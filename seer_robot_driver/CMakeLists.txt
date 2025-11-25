@@ -26,10 +26,10 @@ include_directories(include)
 # install python package
 ament_python_install_package(${PROJECT_NAME})
 # install python executables
-# install(PROGRAMS
-# script/xxx.py
-# DESTINATION lib/${PROJECT_NAME}
-# )
+install(PROGRAMS
+scripts/back_to_charge.py
+DESTINATION lib/${PROJECT_NAME}
+)
 
 # uncomment the following section in order to fill in
 # further dependencies manually.
