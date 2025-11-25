@@ -1,0 +1,16 @@
+# AGV IP and API
+# WLAN
+AGV_IP = '192.168.1.111'
+# # HotPOint
+# AGV_IP = '192.168.192.5'
+AGV_STATUS_PORT = 19204  # 机器人状态
+AGV_CONTROL_PORT = 19205  # 机器人控制
+AGV_NAVIGATION_PORT = 19206  # 机器人导航
+AGV_CONFIG_PORT = 19207  # 机器人配置
+AGV_OTHER_PORT = 19210  # 其他
+AGV_PUSHDATA_PORT = 19301  # 机器人推送
+Robot_Port = 1206
+# Arm IP and API
+ARM_IP = '192.168.1.111'
+ARM_PORT = 8888
+Robot_Port = 1206

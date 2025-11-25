@@ -1,0 +1,3 @@
+[submodule "aubo_ros2_driver"]
+	path = aubo_ros2_driver
+	url = https://github.com/AuboRobot/aubo_ros2_driver
