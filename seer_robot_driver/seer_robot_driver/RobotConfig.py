@@ -1,6 +1,15 @@
+#!/usr/bin/env python
+# coding=UTF-8
+"""
+Author: Wei Luo
+Date: 2025-11-25 10:56:01
+LastEditors: Wei Luo
+LastEditTime: 2025-12-08 16:37:43
+Note: Note
+"""
 # AGV IP and API
 # WLAN
-AGV_IP = '192.168.1.111'
+AGV_IP = "192.168.1.111"
 # # HotPOint
 # AGV_IP = '192.168.192.5'
 AGV_STATUS_PORT = 19204  # 机器人状态
@@ -11,6 +20,6 @@ AGV_OTHER_PORT = 19210  # 其他
 AGV_PUSHDATA_PORT = 19301  # 机器人推送
 Robot_Port = 1206
 # Arm IP and API
-ARM_IP = '192.168.1.111'
+ARM_IP = "192.168.1.111"
 ARM_PORT = 8888
 Robot_Port = 1206

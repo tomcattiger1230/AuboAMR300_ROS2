@@ -1,10 +1,10 @@
-from MessageManager import MessageManager
-from RobotConfig import AGV_IP
-from RobotConfig import AGV_STATUS_PORT, AGV_NAVIGATION_PORT, AGV_CONTROL_PORT
+from .MessageManager import MessageManager
+from .RobotConfig import AGV_IP
+from .RobotConfig import AGV_STATUS_PORT, AGV_NAVIGATION_PORT, AGV_CONTROL_PORT
 import socket
 
 
-class AgvControl():
+class AgvControl:
     messagemanager = MessageManager()
 
     def __init__(self) -> None:
@@ -30,7 +30,9 @@ class AgvControl():
         Socket_Navigation.connect((AGV_IP, AGV_NAVIGATION_PORT))
         Socket_Navigation.settimeout(5)
         # 执行AGV导航
-        message = self.messagemanager.PackMessage(1, 3051, {"source_id": source_id, "id": target_id, "task_id": ''})
+        message = self.messagemanager.PackMessage(
+            1, 3051, {"source_id": source_id, "id": target_id, "task_id": ""}
+        )
         # print("\n\nreq:")
         # print(' '.join('{:02X}'.format(x) for x in message))
         Socket_Navigation.send(message)
@@ -71,7 +73,9 @@ class AgvControl():
         Socket_Relocal.connect((AGV_IP, AGV_CONTROL_PORT))
         Socket_Relocal.settimeout(5)
         # 执行AGV导航
-        message = self.messagemanager.PackMessage(1, 2002, {"source_id": source_id, "id": target_id, "task_id": ''})
+        message = self.messagemanager.PackMessage(
+            1, 2002, {"source_id": source_id, "id": target_id, "task_id": ""}
+        )
         # print(' '.join('{:02X}'.format(x) for x in message))
         Socket_Relocal.send(message)
 
