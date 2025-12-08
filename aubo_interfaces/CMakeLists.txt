@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(seer_robot_driver)
+project(aubo_interfaces)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -7,37 +7,16 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(ament_cmake_python REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(rclpy REQUIRED)
-find_package(std_srvs REQUIRED)
-find_package(aubo_interfaces REQUIRED)
-
-# include "include"
-include_directories(include)
-
-
-# executable
-# add_executable(NAME, src/XXX.cpp)
-# ament_target_dependencies(NAME, rclcpp)
-
-# install
-# install(TARGETS
-# NAME
-# DESTINATION lib/${PROJECT_NAME})
-
-# install python package
-ament_python_install_package(${PROJECT_NAME})
-# install python executables
-install(PROGRAMS
-scripts/back_to_charge.py
-DESTINATION lib/${PROJECT_NAME}
-)
-
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
-ament_export_dependencies(rosidl_default_runtime)
+find_package(rosidl_default_generators REQUIRED)
+
+# msg
+rosidl_generate_interfaces(${PROJECT_NAME}_suffix
+"msg/AgvStatus.msg"
+# DEPENDENCIES
+)
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
