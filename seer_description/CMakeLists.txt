@@ -18,6 +18,12 @@ install(
   DESTINATION share/${PROJECT_NAME}/
 )
 
+# 将 Python 脚本安装到 lib/ 目录下，这样 ros2 run 才能找到它
+install(PROGRAMS
+  scripts/keyboard_teleop.py
+  scripts/circle_move.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
