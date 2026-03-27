@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2026-03-20 15:35:47
 LastEditors: Wei Luo
-LastEditTime: 2026-03-20 16:18:58
+LastEditTime: 2026-03-27 14:12:43
 Note: Note
 """
 
@@ -16,12 +16,26 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch.actions import AppendEnvironmentVariable
+from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
     pkg_name = "seer_description"
     pkg_share = FindPackageShare(pkg_name)
+    # 找到拥有 meshes 文件的那个包的路径 (注意替换为你实际报错的包名，比如 mc_description)
+    model_pkg_share = get_package_share_directory(
+        pkg_name
+    )  # 这里假设 meshes 文件就在 seer_description 包里，如果在其他包里请替换 pkg_name
 
+    # 获取这个包的上一级目录 (即 install/<pkg_name>/share 目录)
+    # 因为 Gazebo 看到 model://mc_description 时，会在这个目录下寻找名为 mc_description 的文件夹
+    workspace_share_dir = os.path.join(model_pkg_share, "..")
+
+    # 创建环境变量注入动作
+    set_env_action = AppendEnvironmentVariable(
+        name="GZ_SIM_RESOURCE_PATH", value=workspace_share_dir
+    )
     urdf_model_path = PathJoinSubstitution(
         [pkg_share, "urdf", "seer_robot_base.urdf.xacro"]
     )
@@ -69,13 +83,20 @@ def generate_launch_description():
         package="ros_gz_bridge",
         executable="parameter_bridge",
         arguments=[
-            "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
-            "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
-            "/joint_states@sensor_msgs/msg/JointState@gz.msgs.Model",
+            # 控制与底盘状态
+            "/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist",
+            "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
+            "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
         ],
         output="screen",
     )
 
     return LaunchDescription(
-        [robot_state_publisher_node, gazebo_launch, spawn_entity_node, bridge_node]
+        [
+            set_env_action,
+            robot_state_publisher_node,
+            gazebo_launch,
+            spawn_entity_node,
+            bridge_node,
+        ]
     )
