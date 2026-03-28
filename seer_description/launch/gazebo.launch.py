@@ -23,13 +23,13 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     pkg_name = "seer_description"
     pkg_share = FindPackageShare(pkg_name)
-    # 找到拥有 meshes 文件的那个包的路径 (注意替换为你实际报错的包名，比如 mc_description)
+    # 找到拥有 meshes 文件的那个包的路径 (注意替换为你实际报错的包名，比如 seer_description)
     model_pkg_share = get_package_share_directory(
         pkg_name
     )  # 这里假设 meshes 文件就在 seer_description 包里，如果在其他包里请替换 pkg_name
 
     # 获取这个包的上一级目录 (即 install/<pkg_name>/share 目录)
-    # 因为 Gazebo 看到 model://mc_description 时，会在这个目录下寻找名为 mc_description 的文件夹
+    # 因为 Gazebo 看到 model://seer_description 时，会在这个目录下寻找名为 seer_description 的文件夹
     workspace_share_dir = os.path.join(model_pkg_share, "..")
 
     # 创建环境变量注入动作

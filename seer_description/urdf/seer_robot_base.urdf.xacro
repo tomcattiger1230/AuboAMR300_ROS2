@@ -21,17 +21,17 @@
 
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.2" rpy="0 0 0" />
+      <origin xyz="0 0 0.21" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://seer_description/meshes/robot_body.stl" scale="0.1 0.1 0.1" />
       </geometry>
-      <material name="white">
-        <color rgba="0.9 0.9 0.9 1.0" />
+      <material name="orange">
+        <color rgba="0.922 0.57 0.82 1.0" />
       </material>
     </visual>
 
     <collision>
-      <origin xyz="0 0 0.15" rpy="0 0 0" />
+      <origin xyz="0 0 0.2" rpy="0 0 0" />
       <geometry>
         <box size="0.8 0.5 0.3" />
       </geometry>
@@ -174,29 +174,5 @@
       <joint_name>right_wheel_joint</joint_name>
     </plugin>
   </gazebo>
-  <!-- <gazebo>
-    <plugin name="gazebo_ros_diff_drive" filename="libgazebo_ros_diff_drive.so">
-      <ros>
-        <namespace>/</namespace>
-        <remapping>cmd_vel:=cmd_vel</remapping>
-        <remapping>odom:=odom</remapping>
-      </ros>
 
-      <left_joint>left_wheel_joint</left_joint>
-      <right_joint>right_wheel_joint</right_joint>
-
-      <wheel_separation>${wheel_ygap * 2}</wheel_separation>
-      <wheel_diameter>${wheel_radius * 2}</wheel_diameter>
-
-      <max_wheel_torque>200</max_wheel_torque>
-      <max_wheel_acceleration>10.0</max_wheel_acceleration>
-
-      <publish_odom>true</publish_odom>
-      <publish_odom_tf>true</publish_odom_tf>
-      <publish_wheel_tf>true</publish_wheel_tf>
-
-      <odometry_frame>odom</odometry_frame>
-      <robot_base_frame>base_footprint</robot_base_frame>
-    </plugin>
-  </gazebo> -->
 </robot>
