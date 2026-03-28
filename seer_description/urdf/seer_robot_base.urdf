@@ -113,7 +113,7 @@
   <joint name="front_lidar_joint" type="fixed">
     <parent link="base_link"/>
     <child link="front_lidar_link"/>
-    <origin rpy="0 0 0" xyz="0.38 0.25 0.15"/>
+    <origin rpy="0 0 0" xyz="0.38 0.25 0.2"/>
   </joint>
   <link name="back_lidar_link">
     <visual>
@@ -140,7 +140,7 @@
   <joint name="back_lidar_joint" type="fixed">
     <parent link="base_link"/>
     <child link="back_lidar_link"/>
-    <origin rpy="0 0 0" xyz="-0.38 -0.25 0.15"/>
+    <origin rpy="0 0 0" xyz="-0.38 -0.25 0.2"/>
   </joint>
   <link name="front_caster">
     <collision>
@@ -154,11 +154,6 @@
       <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
     </inertial>
   </link>
-  <!-- <joint name="front_caster_joint" type="fixed">
-    <parent link="base_link" />
-    <child link="front_caster" />
-    <origin xyz="0.3 0 ${wheel_zoff}" rpy="0 0 0" />
-  </joint> -->
   <link name="rear_caster">
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -171,11 +166,6 @@
       <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
     </inertial>
   </link>
-  <!-- <joint name="rear_caster_joint" type="fixed">
-    <parent link="base_link" />
-    <child link="rear_caster" />
-    <origin xyz="-0.3 0 ${wheel_zoff}" rpy="0 0 0" />
-  </joint> -->
   <joint name="front_caster_joint" type="fixed">
     <parent link="base_link"/>
     <child link="front_caster"/>
@@ -230,6 +220,71 @@
       <topic>joint_states</topic>
       <joint_name>left_wheel_joint</joint_name>
       <joint_name>right_wheel_joint</joint_name>
+    </plugin>
+  </gazebo>
+  <gazebo reference="front_lidar_link">
+    <sensor name="front_lidar_sensor" type="gpu_lidar">
+      <topic>/lidar_front</topic>
+      <gz_frame_id>front_lidar_link</gz_frame_id>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>16</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.2618</min_angle>
+            <max_angle>0.2618</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.2</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <always_on>1</always_on>
+      <visualize>true</visualize>
+    </sensor>
+  </gazebo>
+  <gazebo reference="back_lidar_link">
+    <sensor name="back_lidar_sensor" type="gpu_lidar">
+      <topic>/lidar_back</topic>
+      <gz_frame_id>back_lidar_link</gz_frame_id>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>16</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.2618</min_angle>
+            <max_angle>0.2618</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.2</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <always_on>1</always_on>
+      <visualize>true</visualize>
+    </sensor>
+  </gazebo>
+  <gazebo>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
     </plugin>
   </gazebo>
 </robot>
