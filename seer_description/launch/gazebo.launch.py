@@ -87,6 +87,9 @@ def generate_launch_description():
             "/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
+            # LiDAR 点云数据桥接
+            "/lidar_front/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
+            "/lidar_back/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ],
         output="screen",
     )
