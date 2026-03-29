@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot name="seer_aubo_composite" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find seer_description)/urdf/seer_robot_base.urdf.xacro" />
+
+  <xacro:include filename="$(find seer_description)/urdf/aubo_i16.urdf" />
+
+  <joint name="arm_mount_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="aubo_base_link" />
+
+    <origin xyz="-0.3 0.0 0.6" rpy="0 0 ${pi}" />
+  </joint>
+
+</robot>
