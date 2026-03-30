@@ -14,7 +14,7 @@ find_package(ament_cmake REQUIRED)
 # 找到所有需要的目录并将它们安装到 share 目录下
 install(
   DIRECTORY
-    meshes urdf launch rviz scripts
+    meshes urdf launch rviz scripts config
   DESTINATION share/${PROJECT_NAME}/
 )
 

@@ -42,4 +42,12 @@
       <parameters>$(find seer_description)/config/aubo_controllers.yaml</parameters>
     </plugin>
   </gazebo>
+
+  <xacro:include filename="$(find orbbec_description)/urdf/gemini335L_336L.urdf.xacro" />
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="wrist3_Link" />
+    <child link="camera_link" />
+    <origin xyz="0.03 0.03 0.02" rpy="0 0 0" />
+  </joint>
 </robot>

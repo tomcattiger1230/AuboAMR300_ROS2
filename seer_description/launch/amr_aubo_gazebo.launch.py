@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2026-03-30 16:30:45
 LastEditors: Wei Luo
-LastEditTime: 2026-03-30 16:30:46
+LastEditTime: 2026-03-30 16:48:49
 Note: Note
 """
 #!/usr/bin/env python3
@@ -82,8 +82,10 @@ def generate_launch_description():
         package="ros_gz_bridge",
         executable="parameter_bridge",
         arguments=[
-            "/cmd_vel@geometry_msgs/msg/Twist[gz.msgs.Twist",
-            "/odom@nav_msgs/msg/Odometry]gz.msgs.Odometry",
+            # 引入仿真时钟（极其关键！）
+            "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
+            "/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist",
+            "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             # 注意：这里去掉了 joint_states 桥接，因为机械臂的关节状态由 ros2_control 接管发布了
         ],
         output="screen",
