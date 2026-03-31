@@ -194,7 +194,8 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link0.DAE"/>
+        <!-- <mesh filename="package://seer_description/meshes/aubo_i16/visual/link0.DAE"/> -->
+        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link0.STL"/>
       </geometry>
       <material name="aubo_color">
         <color rgba="1 1 1 1"/>
@@ -216,7 +217,8 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link1.DAE"/>
+        <!-- <mesh filename="package://seer_description/meshes/aubo_i16/visual/link1.DAE"/> -->
+        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link1.STL"/>
       </geometry>
       <material name="aubo_color">
         <color rgba="0.89804 0.91765 0.92941 1"/>
@@ -246,7 +248,8 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link2.DAE"/>
+        <!-- <mesh filename="package://seer_description/meshes/aubo_i16/visual/link2.DAE"/> -->
+        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link2.STL"/>
       </geometry>
       <material name="aubo_color">
         <color rgba="0.89804 0.91765 0.92941 1"/>
@@ -276,7 +279,8 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link3.DAE"/>
+        <!-- <mesh filename="package://seer_description/meshes/aubo_i16/visual/link3.DAE"/> -->
+        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link3.STL"/>
       </geometry>
       <material name="aubo_color">
         <color rgba="1 1 1 1"/>
@@ -306,7 +310,8 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link4.DAE"/>
+        <!-- <mesh filename="package://seer_description/meshes/aubo_i16/visual/link4.DAE"/> -->
+        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link4.STL"/>
       </geometry>
       <material name="aubo_color">
         <color rgba="1 1 1 1"/>
@@ -336,7 +341,8 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link5.DAE"/>
+        <!-- <mesh filename="package://seer_description/meshes/aubo_i16/visual/link5.DAE"/> -->
+        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link5.STL"/>
       </geometry>
       <material name="aubo_color">
         <color rgba="1 1 1 1"/>
@@ -366,7 +372,8 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link6.DAE"/>
+        <!-- <mesh filename="package://seer_description/meshes/aubo_i16/visual/link6.DAE"/> -->
+        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link6.STL"/>
       </geometry>
       <material name="aubo_color">
         <color rgba="1 1 1 1"/>
