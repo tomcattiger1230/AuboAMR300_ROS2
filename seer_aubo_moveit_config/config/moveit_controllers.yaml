@@ -1,0 +1,19 @@
+# MoveIt uses this configuration for controller management
+
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+moveit_simple_controller_manager:
+  controller_names:
+    - aubo_arm_controller
+
+  aubo_arm_controller:
+    action_ns: follow_joint_trajectory   # ROS 2 标准轨迹执行 Action 命名空间
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - shoulder_joint
+      - upperArm_joint
+      - foreArm_joint
+      - wrist1_joint
+      - wrist2_joint
+      - wrist3_joint

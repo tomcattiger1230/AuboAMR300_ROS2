@@ -43,11 +43,11 @@
     </plugin>
   </gazebo>
 
-  <xacro:include filename="$(find orbbec_description)/urdf/gemini335L_336L.urdf.xacro" />
+  <xacro:include filename="$(find seer_description)/urdf/gemini335L_336L.urdf.xacro" />
 
   <joint name="camera_joint" type="fixed">
     <parent link="wrist3_Link" />
     <child link="camera_link" />
-    <origin xyz="0.03 0.03 0.02" rpy="0 0 0" />
+    <origin xyz="0.00 0.08 0.00" rpy="${pi/2} -${pi/2} ${pi}" />
   </joint>
 </robot>

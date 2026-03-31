@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2026-03-29 21:07:40
 LastEditors: Wei Luo
-LastEditTime: 2026-03-29 21:07:42
+LastEditTime: 2026-03-31 10:34:55
 Note: Note
 """
 
@@ -74,7 +74,10 @@ def launch_setup(context, *args, **kwargs):
         name="rviz2",
         output="log",
         arguments=["-d", rvizconfig],
-        parameters=[robot_description],  # 把模型参数传给 rviz2 以便正确解析材质
+        parameters=[
+            robot_description,
+            {"use_sim_time": True},
+        ],  # 把模型参数传给 rviz2 以便正确解析材质
     )
 
     return [

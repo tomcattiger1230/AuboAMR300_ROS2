@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2026-03-30 16:30:45
 LastEditors: Wei Luo
-LastEditTime: 2026-03-30 16:48:49
+LastEditTime: 2026-03-31 10:30:30
 Note: Note
 """
 #!/usr/bin/env python3
@@ -87,6 +87,14 @@ def generate_launch_description():
             "/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             # 注意：这里去掉了 joint_states 桥接，因为机械臂的关节状态由 ros2_control 接管发布了
+            # 桥接 IMU
+            "/camera/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
+            # 桥接左目图像与相机内参
+            "/camera/left/image_raw@sensor_msgs/msg/Image[gz.msgs.Image",
+            "/camera/left/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
+            # 桥接右目图像与相机内参
+            "/camera/right/image_raw@sensor_msgs/msg/Image[gz.msgs.Image",
+            "/camera/right/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
         ],
         output="screen",
     )

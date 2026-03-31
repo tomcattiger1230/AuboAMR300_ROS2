@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="seer_aubo_composite">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import seer_aubo_composite urdf file -->
+    <xacro:include filename="$(find seer_description)/urdf/composite_robot.urdf.xacro" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="seer_aubo_composite.ros2_control.xacro" />
+
+
+    <xacro:seer_aubo_composite_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+
+</robot>
