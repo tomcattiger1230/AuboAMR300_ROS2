@@ -22,6 +22,7 @@ install(
 install(PROGRAMS
   scripts/keyboard_teleop.py
   scripts/circle_move.py
+  scripts/action_bridge.py
   DESTINATION lib/${PROJECT_NAME}
 )
 if(BUILD_TESTING)

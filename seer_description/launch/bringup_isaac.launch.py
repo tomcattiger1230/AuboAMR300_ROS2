@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2026-04-03 21:43:44
 LastEditors: Wei Luo
-LastEditTime: 2026-04-07 16:40:24
+LastEditTime: 2026-04-10 10:11:45
 Note: Note
 """
 
@@ -68,11 +68,17 @@ def generate_launch_description():
 
     set_sim_time = SetParameter(name="use_sim_time", value=True)
 
+    # 启动“赛博翻译官”桥接节点
+    start_action_bridge = Node(
+        package="seer_description", executable="action_bridge.py", output="screen"
+    )
+
     return LaunchDescription(
         [
             set_sim_time,
             set_env_action,
             rsp_node,
+            start_action_bridge,
             delay_moveit,
         ]
     )
