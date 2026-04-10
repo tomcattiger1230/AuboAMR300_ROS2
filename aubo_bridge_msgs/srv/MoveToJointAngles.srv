@@ -1,0 +1,7 @@
+float64[6] joint_angles
+float64 max_velocity
+float64 max_acceleration
+bool blocking
+---
+bool success
+string message

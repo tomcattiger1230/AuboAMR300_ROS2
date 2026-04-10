@@ -1,0 +1,4 @@
+bool reset_all_errors
+---
+bool success
+string message
