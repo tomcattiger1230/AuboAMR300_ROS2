@@ -15,8 +15,11 @@ import time
 import threading
 from math import pi
 
-# Add Python binding to path
-PYTHON_BINDING_PATH = '/home/arnold/Develop/hongshi_ws/libpyauboi5-v1.5.1.x64-for-python3.x/python3.x'
+# Add Python binding to path (relative to this script's location)
+import os
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+AUBO_BRIDGE_DIR = os.path.dirname(SCRIPT_DIR)
+PYTHON_BINDING_PATH = os.path.join(AUBO_BRIDGE_DIR, 'libpyauboi5-v1.5.1.x64-for-python3.x', 'python3.x')
 sys.path.insert(0, PYTHON_BINDING_PATH)
 
 import rclpy
