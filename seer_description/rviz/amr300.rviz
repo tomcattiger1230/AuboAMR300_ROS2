@@ -153,6 +153,21 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        gripper_adapter_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        gripper_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        gripper_motor_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_wheel_link:
           Alpha: 1
           Show Axes: false
@@ -343,25 +358,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.795678734779358
+      Distance: 1.7702633142471313
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.38295942544937134
-        Y: 0.01803152821958065
-        Z: 0.8312782645225525
+        X: -0.34897252917289734
+        Y: -0.15352097153663635
+        Z: 1.5716865062713623
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4647977948188782
+      Pitch: -0.145202174782753
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.4035062789916992
+      Yaw: 0.8735162019729614
     Saved: ~
 Window Geometry:
   Displays:

@@ -5,6 +5,8 @@
 
   <xacro:include filename="$(find seer_description)/urdf/aubo_i16.urdf" />
 
+  <xacro:include filename="$(find seer_description)/urdf/gripper_stick.urdf.xacro" />
+
   <joint name="arm_mount_joint" type="fixed">
     <parent link="base_link" />
     <child link="aubo_base_link" />
@@ -48,6 +50,11 @@
   <joint name="camera_joint" type="fixed">
     <parent link="wrist3_Link" />
     <child link="camera_link" />
-    <origin xyz="0.00 0.08 0.00" rpy="${pi/2} -${pi/2} ${pi}" />
+    <origin xyz="0.00 0.1 0.00" rpy="${pi/2} -${pi/2} ${pi}" />
   </joint>
+
+  <xacro:my_custom_gripper parent="wrist3_Link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:my_custom_gripper>
+
 </robot>
