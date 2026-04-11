@@ -62,7 +62,30 @@
             <origin xyz="-0.02 0 0.035" rpy="${pi/2} 0 ${pi/2}" />
         </joint>
 
-        <link name="gripper_link">
+        <link name="gripper1_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://seer_description/meshes/gripper_stick.stl"
+                        scale="1 1 1" />
+                </geometry>
+                <material name="white">
+                    <color rgba="0.9 0.9 0.9 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://seer_description/meshes/gripper_stick.stl"
+                        scale="1 1 1" />
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.3" />
+                <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
+            </inertial>
+        </link>
+        <link name="gripper2_link">
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
@@ -86,10 +109,18 @@
             </inertial>
         </link>
 
-        <joint name="gripper_joint" type="prismatic">
+        <joint name="gripper1_joint" type="prismatic">
             <parent link="gripper_motor_link" />
-            <child link="gripper_link" />
-            <origin xyz="0 0 0.07" rpy="0 0 ${pi/2}" />
+            <child link="gripper1_link" />
+            <origin xyz="0 0.1 -0.07" rpy="${pi/2} 0 0" />
+            <axis xyz="0 1 0" />
+            <limit lower="0.0" upper="0.04" effort="50.0" velocity="0.1" />
+        </joint>
+
+        <joint name="gripper2_joint" type="prismatic">
+            <parent link="gripper_motor_link" />
+            <child link="gripper2_link" />
+            <origin xyz="0 0.1 0.12" rpy="${pi/2} ${pi} 0" />
             <axis xyz="0 1 0" />
             <limit lower="0.0" upper="0.04" effort="50.0" velocity="0.1" />
         </joint>
