@@ -37,6 +37,8 @@
     <xacro:aubo_joint_interface joint_name="wrist1_joint" joint_min="-6.28" joint_max="6.28" />
     <xacro:aubo_joint_interface joint_name="wrist2_joint" joint_min="-6.28" joint_max="6.28" />
     <xacro:aubo_joint_interface joint_name="wrist3_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="gripper1_joint" joint_min="0.0" joint_max="0.04" />
+    <xacro:aubo_joint_interface joint_name="gripper2_joint" joint_min="0.0" joint_max="0.04" />
   </ros2_control>
 
 
@@ -53,5 +55,9 @@
     <child link="camera_link" />
     <origin xyz="0.00 0.1 0.00" rpy="${pi/2} -${pi/2} ${pi}" />
   </joint>
+
+  <xacro:my_custom_gripper parent="wrist3_Link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:my_custom_gripper>
 
 </robot>
