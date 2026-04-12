@@ -2,6 +2,8 @@
 
 initial_positions:
   foreArm_joint: 0
+  gripper1_joint: 0
+  gripper2_joint: 0
   shoulder_joint: 0
   upperArm_joint: 0
   wrist1_joint: 0

@@ -12,6 +12,10 @@
     <group name="aubo_arm">
         <chain base_link="aubo_base_link" tip_link="wrist3_Link"/>
     </group>
+    <group name="gripper_group">
+        <joint name="gripper1_joint"/>
+        <joint name="gripper2_joint"/>
+    </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="home" group="aubo_arm">
         <joint name="foreArm_joint" value="1.0761"/>
@@ -21,139 +25,17 @@
         <joint name="wrist2_joint" value="-1.5621"/>
         <joint name="wrist3_joint" value="0"/>
     </group_state>
+    <group_state name="open" group="gripper_group">
+        <joint name="gripper1_joint" value="0"/>
+        <joint name="gripper2_joint" value="0"/>
+    </group_state>
+    <group_state name="close" group="gripper_group">
+        <joint name="gripper1_joint" value="0"/>
+        <joint name="gripper2_joint" value="0"/>
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="gripper" parent_link="gripper_motor_link" group="gripper_group"/>
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="virtual_joint" type="planar" parent_frame="odom" child_link="base_footprint"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
-    <disable_collisions link1="aubo_base_link" link2="back_lidar_link" reason="Never"/>
-    <disable_collisions link1="aubo_base_link" link2="base_link" reason="Adjacent"/>
-    <disable_collisions link1="aubo_base_link" link2="front_caster" reason="Never"/>
-    <disable_collisions link1="aubo_base_link" link2="front_lidar_link" reason="Never"/>
-    <disable_collisions link1="aubo_base_link" link2="left_wheel_link" reason="Never"/>
-    <disable_collisions link1="aubo_base_link" link2="rear_caster" reason="Never"/>
-    <disable_collisions link1="aubo_base_link" link2="right_wheel_link" reason="Never"/>
-    <disable_collisions link1="aubo_base_link" link2="shoulder_Link" reason="Adjacent"/>
-    <disable_collisions link1="aubo_base_link" link2="upperArm_Link" reason="Never"/>
-    <disable_collisions link1="aubo_base_link" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="aubo_base_link" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="back_lidar_link" link2="base_link" reason="Adjacent"/>
-    <disable_collisions link1="back_lidar_link" link2="front_caster" reason="Never"/>
-    <disable_collisions link1="back_lidar_link" link2="front_lidar_link" reason="Never"/>
-    <disable_collisions link1="back_lidar_link" link2="left_wheel_link" reason="Never"/>
-    <disable_collisions link1="back_lidar_link" link2="rear_caster" reason="Never"/>
-    <disable_collisions link1="back_lidar_link" link2="right_wheel_link" reason="Never"/>
-    <disable_collisions link1="back_lidar_link" link2="shoulder_Link" reason="Never"/>
-    <disable_collisions link1="base_link" link2="front_caster" reason="Adjacent"/>
-    <disable_collisions link1="base_link" link2="front_lidar_link" reason="Adjacent"/>
-    <disable_collisions link1="base_link" link2="left_wheel_link" reason="Adjacent"/>
-    <disable_collisions link1="base_link" link2="rear_caster" reason="Adjacent"/>
-    <disable_collisions link1="base_link" link2="right_wheel_link" reason="Adjacent"/>
-    <disable_collisions link1="base_link" link2="shoulder_Link" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="camera_color_frame" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="camera_color_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="camera_color_screw_frame" reason="Default"/>
-    <disable_collisions link1="camera_IMU_frame" link2="camera_depth_frame" reason="Adjacent"/>
-    <disable_collisions link1="camera_IMU_frame" link2="camera_left_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="camera_left_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="camera_link" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="camera_right_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="camera_right_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_IMU_frame" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="camera_color_frame" link2="camera_color_optical_frame" reason="Adjacent"/>
-    <disable_collisions link1="camera_color_frame" link2="camera_color_screw_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_frame" link2="camera_depth_frame" reason="Adjacent"/>
-    <disable_collisions link1="camera_color_frame" link2="camera_left_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_frame" link2="camera_left_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_frame" link2="camera_link" reason="Default"/>
-    <disable_collisions link1="camera_color_frame" link2="camera_right_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_frame" link2="camera_right_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_frame" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_color_frame" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_color_frame" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="camera_color_screw_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="camera_depth_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="camera_left_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="camera_left_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="camera_link" reason="Default"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="camera_right_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="camera_right_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_color_optical_frame" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="camera_color_screw_frame" link2="camera_depth_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_screw_frame" link2="camera_left_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_screw_frame" link2="camera_left_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_screw_frame" link2="camera_link" reason="Adjacent"/>
-    <disable_collisions link1="camera_color_screw_frame" link2="camera_right_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_screw_frame" link2="camera_right_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_color_screw_frame" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_color_screw_frame" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_color_screw_frame" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="camera_depth_frame" link2="camera_left_ir_frame" reason="Adjacent"/>
-    <disable_collisions link1="camera_depth_frame" link2="camera_left_ir_optical_frame" reason="Default"/>
-    <disable_collisions link1="camera_depth_frame" link2="camera_link" reason="Adjacent"/>
-    <disable_collisions link1="camera_depth_frame" link2="camera_right_ir_frame" reason="Adjacent"/>
-    <disable_collisions link1="camera_depth_frame" link2="camera_right_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_depth_frame" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_depth_frame" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_depth_frame" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_frame" link2="camera_left_ir_optical_frame" reason="Adjacent"/>
-    <disable_collisions link1="camera_left_ir_frame" link2="camera_link" reason="Default"/>
-    <disable_collisions link1="camera_left_ir_frame" link2="camera_right_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_frame" link2="camera_right_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_frame" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_frame" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_frame" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_optical_frame" link2="camera_link" reason="Default"/>
-    <disable_collisions link1="camera_left_ir_optical_frame" link2="camera_right_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_optical_frame" link2="camera_right_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_optical_frame" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_optical_frame" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_left_ir_optical_frame" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="camera_right_ir_frame" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="camera_right_ir_optical_frame" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="wrist3_Link" reason="Adjacent"/>
-    <disable_collisions link1="camera_right_ir_frame" link2="camera_right_ir_optical_frame" reason="Adjacent"/>
-    <disable_collisions link1="camera_right_ir_frame" link2="front_lidar_link" reason="Never"/>
-    <disable_collisions link1="camera_right_ir_frame" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_right_ir_frame" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_right_ir_frame" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="camera_right_ir_optical_frame" link2="front_lidar_link" reason="Never"/>
-    <disable_collisions link1="camera_right_ir_optical_frame" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="camera_right_ir_optical_frame" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="camera_right_ir_optical_frame" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="foreArm_Link" link2="upperArm_Link" reason="Adjacent"/>
-    <disable_collisions link1="foreArm_Link" link2="wrist1_Link" reason="Adjacent"/>
-    <disable_collisions link1="foreArm_Link" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="front_caster" link2="front_lidar_link" reason="Never"/>
-    <disable_collisions link1="front_caster" link2="left_wheel_link" reason="Never"/>
-    <disable_collisions link1="front_caster" link2="rear_caster" reason="Never"/>
-    <disable_collisions link1="front_caster" link2="right_wheel_link" reason="Never"/>
-    <disable_collisions link1="front_caster" link2="shoulder_Link" reason="Never"/>
-    <disable_collisions link1="front_caster" link2="upperArm_Link" reason="Never"/>
-    <disable_collisions link1="front_lidar_link" link2="left_wheel_link" reason="Never"/>
-    <disable_collisions link1="front_lidar_link" link2="rear_caster" reason="Never"/>
-    <disable_collisions link1="front_lidar_link" link2="right_wheel_link" reason="Never"/>
-    <disable_collisions link1="front_lidar_link" link2="shoulder_Link" reason="Never"/>
-    <disable_collisions link1="front_lidar_link" link2="upperArm_Link" reason="Never"/>
-    <disable_collisions link1="left_wheel_link" link2="rear_caster" reason="Never"/>
-    <disable_collisions link1="left_wheel_link" link2="right_wheel_link" reason="Never"/>
-    <disable_collisions link1="left_wheel_link" link2="shoulder_Link" reason="Never"/>
-    <disable_collisions link1="left_wheel_link" link2="upperArm_Link" reason="Never"/>
-    <disable_collisions link1="rear_caster" link2="right_wheel_link" reason="Never"/>
-    <disable_collisions link1="rear_caster" link2="shoulder_Link" reason="Never"/>
-    <disable_collisions link1="rear_caster" link2="upperArm_Link" reason="Never"/>
-    <disable_collisions link1="rear_caster" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="rear_caster" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="right_wheel_link" link2="shoulder_Link" reason="Never"/>
-    <disable_collisions link1="right_wheel_link" link2="upperArm_Link" reason="Never"/>
-    <disable_collisions link1="shoulder_Link" link2="upperArm_Link" reason="Adjacent"/>
-    <disable_collisions link1="shoulder_Link" link2="wrist1_Link" reason="Never"/>
-    <disable_collisions link1="shoulder_Link" link2="wrist2_Link" reason="Never"/>
-    <disable_collisions link1="wrist1_Link" link2="wrist2_Link" reason="Adjacent"/>
-    <disable_collisions link1="wrist1_Link" link2="wrist3_Link" reason="Never"/>
-    <disable_collisions link1="wrist2_Link" link2="wrist3_Link" reason="Adjacent"/>
 </robot>

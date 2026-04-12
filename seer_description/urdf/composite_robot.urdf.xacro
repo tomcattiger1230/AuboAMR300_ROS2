@@ -19,11 +19,11 @@
       <plugin>gz_ros2_control/GazeboSimSystem</plugin>
     </hardware>
 
-    <xacro:macro name="aubo_joint_interface" params="joint_name">
+    <xacro:macro name="aubo_joint_interface" params="joint_name joint_min joint_max">
       <joint name="${joint_name}">
         <command_interface name="position">
-          <param name="min">-6.28</param>
-          <param name="max">6.28</param>
+          <param name="min">${joint_min}</param>
+          <param name="max">${joint_max}</param>
         </command_interface>
         <state_interface name="position" />
         <state_interface name="velocity" />
@@ -31,13 +31,16 @@
       </joint>
     </xacro:macro>
 
-    <xacro:aubo_joint_interface joint_name="shoulder_joint" />
-    <xacro:aubo_joint_interface joint_name="upperArm_joint" />
-    <xacro:aubo_joint_interface joint_name="foreArm_joint" />
-    <xacro:aubo_joint_interface joint_name="wrist1_joint" />
-    <xacro:aubo_joint_interface joint_name="wrist2_joint" />
-    <xacro:aubo_joint_interface joint_name="wrist3_joint" />
+    <xacro:aubo_joint_interface joint_name="shoulder_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="upperArm_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="foreArm_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="wrist1_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="wrist2_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="wrist3_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="gripper1_joint" joint_min="0.0" joint_max="0.04" />
+    <xacro:aubo_joint_interface joint_name="gripper2_joint" joint_min="0.0" joint_max="0.04" />
   </ros2_control>
+
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">

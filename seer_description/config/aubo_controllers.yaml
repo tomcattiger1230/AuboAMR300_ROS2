@@ -1,6 +1,6 @@
 controller_manager:
   ros__parameters:
-    update_rate: 100  # 控制频率 100Hz
+    update_rate: 100 # 控制频率 100Hz
     use_sim_time: true
 
     # 1. 关节状态广播器（读取虚拟编码器数据）
@@ -20,6 +20,8 @@ aubo_arm_controller:
       - wrist1_joint
       - wrist2_joint
       - wrist3_joint
+      - gripper1_joint
+      - gripper2_joint
     command_interfaces:
       - position
     state_interfaces:
