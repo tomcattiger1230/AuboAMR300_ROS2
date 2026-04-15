@@ -1,0 +1,13 @@
+# Default initial positions for seer_aubo_composite's ros2_control fake system
+
+initial_positions:
+  foreArm_joint: 0
+  gripper1_joint: 0
+  gripper2_joint: 0
+  left_wheel_joint: 0
+  right_wheel_joint: 0
+  shoulder_joint: 0
+  upperArm_joint: 0
+  wrist1_joint: 0
+  wrist2_joint: 0
+  wrist3_joint: 0
