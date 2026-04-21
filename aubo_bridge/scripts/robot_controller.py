@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""
-Aubo Robot Python Controller
+
+"""Aubo Robot Python Controller.
+
 High-level Python interface for controlling Aubo robot via ROS2 topics.
 Works with the aubo_bridge C++ node.
 
@@ -17,8 +18,11 @@ from geometry_msgs.msg import Pose
 from sensor_msgs.msg import JointState
 
 from aubo_bridge_msgs.msg import (
-    TrajectoryCommand, TrajectoryPoint, RobotEvent,
-    JointStateEx, RobotStatus
+    TrajectoryCommand,
+    TrajectoryPoint,
+    RobotEvent,
+    JointStateEx,
+    RobotStatus,
 )
 from aubo_bridge_msgs.srv import MoveToPose, MoveToJointAngles
 
@@ -26,27 +30,33 @@ from aubo_bridge_msgs.srv import MoveToPose, MoveToJointAngles
 class RobotController(Node):
     """High-level Python controller for Aubo robot via ROS2."""
 
-    def __init__(self, node_name='robot_controller'):
+    def __init__(self, node_name="robot_controller"):
         super().__init__(node_name)
 
         # Publishers
         self.traj_pub_ = self.create_publisher(
-            TrajectoryCommand, '/aubo/trajectory_command', 10)
+            TrajectoryCommand, "/aubo/trajectory_command", 10
+        )
         self.joint_move_pub_ = self.create_publisher(
-            TrajectoryPoint, '/aubo/joint_move_command', 10)
+            TrajectoryPoint, "/aubo/joint_move_command", 10
+        )
 
         # Subscribers
         self.event_sub_ = self.create_subscription(
-            RobotEvent, '/aubo/events', self._on_event, 10)
+            RobotEvent, "/aubo/events", self._on_event, 10
+        )
         self.joint_state_sub_ = self.create_subscription(
-            JointStateEx, '/aubo/joint_states_ex', self._on_joint_state, 10)
+            JointStateEx, "/aubo/joint_states_ex", self._on_joint_state, 10
+        )
         self.status_sub_ = self.create_subscription(
-            RobotStatus, '/aubo/status', self._on_status, 10)
+            RobotStatus, "/aubo/status", self._on_status, 10
+        )
 
         # Service clients
-        self.move_pose_client_ = self.create_client(MoveToPose, '/aubo/move_to_pose')
+        self.move_pose_client_ = self.create_client(MoveToPose, "/aubo/move_to_pose")
         self.move_joint_client_ = self.create_client(
-            MoveToJointAngles, '/aubo/move_to_joint_angles')
+            MoveToJointAngles, "/aubo/move_to_joint_angles"
+        )
 
         # State
         self.last_joint_state_ = None
@@ -56,7 +66,8 @@ class RobotController(Node):
     def _on_event(self, msg: RobotEvent):
         self.event_history_.append(msg)
         self.get_logger().info(
-            f"Robot Event: type={msg.event_type}, sev={msg.severity}, {msg.description}")
+            f"Robot Event: type={msg.event_type}, sev={msg.severity}, {msg.description}"
+        )
 
     def _on_joint_state(self, msg: JointStateEx):
         self.last_joint_state_ = msg
@@ -65,10 +76,11 @@ class RobotController(Node):
         self.last_status_ = msg
 
     def move_to_joints(
-        self, joint_angles: list,
+        self,
+        joint_angles: list,
         max_velocity: float = 0.5,
         max_acceleration: float = 0.5,
-        timeout: float = 30.0
+        timeout: float = 30.0,
     ) -> bool:
         """Move robot arm to specified joint angles (radians)."""
         request = MoveToJointAngles.Request()
@@ -95,10 +107,16 @@ class RobotController(Node):
         return response.success
 
     def move_to_pose(
-        self, x: float, y: float, z: float,
-        qx: float = 0, qy: float = 0, qz: float = 0, qw: float = 1,
+        self,
+        x: float,
+        y: float,
+        z: float,
+        qx: float = 0,
+        qy: float = 0,
+        qz: float = 0,
+        qw: float = 1,
         max_velocity: float = 0.5,
-        timeout: float = 30.0
+        timeout: float = 30.0,
     ) -> bool:
         """Move robot tool center to specified Cartesian pose."""
         pose = Pose()
@@ -127,9 +145,10 @@ class RobotController(Node):
         return future.result().success
 
     def execute_trajectory(
-        self, waypoints: list,
+        self,
+        waypoints: list,
         max_joint_velocity: float = 0.5,
-        max_joint_acceleration: float = 0.5
+        max_joint_acceleration: float = 0.5,
     ) -> bool:
         """Execute a list of waypoints as a trajectory.
 
@@ -163,9 +182,9 @@ class RobotController(Node):
         """Get current TCP pose."""
         if self.last_status_:
             return {
-                'x': self.last_status_.tool_position_x,
-                'y': self.last_status_.tool_position_y,
-                'z': self.last_status_.tool_position_z,
+                "x": self.last_status_.tool_position_x,
+                "y": self.last_status_.tool_position_y,
+                "z": self.last_status_.tool_position_z,
             }
         return None
 
@@ -183,5 +202,5 @@ def main():
         rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
