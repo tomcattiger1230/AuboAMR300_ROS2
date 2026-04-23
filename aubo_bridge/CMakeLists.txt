@@ -25,6 +25,9 @@ install(DIRECTORY
 install(PROGRAMS
   scripts/aubo_bridge_node.py
   scripts/robot_controller.py
+  scripts/test_robot_info_ros2.py
+  scripts/test_joint_ros2.py
+  scripts/test_line_ros2.py
   DESTINATION lib/${PROJECT_NAME}/
 )
 

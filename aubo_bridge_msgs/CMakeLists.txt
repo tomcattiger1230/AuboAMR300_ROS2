@@ -19,6 +19,9 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/MoveToPose.srv"
   "srv/MoveToJointAngles.srv"
   "srv/ClearError.srv"
+  "srv/GetRobotInfo.srv"
+  "srv/MoveJoint.srv"
+  "srv/MoveLine.srv"
   DEPENDENCIES std_msgs geometry_msgs
 )
 
