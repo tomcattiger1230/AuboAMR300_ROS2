@@ -1,0 +1,17 @@
+# Request: Move along a straight line in Cartesian space
+# Relative position offset in base frame (m)
+float64[3] relative_pos
+# Relative orientation offset in base frame (quat wxyz), keep current if (1,0,0,0)
+float64[4] relative_ori
+float64[6] max_acc
+float64[6] max_vel
+bool enable_move
+---
+bool success
+string message
+# Result joint angles after IK
+float64[6] result_joint
+# Target position after offset (m)
+float64[3] target_pos
+# Target orientation after offset (quat wxyz)
+float64[4] target_ori

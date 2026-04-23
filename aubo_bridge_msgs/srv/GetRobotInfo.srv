@@ -1,0 +1,17 @@
+# Request: Get robot info (joint status, max acc/vel, current waypoint)
+---
+# Joint status (raw)
+int32 joint_status
+# Current joint angles (rad)
+float64[6] current_joint
+# Current flange position on base (m)
+float64[3] current_pos
+# Current flange orientation on base (quat wxyz)
+float64[4] current_ori
+# Max joint acceleration (rad/s^2)
+float64[6] joint_maxacc
+# Max joint velocity (rad/s)
+float64[6] joint_maxvelc
+# Success flag
+bool success
+string message

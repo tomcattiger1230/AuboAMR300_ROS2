@@ -1,0 +1,10 @@
+# Request: Move to target joint angles in joint space
+float64[6] target_joint
+float64[6] max_acc      # (1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+float64[6] max_vel      # (1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+bool enable_move        # True=execute, False=IK only
+---
+bool success
+string message
+# Result joint angles after IK
+float64[6] result_joint
