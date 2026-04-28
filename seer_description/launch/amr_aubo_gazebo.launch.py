@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2026-03-30 16:30:45
 LastEditors: Wei Luo
-LastEditTime: 2026-04-28 13:32:36
+LastEditTime: 2026-04-28 16:55:04
 Note: Note
 """
 
@@ -13,12 +13,10 @@ from launch import LaunchDescription
 from launch.actions import (
     IncludeLaunchDescription,
     AppendEnvironmentVariable,
-    ExecuteProcess,
-    RegisterEventHandler,
 )
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
-from launch_ros.actions import Node
+from launch.substitutions import Command, PathJoinSubstitution
+from launch_ros.actions import Node, SetParameter
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 from launch.event_handlers import OnProcessExit
@@ -166,6 +164,7 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            SetParameter(name="use_sim_time", value=True),
             set_env_action,
             robot_state_publisher_node,
             gazebo_launch,

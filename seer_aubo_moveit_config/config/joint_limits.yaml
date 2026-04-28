@@ -11,30 +11,30 @@ joint_limits:
   foreArm_joint:
     has_velocity_limits: true
     max_velocity: 4.6600000000000001
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_acceleration_limits: true
+    max_acceleration: 2.0
   shoulder_joint:
     has_velocity_limits: true
     max_velocity: 3.1415999999999999
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_acceleration_limits: true
+    max_acceleration: 2.0
   upperArm_joint:
     has_velocity_limits: true
     max_velocity: 3.1415999999999999
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_acceleration_limits: true
+    max_acceleration: 2.0
   wrist1_joint:
     has_velocity_limits: true
     max_velocity: 3.1415999999999999
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_acceleration_limits: true
+    max_acceleration: 2.0
   wrist2_joint:
     has_velocity_limits: true
     max_velocity: 3.1415999999999999
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_acceleration_limits: true
+    max_acceleration: 2.0
   wrist3_joint:
     has_velocity_limits: true
     max_velocity: 3.1415999999999999
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_acceleration_limits: true
+    max_acceleration: 2.0
