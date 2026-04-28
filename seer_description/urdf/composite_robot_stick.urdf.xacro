@@ -44,7 +44,7 @@
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>$(find seer_description)/config/aubo_controllers.yaml</parameters>
+      <parameters>$(find seer_description)/config/aubo_controllers_with_gripper.yaml</parameters>
     </plugin>
   </gazebo>
 

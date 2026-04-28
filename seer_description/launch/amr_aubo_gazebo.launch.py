@@ -4,25 +4,24 @@
 Author: Wei Luo
 Date: 2026-03-30 16:30:45
 LastEditors: Wei Luo
-LastEditTime: 2026-03-31 10:30:30
+LastEditTime: 2026-04-28 11:48:21
 Note: Note
 """
-#!/usr/bin/env python3
-# coding=UTF-8
 
 import os
 from launch import LaunchDescription
 from launch.actions import (
-    DeclareLaunchArgument,
     IncludeLaunchDescription,
     AppendEnvironmentVariable,
     ExecuteProcess,
+    RegisterEventHandler,
 )
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
+from launch.event_handlers import OnProcessExit
 
 
 def generate_launch_description():
@@ -100,29 +99,48 @@ def generate_launch_description():
     )
 
     # 5. 激活 ros2_control 状态广播器
-    load_joint_state_broadcaster = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "--set-state",
-            "active",
-            "joint_state_broadcaster",
-        ],
-        output="screen",
+    # load_joint_state_broadcaster = ExecuteProcess(
+    #     cmd=[
+    #         "ros2",
+    #         "control",
+    #         "load_controller",
+    #         "--set-state",
+    #         "active",
+    #         "joint_state_broadcaster",
+    #     ],
+    #     output="screen",
+    # )
+    load_joint_state_broadcaster = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
     )
 
-    # 6. 激活机械臂轨迹控制器
-    load_arm_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "--set-state",
-            "active",
-            "aubo_arm_controller",
-        ],
-        output="screen",
+    load_arm_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["aubo_arm_controller_without_gripper"],
+    )
+
+    # # 6. 激活机械臂轨迹控制器
+    # load_arm_controller = ExecuteProcess(
+    #     cmd=[
+    #         "ros2",
+    #         "control",
+    #         "load_controller",
+    #         "--set-state",
+    #         "active",
+    #         "aubo_arm_controller",
+    #     ],
+    #     output="screen",
+    # )
+    # 6. 终极防御机制：事件锁！
+    # 监听 spawn_entity_node，只有当它成功把机器人放入世界并退出后，才允许加载控制器
+    delay_controllers = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=spawn_entity_node,
+            on_exit=[load_joint_state_broadcaster, load_arm_controller],
+        )
     )
 
     return LaunchDescription(
@@ -134,5 +152,6 @@ def generate_launch_description():
             bridge_node,
             load_joint_state_broadcaster,
             load_arm_controller,
+            delay_controllers,
         ]
     )

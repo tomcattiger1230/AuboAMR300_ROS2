@@ -575,7 +575,7 @@
   </ros2_control>
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>/home/arnold/Develop/ROS2_ws/amr_ws/install/seer_description/share/seer_description/config/aubo_controllers.yaml</parameters>
+      <parameters>/home/arnold/Develop/ROS_ws/amr300_ws/install/seer_description/share/seer_description/config/aubo_controllers_with_gripper.yaml</parameters>
     </plugin>
   </gazebo>
   <link name="camera_link">
