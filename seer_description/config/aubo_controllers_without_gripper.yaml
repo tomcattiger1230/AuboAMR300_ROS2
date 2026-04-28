@@ -8,10 +8,10 @@ controller_manager:
       type: joint_state_broadcaster/JointStateBroadcaster
 
     # 2. 机械臂轨迹控制器（接收 MoveIt 或代码下发的轨迹点）
-    aubo_arm_controller:
+    aubo_arm_controller_wo_gripper:
       type: joint_trajectory_controller/JointTrajectoryController
 
-aubo_arm_controller:
+aubo_arm_controller_wo_gripper:
   ros__parameters:
     joints:
       - shoulder_joint

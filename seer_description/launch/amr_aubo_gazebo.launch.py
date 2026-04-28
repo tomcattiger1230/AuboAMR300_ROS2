@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2026-03-30 16:30:45
 LastEditors: Wei Luo
-LastEditTime: 2026-04-28 11:48:21
+LastEditTime: 2026-04-28 13:32:36
 Note: Note
 """
 
@@ -22,11 +22,13 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 from launch.event_handlers import OnProcessExit
+from launch.actions import TimerAction
 
 
 def generate_launch_description():
     pkg_name = "seer_description"
     pkg_share = FindPackageShare(pkg_name)
+    pkg_moveit = FindPackageShare("seer_aubo_moveit_config")
 
     # 解决 Gazebo 模型加载路径问题
     model_pkg_share = get_package_share_directory(pkg_name)
@@ -86,6 +88,9 @@ def generate_launch_description():
             "/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             # 注意：这里去掉了 joint_states 桥接，因为机械臂的关节状态由 ros2_control 接管发布了
+            "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
+            # "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
+            "/model/composite_robot/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             # 桥接 IMU
             "/camera/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
             # 桥接左目图像与相机内参
@@ -95,10 +100,13 @@ def generate_launch_description():
             "/camera/right/image_raw@sensor_msgs/msg/Image[gz.msgs.Image",
             "/camera/right/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
         ],
+        remappings=[
+            ("/model/composite_robot/tf", "/tf"),
+        ],
         output="screen",
     )
 
-    # 5. 激活 ros2_control 状态广播器
+    # # 5. 激活 ros2_control 状态广播器
     # load_joint_state_broadcaster = ExecuteProcess(
     #     cmd=[
     #         "ros2",
@@ -119,7 +127,7 @@ def generate_launch_description():
     load_arm_controller = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["aubo_arm_controller_without_gripper"],
+        arguments=["aubo_arm_controller_wo_gripper"],
     )
 
     # # 6. 激活机械臂轨迹控制器
@@ -136,11 +144,24 @@ def generate_launch_description():
     # )
     # 6. 终极防御机制：事件锁！
     # 监听 spawn_entity_node，只有当它成功把机器人放入世界并退出后，才允许加载控制器
-    delay_controllers = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=spawn_entity_node,
-            on_exit=[load_joint_state_broadcaster, load_arm_controller],
-        )
+    delay_controllers = TimerAction(
+        period=8.0, actions=[load_joint_state_broadcaster, load_arm_controller]
+    )
+
+    # 7. 唤醒 MoveIt2 大脑 (必须开启仿真时间)
+    move_group_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([pkg_moveit, "launch", "move_group.launch.py"])
+        ),
+        launch_arguments={"use_sim_time": "true"}.items(),
+    )
+
+    # 8. 启动 RViz2 视觉界面
+    rviz_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([pkg_moveit, "launch", "moveit_rviz.launch.py"])
+        ),
+        launch_arguments={"use_sim_time": "true"}.items(),
     )
 
     return LaunchDescription(
@@ -150,8 +171,10 @@ def generate_launch_description():
             gazebo_launch,
             spawn_entity_node,
             bridge_node,
-            load_joint_state_broadcaster,
-            load_arm_controller,
+            # load_joint_state_broadcaster,
+            # load_arm_controller,
             delay_controllers,
+            move_group_launch,
+            rviz_launch,
         ]
     )

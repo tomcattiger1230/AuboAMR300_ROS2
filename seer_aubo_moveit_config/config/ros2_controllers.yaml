@@ -35,8 +35,7 @@ gripper_group_controller:
       - gripper1_joint
       - gripper2_joint
     command_interfaces:
-      - position
+      []
     state_interfaces:
-      - position
-      - velocity
+      []
     allow_nonzero_velocity_at_trajectory_end: true
