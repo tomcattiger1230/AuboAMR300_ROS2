@@ -23,6 +23,7 @@ install(PROGRAMS
   scripts/keyboard_teleop.py
   scripts/circle_move.py
   scripts/action_bridge.py
+  scripts/amr_gripper_cmd.py
   DESTINATION lib/${PROJECT_NAME}
 )
 if(BUILD_TESTING)

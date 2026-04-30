@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2026-04-30 10:05:50
 LastEditors: Wei Luo
-LastEditTime: 2026-04-30 11:15:51
+LastEditTime: 2026-04-30 16:04:29
 Note: Note
 """
 
@@ -88,7 +88,7 @@ def generate_launch_description():
             # 注意：这里去掉了 joint_states 桥接，因为机械臂的关节状态由 ros2_control 接管发布了
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             # "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
-            "/model/composite_robot/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
+            "/model/composite_robot_stick/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             # 桥接 IMU
             "/camera/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
             # 桥接左目图像与相机内参
@@ -99,7 +99,7 @@ def generate_launch_description():
             "/camera/right/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
         ],
         remappings=[
-            ("/model/composite_robot/tf", "/tf"),
+            ("/model/composite_robot_stick/tf", "/tf"),
         ],
         output="screen",
     )

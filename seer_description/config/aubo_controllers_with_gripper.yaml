@@ -13,6 +13,7 @@ controller_manager:
 
 aubo_arm_controller:
   ros__parameters:
+    allow_partial_joints_goal: true
     joints:
       - shoulder_joint
       - upperArm_joint

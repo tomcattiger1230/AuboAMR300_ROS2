@@ -4,12 +4,12 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 
 moveit_simple_controller_manager:
   controller_names:
-    - main_base_controller
-    - manipulator_controller
-    - gripper_controller
+    - aubo_arm_controller  # <== 必须与 Gazebo 加载的控制器真名保持绝对一致
 
-  main_base_controller:
+  aubo_arm_controller:
     type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory  # <== 补上了频道名，消除现在的报错
+    default: true
     joints:
       - shoulder_joint
       - upperArm_joint
@@ -17,23 +17,5 @@ moveit_simple_controller_manager:
       - wrist1_joint
       - wrist2_joint
       - wrist3_joint
-      - gripper1_joint
-      - gripper2_joint
-      - left_wheel_joint
-      - right_wheel_joint
-  manipulator_controller:
-    type: FollowJointTrajectory
-    joints:
-      - shoulder_joint
-      - upperArm_joint
-      - foreArm_joint
-      - wrist1_joint
-      - wrist2_joint
-      - wrist3_joint
-      - gripper1_joint
-      - gripper2_joint
-  gripper_controller:
-    type: FollowJointTrajectory
-    joints:
       - gripper1_joint
       - gripper2_joint
