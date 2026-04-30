@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="seer_aubo_composite">
+    <group name="manipulator">
+        <!-- <chain base_link="aubo_base_link" tip_link="wrist3_Link" /> -->
+        <joint name="arm_mount_joint" />
+        <joint name="shoulder_joint" />
+        <joint name="upperArm_joint" />
+        <joint name="foreArm_joint" />
+        <joint name="wrist1_joint" />
+        <joint name="wrist2_joint" />
+        <joint name="wrist3_joint" />
+        <group name="gripper" />
+    </group>
+
+    <group name="gripper">
+        <joint name="gripper1_joint" />
+        <joint name="gripper2_joint" />
+    </group>
+
+    <group name="main_base">
+        <joint name="base_joint" />
+        <joint name="left_wheel_joint" />
+        <joint name="right_wheel_joint" />
+        <group name="manipulator" />
+    </group>
+
+    <!-- <group_state name="open" group="gripper">
+        <joint name="gripper1_joint" value="0.04" />
+        <joint name="gripper2_joint" value="0.04" />
+    </group_state>
+
+    <group_state name="close" group="gripper">
+        <joint name="gripper1_joint" value="0.0" />
+        <joint name="gripper2_joint" value="0.0" />
+    </group_state> -->
+
+    <!-- <group_state name="init_pose" group="main_base">
+        <joint name="foreArm_joint" value="1.5621" />
+        <joint name="gripper1_joint" value="0" />
+        <joint name="gripper2_joint" value="0" />
+        <joint name="left_wheel_joint" value="0" />
+        <joint name="right_wheel_joint" value="0" />
+        <joint name="shoulder_joint" value="-2.1175" />
+        <joint name="upperArm_joint" value="0" />
+        <joint name="wrist1_joint" value="1.4232" />
+        <joint name="wrist2_joint" value="-0.0347" />
+        <joint name="wrist3_joint" value="0.1041" />
+    </group_state> -->
+    <group_state name="gripper_open" group="gripper">
+        <joint name="gripper1_joint" value="0" />
+        <joint name="gripper2_joint" value="0" />
+    </group_state>
+    <group_state name="gripper_closed" group="gripper">
+        <joint name="gripper1_joint" value="0.04" />
+        <joint name="gripper2_joint" value="0.04" />
+    </group_state>
+    <group_state name="pickup_init" group="manipulator">
+        <joint name="foreArm_joint" value="2.2564" />
+        <joint name="gripper1_joint" value="0" />
+        <joint name="gripper2_joint" value="0" />
+        <joint name="shoulder_joint" value="-2.7423" />
+        <joint name="upperArm_joint" value="0.1041" />
+        <joint name="wrist1_joint" value="0.5901" />
+        <joint name="wrist2_joint" value="1.57" />
+        <joint name="wrist3_joint" value="0.3818" />
+    </group_state>
+    <group_state name="pick_closed" group="manipulator">
+        <joint name="foreArm_joint" value="2.2564" />
+        <joint name="gripper1_joint" value="0.04" />
+        <joint name="gripper2_joint" value="0.04" />
+        <joint name="shoulder_joint" value="-2.7423" />
+        <joint name="upperArm_joint" value="0.1041" />
+        <joint name="wrist1_joint" value="0.5901" />
+        <joint name="wrist2_joint" value="1.57" />
+        <joint name="wrist3_joint" value="0.3818" />
+    </group_state>
+    <group_state name="place_open" group="manipulator">
+        <joint name="foreArm_joint" value="-0.1041" />
+        <joint name="gripper1_joint" value="0" />
+        <joint name="gripper2_joint" value="0" />
+        <joint name="shoulder_joint" value="-3.1589" />
+        <joint name="upperArm_joint" value="0.3124" />
+        <joint name="wrist1_joint" value="-0.4513" />
+        <joint name="wrist2_joint" value="-1.6315" />
+        <joint name="wrist3_joint" value="0" />
+    </group_state>
+    <group_state name="place_closed" group="manipulator">
+        <joint name="foreArm_joint" value="-0.1041" />
+        <joint name="gripper1_joint" value="0.04" />
+        <joint name="gripper2_joint" value="0.04" />
+        <joint name="shoulder_joint" value="-3.1589" />
+        <joint name="upperArm_joint" value="0.3124" />
+        <joint name="wrist1_joint" value="-0.4513" />
+        <joint name="wrist2_joint" value="-1.6315" />
+        <joint name="wrist3_joint" value="0" />
+    </group_state>
+
+    <end_effector name="stick_gripper" parent_link="wrist3_Link" group="gripper" parent_group="manipulator" />
+
+    <disable_collisions link1="aubo_base_link" link2="base_link" reason="Adjacent" />
+    </robot>
