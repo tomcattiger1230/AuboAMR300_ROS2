@@ -32,9 +32,10 @@ main_base_controller:
       - left_wheel_joint
       - right_wheel_joint
     command_interfaces:
-      []
+      - position
     state_interfaces:
-      []
+      - position
+      - velocity
     allow_nonzero_velocity_at_trajectory_end: true
 manipulator_controller:
   ros__parameters:
@@ -48,9 +49,10 @@ manipulator_controller:
       - gripper1_joint
       - gripper2_joint
     command_interfaces:
-      []
+      - position
     state_interfaces:
-      []
+      - position
+      - velocity
     allow_nonzero_velocity_at_trajectory_end: true
 gripper_controller:
   ros__parameters:
@@ -58,7 +60,8 @@ gripper_controller:
       - gripper1_joint
       - gripper2_joint
     command_interfaces:
-      []
+      - position
     state_interfaces:
-      []
+      - position
+      - velocity
     allow_nonzero_velocity_at_trajectory_end: true
