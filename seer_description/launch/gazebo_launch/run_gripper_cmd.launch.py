@@ -4,33 +4,79 @@
 Author: Wei Luo
 Date: 2026-04-30 16:38:10
 LastEditors: Wei Luo
-LastEditTime: 2026-04-30 16:40:50
+LastEditTime: 2026-04-30 16:58:39
 Note: Note
 """
 
-from launch import LaunchDescription
-from launch_ros.actions import Node
+import rclpy
+import time
+from moveit.planning import MoveItPy
 from moveit_configs_utils import MoveItConfigsBuilder
 
 
-def generate_launch_description():
-    # 1. 自动构建并加载你配置包里的所有参数 (URDF, SRDF, Kinematics 等)
-    # 注意：确保包名 "seer_aubo_moveit_config" 是你实际的 MoveIt 配置包名
-    moveit_config = (
-        MoveItConfigsBuilder("seer_aubo_stick")
-        .robot_description(file_path="config/seer_aubo_composite.urdf.xacro")
-        .to_moveit_configs()
+def main(args=None):
+    rclpy.init(args=args)
+
+    print("🔍 正在加载 MoveIt 配置参数...")
+
+    # 1. 主动去读取你的 MoveIt 配置包
+    # 注意：请确保 "seer_aubo_moveit_config" 是你的配置包真名
+    # file_path 必须指向你真实的 xacro 模型文件（如果在 urdf 文件夹下，就是 "urdf/你的模型.urdf.xacro"）
+    moveit_config_dict = (
+        MoveItConfigsBuilder("seer_aubo_stick_moveit_config")
+        .robot_description(
+            file_path="config/seer_aubo_composite.urdf.xacro"
+        )  # <== 这里检查一下路径对不对！
+        .to_dict()
     )
 
-    # 2. 启动你刚刚写的 Python 脚本，并把参数全塞给它
-    gripper_cmd_node = Node(
-        package="seer_description",  # 如果你把 py 脚本放在了其他包，改这里
-        executable="amr_gripper_cmd.py",  # 确保在 CMakeLists 或 setup.py 里注册了该脚本
-        output="screen",
-        parameters=[
-            moveit_config.to_dict(),
-            {"use_sim_time": True},  # 极其关键：继承仿真时间！
-        ],
+    # 强制同步仿真时间
+    moveit_config_dict.update({"use_sim_time": True})
+
+    print("🚀 正在初始化 MoveItPy 节点...")
+
+    # 2. 【极其关键的修复】把参数字典通过 config_dict 喂给 MoveItPy！
+    aubo_moveit = MoveItPy(
+        node_name="gripper_cmd_node",
+        config_dict=moveit_config_dict,  # <== 就是少了这一句！
     )
 
-    return LaunchDescription([gripper_cmd_node])
+    # 3. 获取规划组
+    gripper = aubo_moveit.get_planning_component("gripper")
+
+    def execute_pose(pose_name):
+        print(f"\n---> 准备将夹爪设置为快捷动作: [{pose_name}]")
+
+        # 强制更新起点为真实状态
+        gripper.set_start_state_to_current_state()
+
+        # 设置目标状态
+        gripper.set_goal_state(configuration_name=pose_name)
+
+        print("🧠 正在计算运动轨迹...")
+        plan_result = gripper.plan()
+
+        if plan_result:
+            print("✅ 规划成功，正在向底层发送指令...")
+            aubo_moveit.execute(plan_result.trajectory, controllers=[])
+            print(f"🎉 [{pose_name}] 动作执行完毕！")
+        else:
+            print(f"❌ 规划失败！无法执行 [{pose_name}]。")
+
+    # 稍微等 1 秒，确保节点与 Gazebo 的时间线对齐
+    time.sleep(1.0)
+
+    # 🎬 执行测试动作
+    execute_pose("gripper_open")
+
+    print("⏳ 保持张开状态 13 秒钟...")
+    time.sleep(13.0)
+
+    execute_pose("gripper_close")
+
+    print("\n👋 指令发送结束，退出脚本。")
+    rclpy.shutdown()
+
+
+if __name__ == "__main__":
+    main()
