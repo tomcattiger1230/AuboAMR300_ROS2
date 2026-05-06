@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 # coding=UTF-8
+#!/usr/bin/env python
+# coding=UTF-8
+"""
+Author: Wei Luo
+Date: 2026-04-30 22:55:54
+LastEditors: Wei Luo
+LastEditTime: 2026-04-30 23:55:45
+Note: Note
+"""
 """
 Author: Wei Luo
 Date: 2026-04-30 16:38:10
@@ -27,11 +36,19 @@ def main(args=None):
         .robot_description(
             file_path="config/seer_aubo_composite.urdf.xacro"
         )  # <== 这里检查一下路径对不对！
+        .planning_pipelines(pipelines=["ompl", "pilz_industrial_motion_planner"])
         .to_dict()
     )
 
     # 强制同步仿真时间
-    moveit_config_dict.update({"use_sim_time": True})
+    moveit_config_dict.update(
+        {
+            # "use_sim_time": True,
+            "planning_pipelines": {
+                "pipeline_names": ["ompl", "pilz_industrial_motion_planner"]
+            },
+        }
+    )
 
     print("🚀 正在初始化 MoveItPy 节点...")
 
