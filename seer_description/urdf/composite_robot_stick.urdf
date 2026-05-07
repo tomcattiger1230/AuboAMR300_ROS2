@@ -287,27 +287,44 @@
       <render_engine>ogre2</render_engine>
     </plugin>
   </gazebo>
+  <!--
+    Simplified collision model for Gazebo simulation.
+    Visual meshes kept intact for RViz display.
+    Collision geometries replaced with primitive shapes (cylinders/spheres)
+    for faster physics computation.
+  -->
   <dh_type type="modified"/>
   <safety_para singularity_consistent="0.02 0.01 10 0.2 0.045 10"/>
+  <!--
+    Collision primitives guide for i16H:
+    - link0 (base):        cylinder r=0.06 h=0.163
+    - link1 (shoulder):    sphere r=0.08
+    - link2 (upperArm):    cylinder r=0.045 h=0.480
+    - link3 (foreArm):     cylinder r=0.035 h=0.370
+    - link4 (wrist1):     sphere r=0.045
+    - link5 (wrist2):     sphere r=0.045
+    - link6 (wrist3/TCP): sphere r=0.035
+  -->
   <link name="aubo_base_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0.000136 0.001601 0.018986"/>
-      <mass value="2.592"/>
+      <mass value="2.592000"/>
       <inertia ixx="0.008524" ixy="-0.000001" ixz="-0.000005" iyy="0.007934" iyz="-0.000081" izz="0.015304"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link0.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link0.DAE"/>
       </geometry>
-      <material name="aubo_color">
+      <material name="">
         <color rgba="1 1 1 1"/>
       </material>
     </visual>
+    <!-- Base: small cylinder -->
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.0815"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link0.STL"/>
+        <cylinder length="0.163" radius="0.06"/>
       </geometry>
     </collision>
   </link>
@@ -320,46 +337,47 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link1.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link1.DAE"/>
       </geometry>
-      <material name="aubo_color">
+      <material name="">
         <color rgba="0.89804 0.91765 0.92941 1"/>
       </material>
     </visual>
+    <!-- Shoulder: sphere approximation for boxy shape -->
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link1.STL"/>
+        <sphere radius="0.08"/>
       </geometry>
     </collision>
   </link>
   <joint name="shoulder_joint" type="revolute">
-    <origin rpy="0 0 3.1415926535897932384626433832795" xyz="0 0 0.163"/>
+    <origin rpy="-8.7138E-17 -4.3534E-32 3.1415926535897932384626433832795" xyz="0 0 0.163"/>
     <parent link="aubo_base_link"/>
     <child link="shoulder_Link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="267" lower="-6.283185307179586476925286766559" start_stop="411" upper="6.283185307179586476925286766559" velocity="3.1416"/>
-    <property damping="0" inertia="4.9" motor_constant="8.75" offset="0" ratio="101" stiffness="0"/>
+    <limit effort="267" lower="-6.283185307179586" start_stop="411" upper="6.283185307179586" velocity="3.106686068549906"/>
   </joint>
   <link name="upperArm_Link">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.170602 0.0000 -0.013024"/>
-      <mass value="17.66406"/>
-      <inertia ixx="0.063521" ixy="0.00002" ixz="-0.024888" iyy="0.847528" iyz="0.000005" izz="0.828847"/>
+      <origin rpy="0 0 0" xyz="0.170602 0.000000 -0.013024"/>
+      <mass value="17.664060"/>
+      <inertia ixx="0.063521" ixy="0.000020" ixz="-0.024888" iyy="0.847528" iyz="0.000005" izz="0.828847"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link2.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link2.DAE"/>
       </geometry>
-      <material name="aubo_color">
+      <material name="">
         <color rgba="0.89804 0.91765 0.92941 1"/>
       </material>
     </visual>
+    <!-- Upper arm: long cylinder along the link -->
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 1.5707963267948966192313216916398 0" xyz="0.26 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link2.STL"/>
+        <cylinder length="0.55" radius="0.045"/>
       </geometry>
     </collision>
   </link>
@@ -368,129 +386,138 @@
     <parent link="shoulder_Link"/>
     <child link="upperArm_Link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="267" lower="-6.283185307179586476925286766559" start_stop="411" upper="6.283185307179586476925286766559" velocity="3.1416"/>
-    <property damping="0" inertia="4.9" motor_constant="8.75" offset="0" ratio="101" stiffness="0"/>
+    <limit effort="267" lower="-6.283185307179586" start_stop="411" upper="6.283185307179586" velocity="3.106686068549906"/>
   </joint>
   <link name="foreArm_Link">
     <inertial>
       <origin rpy="0 0 0" xyz="0.269208 -0.000022 0.106467"/>
       <mass value="3.926354"/>
-      <inertia ixx="0.006007" ixy="0.000009" ixz="0.001991" iyy="0.08378" iyz="0.000005" izz="0.082433"/>
+      <inertia ixx="0.006007" ixy="0.000009" ixz="0.001991" iyy="0.083780" iyz="0.000005" izz="0.082433"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link3.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link3.DAE"/>
       </geometry>
-      <material name="aubo_color">
+      <material name="">
         <color rgba="1 1 1 1"/>
       </material>
     </visual>
+    <!-- Forearm: cylinder 0.185-->
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 1.5707963267948966192313216916398 0" xyz="0.19 0. 0.12"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link3.STL"/>
+        <cylinder length="0.370" radius="0.035"/>
       </geometry>
     </collision>
   </link>
   <joint name="foreArm_joint" type="revolute">
-    <origin rpy="-3.1415926535897932384626433832795 0 0" xyz="0.480 0 0"/>
+    <origin rpy="-3.1415926535897932384626433832795 -4.5954E-17 -8.4328E-17" xyz="0.480 0 0"/>
     <parent link="upperArm_Link"/>
     <child link="foreArm_Link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="133" lower="-6.283185307179586476925286766559" start_stop="207" upper="6.283185307179586476925286766559" velocity="4.6600"/>
-    <property damping="0" inertia="2.0" motor_constant="8.72" offset="0" ratio="101" stiffness="0"/>
+    <limit effort="133" lower="-6.283185307179586" start_stop="207" upper="6.283185307179586" velocity="4.660029102824860"/>
   </joint>
   <link name="wrist1_Link">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.000036 0.01561 -0.001526"/>
+      <origin rpy="0 0 0" xyz="0.000036 0.015610 -0.001526"/>
       <mass value="2.370741"/>
-      <inertia ixx="0.003672" ixy="0.000006" ixz="-0.000001" iyy="0.00219" iyz="-0.00008" izz="0.003621"/>
+      <inertia ixx="0.003672" ixy="0.000006" ixz="-0.000001" iyy="0.002190" iyz="-0.000080" izz="0.003621"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link4.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link4.DAE"/>
       </geometry>
-      <material name="aubo_color">
+      <material name="">
         <color rgba="1 1 1 1"/>
       </material>
     </visual>
+    <!-- Wrist1: small sphere -->
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link4.STL"/>
+        <sphere radius="0.045"/>
       </geometry>
     </collision>
   </link>
   <joint name="wrist1_joint" type="revolute">
-    <origin rpy="3.1415926535897932384626433832795 0 1.5707963267948966192313216916398" xyz="0.370 0 0"/>
+    <origin rpy="3.1415926535897932384626433832795 -1.4294E-15 1.5707963267948966192313216916398" xyz="0.370 0 0"/>
     <parent link="foreArm_Link"/>
     <child link="wrist1_Link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="49" lower="-6.283185307179586476925286766559" start_stop="66" upper="6.283185307179586476925286766559" velocity="3.1416"/>
-    <property damping="0" inertia="0" motor_constant="8.81" offset="0" ratio="101" stiffness="0"/>
+    <limit effort="49" lower="-6.283185307179586" start_stop="66" upper="6.283185307179586" velocity="4.136430327226561"/>
   </joint>
   <link name="wrist2_Link">
     <inertial>
-      <origin rpy="0 0 0" xyz="-0.000036 -0.01561 -0.001526"/>
+      <origin rpy="0 0 0" xyz="-0.000036 -0.015610 -0.001526"/>
       <mass value="2.370741"/>
-      <inertia ixx="0.003672" ixy="0.000006" ixz="0.000001" iyy="0.00219" iyz="0.00008" izz="0.003621"/>
+      <inertia ixx="0.003672" ixy="0.000006" ixz="0.000001" iyy="0.002190" iyz="0.000080" izz="0.003621"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link5.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link5.DAE"/>
       </geometry>
-      <material name="aubo_color">
+      <material name="">
         <color rgba="1 1 1 1"/>
       </material>
     </visual>
+    <!-- Wrist2: small sphere -->
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link5.STL"/>
+        <sphere radius="0.045"/>
       </geometry>
     </collision>
   </link>
   <joint name="wrist2_joint" type="revolute">
-    <origin rpy="-1.5707963267948966192313216916398 0 0" xyz="0 0.1175 0"/>
+    <origin rpy="-1.5707963267948966192313216916398 -7.0777E-16 -7.4101E-16" xyz="0 0.1175 0"/>
     <parent link="wrist1_Link"/>
     <child link="wrist2_Link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="49" lower="-6.283185307179586476925286766559" start_stop="66" upper="6.283185307179586476925286766559" velocity="3.1416"/>
-    <property damping="0" inertia="0" motor_constant="8.814" offset="0" ratio="101" stiffness="0"/>
+    <limit effort="49" lower="-6.283185307179586" start_stop="66" upper="6.283185307179586" velocity="4.136430327226561"/>
   </joint>
   <link name="wrist3_Link">
     <inertial>
       <origin rpy="0 0 0" xyz="0.000508 0.000344 -0.017049"/>
       <mass value="0.259654"/>
-      <inertia ixx="0.000162" ixy="0.0000" ixz="0.0000" iyy="0.000162" iyz="0.000001" izz="0.000273"/>
+      <inertia ixx="0.000162" ixy="-0.000000" ixz="-0.000000" iyy="0.000160" iyz="0.000001" izz="0.000273"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/visual/link6.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link6.DAE"/>
       </geometry>
-      <material name="aubo_color">
+      <material name="">
         <color rgba="1 1 1 1"/>
       </material>
     </visual>
+    <!-- Wrist3/TCP: tiny sphere -->
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/aubo_i16/collision/link6.STL"/>
+        <sphere radius="0.035"/>
       </geometry>
     </collision>
   </link>
   <joint name="wrist3_joint" type="revolute">
-    <origin rpy="1.5707963267948966192313216916398 0 0" xyz="0 -0.1035 0"/>
+    <origin rpy="1.5707963267948966192313216916398 0 6.7283E-16" xyz="0 -0.1035 0"/>
     <parent link="wrist2_Link"/>
     <child link="wrist3_Link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="49" lower="-6.283185307179586476925286766559" start_stop="66" upper="6.283185307179586476925286766559" velocity="3.1416"/>
-    <property damping="0" inertia="0" motor_constant="8.814" offset="0" ratio="101" stiffness="0"/>
+    <limit effort="49" lower="-6.283185307179586" start_stop="66" upper="6.283185307179586" velocity="4.136430327226561"/>
   </joint>
+  <!-- using world if you only use this urdf alone, but when included in
+  composite_robot_stick.xacro, the world link and joint are defined there, so we comment them out
+  here to avoid duplication. -->
+  <!-- <link name="world" />
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link="base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint> -->
   <joint name="arm_mount_joint" type="fixed">
     <parent link="base_link"/>
     <child link="aubo_base_link"/>
@@ -594,9 +621,9 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="-0.011715 -0.0475 -0.014311"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/base_link.STL"/>
+        <box size="0.07 0.05 0.035"/>
       </geometry>
     </collision>
   </link>
@@ -618,7 +645,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/camera_color_screw_frame.STL"/>
+        <box size="0.04 0.015 0.005"/>
       </geometry>
     </collision>
   </link>
@@ -646,7 +673,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/camera_IMU_frame.STL"/>
+        <box size="0.01 0.01 0.005"/>
       </geometry>
     </collision>
   </link>
@@ -674,7 +701,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/camera_depth_frame.STL"/>
+        <box size="0.065 0.05 0.02"/>
       </geometry>
     </collision>
   </link>
@@ -702,7 +729,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/camera_infra1_frame.STL"/>
+        <box size="0.04 0.03 0.015"/>
       </geometry>
     </collision>
   </link>
@@ -730,7 +757,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/camera_infra1_optical_frame.STL"/>
+        <box size="0.008 0.008 0.008"/>
       </geometry>
     </collision>
   </link>
@@ -758,7 +785,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/camera_infra2_frame.STL"/>
+        <box size="0.04 0.03 0.015"/>
       </geometry>
     </collision>
   </link>
@@ -786,7 +813,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/camera_infra2_optical_frame.STL"/>
+        <box size="0.008 0.008 0.008"/>
       </geometry>
     </collision>
   </link>
@@ -814,7 +841,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/camera_color_frame.STL"/>
+        <box size="0.04 0.03 0.015"/>
       </geometry>
     </collision>
   </link>
@@ -842,7 +869,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/gemini335L_336L/camera_color_optical_frame.STL"/>
+        <box size="0.008 0.008 0.008"/>
       </geometry>
     </collision>
   </link>
@@ -984,7 +1011,7 @@
     <collision>
       <origin rpy="0 3.141592653589793 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/adapter.stl" scale="1 1 1"/>
+        <box size="0.1 0.1 0.05"/>
       </geometry>
     </collision>
     <inertial>
@@ -1010,7 +1037,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://seer_description/meshes/motor.stl" scale="1 1 1"/>
+        <cylinder length="0.14" radius="0.025"/>
       </geometry>
     </collision>
     <inertial>

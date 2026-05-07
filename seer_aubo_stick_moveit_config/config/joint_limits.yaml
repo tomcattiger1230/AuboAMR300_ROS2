@@ -10,51 +10,51 @@ default_acceleration_scaling_factor: 0.1
 joint_limits:
   foreArm_joint:
     has_velocity_limits: true
-    max_velocity: 4.6600000000000001
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    max_velocity: 4.6600291028248604
+    has_acceleration_limits: false
+    max_acceleration: 0
   gripper1_joint:
     has_velocity_limits: true
     max_velocity: 0.10000000000000001
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    has_acceleration_limits: false
+    max_acceleration: 0
   gripper2_joint:
     has_velocity_limits: true
     max_velocity: 0.10000000000000001
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    has_acceleration_limits: false
+    max_acceleration: 0
   left_wheel_joint:
     has_velocity_limits: false
     max_velocity: 0
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    has_acceleration_limits: false
+    max_acceleration: 0
   right_wheel_joint:
     has_velocity_limits: false
     max_velocity: 0
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    has_acceleration_limits: false
+    max_acceleration: 0
   shoulder_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415999999999999
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    max_velocity: 3.106686068549906
+    has_acceleration_limits: false
+    max_acceleration: 0
   upperArm_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415999999999999
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    max_velocity: 3.106686068549906
+    has_acceleration_limits: false
+    max_acceleration: 0
   wrist1_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415999999999999
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    max_velocity: 4.1364303272265612
+    has_acceleration_limits: false
+    max_acceleration: 0
   wrist2_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415999999999999
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    max_velocity: 4.1364303272265612
+    has_acceleration_limits: false
+    max_acceleration: 0
   wrist3_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415999999999999
-    has_acceleration_limits: true
-    max_acceleration: 2.0
+    max_velocity: 4.1364303272265612
+    has_acceleration_limits: false
+    max_acceleration: 0

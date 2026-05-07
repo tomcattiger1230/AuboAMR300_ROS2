@@ -3,9 +3,9 @@
 
   <xacro:include filename="$(find seer_description)/urdf/seer_robot_base.urdf.xacro" />
 
-  <xacro:include filename="$(find seer_description)/urdf/aubo_i16.urdf" />
+  <xacro:include filename="$(find seer_description)/urdf/aubo_i16H_simple.urdf" />
 
-  <xacro:include filename="$(find seer_description)/urdf/gripper_stick.urdf.xacro" />
+  <xacro:include filename="$(find seer_description)/urdf/gripper_stick_simple.urdf.xacro" />
 
   <joint name="arm_mount_joint" type="fixed">
     <parent link="base_link" />
@@ -48,7 +48,7 @@
     </plugin>
   </gazebo>
 
-  <xacro:include filename="$(find seer_description)/urdf/gemini335L_336L.urdf.xacro" />
+  <xacro:include filename="$(find seer_description)/urdf/gemini33X_simple.urdf.xacro" />
 
   <joint name="camera_joint" type="fixed">
     <parent link="wrist3_Link" />

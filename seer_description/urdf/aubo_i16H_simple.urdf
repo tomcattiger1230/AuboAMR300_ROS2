@@ -22,7 +22,7 @@
     - link5 (wrist2):     sphere r=0.045
     - link6 (wrist3/TCP): sphere r=0.035
   -->
-  <link name="base_link">
+  <link name="aubo_base_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0.000136 0.001601 0.018986"/>
       <mass value="2.592000"/>
@@ -31,7 +31,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://aubo_description/meshes/aubo_i16H/visual/link0.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link0.DAE"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -54,7 +54,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://aubo_description/meshes/aubo_i16H/visual/link1.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link1.DAE"/>
       </geometry>
       <material name="">
         <color rgba="0.89804 0.91765 0.92941 1"/>
@@ -70,7 +70,7 @@
   </link>
   <joint name="shoulder_joint" type="revolute">
     <origin rpy="-8.7138E-17 -4.3534E-32 3.1415926535897932384626433832795" xyz="0 0 0.163"/>
-    <parent link="base_link"/>
+    <parent link="aubo_base_link"/>
     <child link="shoulder_Link"/>
     <axis xyz="0 0 1"/>
     <limit effort="267" lower="-6.283185307179586" start_stop="411" upper="6.283185307179586" velocity="3.106686068549906"/>
@@ -84,7 +84,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://aubo_description/meshes/aubo_i16H/visual/link2.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link2.DAE"/>
       </geometry>
       <material name="">
         <color rgba="0.89804 0.91765 0.92941 1"/>
@@ -92,9 +92,9 @@
     </visual>
     <!-- Upper arm: long cylinder along the link -->
     <collision>
-      <origin rpy="0 0 0" xyz="0.24 0 0"/>
+      <origin rpy="0 1.5707963267948966192313216916398 0" xyz="0.26 0 0"/>
       <geometry>
-        <cylinder length="0.480" radius="0.045"/>
+        <cylinder length="0.55" radius="0.045"/>
       </geometry>
     </collision>
   </link>
@@ -114,15 +114,15 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://aubo_description/meshes/aubo_i16H/visual/link3.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link3.DAE"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
       </material>
     </visual>
-    <!-- Forearm: cylinder -->
+    <!-- Forearm: cylinder 0.185-->
     <collision>
-      <origin rpy="0 0 0" xyz="0.185 0 0"/>
+      <origin rpy="0 1.5707963267948966192313216916398 0" xyz="0.19 0. 0.12"/>
       <geometry>
         <cylinder length="0.370" radius="0.035"/>
       </geometry>
@@ -144,7 +144,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://aubo_description/meshes/aubo_i16H/visual/link4.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link4.DAE"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -174,7 +174,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://aubo_description/meshes/aubo_i16H/visual/link5.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link5.DAE"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -204,7 +204,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://aubo_description/meshes/aubo_i16H/visual/link6.DAE"/>
+        <mesh filename="package://seer_description/meshes/aubo_i16H/visual/link6.DAE"/>
       </geometry>
       <material name="">
         <color rgba="1 1 1 1"/>
@@ -225,10 +225,14 @@
     <axis xyz="0 0 1"/>
     <limit effort="49" lower="-6.283185307179586" start_stop="66" upper="6.283185307179586" velocity="4.136430327226561"/>
   </joint>
-  <link name="world"/>
+  <!-- using world if you only use this urdf alone, but when included in
+  composite_robot_stick.xacro, the world link and joint are defined there, so we comment them out
+  here to avoid duplication. -->
+  <!-- <link name="world" />
+
   <joint name="world_joint" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-  </joint>
+    <parent link="world" />
+    <child link="base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint> -->
 </robot>

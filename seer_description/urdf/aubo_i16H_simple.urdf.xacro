@@ -20,7 +20,7 @@
     - link6 (wrist3/TCP): sphere r=0.035
   -->
 
-  <link name="base_link">
+  <link name="aubo_base_link">
     <inertial>
       <origin xyz="0.000136 0.001601 0.018986" rpy="0 0 0" />
       <mass value="2.592000" />
@@ -72,7 +72,7 @@
 
   <joint name="shoulder_joint" type="revolute">
     <origin xyz="0 0 0.163" rpy="-8.7138E-17 -4.3534E-32 3.1415926535897932384626433832795" />
-    <parent link="base_link" />
+    <parent link="aubo_base_link" />
     <child link="shoulder_Link" />
     <axis xyz="0 0 1" />
     <limit lower="-6.283185307179586" upper="6.283185307179586" effort="267" start_stop="411"
@@ -97,9 +97,9 @@
     </visual>
     <!-- Upper arm: long cylinder along the link -->
     <collision>
-      <origin xyz="0.24 0 0" rpy="0 0 0" />
+      <origin xyz="0.26 0 0" rpy="0 1.5707963267948966192313216916398 0" />
       <geometry>
-        <cylinder radius="0.045" length="0.480" />
+        <cylinder radius="0.045" length="0.55" />
       </geometry>
     </collision>
   </link>
@@ -130,9 +130,9 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- Forearm: cylinder -->
+    <!-- Forearm: cylinder 0.185-->
     <collision>
-      <origin xyz="0.185 0 0" rpy="0 0 0" />
+      <origin xyz="0.19 0. 0.12" rpy="0 1.5707963267948966192313216916398 0" />
       <geometry>
         <cylinder radius="0.035" length="0.370" />
       </geometry>
@@ -251,12 +251,15 @@
       velocity="4.136430327226561" />
   </joint>
 
-  <link name="world" />
+  <!-- using world if you only use this urdf alone, but when included in
+  composite_robot_stick.xacro, the world link and joint are defined there, so we comment them out
+  here to avoid duplication. -->
+  <!-- <link name="world" />
 
   <joint name="world_joint" type="fixed">
     <parent link="world" />
     <child link="base_link" />
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
-  </joint>
+  </joint> -->
 
 </robot>
