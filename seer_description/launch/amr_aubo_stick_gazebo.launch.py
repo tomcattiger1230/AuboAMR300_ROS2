@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2026-04-30 10:05:50
 LastEditors: Wei Luo
-LastEditTime: 2026-04-30 16:04:29
+LastEditTime: 2026-05-07 16:46:15
 Note: Note
 """
 
@@ -21,6 +21,7 @@ from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 from launch.event_handlers import OnProcessExit
 from launch.actions import TimerAction
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -46,7 +47,10 @@ def generate_launch_description():
         executable="robot_state_publisher",
         parameters=[
             {
-                "robot_description": Command(["xacro ", urdf_model_path]),
+                # "robot_description": Command(["xacro ", urdf_model_path]),
+                "robot_description": ParameterValue(
+                    Command(["xacro ", urdf_model_path]), value_type=str
+                ),
                 "use_sim_time": True,
             }
         ],
