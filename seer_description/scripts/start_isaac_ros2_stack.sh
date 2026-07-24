@@ -95,7 +95,25 @@ if [[ ! -x "$ISAAC_SIM_PATH/python.sh" ]]; then
 fi
 
 set +u
-source /opt/ros/jazzy/setup.bash
+ROS_SETUP_FILE=""
+if [[ -n "${ROS_DISTRO:-}" && -f "/opt/ros/${ROS_DISTRO}/setup.bash" ]]; then
+  ROS_SETUP_FILE="/opt/ros/${ROS_DISTRO}/setup.bash"
+else
+  for candidate in /opt/ros/*/setup.bash; do
+    if [[ -f "$candidate" ]]; then
+      ROS_SETUP_FILE="$candidate"
+      break
+    fi
+  done
+fi
+
+if [[ -z "$ROS_SETUP_FILE" ]]; then
+  printf 'No ROS 2 installation was found under /opt/ros.\n' >&2
+  exit 1
+fi
+
+unset COLCON_CURRENT_PREFIX
+source "$ROS_SETUP_FILE"
 
 WORKSPACE_ROOT=""
 for candidate in \
@@ -114,6 +132,14 @@ if [[ -z "$WORKSPACE_ROOT" ]]; then
 fi
 
 source "$WORKSPACE_ROOT/install/setup.bash"
+
+for candidate in "$WORKSPACE_ROOT"/.venv-isaac/lib/python*/site-packages; do
+  if [[ -d "$candidate" ]]; then
+    export PYTHONPATH="$candidate:${PYTHONPATH:-}"
+    break
+  fi
+done
+
 set -u
 
 if [[ -z "$USD_PATH" ]]; then

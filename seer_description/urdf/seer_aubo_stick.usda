@@ -11,6 +11,71 @@ def Xform "World"
         prepend references = @./seer_aubo.usd@</World/seer_aubo_composite>
     )
     {
+        def Scope "PhysicsMaterials"
+        {
+            def Material "WheelMaterial" (
+                prepend apiSchemas = ["PhysicsMaterialAPI"]
+            )
+            {
+                float physics:dynamicFriction = 1
+                float physics:restitution = 0
+                float physics:staticFriction = 1
+            }
+
+            def Material "CasterMaterial" (
+                prepend apiSchemas = ["PhysicsMaterialAPI"]
+            )
+            {
+                float physics:dynamicFriction = 0
+                float physics:restitution = 0
+                float physics:staticFriction = 0
+            }
+        }
+
+        over "left_wheel_link"
+        {
+            def Sphere "support_collision" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                float3[] extent = [(-0.1, -0.1, -0.1), (0.1, 0.1, 0.1)]
+                bool physics:collisionEnabled = 1
+                double radius = 0.1
+                rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/WheelMaterial>
+            }
+        }
+
+        over "right_wheel_link"
+        {
+            def Sphere "support_collision" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                float3[] extent = [(-0.1, -0.1, -0.1), (0.1, 0.1, 0.1)]
+                bool physics:collisionEnabled = 1
+                double radius = 0.1
+                rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/WheelMaterial>
+            }
+        }
+
+        over "front_caster" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/CasterMaterial> (
+                bindMaterialAs = "strongerThanDescendants"
+            )
+        }
+
+        over "rear_caster" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/CasterMaterial> (
+                bindMaterialAs = "strongerThanDescendants"
+            )
+        }
+
         over "wrist3_Link"
         {
             def Xform "gripper_adapter_link" (
