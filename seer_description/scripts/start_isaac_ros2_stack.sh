@@ -7,6 +7,9 @@ HEADLESS=true
 START_RVIZ=true
 USD_PATH=""
 ROBOT_PRIM="/World/seer_aubo_composite/base_footprint"
+ROBOT_XACRO="composite_robot.urdf.xacro"
+MOVEIT_PACKAGE="seer_aubo_moveit_config"
+ACTION_NAME="/aubo_arm_controller_wo_gripper/follow_joint_trajectory"
 COMMAND_TOPIC="/isaac_joint_commands"
 STATE_TOPIC="/joint_states"
 
@@ -18,6 +21,10 @@ usage() {
     "  --gui                  Show the Isaac Sim window (default: headless)" \
     "  --no-rviz              Do not start RViz" \
     "  --usd PATH             Override seer_aubo.usd path" \
+    "  --robot-prim PATH      Articulation root prim in the USD" \
+    "  --robot-xacro FILE     Robot xacro from seer_description/urdf" \
+    "  --moveit-package NAME  MoveIt configuration package" \
+    "  --action-name NAME     FollowJointTrajectory action name" \
     "  --isaac-sim PATH       Isaac Sim directory (default: $ISAAC_SIM_PATH)" \
     "  --domain-id ID         Set ROS_DOMAIN_ID" \
     "  --help                 Show this help"
@@ -33,6 +40,22 @@ while (($#)); do
       ;;
     --usd)
       USD_PATH="${2:?--usd requires a path}"
+      shift
+      ;;
+    --robot-prim)
+      ROBOT_PRIM="${2:?--robot-prim requires a path}"
+      shift
+      ;;
+    --robot-xacro)
+      ROBOT_XACRO="${2:?--robot-xacro requires a file name}"
+      shift
+      ;;
+    --moveit-package)
+      MOVEIT_PACKAGE="${2:?--moveit-package requires a package name}"
+      shift
+      ;;
+    --action-name)
+      ACTION_NAME="${2:?--action-name requires a name}"
       shift
       ;;
     --isaac-sim)
@@ -55,6 +78,16 @@ while (($#)); do
   esac
   shift
 done
+
+ROS_DOMAIN_KEY="${ROS_DOMAIN_ID:-0}"
+LOCK_FILE="/tmp/seer_isaac_ros2_domain_${ROS_DOMAIN_KEY}.lock"
+exec 9>"$LOCK_FILE"
+if ! flock -n 9; then
+  printf '%s\n' \
+    "Another SEER Isaac ROS 2 stack is already running in ROS_DOMAIN_ID=${ROS_DOMAIN_KEY}." \
+    "Stop it first, or start this stack with a different --domain-id." >&2
+  exit 1
+fi
 
 if [[ ! -x "$ISAAC_SIM_PATH/python.sh" ]]; then
   printf 'Isaac Sim python.sh was not found under %s\n' "$ISAAC_SIM_PATH" >&2
@@ -144,7 +177,8 @@ ready=false
 for _ in $(seq 1 120); do
   if ! kill -0 "$ISAAC_PID" 2>/dev/null; then
     printf '\nIsaac Sim exited before the ROS 2 bridge became ready.\n' >&2
-    wait "$ISAAC_PID"
+    wait "$ISAAC_PID" || true
+    exit 1
   fi
   if ros2 topic list 2>/dev/null | grep -Fxq "$STATE_TOPIC"; then
     ready=true
@@ -162,4 +196,7 @@ fi
 
 ros2 launch seer_description bringup_isaac.launch.py \
   start_rviz:="$START_RVIZ" \
-  command_topic:="$COMMAND_TOPIC"
+  command_topic:="$COMMAND_TOPIC" \
+  robot_xacro:="$ROBOT_XACRO" \
+  moveit_package:="$MOVEIT_PACKAGE" \
+  action_name:="$ACTION_NAME"

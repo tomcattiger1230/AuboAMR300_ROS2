@@ -25,8 +25,10 @@ install(PROGRAMS
   scripts/action_bridge.py
   scripts/generate_warehouse_scene.py
   scripts/isaac_ros2_runner.py
+  scripts/mobile_manipulator_control.py
   scripts/start_isaac_ros2_stack.sh
   scripts/start_warehouse_demo.sh
+  scripts/start_warehouse_stick_demo.sh
   scripts/amr_gripper_cmd.py
   DESTINATION lib/${PROJECT_NAME}
 )

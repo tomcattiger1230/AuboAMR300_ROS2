@@ -1,0 +1,415 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.3"
+    }
+    defaultPrim = "seer_aubo_composite"
+    doc = """Generated from Composed Stage of root layer /tmp/tmps6kv9qo3/seer_aubo_composite.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_composite_robot_stick_vm24sttp/usdex_composite_robot_stick/seer_aubo_composite.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_composite_robot_stick_vm24sttp/temp_composite_robot_stick/composite_robot_stick.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+over "seer_aubo_composite" (
+    prepend apiSchemas = ["IsaacRobotAPI"]
+)
+{
+    prepend rel isaac:physics:robotJoints = [
+        </seer_aubo_composite/Physics/left_wheel_joint>,
+        </seer_aubo_composite/Physics/right_wheel_joint>,
+        </seer_aubo_composite/Physics/front_lidar_joint>,
+        </seer_aubo_composite/Physics/back_lidar_joint>,
+        </seer_aubo_composite/Physics/front_caster_joint>,
+        </seer_aubo_composite/Physics/rear_caster_joint>,
+        </seer_aubo_composite/Physics/arm_mount_joint>,
+        </seer_aubo_composite/Physics/shoulder_joint>,
+        </seer_aubo_composite/Physics/upperArm_joint>,
+        </seer_aubo_composite/Physics/foreArm_joint>,
+        </seer_aubo_composite/Physics/wrist1_joint>,
+        </seer_aubo_composite/Physics/wrist2_joint>,
+        </seer_aubo_composite/Physics/wrist3_joint>,
+        </seer_aubo_composite/Physics/camera_joint>,
+        </seer_aubo_composite/Physics/adapter_mount_joint>,
+        </seer_aubo_composite/Physics/camera_color_screw_joint>,
+        </seer_aubo_composite/Physics/camera_depth_joint>,
+        </seer_aubo_composite/Physics/camera_IMU_joint>,
+        </seer_aubo_composite/Physics/camera_left_ir_joint>,
+        </seer_aubo_composite/Physics/camera_right_ir_joint>,
+        </seer_aubo_composite/Physics/camera_color_joint>,
+        </seer_aubo_composite/Physics/camera_left_ir_optical_joint>,
+        </seer_aubo_composite/Physics/camera_right_ir_optical_joint>,
+        </seer_aubo_composite/Physics/camera_color_optical_joint>,
+        </seer_aubo_composite/Physics/motor_mount_joint>,
+        </seer_aubo_composite/Physics/gripper1_joint>,
+        </seer_aubo_composite/Physics/gripper2_joint>,
+    ]
+    prepend rel isaac:physics:robotLinks = [
+        </seer_aubo_composite/Geometry/base_footprint/base_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/left_wheel_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/right_wheel_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/front_lidar_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/back_lidar_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/front_caster>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/rear_caster>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_color_screw_frame>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_IMU_frame>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_left_ir_frame>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_left_ir_frame/camera_left_ir_optical_frame>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_right_ir_frame>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_right_ir_frame/camera_right_ir_optical_frame>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_color_frame>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_color_frame/camera_color_optical_frame>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link/gripper1_link>,
+        </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link/gripper2_link>,
+    ]
+    token isaac:robotType = "Default"
+
+    over "Geometry"
+    {
+        over "base_footprint"
+        {
+            over "base_link" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
+                over "left_wheel_link" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+
+                over "right_wheel_link" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+
+                over "front_lidar_link" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+
+                over "back_lidar_link" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+
+                over "aubo_base_link" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                    over "shoulder_Link" (
+                        prepend apiSchemas = ["IsaacLinkAPI"]
+                    )
+                    {
+                        over "upperArm_Link" (
+                            prepend apiSchemas = ["IsaacLinkAPI"]
+                        )
+                        {
+                            over "link2" (
+                                prepend apiSchemas = ["IsaacSiteAPI"]
+                            )
+                            {
+                            }
+
+                            over "foreArm_Link" (
+                                prepend apiSchemas = ["IsaacLinkAPI"]
+                            )
+                            {
+                                over "wrist1_Link" (
+                                    prepend apiSchemas = ["IsaacLinkAPI"]
+                                )
+                                {
+                                    over "wrist2_Link" (
+                                        prepend apiSchemas = ["IsaacLinkAPI"]
+                                    )
+                                    {
+                                        over "wrist3_Link" (
+                                            prepend apiSchemas = ["IsaacLinkAPI"]
+                                        )
+                                        {
+                                            over "camera_link" (
+                                                prepend apiSchemas = ["IsaacLinkAPI"]
+                                            )
+                                            {
+                                                over "camera_color_screw_frame" (
+                                                    prepend apiSchemas = ["IsaacLinkAPI"]
+                                                )
+                                                {
+                                                }
+
+                                                over "camera_depth_frame" (
+                                                    prepend apiSchemas = ["IsaacLinkAPI"]
+                                                )
+                                                {
+                                                    over "camera_IMU_frame" (
+                                                        prepend apiSchemas = ["IsaacLinkAPI"]
+                                                    )
+                                                    {
+                                                    }
+
+                                                    over "camera_left_ir_frame" (
+                                                        prepend apiSchemas = ["IsaacLinkAPI"]
+                                                    )
+                                                    {
+                                                        over "camera_left_ir_optical_frame" (
+                                                            prepend apiSchemas = ["IsaacLinkAPI"]
+                                                        )
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "camera_right_ir_frame" (
+                                                        prepend apiSchemas = ["IsaacLinkAPI"]
+                                                    )
+                                                    {
+                                                        over "camera_right_ir_optical_frame" (
+                                                            prepend apiSchemas = ["IsaacLinkAPI"]
+                                                        )
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "camera_color_frame" (
+                                                        prepend apiSchemas = ["IsaacLinkAPI"]
+                                                    )
+                                                    {
+                                                        over "camera_color_optical_frame" (
+                                                            prepend apiSchemas = ["IsaacLinkAPI"]
+                                                        )
+                                                        {
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            over "gripper_adapter_link" (
+                                                prepend apiSchemas = ["IsaacLinkAPI"]
+                                            )
+                                            {
+                                                over "gripper_motor_link" (
+                                                    prepend apiSchemas = ["IsaacLinkAPI"]
+                                                )
+                                                {
+                                                    over "gripper1_link" (
+                                                        prepend apiSchemas = ["IsaacLinkAPI"]
+                                                    )
+                                                    {
+                                                    }
+
+                                                    over "gripper2_link" (
+                                                        prepend apiSchemas = ["IsaacLinkAPI"]
+                                                    )
+                                                    {
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                over "front_caster" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+
+                over "rear_caster" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+            }
+        }
+    }
+
+    over "Physics"
+    {
+        over "left_wheel_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "right_wheel_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "front_lidar_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "back_lidar_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "front_caster_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "rear_caster_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "shoulder_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "upperArm_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "foreArm_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "wrist1_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "wrist2_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "wrist3_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "arm_mount_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_color_screw_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_IMU_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_depth_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_left_ir_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_left_ir_optical_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_right_ir_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_right_ir_optical_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_color_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_color_optical_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "adapter_mount_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "motor_mount_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "gripper1_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "gripper2_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+    }
+}
+

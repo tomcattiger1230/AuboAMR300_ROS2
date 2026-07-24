@@ -1,0 +1,859 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.3"
+    }
+    defaultPrim = "seer_aubo_composite"
+    doc = """Generated from Composed Stage of root layer /tmp/tmps6kv9qo3/seer_aubo_composite.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_composite_robot_stick_vm24sttp/usdex_composite_robot_stick/seer_aubo_composite.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_composite_robot_stick_vm24sttp/temp_composite_robot_stick/composite_robot_stick.usd
+
+
+Generated from Composed Stage of root layer /tmp/stick_usd_import/composite_robot_stick/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+over "seer_aubo_composite"
+{
+    over "Geometry"
+    {
+        over "base_footprint"
+        {
+            over "base_link" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsArticulationRootAPI", "NewtonArticulationRootAPI", "PhysicsMassAPI"]
+            )
+            {
+                bool newton:selfCollisionEnabled = 0
+                point3f physics:centerOfMass = (0, 0, 0.15)
+                float3 physics:diagonalInertia = (3.11, 6.68, 8.15)
+                float physics:mass = 110
+                quatf physics:principalAxes = (1, 0, 0, 0)
+
+                over "left_wheel_link" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    point3f physics:centerOfMass = (0, 0, 0)
+                    float3 physics:diagonalInertia = (0.01, 0.01, 0.01)
+                    float physics:mass = 6
+                    quatf physics:principalAxes = (0.70710677, 0.70710677, 0, 0)
+
+                    over "cylinder" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+
+                over "right_wheel_link" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    point3f physics:centerOfMass = (0, 0, 0)
+                    float3 physics:diagonalInertia = (0.01, 0.01, 0.01)
+                    float physics:mass = 6
+                    quatf physics:principalAxes = (0.70710677, 0.70710677, 0, 0)
+
+                    over "cylinder" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+
+                over "front_lidar_link" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    point3f physics:centerOfMass = (0, 0, 0)
+                    float3 physics:diagonalInertia = (0.01, 0.01, 0.01)
+                    float physics:mass = 0.3
+                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                    over "cylinder" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+
+                over "back_lidar_link" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    point3f physics:centerOfMass = (0, 0, 0)
+                    float3 physics:diagonalInertia = (0.01, 0.01, 0.01)
+                    float physics:mass = 0.3
+                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                    over "cylinder" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+
+                over "aubo_base_link" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    point3f physics:centerOfMass = (0.000136, 0.001601, 0.018986)
+                    float3 physics:diagonalInertia = (0.007933108, 0.008523998, 0.015304894)
+                    float physics:mass = 2.592
+                    quatf physics:principalAxes = (0.0036286397, 0.7077284, 0.70646316, 0.0041419147)
+
+                    over "shoulder_Link" (
+                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                    )
+                    {
+                        point3f physics:centerOfMass = (-0.000004, 0.005112, -0.026275)
+                        float3 physics:diagonalInertia = (0.02965379, 0.042481203, 0.04332601)
+                        float physics:mass = 10.180139
+                        quatf physics:principalAxes = (0.70537233, 0.048228655, 0.7053981, -0.05037299)
+
+                        over "upperArm_Link" (
+                            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                        )
+                        {
+                            point3f physics:centerOfMass = (0.170602, 0, -0.013024)
+                            float3 physics:diagonalInertia = (0.062712505, 0.82965547, 0.847528)
+                            float physics:mass = 17.66406
+                            quatf physics:principalAxes = (-0.7069274, 0.70709974, -0.011488377, 0.011473016)
+
+                            over "foreArm_Link" (
+                                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                            )
+                            {
+                                point3f physics:centerOfMass = (0.269208, -0.000022, 0.106467)
+                                float3 physics:diagonalInertia = (0.0059551657, 0.08248481, 0.08378002)
+                                float physics:mass = 3.926354
+                                quatf physics:principalAxes = (-0.7056178, 0.70847315, 0.009142991, -0.009260723)
+
+                                over "wrist1_Link" (
+                                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                )
+                                {
+                                    point3f physics:centerOfMass = (0.000036, 0.01561, -0.001526)
+                                    float3 physics:diagonalInertia = (0.0021855177, 0.0036254204, 0.0036720617)
+                                    float physics:mass = 2.370741
+                                    quatf physics:principalAxes = (-0.47754383, 0.5195725, 0.49416554, 0.50773686)
+
+                                    over "wrist2_Link" (
+                                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                    )
+                                    {
+                                        point3f physics:centerOfMass = (-0.000036, -0.01561, -0.001526)
+                                        float3 physics:diagonalInertia = (0.0021855177, 0.0036254204, 0.0036720617)
+                                        float physics:mass = 2.370741
+                                        quatf physics:principalAxes = (0.5195725, -0.47754383, -0.50773686, -0.49416554)
+
+                                        over "wrist3_Link" (
+                                            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                        )
+                                        {
+                                            point3f physics:centerOfMass = (0.000508, 0.000344, -0.017049)
+                                            float3 physics:diagonalInertia = (0.00015999115, 0.000162, 0.00027300886)
+                                            float physics:mass = 0.259654
+                                            quatf physics:principalAxes = (-0.0031284543, 0.70709985, 0.70709985, -0.0031284543)
+
+                                            over "camera_link" (
+                                                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                            )
+                                            {
+                                                point3f physics:centerOfMass = (0.0028757798, 0.00061747595, 0.014109427)
+                                                float3 physics:diagonalInertia = (0.0000030764368, 0.000042338845, 0.000044476885)
+                                                float physics:mass = 0.033071015
+                                                quatf physics:principalAxes = (-0.49747744, 0.5018424, 0.50460786, 0.49602556)
+
+                                                over "camera_color_screw_frame" (
+                                                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                )
+                                                {
+                                                    point3f physics:centerOfMass = (-0.00056532706, -0.0007547946, 0.013296538)
+                                                    float3 physics:diagonalInertia = (3.4948164e-7, 0.000005991268, 0.0000062967133)
+                                                    float physics:mass = 0.006822372
+                                                    quatf physics:principalAxes = (-0.5013462, 0.49911284, 0.50754255, 0.49187294)
+
+                                                    over "box" (
+                                                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                    )
+                                                    {
+                                                    }
+                                                }
+
+                                                over "camera_depth_frame" (
+                                                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                )
+                                                {
+                                                    point3f physics:centerOfMass = (-0.0015802064, -1.721139e-8, -1.522659e-7)
+                                                    float3 physics:diagonalInertia = (4.3410737e-9, 4.8401096e-9, 4.8404383e-9)
+                                                    float physics:mass = 0.00045316777
+                                                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                    over "camera_IMU_frame" (
+                                                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                    )
+                                                    {
+                                                        point3f physics:centerOfMass = (-0.000485, 0, 0)
+                                                        float3 physics:diagonalInertia = (1.0215032e-11, 1.3402993e-11, 2.1858756e-11)
+                                                        float physics:mass = 0.000011218632
+                                                        quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                        over "box" (
+                                                            prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                        )
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "camera_left_ir_frame" (
+                                                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                    )
+                                                    {
+                                                        point3f physics:centerOfMass = (-0.0015802064, -1.721139e-8, -1.522659e-7)
+                                                        float3 physics:diagonalInertia = (4.3410737e-9, 4.8401096e-9, 4.8404383e-9)
+                                                        float physics:mass = 0.00045316777
+                                                        quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                        over "camera_left_ir_optical_frame" (
+                                                            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                        )
+                                                        {
+                                                            point3f physics:centerOfMass = (1.721139e-8, 1.522659e-7, -0.0015802064)
+                                                            float3 physics:diagonalInertia = (4.3410737e-9, 4.8401096e-9, 4.8404383e-9)
+                                                            float physics:mass = 0.00045316777
+                                                            quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                            over "box" (
+                                                                prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                            )
+                                                            {
+                                                            }
+                                                        }
+
+                                                        over "box" (
+                                                            prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                        )
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "camera_right_ir_frame" (
+                                                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                    )
+                                                    {
+                                                        point3f physics:centerOfMass = (-0.0015802064, -1.721139e-8, -1.522659e-7)
+                                                        float3 physics:diagonalInertia = (4.3410737e-9, 4.8401096e-9, 4.8404383e-9)
+                                                        float physics:mass = 0.00045316777
+                                                        quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                        over "camera_right_ir_optical_frame" (
+                                                            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                        )
+                                                        {
+                                                            point3f physics:centerOfMass = (1.721139e-8, 1.522659e-7, -0.0015802064)
+                                                            float3 physics:diagonalInertia = (4.3410737e-9, 4.8401096e-9, 4.8404383e-9)
+                                                            float physics:mass = 0.00045316777
+                                                            quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                            over "box" (
+                                                                prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                            )
+                                                            {
+                                                            }
+                                                        }
+
+                                                        over "box" (
+                                                            prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                        )
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "camera_color_frame" (
+                                                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                    )
+                                                    {
+                                                        point3f physics:centerOfMass = (-0.0015802, -2.0338074e-8, -1.5958099e-7)
+                                                        float3 physics:diagonalInertia = (4.341061e-9, 4.8400963e-9, 4.84043e-9)
+                                                        float physics:mass = 0.00045316614
+                                                        quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                        over "camera_color_optical_frame" (
+                                                            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                        )
+                                                        {
+                                                            point3f physics:centerOfMass = (2.0338074e-8, 1.5958099e-7, -0.0015802)
+                                                            float3 physics:diagonalInertia = (4.341061e-9, 4.8400963e-9, 4.84043e-9)
+                                                            float physics:mass = 0.00045316614
+                                                            quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                            over "box" (
+                                                                prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                            )
+                                                            {
+                                                            }
+                                                        }
+
+                                                        over "box" (
+                                                            prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                        )
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "box" (
+                                                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                    )
+                                                    {
+                                                    }
+                                                }
+
+                                                over "box" (
+                                                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                )
+                                                {
+                                                }
+                                            }
+
+                                            over "gripper_adapter_link" (
+                                                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                            )
+                                            {
+                                                float3 physics:diagonalInertia = (0.001, 0.001, 0.001)
+                                                float physics:mass = 0.2
+                                                quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                over "gripper_motor_link" (
+                                                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                )
+                                                {
+                                                    float3 physics:diagonalInertia = (0.002, 0.002, 0.002)
+                                                    float physics:mass = 0.5
+                                                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                                                    over "gripper1_link" (
+                                                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                    )
+                                                    {
+                                                        float3 physics:diagonalInertia = (0.001, 0.001, 0.001)
+                                                        float physics:mass = 0.3
+                                                        quatf physics:principalAxes = (1, 0, 0, 0)
+                                                    }
+
+                                                    over "gripper2_link" (
+                                                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                                    )
+                                                    {
+                                                        float3 physics:diagonalInertia = (0.001, 0.001, 0.001)
+                                                        float physics:mass = 0.3
+                                                        quatf physics:principalAxes = (1, 0, 0, 0)
+                                                    }
+
+                                                    over "cylinder" (
+                                                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                    )
+                                                    {
+                                                    }
+                                                }
+
+                                                over "box" (
+                                                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                                                )
+                                                {
+                                                }
+                                            }
+
+                                            over "sphere" (
+                                                prepend apiSchemas = ["NewtonCollisionAPI"]
+                                            )
+                                            {
+                                            }
+                                        }
+
+                                        over "sphere" (
+                                            prepend apiSchemas = ["NewtonCollisionAPI"]
+                                        )
+                                        {
+                                        }
+                                    }
+
+                                    over "sphere" (
+                                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                                    )
+                                    {
+                                    }
+                                }
+
+                                over "cylinder" (
+                                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                                )
+                                {
+                                }
+                            }
+
+                            over "cylinder" (
+                                prepend apiSchemas = ["NewtonCollisionAPI"]
+                            )
+                            {
+                            }
+                        }
+
+                        over "sphere" (
+                            prepend apiSchemas = ["NewtonCollisionAPI"]
+                        )
+                        {
+                        }
+                    }
+
+                    over "cylinder" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+
+                over "box" (
+                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                )
+                {
+                }
+
+                over "front_caster" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    float3 physics:diagonalInertia = (0.01, 0.01, 0.01)
+                    float physics:mass = 1
+                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                    over "sphere" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+
+                over "rear_caster" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    float3 physics:diagonalInertia = (0.01, 0.01, 0.01)
+                    float physics:mass = 1
+                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                    over "sphere" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+            }
+        }
+    }
+
+    over "Physics"
+    {
+        def PhysicsRevoluteJoint "left_wheel_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            uniform token physics:axis = "Y"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/left_wheel_link>
+            point3f physics:localPos0 = (0, 0.3, 0.1)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsRevoluteJoint "right_wheel_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            uniform token physics:axis = "Y"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/right_wheel_link>
+            point3f physics:localPos0 = (0, -0.3, 0.1)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsRevoluteJoint "shoulder_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            float drive:angular:physics:maxForce = 267
+            uniform token physics:axis = "Z"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link>
+            point3f physics:localPos0 = (0, 0, 0.163)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (6.123234e-17, 0, 0, -1)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360
+            float physics:upperLimit = 360
+            custom float urdf:limit:effort = 267
+            custom float urdf:limit:velocity = 3.106686
+        }
+
+        def PhysicsRevoluteJoint "upperArm_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            float drive:angular:physics:maxForce = 267
+            uniform token physics:axis = "Z"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link>
+            point3f physics:localPos0 = (0, 0.191, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-0.5, 0.5, 0.5, 0.5)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360
+            float physics:upperLimit = 360
+            custom float urdf:limit:effort = 267
+            custom float urdf:limit:velocity = 3.106686
+        }
+
+        def PhysicsRevoluteJoint "foreArm_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            float drive:angular:physics:maxForce = 133
+            uniform token physics:axis = "Z"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link>
+            point3f physics:localPos0 = (0.48, -5.551115e-17, -2.7755576e-17)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (5.551115e-17, -1, 2.7755576e-16, -1.6653345e-16)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360
+            float physics:upperLimit = 360
+            custom float urdf:limit:effort = 133
+            custom float urdf:limit:velocity = 4.660029
+        }
+
+        def PhysicsRevoluteJoint "wrist1_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            float drive:angular:physics:maxForce = 49
+            uniform token physics:axis = "Z"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link>
+            point3f physics:localPos0 = (0.37, 1.110223e-16, 2.7755576e-17)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-5.800065e-16, 0.70710677, 0.70710677, 6.661338e-16)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360
+            float physics:upperLimit = 360
+            custom float urdf:limit:effort = 49
+            custom float urdf:limit:velocity = 4.1364303
+        }
+
+        def PhysicsRevoluteJoint "wrist2_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            float drive:angular:physics:maxForce = 49
+            uniform token physics:axis = "Z"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link>
+            point3f physics:localPos0 = (0, 0.1175, -2.7755576e-17)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.70710677, -0.70710677, 8.706637e-18, -8.0877416e-16)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360
+            float physics:upperLimit = 360
+            custom float urdf:limit:effort = 49
+            custom float urdf:limit:velocity = 4.1364303
+        }
+
+        def PhysicsRevoluteJoint "wrist3_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            float drive:angular:physics:maxForce = 49
+            uniform token physics:axis = "Z"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link>
+            point3f physics:localPos0 = (0, -0.1035, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.70710677, 0.70710677, 2.7036603e-16, 1.4264034e-16)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360
+            float physics:upperLimit = 360
+            custom float urdf:limit:effort = 49
+            custom float urdf:limit:velocity = 4.1364303
+        }
+
+        def PhysicsPrismaticJoint "gripper1_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:linear", "PhysicsJointStateAPI:linear"]
+        )
+        {
+            float drive:linear:physics:maxForce = 50
+            uniform token physics:axis = "Y"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link/gripper1_link>
+            point3f physics:localPos0 = (2.220446e-16, 0.1, -0.07)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-0.70710677, -0.70710677, 6.875268e-17, 1.6653345e-16)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.04
+            custom float urdf:limit:effort = 50
+            custom float urdf:limit:velocity = 0.1
+        }
+
+        def PhysicsPrismaticJoint "gripper2_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:linear", "PhysicsJointStateAPI:linear"]
+        )
+        {
+            float drive:linear:physics:maxForce = 50
+            uniform token physics:axis = "Y"
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link/gripper2_link>
+            point3f physics:localPos0 = (2.220446e-16, 0.1, 0.12)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-1.110223e-16, -2.220446e-16, -0.70710677, 0.70710677)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.04
+            custom float urdf:limit:effort = 50
+            custom float urdf:limit:velocity = 0.1
+        }
+
+        def PhysicsFixedJoint "front_lidar_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/front_lidar_link>
+            point3f physics:localPos0 = (0.38, 0.25, 0.2)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "back_lidar_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/back_lidar_link>
+            point3f physics:localPos0 = (-0.38, -0.25, 0.2)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "front_caster_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/front_caster>
+            point3f physics:localPos0 = (0.3, 0, 0.095)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "rear_caster_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/rear_caster>
+            point3f physics:localPos0 = (-0.3, 0, 0.095)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "arm_mount_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link>
+            point3f physics:localPos0 = (-0.3, 0, 0.6)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (6.123234e-17, 0, 0, 1)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_color_screw_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_color_screw_frame>
+            point3f physics:localPos0 = (-0.011715, -0.0475, -0.014311)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_IMU_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_IMU_frame>
+            point3f physics:localPos0 = (-0.01425, -0.007866, -0.001068)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_depth_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame>
+            point3f physics:localPos0 = (-5.551115e-17, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_left_ir_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_left_ir_frame>
+            point3f physics:localPos0 = (-5.551115e-17, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_left_ir_optical_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_left_ir_frame>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_left_ir_frame/camera_left_ir_optical_frame>
+            point3f physics:localPos0 = (-5.551115e-17, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-0.49999815, 0.5, -0.50000185, 0.5)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_right_ir_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_right_ir_frame>
+            point3f physics:localPos0 = (-5.551115e-17, -0.095, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_right_ir_optical_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_right_ir_frame>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_right_ir_frame/camera_right_ir_optical_frame>
+            point3f physics:localPos0 = (-5.551115e-17, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-0.49999815, 0.5, -0.50000185, 0.5)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_color_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_color_frame>
+            point3f physics:localPos0 = (-5.551115e-17, -0.02375, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.9999999, 0.00048828122, 2.762005e-17, -2.0982248e-19)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_color_optical_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_color_frame>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link/camera_depth_frame/camera_color_frame/camera_color_optical_frame>
+            point3f physics:localPos0 = (-5.551115e-17, -5.551115e-17, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-0.49999815, 0.5, -0.50000185, 0.5)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "camera_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/camera_link>
+            point3f physics:localPos0 = (5.551115e-17, 0.1, 5.551115e-17)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.5, -0.5, -0.5, -0.5)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "adapter_mount_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link>
+            point3f physics:localPos0 = (5.551115e-17, 0, 5.551115e-17)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "motor_mount_joint"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link>
+            point3f physics:localPos0 = (-0.02, -2.220446e-16, 0.035)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.5, 0.5, 0.5, 0.5)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+    }
+}
+

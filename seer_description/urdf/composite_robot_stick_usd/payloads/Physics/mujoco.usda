@@ -1,0 +1,556 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.3"
+    }
+    defaultPrim = "seer_aubo_composite"
+    doc = """Generated from Composed Stage of root layer /tmp/tmps6kv9qo3/seer_aubo_composite.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_composite_robot_stick_vm24sttp/usdex_composite_robot_stick/seer_aubo_composite.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_composite_robot_stick_vm24sttp/temp_composite_robot_stick/composite_robot_stick.usd
+
+
+Generated from Composed Stage of root layer /tmp/stick_usd_import/composite_robot_stick/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    subLayers = [
+        @./physics.usda@
+    ]
+    upAxis = "Z"
+)
+
+over "seer_aubo_composite"
+{
+    over "Physics"
+    {
+        def MjcActuator "left_wheel_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/left_wheel_joint>
+        }
+
+        def MjcActuator "right_wheel_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/right_wheel_joint>
+        }
+
+        def MjcActuator "shoulder_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 267
+            uniform double mjc:forceRange:min = -267
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/shoulder_joint>
+        }
+
+        def MjcActuator "upperArm_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 267
+            uniform double mjc:forceRange:min = -267
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/upperArm_joint>
+        }
+
+        def MjcActuator "foreArm_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 133
+            uniform double mjc:forceRange:min = -133
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/foreArm_joint>
+        }
+
+        def MjcActuator "wrist1_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 49
+            uniform double mjc:forceRange:min = -49
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/wrist1_joint>
+        }
+
+        def MjcActuator "wrist2_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 49
+            uniform double mjc:forceRange:min = -49
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/wrist2_joint>
+        }
+
+        def MjcActuator "wrist3_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 49
+            uniform double mjc:forceRange:min = -49
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/wrist3_joint>
+        }
+
+        def MjcActuator "gripper1_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 50
+            uniform double mjc:forceRange:min = -50
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/gripper1_joint>
+        }
+
+        def MjcActuator "gripper2_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 50
+            uniform double mjc:forceRange:min = -50
+            custom rel mjc:target
+            prepend rel mjc:target = </seer_aubo_composite/Physics/gripper2_joint>
+        }
+
+        over "left_wheel_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "right_wheel_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "front_lidar_joint"
+        {
+        }
+
+        over "back_lidar_joint"
+        {
+        }
+
+        over "front_caster_joint"
+        {
+        }
+
+        over "rear_caster_joint"
+        {
+        }
+
+        over "shoulder_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "upperArm_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "foreArm_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "wrist1_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "wrist2_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "wrist3_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "arm_mount_joint"
+        {
+        }
+
+        over "camera_color_screw_joint"
+        {
+        }
+
+        over "camera_IMU_joint"
+        {
+        }
+
+        over "camera_depth_joint"
+        {
+        }
+
+        over "camera_left_ir_joint"
+        {
+        }
+
+        over "camera_left_ir_optical_joint"
+        {
+        }
+
+        over "camera_right_ir_joint"
+        {
+        }
+
+        over "camera_right_ir_optical_joint"
+        {
+        }
+
+        over "camera_color_joint"
+        {
+        }
+
+        over "camera_color_optical_joint"
+        {
+        }
+
+        over "camera_joint"
+        {
+        }
+
+        over "adapter_mount_joint"
+        {
+        }
+
+        over "motor_mount_joint"
+        {
+        }
+
+        over "gripper1_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:linear", "PhysicsJointStateAPI:linear"]
+        )
+        {
+        }
+
+        over "gripper2_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:linear", "PhysicsJointStateAPI:linear"]
+        )
+        {
+        }
+    }
+
+    over "Geometry"
+    {
+        over "base_footprint"
+        {
+            over "base_link"
+            {
+                over "left_wheel_link"
+                {
+                    over "left_wheel"
+                    {
+                    }
+
+                    over "cylinder"
+                    {
+                    }
+                }
+
+                over "right_wheel_link"
+                {
+                    over "right_wheel"
+                    {
+                    }
+
+                    over "cylinder"
+                    {
+                    }
+                }
+
+                over "front_lidar_link"
+                {
+                    over "lidar"
+                    {
+                    }
+
+                    over "cylinder"
+                    {
+                    }
+                }
+
+                over "back_lidar_link"
+                {
+                    over "lidar"
+                    {
+                    }
+
+                    over "cylinder"
+                    {
+                    }
+                }
+
+                over "aubo_base_link"
+                {
+                    over "shoulder_Link"
+                    {
+                        over "upperArm_Link"
+                        {
+                            over "link2"
+                            {
+                            }
+
+                            over "foreArm_Link"
+                            {
+                                over "wrist1_Link"
+                                {
+                                    over "wrist2_Link"
+                                    {
+                                        over "wrist3_Link"
+                                        {
+                                            over "camera_link"
+                                            {
+                                                over "camera_color_screw_frame"
+                                                {
+                                                    over "camera_color_screw_frame"
+                                                    {
+                                                    }
+
+                                                    over "box"
+                                                    {
+                                                    }
+                                                }
+
+                                                over "camera_depth_frame"
+                                                {
+                                                    over "camera_IMU_frame"
+                                                    {
+                                                        over "camera_IMU_frame"
+                                                        {
+                                                        }
+
+                                                        over "box"
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "camera_left_ir_frame"
+                                                    {
+                                                        over "camera_left_ir_optical_frame"
+                                                        {
+                                                            over "camera_infra1_optical_frame"
+                                                            {
+                                                            }
+
+                                                            over "box"
+                                                            {
+                                                            }
+                                                        }
+
+                                                        over "camera_infra1_frame"
+                                                        {
+                                                        }
+
+                                                        over "box"
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "camera_right_ir_frame"
+                                                    {
+                                                        over "camera_right_ir_optical_frame"
+                                                        {
+                                                            over "camera_infra2_optical_frame"
+                                                            {
+                                                            }
+
+                                                            over "box"
+                                                            {
+                                                            }
+                                                        }
+
+                                                        over "camera_infra2_frame"
+                                                        {
+                                                        }
+
+                                                        over "box"
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "camera_color_frame"
+                                                    {
+                                                        over "camera_color_optical_frame"
+                                                        {
+                                                            over "camera_color_optical_frame"
+                                                            {
+                                                            }
+
+                                                            over "box"
+                                                            {
+                                                            }
+                                                        }
+
+                                                        over "camera_color_frame"
+                                                        {
+                                                        }
+
+                                                        over "box"
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "camera_depth_frame"
+                                                    {
+                                                    }
+
+                                                    over "box"
+                                                    {
+                                                    }
+                                                }
+
+                                                over "base_link"
+                                                {
+                                                }
+
+                                                over "box"
+                                                {
+                                                }
+                                            }
+
+                                            over "gripper_adapter_link"
+                                            {
+                                                over "gripper_motor_link"
+                                                {
+                                                    over "gripper1_link"
+                                                    {
+                                                        over "gripper_stick"
+                                                        {
+                                                        }
+
+                                                        over "gripper_stick_1"
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "gripper2_link"
+                                                    {
+                                                        over "gripper_stick"
+                                                        {
+                                                        }
+
+                                                        over "gripper_stick_1"
+                                                        {
+                                                        }
+                                                    }
+
+                                                    over "motor"
+                                                    {
+                                                    }
+
+                                                    over "cylinder"
+                                                    {
+                                                    }
+                                                }
+
+                                                over "adapter"
+                                                {
+                                                }
+
+                                                over "box"
+                                                {
+                                                }
+                                            }
+
+                                            over "link6"
+                                            {
+                                            }
+
+                                            over "sphere"
+                                            {
+                                            }
+                                        }
+
+                                        over "link5"
+                                        {
+                                        }
+
+                                        over "sphere"
+                                        {
+                                        }
+                                    }
+
+                                    over "link4"
+                                    {
+                                    }
+
+                                    over "sphere"
+                                    {
+                                    }
+                                }
+
+                                over "link3"
+                                {
+                                }
+
+                                over "cylinder"
+                                {
+                                }
+                            }
+
+                            over "cylinder"
+                            {
+                            }
+                        }
+
+                        over "link1"
+                        {
+                        }
+
+                        over "sphere"
+                        {
+                        }
+                    }
+
+                    over "link0"
+                    {
+                    }
+
+                    over "cylinder"
+                    {
+                    }
+                }
+
+                over "front_caster"
+                {
+                    over "sphere"
+                    {
+                    }
+                }
+
+                over "rear_caster"
+                {
+                    over "sphere"
+                    {
+                    }
+                }
+
+                over "robot_body"
+                {
+                }
+
+                over "box"
+                {
+                }
+            }
+        }
+    }
+
+    over "Materials"
+    {
+        over "material_3"
+        {
+        }
+    }
+
+    over "VisualMaterials"
+    {
+    }
+}
+

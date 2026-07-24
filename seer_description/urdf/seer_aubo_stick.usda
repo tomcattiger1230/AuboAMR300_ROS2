@@ -1,0 +1,72 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Xform "seer_aubo_composite" (
+        prepend references = @./seer_aubo.usd@</World/seer_aubo_composite>
+    )
+    {
+        over "wrist3_Link"
+        {
+            def Xform "gripper_adapter_link" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "IsaacLinkAPI"]
+                prepend references = @./composite_robot_stick_usd/payloads/base.usda@</seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link>
+            )
+            {
+                float3 physics:diagonalInertia = (0.001, 0.001, 0.001)
+                float physics:mass = 0.001
+                quatf physics:principalAxes = (1, 0, 0, 0)
+
+                over "gripper_motor_link" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "IsaacLinkAPI"]
+                )
+                {
+                    float3 physics:diagonalInertia = (0.002, 0.002, 0.002)
+                    float physics:mass = 0.001
+                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                    over "gripper1_link"
+                    {
+                    }
+
+                    over "gripper2_link"
+                    {
+                    }
+                }
+            }
+        }
+
+        over "joints"
+        {
+            def PhysicsFixedJoint "adapter_mount_joint" (
+                prepend apiSchemas = ["IsaacJointAPI"]
+            )
+            {
+                rel physics:body0 = </World/seer_aubo_composite/wrist3_Link>
+                rel physics:body1 = </World/seer_aubo_composite/wrist3_Link/gripper_adapter_link>
+                point3f physics:localPos0 = (0, 0, 0)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (1, 0, 0, 0)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+            }
+
+            def PhysicsFixedJoint "motor_mount_joint" (
+                prepend apiSchemas = ["IsaacJointAPI"]
+            )
+            {
+                rel physics:body0 = </World/seer_aubo_composite/wrist3_Link/gripper_adapter_link>
+                rel physics:body1 = </World/seer_aubo_composite/wrist3_Link/gripper_adapter_link/gripper_motor_link>
+                point3f physics:localPos0 = (-0.02, 0, 0.035)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (0.5, 0.5, 0.5, 0.5)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+            }
+
+        }
+    }
+}

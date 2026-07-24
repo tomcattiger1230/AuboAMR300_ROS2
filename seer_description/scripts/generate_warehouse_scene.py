@@ -115,14 +115,14 @@ def rack(index, position):
     return "\n".join(lines)
 
 
-def generate():
+def generate(robot_layer="seer_aubo.usd"):
     header = """#usda 1.0
 (
     defaultPrim = "World"
     metersPerUnit = 1
     upAxis = "Z"
     subLayers = [
-        @seer_aubo.usd@
+        @__ROBOT_LAYER__@
     ]
 )
 
@@ -131,6 +131,7 @@ over "World"
     def Xform "WarehouseDemo"
     {
 """
+    header = header.replace("__ROBOT_LAYER__", robot_layer)
     pieces = [header.rstrip()]
 
     # Building shell and high-contrast navigation markings.
@@ -262,9 +263,14 @@ def main():
         type=Path,
         default=Path(__file__).resolve().parent.parent / "urdf" / "warehouse_demo.usda",
     )
+    parser.add_argument(
+        "--robot-layer",
+        default="seer_aubo.usd",
+        help="Robot USD layer referenced by the generated warehouse scene",
+    )
     args = parser.parse_args()
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(generate(), encoding="utf-8")
+    args.output.write_text(generate(args.robot_layer), encoding="utf-8")
     print(f"Generated warehouse scene: {args.output}")
 
 
