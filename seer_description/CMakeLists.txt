@@ -23,8 +23,17 @@ install(PROGRAMS
   scripts/keyboard_teleop.py
   scripts/circle_move.py
   scripts/action_bridge.py
+  scripts/generate_warehouse_scene.py
+  scripts/isaac_ros2_runner.py
+  scripts/start_isaac_ros2_stack.sh
+  scripts/start_warehouse_demo.sh
   scripts/amr_gripper_cmd.py
   DESTINATION lib/${PROJECT_NAME}
+)
+
+install(FILES
+  README_ISAAC_ROS2.md
+  DESTINATION share/${PROJECT_NAME}
 )
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

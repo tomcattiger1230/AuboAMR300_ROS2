@@ -1,90 +1,152 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=UTF-8
-"""
-Author: Wei Luo
-Date: 2026-04-09 16:50:17
-LastEditors: Wei Luo
-LastEditTime: 2026-04-10 10:22:14
-Note: Note
-"""
+"""Translate MoveIt FollowJointTrajectory goals into Isaac JointState commands."""
 
+import threading
 import rclpy
+from rclpy.action import ActionServer, CancelResponse, GoalResponse
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.executors import MultiThreadedExecutor
 from rclpy.node import Node
-from rclpy.action import ActionServer
 from control_msgs.action import FollowJointTrajectory
-from sensor_msgs.msg import JointState  # <== 关键改变：引入 JointState 照片级消息
-import time
+from sensor_msgs.msg import JointState
+from time import monotonic, sleep
 
 
 class TrajectoryBridge(Node):
     def __init__(self):
         super().__init__("action_to_joint_state_bridge")
 
-        # 1. 依然伪装成 Action Server 稳住 MoveIt
+        self.declare_parameter(
+            "action_name",
+            "/aubo_arm_controller_wo_gripper/follow_joint_trajectory",
+        )
+        self.declare_parameter("command_topic", "/isaac_joint_commands")
+        action_name = self.get_parameter("action_name").value
+        command_topic = self.get_parameter("command_topic").value
+
+        self._goal_lock = threading.Lock()
+        self._goal_active = False
+        callback_group = ReentrantCallbackGroup()
+
         self._action_server = ActionServer(
             self,
             FollowJointTrajectory,
-            "/aubo_arm_controller/follow_joint_trajectory",
+            action_name,
             self.execute_callback,
+            goal_callback=self.goal_callback,
+            cancel_callback=self.cancel_callback,
+            callback_group=callback_group,
         )
 
-        # 2. 创建 JointState 发布者 (专门喂给 Isaac Sim)
         self.publisher_ = self.create_publisher(
             JointState,
-            "/isaac_joint_commands",  # <== 我们换一个极其清晰的专线话题名
+            command_topic,
             10,
         )
         self.get_logger().info(
-            "🚀 V2 终极翻译官：Action -> JointState 实时插值引擎已启动！"
+            f"MoveIt action {action_name} -> Isaac commands {command_topic}"
         )
+
+    def goal_callback(self, goal_request):
+        if not goal_request.trajectory.points:
+            self.get_logger().warning("Rejected an empty trajectory")
+            return GoalResponse.REJECT
+        with self._goal_lock:
+            if self._goal_active:
+                self.get_logger().warning("Rejected a goal while another is active")
+                return GoalResponse.REJECT
+            self._goal_active = True
+        return GoalResponse.ACCEPT
+
+    def cancel_callback(self, _goal_handle):
+        return CancelResponse.ACCEPT
+
+    @staticmethod
+    def _result(code, message):
+        result = FollowJointTrajectory.Result()
+        result.error_code = code
+        result.error_string = message
+        return result
+
+    @staticmethod
+    def _point_time(point):
+        return point.time_from_start.sec + point.time_from_start.nanosec / 1e9
+
+    def _wait_until(self, target_time, goal_handle):
+        while rclpy.ok():
+            if goal_handle.is_cancel_requested:
+                return False
+            remaining = target_time - monotonic()
+            if remaining <= 0.0:
+                return True
+            sleep(min(remaining, 0.01))
+        return False
 
     def execute_callback(self, goal_handle):
-        self.get_logger().info(
-            "✅ 收到轨迹！开始像放电影一样向 Isaac Sim 发送实时关节流..."
-        )
-
-        traj = goal_handle.request.trajectory
-        joint_names = traj.joint_names
-
-        # 记录系统启动播放的时间点
-        sys_start = time.time()
-
-        # 遍历 MoveIt 算好的每一个路径点
-        for point in traj.points:
-            # 计算这个点应该在未来的第几秒执行
-            time_from_start = (
-                point.time_from_start.sec + point.time_from_start.nanosec / 1e9
+        try:
+            trajectory = goal_handle.request.trajectory
+            start_time = monotonic()
+            self.get_logger().info(
+                f"Executing {len(trajectory.points)} trajectory points"
             )
 
-            # 等待，直到真实时间到达这个点的时间 (完美复现 MoveIt 规划的速度)
-            target_sys_time = sys_start + time_from_start
-            sleep_duration = target_sys_time - time.time()
-            if sleep_duration > 0:
-                time.sleep(sleep_duration)
+            for point in trajectory.points:
+                if not self._wait_until(
+                    start_time + self._point_time(point), goal_handle
+                ):
+                    if goal_handle.is_cancel_requested:
+                        goal_handle.canceled()
+                        self.get_logger().info("Trajectory canceled")
+                        return self._result(
+                            FollowJointTrajectory.Result.INVALID_GOAL,
+                            "Trajectory canceled",
+                        )
+                    goal_handle.abort()
+                    return self._result(
+                        FollowJointTrajectory.Result.INVALID_GOAL,
+                        "ROS shutdown interrupted trajectory",
+                    )
 
-            # 组装单帧的 "JointState 照片" 并发布
-            msg = JointState()
-            msg.header.stamp = self.get_clock().now().to_msg()
-            msg.name = joint_names
-            msg.position = point.positions
-            if point.velocities:
-                msg.velocity = point.velocities
+                command = JointState()
+                command.header.stamp = self.get_clock().now().to_msg()
+                command.name = list(trajectory.joint_names)
+                command.position = list(point.positions)
+                command.velocity = list(point.velocities)
+                command.effort = list(point.effort)
+                self.publisher_.publish(command)
 
-            self.publisher_.publish(msg)
+                feedback = FollowJointTrajectory.Feedback()
+                feedback.header.stamp = command.header.stamp
+                feedback.joint_names = list(trajectory.joint_names)
+                feedback.desired = point
+                goal_handle.publish_feedback(feedback)
 
-        # 播放完毕，告诉 MoveIt 任务成功
-        goal_handle.succeed()
-        result = FollowJointTrajectory.Result()
-        result.error_code = FollowJointTrajectory.Result.SUCCESSFUL
-        self.get_logger().info("🏁 电影放映完毕！机械臂应该已经完美到达目标！")
-        return result
+            goal_handle.succeed()
+            self.get_logger().info("Trajectory completed")
+            return self._result(
+                FollowJointTrajectory.Result.SUCCESSFUL,
+                "Trajectory completed",
+            )
+        finally:
+            with self._goal_lock:
+                self._goal_active = False
 
 
 def main(args=None):
     rclpy.init(args=args)
     node = TrajectoryBridge()
-    rclpy.spin(node)
-    rclpy.shutdown()
+    executor = MultiThreadedExecutor(num_threads=2)
+    executor.add_node(node)
+    try:
+        executor.spin()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        executor.shutdown()
+        node.destroy_node()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == "__main__":
