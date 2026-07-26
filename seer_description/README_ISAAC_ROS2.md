@@ -169,15 +169,26 @@ ros2 run seer_description mobile_manipulator_control.py \
   arm --target 0.0 -0.35 0.6 0.0 0.35 0.0 --duration 4.0
 ```
 
-Run a base-then-arm demonstration:
+Run the complete example. It records the initial arm pose, drives the base,
+moves the arm to the example target, and returns the arm to its recorded pose:
 
 ```bash
-ros2 run seer_description mobile_manipulator_control.py sequence
+ros2 run seer_description mobile_manipulator_control.py demo
 ```
 
 The controller limits base commands to 0.5 m/s linear and 1.0 rad/s angular,
 reads the current arm pose from `/joint_states`, interpolates each arm motion,
 and always publishes zero base velocity when it finishes or is interrupted.
+Use `sequence` instead of `demo` when the arm should remain at the target pose.
+
+The Isaac/with-gripper controller action is the default. For the older
+without-gripper Gazebo controller, place this global option before the command:
+
+```bash
+ros2 run seer_description mobile_manipulator_control.py \
+  --action-name /aubo_arm_controller_wo_gripper/follow_joint_trajectory \
+  demo
+```
 
 The command message should use these joint names:
 

@@ -60,6 +60,15 @@ def positive_duration(value):
     return result
 
 
+def nonnegative_duration(value):
+    result = finite_float(value)
+    if not 0.0 <= result <= MAX_MOTION_DURATION:
+        raise argparse.ArgumentTypeError(
+            f"duration must be in [0, {MAX_MOTION_DURATION:g}] seconds"
+        )
+    return result
+
+
 def joint_target(value):
     result = finite_float(value)
     if abs(result) > 2.0 * math.pi:
@@ -84,7 +93,7 @@ def build_parser():
     parser.add_argument("--joint-state-topic", default="/joint_states")
     parser.add_argument(
         "--action-name",
-        default="/aubo_arm_controller_wo_gripper/follow_joint_trajectory",
+        default="/aubo_arm_controller/follow_joint_trajectory",
     )
     parser.add_argument("--wait-timeout", type=positive_duration, default=10.0)
 
@@ -133,6 +142,24 @@ def build_parser():
     )
     sequence.add_argument("--arm-duration", type=positive_duration, default=4.0)
     sequence.add_argument("--steps", type=int, default=80)
+
+    demo = subparsers.add_parser(
+        "demo",
+        help="Drive the base, move the arm, then return to its starting pose",
+    )
+    demo.add_argument("--linear", type=finite_float, default=0.15)
+    demo.add_argument("--angular", type=finite_float, default=0.0)
+    demo.add_argument("--base-duration", type=positive_duration, default=2.0)
+    demo.add_argument(
+        "--target",
+        type=joint_target,
+        nargs=6,
+        metavar=("J1", "J2", "J3", "J4", "J5", "J6"),
+        default=(0.0, -0.35, 0.6, 0.0, 0.35, 0.0),
+    )
+    demo.add_argument("--arm-duration", type=positive_duration, default=4.0)
+    demo.add_argument("--pause", type=nonnegative_duration, default=1.0)
+    demo.add_argument("--steps", type=int, default=80)
 
     subparsers.add_parser("stop", help="Publish zero base velocity")
     return parser
@@ -313,6 +340,16 @@ def main():
         elif args.command == "sequence":
             node.drive_base(args.linear, args.angular, args.base_duration)
             node.move_arm(args.target, args.arm_duration, args.steps)
+        elif args.command == "demo":
+            initial_arm_pose = node._current_joint_positions(ARM_JOINTS, "arm")
+            node.get_logger().info(
+                "Saved initial arm pose; the demo will return to it"
+            )
+            node.drive_base(args.linear, args.angular, args.base_duration)
+            node.move_arm(args.target, args.arm_duration, args.steps)
+            if args.pause:
+                time.sleep(args.pause)
+            node.move_arm(initial_arm_pose, args.arm_duration, args.steps)
         elif args.command == "stop":
             node.stop_base()
             node.get_logger().info("Zero base velocity published")
