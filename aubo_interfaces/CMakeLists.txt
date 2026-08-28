@@ -13,7 +13,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 # msg
-rosidl_generate_interfaces(${PROJECT_NAME}_suffix
+rosidl_generate_interfaces(${PROJECT_NAME}
 "msg/AgvStatus.msg"
 # DEPENDENCIES
 )

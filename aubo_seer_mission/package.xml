@@ -1,13 +1,22 @@
 <?xml version="1.0"?>
-<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypyns="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>aubo_seer_mission</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <version>0.1.0</version>
+  <description>Joint mission execution for the SEER AMR chassis and AUBO manipulator</description>
   <maintainer email="wei.luo.88@outlook.com">arnold</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>aubo_interfaces</depend>
+  <depend>aubo_bridge_msgs</depend>
+  <depend>seer_robot_driver</depend>
+  <exec_depend>python3-yaml</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

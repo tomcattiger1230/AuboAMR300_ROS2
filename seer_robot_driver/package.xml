@@ -11,8 +11,8 @@
   <buildtool_depend>ament_cmake_python</buildtool_depend>
   <depend>rclcpp</depend>
   <depend>rclpy</depend>
-  <depend>aubo_ros2_driver</depend>
   <depend>std_srvs</depend>
+  <depend>aubo_ros2_driver</depend>
   <depend>aubo_interfaces</depend>
 
 

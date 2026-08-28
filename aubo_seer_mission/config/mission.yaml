@@ -1,0 +1,49 @@
+# Mission configuration for aubo_seer_mission
+#
+# stations: ordered list of station tasks. Each station:
+#   name:            display name
+#   agv_source_id:   SEER map point id the robot is currently at ("" = let server decide)
+#   agv_target_id:   SEER map point id to navigate to
+#   navigation_timeout: seconds; FAILED if arrival not detected within this window
+#   arm_actions:     executed sequentially after arrival
+#     - type: joint   -> /aubo/move_to_joint_angles (target_joint in degrees)
+#     - type: pose    -> /aubo/move_to_pose (position in m, orientation quaternion xyzw)
+#   arm_home:        optional joint angles (degrees) moved to after arm_actions
+
+stations:
+  - name: station_1
+    agv_source_id: ""
+    agv_target_id: "1"
+    navigation_timeout: 300.0
+    arm_actions:
+      - type: joint
+        name: approach
+        target_joint: [0.0, -10.0, 90.0, -80.0, 90.0, 0.0]
+        max_acc: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        max_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      - type: pose
+        name: pick
+        position: [0.45, 0.0, 0.35]
+        orientation: [0.0, 0.0, 0.0, 1.0]  # quaternion xyzw
+        max_velocity: 0.2
+        max_acceleration: 0.5
+    arm_home: [0.0, 0.0, 90.0, 0.0, 90.0, 0.0]
+
+  - name: station_2
+    agv_source_id: ""
+    agv_target_id: "2"
+    navigation_timeout: 300.0
+    arm_actions:
+      - type: joint
+        name: place
+        target_joint: [30.0, -10.0, 90.0, -80.0, 90.0, 30.0]
+    arm_home: [0.0, 0.0, 90.0, 0.0, 90.0, 0.0]
+
+# Fallback arm home position (degrees) used for /mission/stop and station arm_home omission
+default_arm_home: [0.0, 0.0, 90.0, 0.0, 90.0, 0.0]
+
+# Poll interval (seconds) while waiting for AGV navigation / arm motion
+poll_interval: 0.5
+
+# Timeout (seconds) for a single arm service call
+arm_service_timeout: 10.0
