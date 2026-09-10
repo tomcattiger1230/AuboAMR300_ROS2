@@ -5,8 +5,9 @@
 
 ## 接口与行为
 
-GUI → `moveit_msgs/action/MoveGroup` (`/move_action`) → MoveIt →
-`control_msgs/action/FollowJointTrajectory` → Isaac articulation。
+GUI 通过 `moveit_msgs/action/MoveGroup` (`/move_action`) 仅规划；点击执行后，
+通过 `moveit_msgs/action/ExecuteTrajectory` (`/execute_trajectory`) 将缓存轨迹交给 MoveIt，
+再经 `control_msgs/action/FollowJointTrajectory` 驱动 Isaac articulation。
 机械臂使用 `arm` 组，夹爪使用 `gripper` 组，复用现有
 `/aubo_arm_controller/follow_joint_trajectory`，不发送学生版 SDK 服务或字符串夹爪命令。
 
@@ -74,13 +75,13 @@ ros2 launch aubo_control_gui aubo_i16_gui.launch.py backend:=isaac
 ros2 launch aubo_control_gui aubo_i16_gui.launch.py backend:=isaac enable_motion:=true
 ```
 
-GUI 只连接已有 MoveIt，不启动第二套控制器。右侧为 i16 机械臂和末端夹爪预览；
-完整底盘与相机模型仍在 Isaac / RViz 中显示。
+GUI 只连接已有 MoveIt，不启动第二套控制器。右侧显示 i16 外观网格、末端夹爪和黑白相机，关节限位按 i16H 配置；
+完整底盘与仓库场景在 Isaac / RViz 中显示。相机位置优先跟随远端 `/robot_description`。
 快捷位保存于 Qt AppConfigLocation 下的 `quick_positions.json`，不会自动导入学生现场坐标。
 
 ## 验证
 
-Ubuntu 端 32 项回归测试通过；Mac 端 31 项客户端测试通过，控制器测试仅在 Ubuntu 运行。另完成 GUI 窗口、模型渲染与实际鼠标拖动检查。
+初次整合的历史验证：Ubuntu 端 32 项回归测试通过；Mac 端 31 项客户端测试通过，控制器测试仅在 Ubuntu 运行。另完成 GUI 窗口、模型渲染与实际鼠标拖动检查。
 
 在 source 工作空间环境后运行：
 
@@ -195,7 +196,7 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 这些文件仅用于 GUI 预览，不改变仿真 URDF、碰撞网格或目标参数。
 [转换核验](test/results/macos_mesh_conversion_20260910.json)。
 
-也可验证 Qt 窗口实际接收和显示反馈（最多 30 秒，成功后自动关闭）：
+也可验证 Qt 窗口实际接收和显示反馈，以及已收到远端相机安装描述（最多 30 秒，成功后自动关闭）：
 
 ```bash
 ./scripts/start_macos_gui.command --check-gui
@@ -209,7 +210,7 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 
 ### GUI 夹爪与相机预览
 
-相机由深灰色机身和黑色圆柱镜头组成，几何与颜色读取本地组合 URDF，安装变换优先读取远端运行中的机器人描述；仅未连接时使用本地安装变换。
+相机由深灰色机身和黑色圆柱镜头组成，几何与颜色读取本地组合 URDF，安装变换优先读取远端运行中的机器人描述；尚未收到远端描述时使用本地安装变换（收到后保留最近的远端描述）。
 整体视角下体积较小，可点击视图上方的“相机特写”放大当前相机位置；拖动空白处绕该位置观察，滚轮继续缩放。
 特写时隐藏末端拖动控件，避免遮挡相机；“整体视图”恢复全景及目标控件。视角按钮不发送机器人运动命令，也不修改规划目标。
 特写定位的是点击时的相机位置；机器人运动后可再次点击定位。
@@ -218,8 +219,8 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 视频尚未嵌入 GUI，见 [相机与视频说明](../seer_description/README_MONO_CAMERA.md)。
 
 
-右侧模型包含连接板、电机、两片长夹指，以及 MV-CH100-60UM 黑白相机机身和 12 mm C 口镜头的示意外形。安装位姿及夹指运动轴从当前
-`seer_description/urdf/composite_robot_stick_mono.urdf` 读取，挂在 `wrist3_Link` 下。
+右侧模型包含连接板、电机、两片长夹指，以及 MV-CH100-60UM 黑白相机机身和 12 mm C 口镜头的示意外形。夹爪安装位姿、夹指运动轴和相机几何从
+`seer_description/urdf/composite_robot_stick_mono.urdf` 读取。相机安装变换优先使用远端模型；当前两端均为 `wrist3_Link` 下 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
 `gripper1_joint` 和 `gripper2_joint` 的实际反馈分别驱动两片夹指，单位为米；
 点击开合按钮不会直接伪造模型位置，仍需等待仿真反馈。点击“规划夹爪打开/闭合”后先显示预览，再点击“执行已规划轨迹”才会实际开合。
 

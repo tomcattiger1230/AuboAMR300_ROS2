@@ -96,7 +96,7 @@ ros2 run seer_description test_isaac_arm.py --execute --output /tmp/mono_arm.jso
 ## macOS GUI 中查看相机
 
 按 [GUI README](../aubo_control_gui/README.md) 启动后，使用“相机特写”查看机身和镜头，再用“整体视图”返回全景。
-GUI 从本文件所列的组合 URDF 读取相机几何和安装位置，不需要另行导入 USD。
+GUI 从本文件所列的组合 URDF 读取相机几何，安装位置优先读取远端运行中的 `/robot_description`；尚未收到远端描述时使用本地 URDF，不需要另行导入 USD。
 这只显示三维外观；实时视频仍使用上面的网页服务。更新源码后需要重启 GUI，已打开的窗口不会热加载模型。
 
 ### 2026-09-10：GUI 相机安装位置跟随运行中的 Ubuntu 模型

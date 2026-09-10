@@ -3,6 +3,26 @@
 This package can launch `seer_aubo.usd`, connect its articulation to ROS 2,
 and use MoveIt 2 trajectories to control the six AUBO joints.
 
+## Current tested configuration (2026-09-10)
+
+The current workflow uses Ubuntu 26.04 / ROS Lyrical with Isaac's isolated internal Jazzy bridge,
+i16H joint limits, a stick gripper, and an MV-CH100-60UM monochrome camera with a 12 mm C-mount lens.
+The generic and RGB-D launch commands below remain available as separate variants; they do not select the monochrome model.
+For the current variant, build and launch from the workspace root:
+
+```bash
+source /opt/ros/lyrical/setup.bash
+colcon build --symlink-install --packages-up-to seer_description seer_aubo_stick_mono_moveit_config
+source install/setup.bash
+ros2 run seer_description start_warehouse_stick_mono_demo.sh --gui --domain-id 133
+```
+
+The validated camera mount is fixed to `wrist3_Link`, at `(0, 0.1, 0)` m with a 180° Z rotation.
+URDF/Xacro, SDF, USD and the USD generator have been restored to this mount.
+The Mac GUI follows the running `/robot_description` for camera placement and includes a camera close-up view.
+See [monochrome camera and video](README_MONO_CAMERA.md) and [Mac GUI](../aubo_control_gui/README.md).
+Real robot deployment remains pending; these checks concern simulation.
+
 ## Data flow
 
 `MoveIt 2` → `FollowJointTrajectory` → `action_bridge.py` →
@@ -17,7 +37,7 @@ time on `/clock`. The differential-drive base accepts `/cmd_vel`, publishes
 Build once from the workspace root:
 
 ```bash
-source /opt/ros/jazzy/setup.bash
+source /opt/ros/lyrical/setup.bash # Use the ROS distribution installed on your host.
 colcon build --symlink-install --packages-up-to \
   seer_description seer_aubo_moveit_config seer_aubo_stick_moveit_config
 ```
@@ -173,9 +193,11 @@ ROS distribution.
 - Mobile-base command: `/cmd_vel` (`geometry_msgs/msg/Twist`)
 - Mobile-base odometry: `/odom` (`nav_msgs/msg/Odometry`)
 - Simulation clock: `/clock`
-- RGB image: `/camera/color/image_raw` (`sensor_msgs/msg/Image`)
-- Depth image: `/camera/depth/image_raw` (`sensor_msgs/msg/Image`)
-- Camera calibration: `/camera/color/camera_info`
+- RGB-D variant RGB image: `/camera/color/image_raw` (`sensor_msgs/msg/Image`)
+- RGB-D variant depth image: `/camera/depth/image_raw` (`sensor_msgs/msg/Image`)
+- RGB-D variant camera calibration: `/camera/color/camera_info`
+- Monochrome variant image: `/camera/image_raw` (`sensor_msgs/msg/Image`, `mono8`)
+- Monochrome variant calibration: `/camera/camera_info`; no depth topic
 - Front lidar scan: `/front_lidar/scan` (`sensor_msgs/msg/LaserScan`)
 - Rear lidar scan: `/back_lidar/scan` (`sensor_msgs/msg/LaserScan`)
 - Front lidar points: `/front_lidar/points` (`sensor_msgs/msg/PointCloud2`)
@@ -184,8 +206,10 @@ ROS distribution.
   `/aubo_arm_controller/follow_joint_trajectory`
 
 The runner creates Isaac Sim 6.x-native camera and RTX lidar sensors on the
-existing robot mounting frames at runtime. Camera data is published at 640×480
-with a nominal 20 Hz update rate; the two 2D lidars publish scans and point
+existing robot mounting frames at runtime. The RGB-D variant publishes 640×480 camera data
+with a nominal 20 Hz update rate. The monochrome variant defaults to 1024×615 preview,
+with 4096×2460 available via `--camera-resolution full`; see its dedicated README for rate and model limits.
+The two 2D lidars publish scans and point
 clouds at a nominal 10 Hz. Wall-clock rates track the simulation's real-time
 factor. The source USD remains unchanged.
 
@@ -242,7 +266,7 @@ wrist3_joint
 - The automation targets the current Isaac Sim 6.x installation at
   `~/isaacsim`. It uses `$ROS_DISTRO` when sourced, or detects the installed
   distribution under `/opt/ros`. Override Isaac with `--isaac-sim` when needed.
-- Do not start a second Isaac Sim instance while the GUI is already running.
+- Do not start a second Isaac Sim instance while an Isaac simulation is already running. Starting the Mac control GUI does not start Isaac.
 - The host currently reports duplicate NVIDIA Vulkan ICDs. Isaac warns that
   this can cause instability; clean the duplicate driver installation
   separately from the robot-physics fix.

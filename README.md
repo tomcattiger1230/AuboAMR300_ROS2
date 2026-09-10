@@ -11,6 +11,7 @@ SEER AMB-300 底盘、AUBO i16H 机械臂、末端夹爪和工业相机的 ROS 2
 | Isaac 与 ROS 2 启动及发行版兼容性 | [Isaac ROS 2](seer_description/README_ISAAC_ROS2.md) |
 | 双雷达、SLAM、导航和视频 | [导航与相机](seer_description/ISAAC_NAVIGATION_CAMERA.md) |
 | 黑白相机参数、URDF/SDF/USD、视频入口 | [MV-CH100-60UM + 12 mm](seer_description/README_MONO_CAMERA.md) |
+| GUI 模型资源来源与 i16H 限位 | [模型资源 README](aubo_student_description/README.md) |
 | 学生关键位置与碰撞验证 | [关键位置验证](aubo_control_gui/KEY_POSITION_VALIDATION.md) |
 
 ## Mac GUI 快速启动
@@ -25,7 +26,7 @@ cd ~/Develop/github/AuboAMR300_ROS2
 
 默认仿真机 `192.168.3.133`、ROS domain `133`、`rmw_fastrtps_cpp`。
 检查成功应包含 `fresh: true`、`moveit: true`、`fk: true`、`plan_error_code: 1`。
-`--check` 只规划、不执行；`--check-gui` 验证窗口反馈后自动关闭。
+`--check` 只规划、不执行；`--check-gui` 验证窗口反馈和远端相机安装描述后自动关闭。
 `--execute` 允许单独点击执行，不会在启动时自动运动。
 
 窗口右上方“相机特写”定位并放大末端相机，拖动空白处旋转、滚轮缩放；“整体视图”恢复机械臂全景。
