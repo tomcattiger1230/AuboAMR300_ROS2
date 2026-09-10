@@ -83,6 +83,13 @@ def Xform "World"
 
         over "joints"
         {
+            # AUBO i16H J3 specification; USD angular limits are degrees.
+            over "foreArm_joint"
+            {
+                float physics:lowerLimit = -161
+                float physics:upperLimit = 161
+            }
+
             def PhysicsFixedJoint "adapter_mount_joint" (
                 prepend apiSchemas = ["IsaacJointAPI"]
             )

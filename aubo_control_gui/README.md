@@ -204,3 +204,17 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 预览 GLB 来自本地及仿真机一致的 STL，来源哈希、面数和边界核验在
 `meshes/gripper/provenance.json`。转换合并重复顶点并使用 URDF 的灰/黑/白材质；
 仅增加显示资源，原始 STL、仿真模型及目标参数不变。
+
+### i16H J3 限位
+
+`foreArm_joint` 已按 i16H 官方规格校正为 **±161°**（±2.8099800957108707 rad）。
+依据：[AUBO-iH 官方手册](https://aubocdn.aubo-robotics.cn/official_website/hardware/AUBO-iH_user_manual_en_v1.0.1_trial_20251014.pdf)。
+i16H 原始与简化 URDF/Xacro、两套 stick 组合 URDF、黑白相机版 SDF、MoveIt 配置及 Isaac stick USD 均已同步。
+USD 角度单位为度；URDF/SDF 和 MoveIt 使用弧度。
+GUI 的 J3 初始/目标输入框限制为 ±161°，快捷位等绕过输入框的请求也会在 MotionClient 中校验。
+其余关节的位置范围保持原样。
+
+2026-09-10 已重启仿真，读取运行中 MoveIt 参数确认限位生效，并通过 Mac Fast DDS 仅规划复查。
+16 项 GUI/控制回归测试、5 项 USD 测试通过，包括 J3 边界与越界拒绝。
+[运行核验记录](test/results/i16h_j3_limits_20260910.json)。本次没有执行机械臂运动。
+原四个存储位的 J3 均在该范围内，因此这次修改不消除此前的夹爪与底盘碰撞。

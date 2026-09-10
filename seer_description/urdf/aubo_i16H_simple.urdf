@@ -133,7 +133,7 @@
     <parent link="upperArm_Link"/>
     <child link="foreArm_Link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="133" lower="-6.283185307179586" start_stop="207" upper="6.283185307179586" velocity="4.660029102824860"/>
+    <limit effort="133" lower="-2.8099800957108707" start_stop="207" upper="2.8099800957108707" velocity="4.660029102824860"/>
   </joint>
   <link name="wrist1_Link">
     <inertial>

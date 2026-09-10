@@ -341,8 +341,8 @@
       <axis>
         <xyz>0 0 1</xyz>
         <limit>
-          <lower>-6.2831853071795862</lower>
-          <upper>6.2831853071795862</upper>
+          <lower>-2.8099800957108707</lower>
+          <upper>2.8099800957108707</upper>
           <effort>133</effort>
           <velocity>4.6600291028248604</velocity>
         </limit>

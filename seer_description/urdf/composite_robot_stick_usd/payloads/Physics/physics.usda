@@ -545,8 +545,8 @@ over "seer_aubo_composite"
             point3f physics:localPos1 = (0, 0, 0)
             quatf physics:localRot0 = (5.551115e-17, -1, 2.7755576e-16, -1.6653345e-16)
             quatf physics:localRot1 = (1, 0, 0, 0)
-            float physics:lowerLimit = -360
-            float physics:upperLimit = 360
+            float physics:lowerLimit = -161
+            float physics:upperLimit = 161
             custom float urdf:limit:effort = 133
             custom float urdf:limit:velocity = 4.660029
         }

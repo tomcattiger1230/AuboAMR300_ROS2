@@ -156,6 +156,8 @@ class MotionClient(Node):
         names = ARM if group == 'arm' else GRIPPER
         if len(target) != len(names) or not all(math.isfinite(v) for v in target):
             raise ValueError('目标关节数据无效')
+        if group == 'arm' and abs(target[2]) > math.radians(161):
+            raise ValueError('i16H J3 目标超出 ±161° 限位')
         limits = (-2*math.pi, 2*math.pi) if group == 'arm' else (0.0, 0.04)
         if any(not limits[0] <= v <= limits[1] for v in target):
             raise ValueError('目标超出模型限位')

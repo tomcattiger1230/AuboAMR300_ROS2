@@ -40,6 +40,7 @@ class MainWindow(QMainWindow):
         self.motion_joint_labels=[QLabel("--") for _ in range(6)]; grid.addWidget(QLabel("当前"),1,0)
         for i,label in enumerate(self.motion_joint_labels): grid.addWidget(label,1,i+1)
         self.start_boxes=[_spin() for _ in range(6)]; self.target_boxes=[_spin() for _ in range(6)]
+        self.start_boxes[2].setRange(-161,161); self.target_boxes[2].setRange(-161,161)
         for r,(name,boxes) in enumerate((("初始",self.start_boxes),("目标",self.target_boxes)),2):
             grid.addWidget(QLabel(name),r,0)
             for i,box in enumerate(boxes): grid.addWidget(box,r,i+1)

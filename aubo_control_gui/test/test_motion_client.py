@@ -69,3 +69,19 @@ def test_nonfinite_state_cannot_refresh_old_sample(client):
     msg=JointState();msg.name=[ARM[0]];msg.position=[math.nan]
     client._state(msg)
     assert client.received[ARM[0]]==stamp
+
+
+def test_i16h_j3_position_limits(client):
+    sent = []
+    client._send = lambda *args: sent.append(args)
+    for degrees in (-161, 161):
+        target = [0.0]*6
+        target[2] = math.radians(degrees)
+        client.joint_target(target)
+    assert len(sent) == 2
+    for degrees in (-161.01, 161.01, -360, 360):
+        target = [0.0]*6
+        target[2] = math.radians(degrees)
+        with pytest.raises(ValueError, match='J3'):
+            client.joint_target(target)
+    assert len(sent) == 2

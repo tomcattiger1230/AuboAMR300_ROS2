@@ -14,6 +14,14 @@ class StickArticulationTest(unittest.TestCase):
         cls.cache = UsdGeom.XformCache()
         cls.root = "/World/seer_aubo_composite"
 
+    def test_i16h_j3_limits(self):
+        for asset in ("seer_aubo_stick.usda", "seer_aubo_stick_mono.usda", "warehouse_stick_mono_demo.usda"):
+            with self.subTest(asset=asset):
+                stage = Usd.Stage.Open(str(Path(__file__).resolve().parents[1] / "urdf" / asset))
+                joint = UsdPhysics.RevoluteJoint(stage.GetPrimAtPath(self.root + "/joints/foreArm_joint"))
+                self.assertEqual(joint.GetLowerLimitAttr().Get(), -161.0)
+                self.assertEqual(joint.GetUpperLimitAttr().Get(), 161.0)
+
     def test_stage_units_and_gravity_axis(self):
         self.assertEqual(UsdGeom.GetStageUpAxis(self.stage), UsdGeom.Tokens.z)
         self.assertEqual(UsdGeom.GetStageMetersPerUnit(self.stage), 1.0)

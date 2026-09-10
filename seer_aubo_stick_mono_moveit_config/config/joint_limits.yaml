@@ -9,6 +9,9 @@ default_acceleration_scaling_factor: 0.1
 # Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
 joint_limits:
   foreArm_joint:
+    has_position_limits: true
+    min_position: -2.8099800957108707
+    max_position: 2.8099800957108707
     has_velocity_limits: true
     max_velocity: 4.6600291028248604
     has_acceleration_limits: true

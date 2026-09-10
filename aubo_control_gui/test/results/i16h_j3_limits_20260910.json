@@ -1,0 +1,31 @@
+{
+  "urdf": {
+    "effort": "133",
+    "lower": "-2.8099800957108707",
+    "start_stop": "207",
+    "upper": "2.8099800957108707",
+    "velocity": "4.660029102824860"
+  },
+  "moveit_min_position": -2.8099800957108707,
+  "moveit_max_position": 2.8099800957108707,
+  "mac_fastdds_check": {
+    "rmw": "rmw_fastrtps_cpp",
+    "fresh": true,
+    "moveit": true,
+    "fk": true,
+    "joints": [
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0,
+      0.0003
+    ],
+    "plan_error_code": 1,
+    "executed": false
+  },
+  "usd_asset_limits_degrees": [
+    -161,
+    161
+  ]
+}
