@@ -77,6 +77,8 @@ ros2 launch aubo_control_gui collision_review.launch.py target_name:="存储位 
 ```
 
 红色是目标夹指，半透明蓝色是底盘，黄色球是 MoveIt 返回的接触位置。
+工具栏默认选中 `Move Camera`，在三维区域按住鼠标左键拖动可绕目标旋转；中键拖动平移，滚轮缩放。
+误切到选择工具时，重新点击 `Move Camera`。`Views` 面板使用 `Orbit`，也可以直接调整 Pitch、Yaw 和 Distance。
 窗口标注 `target only` / `NOT EXECUTED`。这不是实时实体机器人，也不会改变当前关节状态。
 可在同一窗口切换目标：
 

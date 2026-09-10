@@ -1,6 +1,8 @@
 Panels:
   - Class: rviz_common/Displays
     Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
 Visualization Manager:
   Class: ""
   Global Options:
@@ -20,6 +22,9 @@ Visualization Manager:
         Value: /diagnostics/student_target
         Reliability Policy: Reliable
         Durability Policy: Transient Local
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
