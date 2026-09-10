@@ -108,9 +108,9 @@ ros2 run seer_description mobile_manipulator_control.py gripper --position 0.0
 Open/close planning and execution have been checked on Ubuntu 26.04 / Lyrical
 with Isaac Sim 6.0.1-rc.7 using the internal Jazzy bridge. This does not validate
 contact grasping, payload retention, or force control. The `manipulator` SRDF
-group still includes the branched gripper, so its KDL Cartesian IK solver
-cannot initialize; named **joint-space** goals and the separate gripper group
-remain usable.
+group retains the branched gripper for joint-space goals. Use the separate
+`arm` chain for KDL IK and Cartesian wrist trajectories. See
+[SLAM, navigation and wrist video](ISAAC_NAVIGATION_CAMERA.md) for the tested workflow.
 
 ### Wheel contact fix
 

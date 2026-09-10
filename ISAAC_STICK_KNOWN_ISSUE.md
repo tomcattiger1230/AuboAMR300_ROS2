@@ -5,7 +5,11 @@
 The stick model now has two physical prismatic finger joints with 0–40 mm
 travel, collision geometry and position drives. Adapter, motor and fingers
 are sibling rigid bodies; fixed and prismatic joint frames agree at the
-neutral pose. The existing wheel-contact fix is retained.
+neutral pose. The wheel-contact fix is retained, with explicit caster `min`
+and drive-wheel `max` friction combination for mobile-base motion.
+
+SLAM, Nav2 and wrist video are described in
+[the navigation workflow](seer_description/ISAAC_NAVIGATION_CAMERA.md).
 
 MoveIt `gripper_open` / `gripper_closed` planning and execution are supported
 through `/aubo_arm_controller/follow_joint_trajectory`, with both finger
@@ -18,7 +22,7 @@ Python 3.14 environment. Other hosts can retain system mode. See
 `seer_description/README_ISAAC_ROS2.md` for startup and overrides.
 
 Remaining limitations: object grasping and payload retention are not yet
-validated; the branched `manipulator` group cannot use KDL Cartesian IK;
+validated; use the independent `arm` chain for KDL Cartesian IK;
 RTX lidar motion compensation and long-duration stability need separate
 validation. Named joint-space goals do not require that IK solver.
 

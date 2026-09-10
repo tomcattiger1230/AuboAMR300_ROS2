@@ -1,0 +1,79 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: nav2_rviz_plugins/Navigation 2
+    Name: Navigation 2
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Fixed Frame: map
+    Background Color: 40; 40; 40
+    Frame Rate: 20
+  Displays:
+    - Class: rviz_default_plugins/Map
+      Name: SLAM map
+      Enabled: true
+      Topic:
+        Value: /map
+        Reliability Policy: Reliable
+        Durability Policy: Transient Local
+      Alpha: 0.8
+    - Class: rviz_default_plugins/RobotModel
+      Name: Robot
+      Enabled: true
+      Description Source: Topic
+      Description Topic:
+        Value: /robot_description
+        Reliability Policy: Reliable
+        Durability Policy: Transient Local
+    - Class: rviz_default_plugins/LaserScan
+      Name: Front laser
+      Enabled: true
+      Topic:
+        Value: /front_lidar/scan_filtered
+        Reliability Policy: Best Effort
+      Size (m): 0.03
+      Style: Points
+      Color Transformer: FlatColor
+      Color: 255; 60; 60
+    - Class: rviz_default_plugins/LaserScan
+      Name: Rear laser
+      Enabled: true
+      Topic:
+        Value: /back_lidar/scan_filtered
+        Reliability Policy: Best Effort
+      Size (m): 0.03
+      Style: Points
+      Color Transformer: FlatColor
+      Color: 60; 180; 255
+    - Class: rviz_default_plugins/Path
+      Name: Navigation path
+      Enabled: true
+      Topic:
+        Value: /plan
+      Color: 40; 255; 80
+      Line Style: Lines
+      Line Width: 0.04
+    - Class: rviz_default_plugins/Image
+      Name: Wrist RGB
+      Enabled: true
+      Topic:
+        Value: /camera/color/image_raw
+        Reliability Policy: Best Effort
+      Transport Hint: raw
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: nav2_rviz_plugins/GoalTool
+      Topic: /goal_pose
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Name: Map view
+      Target Frame: map
+      Scale: 35
+      X: 0
+      Y: 0
+Window Geometry:
+  Width: 1400
+  Height: 900

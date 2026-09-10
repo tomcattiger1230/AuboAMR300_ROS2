@@ -109,6 +109,7 @@ def generate_launch_description():
                 "command_topic", default_value="/isaac_joint_commands"
             ),
             rsp_node,
+            Node(package='seer_description', executable='cmd_vel_watchdog.py', output='screen'),
             start_action_bridge,
             delay_moveit,
         ]

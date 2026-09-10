@@ -17,21 +17,23 @@ def Xform "World"
         def Scope "PhysicsMaterials"
         {
             def Material "WheelMaterial" (
-                prepend apiSchemas = ["PhysicsMaterialAPI"]
+                prepend apiSchemas = ["PhysicsMaterialAPI", "PhysxMaterialAPI"]
             )
             {
                 float physics:dynamicFriction = 1
                 float physics:restitution = 0
                 float physics:staticFriction = 1
+                token physxMaterial:frictionCombineMode = "max"
             }
 
             def Material "CasterMaterial" (
-                prepend apiSchemas = ["PhysicsMaterialAPI"]
+                prepend apiSchemas = ["PhysicsMaterialAPI", "PhysxMaterialAPI"]
             )
             {
                 float physics:dynamicFriction = 0
                 float physics:restitution = 0
                 float physics:staticFriction = 0
+                token physxMaterial:frictionCombineMode = "min"
             }
         }
 

@@ -1,0 +1,141 @@
+{
+  "date": "2026-09-10",
+  "environment": {
+    "os": "Ubuntu 26.04.1",
+    "host_ros": "Lyrical",
+    "isaac": "6.0.1-rc.7",
+    "isaac_bridge": "bundled Jazzy",
+    "gpu": "RTX 4090"
+  },
+  "navigation": [
+    {
+      "goal": [
+        1.5,
+        0.0,
+        0.0
+      ],
+      "planning_status": 4,
+      "path_points": 56,
+      "status": 4,
+      "error_code": 0,
+      "actual": [
+        1.3909980323509379,
+        -0.023503269383568216
+      ],
+      "position_error": 0.11150709673865497
+    },
+    {
+      "goal": [
+        1.5,
+        1.5,
+        1.5707963267948966
+      ],
+      "planning_status": 4,
+      "path_points": 60,
+      "status": 4,
+      "error_code": 0,
+      "actual": [
+        1.4911782580874178,
+        1.3553175148416707
+      ],
+      "position_error": 0.14495118020203346
+    },
+    {
+      "goal": [
+        0.0,
+        1.5,
+        3.141592653589793
+      ],
+      "planning_status": 4,
+      "path_points": 59,
+      "status": 4,
+      "error_code": 0,
+      "actual": [
+        0.1457972780051,
+        1.5055507540838053
+      ],
+      "position_error": 0.14590290313970897
+    },
+    {
+      "goal": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "planning_status": 4,
+      "path_points": 61,
+      "status": 4,
+      "error_code": 0,
+      "actual": [
+        0.030316444679589525,
+        0.14188618493296876
+      ],
+      "position_error": 0.145088856542614
+    },
+    {
+      "occupied_goal_rejected": true
+    }
+  ],
+  "arm": [
+    {
+      "test": "six_axis_joint_plan",
+      "planning_code": 1,
+      "points": 14,
+      "execution_code": 1,
+      "max_joint_error": 0.0009058957057073713
+    },
+    {
+      "test": "wrist_pose_ik",
+      "code": 1
+    },
+    {
+      "test": "cartesian_wrist_path",
+      "fraction": 1.0,
+      "code": 1,
+      "points": 7,
+      "execution_code": 1,
+      "max_joint_error": 0.0011485744898669659
+    },
+    {
+      "test": "return_to_start",
+      "planning_code": 1,
+      "points": 15,
+      "execution_code": 1,
+      "max_joint_error": 0.000496133334375918
+    },
+    {
+      "test": "unreachable_pose_rejected",
+      "code": -31
+    }
+  ],
+  "slam": {
+    "width": 494,
+    "height": 377,
+    "resolution_m": 0.05,
+    "known_cells": 161980,
+    "occupied_cells": 5080,
+    "map_saved": true
+  },
+  "video": {
+    "width": 640,
+    "height": 480,
+    "frames_in_10_wall_seconds": 46,
+    "measured_wall_fps": 4.806992162093712,
+    "mean_pixel_change": 49.00185546875,
+    "http_snapshot_status": 200
+  },
+  "regressions": {
+    "navigation_adapters_passed": 2,
+    "usd_passed": 4,
+    "packages_built": [
+      "seer_description",
+      "seer_aubo_stick_moveit_config"
+    ]
+  },
+  "limits": [
+    "Partial warehouse coverage; unknown areas remain",
+    "Arm test uses existing MoveIt scene, not all USD warehouse obstacles",
+    "No physical robot or long-duration validation",
+    "Wrist frame is not calibrated gripper TCP"
+  ]
+}

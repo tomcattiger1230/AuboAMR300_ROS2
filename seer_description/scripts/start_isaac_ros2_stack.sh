@@ -224,6 +224,7 @@ RUNNER_ARGS=(
   --robot-prim "$ROBOT_PRIM"
   --command-topic "$COMMAND_TOPIC"
   --state-topic "$STATE_TOPIC"
+  --cmd-vel-topic /isaac_cmd_vel
   --renderer "$RENDERER"
 )
 if [[ "$ROS_BRIDGE_MODE" == internal ]]; then

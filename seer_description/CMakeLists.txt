@@ -14,12 +14,18 @@ find_package(ament_cmake REQUIRED)
 # 找到所有需要的目录并将它们安装到 share 目录下
 install(
   DIRECTORY
-    meshes urdf launch rviz scripts config
+    meshes urdf launch rviz scripts config maps
   DESTINATION share/${PROJECT_NAME}/
 )
 
 # 将 Python 脚本安装到 lib/ 目录下，这样 ros2 run 才能找到它
 install(PROGRAMS
+  scripts/scan_filter.py
+  scripts/camera_video.py
+  scripts/cmd_vel_watchdog.py
+  scripts/test_isaac_navigation.py
+  scripts/test_isaac_arm.py
+  scripts/test_isaac_mapping.py
   scripts/keyboard_teleop.py
   scripts/circle_move.py
   scripts/action_bridge.py
@@ -35,8 +41,10 @@ install(PROGRAMS
 
 install(FILES
   README_ISAAC_ROS2.md
+  ISAAC_NAVIGATION_CAMERA.md
   DESTINATION share/${PROJECT_NAME}
 )
+install(DIRECTORY test/results DESTINATION share/${PROJECT_NAME}/test)
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

@@ -18,6 +18,11 @@ class StickArticulationTest(unittest.TestCase):
         self.assertEqual(UsdGeom.GetStageUpAxis(self.stage), UsdGeom.Tokens.z)
         self.assertEqual(UsdGeom.GetStageMetersPerUnit(self.stage), 1.0)
 
+    def test_caster_friction_is_not_averaged_with_ground(self):
+        material = self.stage.GetPrimAtPath(self.root + '/PhysicsMaterials/CasterMaterial')
+        self.assertEqual(material.GetAttribute('physxMaterial:frictionCombineMode').Get(), 'min')
+        self.assertEqual(material.GetAttribute('physics:dynamicFriction').Get(), 0.)
+
     def test_joint_frames_match_at_zero_position(self):
         for name in ("adapter_mount_joint", "motor_mount_joint",
                      "gripper1_joint", "gripper2_joint"):
