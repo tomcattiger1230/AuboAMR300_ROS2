@@ -1,0 +1,46 @@
+[
+  {
+    "test": "gui_joint_plan_execute",
+    "code": 1,
+    "max_error": 0.006400000000000003
+  },
+  {
+    "test": "saved_joint_target_return",
+    "code": 1,
+    "max_error": 0.0063
+  },
+  {
+    "test": "gui_pose_target",
+    "code": 1
+  },
+  {
+    "test": "return_after_pose",
+    "code": 1,
+    "max_error": 0.0091
+  },
+  {
+    "test": "gui_gripper_close",
+    "code": 1,
+    "max_error": 0.001899999999999999
+  },
+  {
+    "test": "gui_gripper_open",
+    "code": 1,
+    "max_error": 0.0019
+  },
+  {
+    "test": "gripper_restore",
+    "code": 1,
+    "max_error": 0.0010999999999999998
+  },
+  {
+    "test": "cancel_no_reissue",
+    "status": 5,
+    "drift": 0.0004
+  },
+  {
+    "test": "return_after_cancel",
+    "code": 1,
+    "max_error": 0.0086
+  }
+]

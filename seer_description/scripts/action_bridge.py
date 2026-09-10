@@ -29,6 +29,8 @@ class TrajectoryBridge(Node):
         action_name = self.get_parameter("action_name").value
         command_topic = self.get_parameter("command_topic").value
 
+        self._command_lock = threading.Lock()
+        self._cancel_pending = False
         self._goal_lock = threading.Lock()
         self._goal_active = False
         callback_group = ReentrantCallbackGroup()
@@ -73,7 +75,7 @@ class TrajectoryBridge(Node):
                     or point_time < 0.0 or point_time < previous_time
                     or any(values and (len(values) != len(names)
                            or not all(math.isfinite(v) for v in values))
-                           for values in (point.velocities, point.effort))):
+                           for values in (point.velocities, point.accelerations, point.effort))):
                 self.get_logger().warning("Rejected malformed trajectory points")
                 return GoalResponse.REJECT
             previous_time = point_time
@@ -82,10 +84,25 @@ class TrajectoryBridge(Node):
                 self.get_logger().warning("Rejected a goal while another is active")
                 return GoalResponse.REJECT
             self._goal_active = True
+            self._cancel_pending = False
         return GoalResponse.ACCEPT
 
-    def cancel_callback(self, _goal_handle):
+    def cancel_callback(self, goal_handle):
+        # Serialize cancellation with publishing: no target can follow this hold.
+        with self._command_lock:
+            self._cancel_pending = True
+            self._hold_position(goal_handle.request.trajectory.joint_names)
         return CancelResponse.ACCEPT
+
+    def _hold_position(self, names):
+        actual = self._actual_positions(names)
+        if actual is not None:
+            command = JointState()
+            command.header.stamp = self.get_clock().now().to_msg()
+            command.name = list(names)
+            command.position = actual
+            command.velocity = [0.0] * len(names)
+            self.publisher_.publish(command)
 
     def _on_joint_state(self, message):
         now = monotonic()
@@ -93,6 +110,7 @@ class TrajectoryBridge(Node):
             self._joint_state.update(
                 (name, (position, now))
                 for name, position in zip(message.name, message.position)
+                if math.isfinite(position)
             )
 
     def _actual_positions(self, names):
@@ -188,7 +206,9 @@ class TrajectoryBridge(Node):
                 command.position = list(point.positions)
                 command.velocity = list(point.velocities)
                 command.effort = list(point.effort)
-                self.publisher_.publish(command)
+                with self._command_lock:
+                    if not self._cancel_pending:
+                        self.publisher_.publish(command)
 
                 self._feedback(goal_handle, trajectory.joint_names, point)
 
@@ -198,6 +218,8 @@ class TrajectoryBridge(Node):
                 if goal_handle.is_cancel_requested:
                     goal_handle.canceled()
                 else:
+                    with self._command_lock:
+                        self._hold_position(trajectory.joint_names)
                     goal_handle.abort()
                 return self._result(
                     FollowJointTrajectory.Result.GOAL_TOLERANCE_VIOLATED,
