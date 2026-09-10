@@ -673,7 +673,7 @@
     </sensor>
   </gazebo>
   <joint name="camera_joint" type="fixed">
-    <parent link="wrist3_Link"/>
+    <parent link="gripper_motor_link"/>
     <child link="camera_link"/>
     <origin rpy="0 0 3.141592653589793" xyz="0.00 0.1 0.00"/>
   </joint>

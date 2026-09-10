@@ -50,14 +50,15 @@
 
   <xacro:include filename="$(find seer_description)/urdf/mv_ch100_60um_12mm.urdf.xacro" />
 
-  <joint name="camera_joint" type="fixed">
-    <parent link="wrist3_Link" />
-    <child link="camera_link" />
-    <origin xyz="0.00 0.1 0.00" rpy="0 0 ${pi}" />
-  </joint>
-
   <xacro:my_custom_gripper parent="wrist3_Link">
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:my_custom_gripper>
+
+  <!-- 末端夹爪后端安装：挂在 gripper_motor_link 上，避免停在 wrist3 中段。 -->
+  <joint name="camera_joint" type="fixed">
+    <parent link="gripper_motor_link" />
+    <child link="camera_link" />
+    <origin xyz="0.00 0.1 0.00" rpy="0 0 ${pi}" />
+  </joint>
 
 </robot>

@@ -76,7 +76,7 @@ over "World"
 
             def PhysicsFixedJoint "mono_camera_joint"
             {
-                rel physics:body0 = </World/seer_aubo_composite/wrist3_Link>
+                rel physics:body0 = </World/seer_aubo_composite/gripper_motor_link>
                 rel physics:body1 = </World/seer_aubo_composite/mono_camera_link>
                 bool physics:collisionEnabled = 0
                 point3f physics:localPos0 = (0, 0.1, 0)
