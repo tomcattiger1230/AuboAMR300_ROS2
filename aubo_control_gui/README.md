@@ -209,6 +209,15 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 
 ### GUI 夹爪与相机预览
 
+相机由深灰色机身和黑色圆柱镜头组成，直接读取组合 URDF 的几何、颜色和安装变换，固定在 `gripper_motor_link` 上。
+整体视角下体积较小，可点击视图上方的“相机特写”放大当前相机位置；拖动空白处绕该位置观察，滚轮继续缩放。
+特写时隐藏末端拖动控件，避免遮挡相机；“整体视图”恢复全景及目标控件。视角按钮不发送机器人运动命令，也不修改规划目标。
+特写定位的是点击时的相机位置；机器人运动后可再次点击定位。
+源码运行优先读取当前仓库的资源；安装运行仍通过 ROS package index 查找。更新后务必退出旧 GUI 再启动。
+镜头外形和安装参数仍为近似值，实际模型与轨迹预览共享同一装配。
+视频尚未嵌入 GUI，见 [相机与视频说明](../seer_description/README_MONO_CAMERA.md)。
+
+
 右侧模型包含连接板、电机、两片长夹指，以及 MV-CH100-60UM 黑白相机机身和 12 mm C 口镜头的示意外形。安装位姿及夹指运动轴从当前
 `seer_description/urdf/composite_robot_stick_mono.urdf` 读取，挂在 `wrist3_Link` 下。
 `gripper1_joint` 和 `gripper2_joint` 的实际反馈分别驱动两片夹指，单位为米；
@@ -247,7 +256,7 @@ Mac 启动：`./scripts/start_macos_gui.command`。连接现有 Ubuntu Isaac / M
 
 修改目标、规划参数、目标页签、碰撞场景，或起始关节状态偏离/反馈过期，都会使旧轨迹失效。机体场景坐标变换累计超过 1 mm / 0.001 rad 也会使轨迹失效，以容忍仿真静止时的微小数值抖动。关节起点检查为机械臂 0.01 rad、夹指 0.003 m；反馈时效 1.5 s。
 
-末端目标是 `base_footprint` 下的 `wrist3_Link` 腕部法兰，尚未定义夹爪抓取 TCP。GUI 正确转换该坐标系到独立机械臂视图；控制使用 i16H 参数，外观沿用学生 i16 网格。完整底盘、相机和仓库仍在 Isaac / RViz 查看。碰撞判断受 MoveIt 已加载场景范围限制；本次没有修改此前四个关键位置或关闭碰撞检查。
+末端目标是 `base_footprint` 下的 `wrist3_Link` 腕部法兰，尚未定义夹爪抓取 TCP。GUI 正确转换该坐标系到独立机械臂视图；控制使用 i16H 参数，外观沿用学生 i16 网格。GUI 已显示末端相机；完整底盘与仓库仍在 Isaac / RViz 查看。碰撞判断受 MoveIt 已加载场景范围限制；本次没有修改此前四个关键位置或关闭碰撞检查。
 
 
 2026-09-10 分离规划/执行验证：关节目标、末端位姿、夹爪开合、停止及返回均在 Isaac 验证。
@@ -259,4 +268,16 @@ Mac 启动：`./scripts/start_macos_gui.command`。连接现有 Ubuntu Isaac / M
 Mac 通过 Fast DDS 的同样流程也通过：[Mac 跨机测试记录](test/results/macos_plan_execute_20260910.json)。等待控制器稳定后，机械臂最大目标误差 0.0019 rad，夹指最大误差 0.001 m；停止后 1 秒最大关节漂移 0.0015 rad。
 可在 GUI 相同 Python/ROS 环境下运行 `test/check_gui_drag.py --ros-args -p use_sim_time:=true -p enable_motion:=true` 复查鼠标平移、旋转、预览及轨迹失效；该检查只规划、不执行，要求 Isaac 处于无碰撞的近零位姿。
 
-相机直接读取组合 URDF 的 box/cylinder 几何、颜色和安装变换，随夹爪电机座运动；实际模型与轨迹预览使用相同装配。镜头外形仍为未指定具体型号时的近似尺寸。本项仅添加三维模型，不新增视频面板。
+
+
+## macOS 无反馈排障与本次验证
+
+1. 在启动 GUI 的同一终端执行 `./scripts/start_macos_gui.command --check`，等待最终 JSON 结果。
+2. `UDP send failed: ... Broken pipe` 表示普通 socket 发送已失败。检查“系统设置 → 隐私与安全性 → 本地网络”中启动终端及 Python 的权限。
+   若权限已开启但仍失败，可关闭后重新开启该终端权限，并在保存终端任务后完全退出、重新打开终端，再检查。
+3. UDP 发送成功仍不代表 DDS 连通；以 `fresh`、`moveit`、`fk` 和规划返回码为准。核对远端仿真、domain、静态 peer、防火墙和主机地址。
+4. `--check` 成功但窗口无数值时，执行 `--check-gui`，并查看缺失关节日志。不要把终端输出的 `[AUBO GUI] ...` 行粘贴成命令。
+5. `IMKCFRunLoopWakeUpReliable` 曾与成功运行同时出现，不能单凭它判断 GUI 或 ROS 失败。
+
+2026-09-10：用户终端最终报告 UDP send accepted、fresh/moveit/fk 均为 true、规划返回码 1、executed=false。
+本次相机特写经 Qt 实际渲染检查；Mac GUI 连续反馈自检以及本地/Ubuntu 模型与视图数学测试通过。没有新增实机验证。

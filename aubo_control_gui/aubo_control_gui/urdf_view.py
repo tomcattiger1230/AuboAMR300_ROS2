@@ -54,6 +54,7 @@ class UrdfRobotView(QQuickWidget):
         self.rootObject().setProperty('targetBasis', (np.array(basis)/100).tolist())
         self.rootObject().targetDrag.connect(self._drag_target)
         visuals = tool_visuals(description / "urdf/composite_robot_stick_mono.urdf")
+        self.camera_center = np.array(next(v['position'] for v in visuals if v['link'] == 'camera_link'))
         for visual in visuals:
             visual['quaternion'] = QQuaternion.fromRotationMatrix(QMatrix3x3(np.array(visual['rotation']).flatten().tolist()))
         self.rootObject().setProperty("toolMeshRoot", QUrl.fromLocalFile(str(qml_path.parent.parent / "meshes/gripper")))
@@ -107,3 +108,16 @@ class UrdfRobotView(QQuickWidget):
 
     def set_target_status(self, text):
         self.rootObject().setProperty('targetStatus', text)
+
+    def focus_camera(self):
+        # Same URDF chain and scene basis as the displayed arm; view-only operation.
+        pose = np.eye(4)
+        for (_, xyz, rpy, axis), angle in zip(self.joints, self.angles):
+            pose = pose @ _transform(xyz, _rpy(*rpy)) @ _transform(rot=_axis_angle(axis, angle))
+        point = pose @ np.array([*self.camera_center, 1.])
+        scene = _transform((0,-45,0), _rpy(-math.pi/2,0,0)) @ np.diag([100,100,100,1]) @ point
+        from PySide6.QtGui import QVector3D
+        self.rootObject().focusCamera(QVector3D(*scene[:3]))
+
+    def reset_view(self):
+        self.rootObject().resetView()

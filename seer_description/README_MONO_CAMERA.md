@@ -92,3 +92,9 @@ ros2 run seer_description test_isaac_arm.py --execute --output /tmp/mono_arm.jso
 ```
 
 原生模式实测收到 4096×2460 mono8，K 中 fx=fy≈3478.26，深度发布器为 0；10 秒监测窗口收到 5 帧。厂商 36 fps 是硬件规格，不是当前 RTX 仓库场景的仿真帧率保证。预览模式实测为 1024×615，10 秒接收 19 帧；机械臂规划、IK、笛卡尔运动和回位通过，最大关节误差约 0.00121 rad。完整结果见 [测试记录](test/results/mono_camera_20260910.json)，[黑白画面示例](test/results/mv_ch100_60um_preview.jpg)。
+
+## macOS GUI 中查看相机
+
+按 [GUI README](../aubo_control_gui/README.md) 启动后，使用“相机特写”查看机身和镜头，再用“整体视图”返回全景。
+GUI 从本文件所列的组合 URDF 读取相机几何和安装位置，不需要另行导入 USD。
+这只显示三维外观；实时视频仍使用上面的网页服务。更新源码后需要重启 GUI，已打开的窗口不会热加载模型。

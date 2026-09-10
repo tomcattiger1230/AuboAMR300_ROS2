@@ -5,6 +5,18 @@ import QtQuick3D.AssetUtils
 View3D {
     id: view
     camera: sceneCamera
+    property bool cameraInspection: false
+    function focusCamera(point) {
+        cameraInspection = true
+        cameraRig.position = point
+        sceneCamera.z = 38
+    }
+    function resetView() {
+        cameraInspection = false
+        cameraRig.position = Qt.vector3d(0,0,0)
+        cameraRig.eulerRotation = Qt.vector3d(-22,-42,0)
+        sceneCamera.z = 230
+    }
     property bool ghostVisible: false
     property var ghostJoints: [0,0,0,0,0,0]
     property var ghostFingers: [0,0]
@@ -49,15 +61,15 @@ View3D {
         anchors.fill: parent; property real oldX; property real oldY
         onPressed: function(mouse) { oldX=mouse.x; oldY=mouse.y }
         onPositionChanged: function(mouse) { if (pressed) { cameraRig.eulerRotation.y += (mouse.x-oldX)*.35; cameraRig.eulerRotation.x=Math.max(-85,Math.min(85,cameraRig.eulerRotation.x+(mouse.y-oldY)*.35)); oldX=mouse.x; oldY=mouse.y } }
-        onWheel: function(wheel) { sceneCamera.z=Math.max(80,Math.min(450,sceneCamera.z-wheel.angleDelta.y*.15)) }
+        onWheel: function(wheel) { sceneCamera.z=Math.max(15,Math.min(450,sceneCamera.z-wheel.angleDelta.y*.15)) }
     }
     EndEffectorGizmo {
         anchors.fill: parent; view3d: view
-        enabled: view.targetEnabled; visible: view.targetEnabled
+        enabled: view.targetEnabled && !view.cameraInspection; visible: view.targetEnabled && !view.cameraInspection
         center: view.targetScene; basis: view.targetBasis; orientation: view.targetOrientation
         onDragged: function(axis, amount, rotation) { view.targetDrag(axis, amount, rotation) }
     }
-    Text { text: "AUBO i16H · 机械臂实时反馈"; color: "#d7e8fa"; font.pixelSize: 21; x: 16; y: 14 }
-    Text { text: view.targetStatus; color: "#73d7ec"; font.pixelSize: 15; x: 16; y: 46; width: parent.width-32; wrapMode: Text.WordWrap }
+    Text { text: view.cameraInspection ? "MV-CH100-60UM · 12 mm C 口镜头" : "AUBO i16H · 机械臂实时反馈"; color: "#d7e8fa"; font.pixelSize: 21; x: 16; y: 14 }
+    Text { text: view.cameraInspection ? "深灰色机身 + 黑色圆柱镜头；拖动空白旋转观察" : view.targetStatus; color: "#73d7ec"; font.pixelSize: 15; x: 16; y: 46; width: parent.width-32; wrapMode: Text.WordWrap }
     Text { text: "拖动空白旋转视角 · 滚轮缩放 · 半透明模型为目标/轨迹预览"; color: "#8fa9c2"; font.pixelSize: 18; x: 16; anchors.bottom: parent.bottom; anchors.bottomMargin: 14 }
 }
