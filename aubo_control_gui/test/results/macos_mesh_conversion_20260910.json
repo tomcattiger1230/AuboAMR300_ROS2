@@ -1,0 +1,118 @@
+{
+  "converter": "Assimp 6.0 glb2 exporter",
+  "note": "GLB deduplicates indexed vertices; face counts and transformed bounds compared.",
+  "meshes": [
+    {
+      "mesh": "link0",
+      "dae": [
+        "Vertices:           5096",
+        "Faces:              2812",
+        "Minimum point      (-0.104998 -0.061800 -0.104819)",
+        "Maximum point      (0.104998 0.000000 0.105000)"
+      ],
+      "glb": [
+        "Vertices:           2306",
+        "Faces:              2812",
+        "Minimum point      (-0.104998 -0.061800 -0.104819)",
+        "Maximum point      (0.104998 0.000000 0.105000)"
+      ],
+      "faces_and_bounds_match": true
+    },
+    {
+      "mesh": "link1",
+      "dae": [
+        "Vertices:           2275",
+        "Faces:              1256",
+        "Minimum point      (-0.075000 -0.101000 -0.075000)",
+        "Maximum point      (0.075000 0.110000 0.096000)"
+      ],
+      "glb": [
+        "Vertices:           1134",
+        "Faces:              1256",
+        "Minimum point      (-0.075000 -0.101000 -0.075000)",
+        "Maximum point      (0.075000 0.110000 0.096000)"
+      ],
+      "faces_and_bounds_match": true
+    },
+    {
+      "mesh": "link2",
+      "dae": [
+        "Vertices:           2650",
+        "Faces:              1424",
+        "Minimum point      (-0.101000 -0.075000 -0.069000)",
+        "Maximum point      (0.110000 0.075000 0.545000)"
+      ],
+      "glb": [
+        "Vertices:           1278",
+        "Faces:              1424",
+        "Minimum point      (-0.101000 -0.075000 -0.069000)",
+        "Maximum point      (0.110000 0.075000 0.545000)"
+      ],
+      "faces_and_bounds_match": true
+    },
+    {
+      "mesh": "link3",
+      "dae": [
+        "Vertices:           3692",
+        "Faces:              2004",
+        "Minimum point      (-0.059000 -0.059000 0.047000)",
+        "Maximum point      (0.059000 0.414047 0.181500)"
+      ],
+      "glb": [
+        "Vertices:           1541",
+        "Faces:              2004",
+        "Minimum point      (-0.059000 -0.059000 0.047000)",
+        "Maximum point      (0.059000 0.414047 0.181500)"
+      ],
+      "faces_and_bounds_match": true
+    },
+    {
+      "mesh": "link4",
+      "dae": [
+        "Vertices:           2246",
+        "Faces:              1240",
+        "Minimum point      (-0.044500 -0.053000 -0.070500)",
+        "Maximum point      (0.044500 0.044500 0.064000)"
+      ],
+      "glb": [
+        "Vertices:           1128",
+        "Faces:              1240",
+        "Minimum point      (-0.044500 -0.053000 -0.070500)",
+        "Maximum point      (0.044500 0.044500 0.064000)"
+      ],
+      "faces_and_bounds_match": true
+    },
+    {
+      "mesh": "link5",
+      "dae": [
+        "Vertices:           2246",
+        "Faces:              1240",
+        "Minimum point      (-0.044500 -0.044500 -0.070500)",
+        "Maximum point      (0.044500 0.053000 0.064000)"
+      ],
+      "glb": [
+        "Vertices:           1128",
+        "Faces:              1240",
+        "Minimum point      (-0.044500 -0.044500 -0.070500)",
+        "Maximum point      (0.044500 0.053000 0.064000)"
+      ],
+      "faces_and_bounds_match": true
+    },
+    {
+      "mesh": "link6",
+      "dae": [
+        "Vertices:           3120",
+        "Faces:              1624",
+        "Minimum point      (-0.044376 -0.044500 -0.039000)",
+        "Maximum point      (0.050000 0.044500 0.000000)"
+      ],
+      "glb": [
+        "Vertices:           1668",
+        "Faces:              1624",
+        "Minimum point      (-0.044376 -0.044500 -0.039000)",
+        "Maximum point      (0.050000 0.044500 0.000000)"
+      ],
+      "faces_and_bounds_match": true
+    }
+  ]
+}

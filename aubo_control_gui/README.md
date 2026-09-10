@@ -109,3 +109,87 @@ GUI 基于用户提供的 `aubo_develop_student/aubo_i16_pc_ws/src/aubo_control_
 夹爪行程映射、停止语义和工具坐标。完成后 GUI 继续使用相同 MoveIt 接口。
 
 关键位置另见 [四个存储位、放置位及过渡点验证](KEY_POSITION_VALIDATION.md)：四个存储位在当前完整模型中存在夹爪与底盘碰撞，未启用为默认快捷位。
+
+## macOS 本地 GUI（Fast DDS）
+
+界面、机械臂预览、参数输入及快捷位文件在 Mac 本地；MoveIt、控制器和 Isaac 在 Ubuntu 仿真机。
+通信使用原有 ROS 2 topic/service/action，经 `rmw_fastrtps_cpp` 直接传输，不使用 SSH 转发控制命令。
+Mac 需要 ROS 客户端运行库；单独安装 PySide6 或 Fast DDS 不足以运行本 GUI。
+Apple Silicon 环境使用 RoboStack Lyrical，避免 Mac 与 MoveIt 的消息发行版不同。
+
+首次安装（已有 conda 或 [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html) 时）：
+
+```bash
+cd ~/Develop/github/AuboAMR300_ROS2
+# micromamba 可以替换为 conda；在独立环境中安装，不要装进 base。
+micromamba env create -p ~/.venvs/aubo-ros-lyrical \
+  -f aubo_control_gui/environment-macos.yml
+./scripts/build_macos_moveit_msgs.sh
+```
+
+远端当前 `moveit_msgs=2.7.2`，RoboStack 二进制包为 2.7.1，`MotionPlanRequest` 相差 `smoothness_level` 字段。
+上面的构建脚本将官方 2.7.2 消息包编译到独立 overlay；启动器优先加载它，不替换远端软件。
+后续远端消息版本升级时，需要重新核对并同步此 overlay。
+
+启动仅规划模式：
+
+```bash
+cd ~/Develop/github/AuboAMR300_ROS2
+./scripts/start_macos_gui.command
+```
+
+也可在 Finder 中双击 `scripts/start_macos_gui.command`。
+指定仿真执行模式：
+
+```bash
+./scripts/start_macos_gui.command --execute
+```
+
+切换仿真机或 DDS domain：
+
+```bash
+./scripts/start_macos_gui.command --peer 192.168.3.133 --domain-id 133
+```
+
+启动器设置 `RMW_IMPLEMENTATION=rmw_fastrtps_cpp`、`ROS_DOMAIN_ID=133`、
+`ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST` 和 `ROS_STATIC_PEERS=192.168.3.133`。
+启动器使用仓库内 `config/fastdds_macos.xml`（UDPv4、自动端口），覆盖进程继承的 DDS profile 和 discovery server 设置。
+这避免已有全局 profile 仅绑定 127.0.0.1 或固定端口而导致跨机失败；不会修改全局配置文件。
+静态 peer 为指定主机建立发现连接，不代表仅能访问该主机，也不是访问控制机制。
+远端 ROS 节点必须使用相同 domain、兼容的 DDS，发现范围不能为 OFF，且网络允许 DDS UDP 双向通信。
+如果需要在远端显式添加 Mac（当前地址 `192.168.3.131`），在启动相关 ROS 进程前设置：
+
+```bash
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+export ROS_DOMAIN_ID=133
+export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+export ROS_STATIC_PEERS=192.168.3.131
+```
+
+环境变量只影响之后启动的进程。Mac IP 变化时同步调整配置。
+启动 GUI 不会启动远端仿真；Ubuntu 仿真与 MoveIt 须先按上文启动。
+默认仅规划模式中，机械臂和夹爪按钮均只请求规划；`--execute` 才允许执行。
+首次操作先使用“当前关节角 → 初始”，然后设置目标及速度/加速度比例。
+快捷位保存于 Mac 的 Qt AppConfigLocation，不会自动同步 Ubuntu 的快捷位文件。
+末端显示仍是 `base_footprint` 下的 `wrist3_Link`，不是夹爪尖端 TCP。
+
+参考：[RoboStack 安装](https://robostack.github.io/GettingStarted.html)、
+[ROS 2 静态 peer 与发现范围](https://github.com/ros2/ros2_documentation/blob/jazzy/source/Tutorials/Advanced/Improved-Dynamic-Discovery.rst)。
+
+本次跨机通信验证（2026-09-10）：Mac arm64 / RoboStack Lyrical / Fast DDS → Ubuntu Lyrical，
+关节反馈、FK 和 MoveGroup 仅规划请求通过（返回码 1），未执行运动。
+[验证结果](test/results/macos_fastdds_20260910.json)。可自行复查：
+
+```bash
+./scripts/start_macos_gui.command --check
+```
+
+`--check` 不打开窗口，也不能与 `--execute` 同时使用。
+启动器优先加载 overlay 的 Python 模块及动态库，避免 Python 使用新消息、DDS 序列化仍加载旧库。
+
+Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader 仅列出 OBJ/glTF/GLB，
+因此 Mac 使用由原始 DAE 转换的 GLB；Ubuntu 继续使用 DAE。
+七个 GLB 由 Assimp 6.0 `assimp export linkN.DAE linkN.glb -fglb2` 生成，
+转换前后面数及变换后的边界一致（GLB 对顶点进行了去重）。
+这些文件仅用于 GUI 预览，不改变仿真 URDF、碰撞网格或目标参数。
+[转换核验](test/results/macos_mesh_conversion_20260910.json)。

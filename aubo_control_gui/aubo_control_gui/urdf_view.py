@@ -1,6 +1,7 @@
 """Qt Quick 3D viewer for the real AUBO i16 COLLADA visual meshes."""
 from __future__ import annotations
 import math
+import sys
 import xml.etree.ElementTree as ET
 import numpy as np
 from PySide6.QtCore import QUrl
@@ -31,7 +32,9 @@ class UrdfRobotView(QQuickWidget):
         self.setSource(QUrl.fromLocalFile(str(qml_path)))
         if self.status()!=QQuickWidget.Ready: raise RuntimeError("Qt Quick 3D 视图加载失败: "+"; ".join(str(e) for e in self.errors()))
         mesh_dir=urdf_path.parent.parent/"meshes"/"aubo_i16"/"visual"
-        self.rootObject().setProperty("meshRoot",QUrl.fromLocalFile(str(mesh_dir)).toString())
+        if sys.platform == "darwin":
+            self.rootObject().setProperty("meshExtension", "glb")
+        self.rootObject().setProperty("meshRoot",QUrl.fromLocalFile(str(mesh_dir)))
     def set_joint_positions(self,angles):
         self.angles=list(angles)[:6]; root=self.rootObject()
         if root:

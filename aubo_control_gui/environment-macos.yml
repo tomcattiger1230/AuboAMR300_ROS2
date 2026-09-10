@@ -1,0 +1,17 @@
+name: aubo-ros-lyrical
+channels:
+  - https://prefix.dev/robostack-lyrical
+  - conda-forge
+dependencies:
+  - ros-lyrical-rclpy
+  - ros-lyrical-rmw-fastrtps-cpp
+  - ros-lyrical-moveit-msgs
+  - ros-lyrical-sensor-msgs
+  - ros-lyrical-ament-cmake
+  - ros-lyrical-rosidl-default-generators
+  - cmake
+  - ninja
+  - numpy>=2,<3
+  - pip
+  - pip:
+      - PySide6>=6.8,<7

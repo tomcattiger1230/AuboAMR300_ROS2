@@ -4,7 +4,7 @@ from pathlib import Path
 from PySide6.QtCore import QStandardPaths, Qt
 from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import (QApplication,QDoubleSpinBox,QFormLayout,QGridLayout,QGroupBox,QHBoxLayout,QLabel,QMainWindow,QMessageBox,QPushButton,QScrollArea,QSplitter,QTabWidget,QVBoxLayout,QWidget)
-from ament_index_python.packages import get_package_share_directory
+from .resources import get_package_share_directory
 from .planner import PlanningError, start_matches_actual
 from .presets import PRESET_NAMES, PresetStore
 
