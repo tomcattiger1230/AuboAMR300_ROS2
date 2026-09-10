@@ -53,6 +53,8 @@ def parse_args():
         "--internal-ros-distro", choices=("jazzy", "humble"),
         help="Use Isaac's bundled ROS backend in an isolated process environment",
     )
+    parser.add_argument("--camera-profile", choices=("gemini", "mv-ch100-60um"), default="gemini")
+    parser.add_argument("--camera-resolution", choices=("preview", "full"), default="preview")
     parser.add_argument("--ready-file", help="Write this marker after simulation startup")
     return parser.parse_args()
 
@@ -320,7 +322,10 @@ def attach_lidar_publishers(lidar_specs):
 
 
 def create_camera_graph(stage):
-    camera_mount = find_prim_path(stage, "camera_color_optical_frame")
+    mono = ARGS.camera_profile == "mv-ch100-60um"
+    frame = "camera_optical_frame" if mono else "camera_color_optical_frame"
+    width, height = ((4096, 2460) if ARGS.camera_resolution == "full" else (1024, 615)) if mono else (640, 480)
+    camera_mount = find_prim_path(stage, frame)
 
     camera_path = f"{camera_mount}/ros2_camera"
     camera = UsdGeom.Camera.Define(stage, camera_path)
@@ -332,22 +337,18 @@ def create_camera_graph(stage):
         (180.0, 0.0, 0.0),
         UsdGeom.XformCommonAPI.RotationOrderXYZ,
     )
-    camera.GetHorizontalApertureAttr().Set(20.955)
-    camera.GetVerticalApertureAttr().Set(15.7)
+    camera.GetHorizontalApertureAttr().Set(4096 * 0.00345 if mono else 20.955)
+    camera.GetVerticalApertureAttr().Set(2460 * 0.00345 if mono else 15.7)
     camera.GetProjectionAttr().Set("perspective")
-    camera.GetFocalLengthAttr().Set(18.0)
+    camera.GetFocalLengthAttr().Set(12.0 if mono else 18.0)
+    if mono:
+        camera.GetClippingRangeAttr().Set(Gf.Vec2f(.01, 100.0))
     camera.GetFocusDistanceAttr().Set(4.0)
 
     if stage.GetPrimAtPath(SENSOR_GRAPH_PATH).IsValid():
         stage.RemovePrim(SENSOR_GRAPH_PATH)
 
-    camera_graph, _, _, _ = og.Controller.edit(
-        {
-            "graph_path": SENSOR_GRAPH_PATH,
-            "evaluator_name": "push",
-            "pipeline_stage": og.GraphPipelineStage.GRAPH_PIPELINE_STAGE_ONDEMAND,
-        },
-        {
+    graph_data = {
             og.Controller.Keys.CREATE_NODES: [
                 ("OnTick", "omni.graph.action.OnTick"),
                 (
@@ -393,28 +394,28 @@ def create_camera_graph(stage):
                     "CreateRenderProduct.inputs:cameraPrim",
                     [usdrt.Sdf.Path(camera_path)],
                 ),
-                ("CreateRenderProduct.inputs:width", 640),
-                ("CreateRenderProduct.inputs:height", 480),
+                ("CreateRenderProduct.inputs:width", width),
+                ("CreateRenderProduct.inputs:height", height),
                 (
                     "PublishRgb.inputs:frameId",
-                    "camera_color_optical_frame",
+                    frame,
                 ),
                 (
                     "PublishRgb.inputs:topicName",
-                    "camera/color/image_raw",
+                    "camera/render/image_raw" if mono else "camera/color/image_raw",
                 ),
                 ("PublishRgb.inputs:type", "rgb"),
                 (
                     "PublishCameraInfo.inputs:frameId",
-                    "camera_color_optical_frame",
+                    frame,
                 ),
                 (
                     "PublishCameraInfo.inputs:topicName",
-                    "camera/color/camera_info",
+                    "camera/camera_info" if mono else "camera/color/camera_info",
                 ),
                 (
                     "PublishDepth.inputs:frameId",
-                    "camera_color_optical_frame",
+                    frame,
                 ),
                 (
                     "PublishDepth.inputs:topicName",
@@ -422,8 +423,16 @@ def create_camera_graph(stage):
                 ),
                 ("PublishDepth.inputs:type", "depth"),
             ],
-        },
-    )
+    }
+    if mono:
+        # A single monochrome sensor has no depth channel. RGB render output
+        # is converted by camera_mono.py, not misrepresented as an RGB-D device.
+        for key in (og.Controller.Keys.CREATE_NODES, og.Controller.Keys.CONNECT, og.Controller.Keys.SET_VALUES):
+            graph_data[key] = [item for item in graph_data[key]
+                               if not any(isinstance(value, str) and value.startswith("PublishDepth") for value in item)]
+    camera_graph, _, _, _ = og.Controller.edit(
+        {"graph_path": SENSOR_GRAPH_PATH, "evaluator_name": "push",
+         "pipeline_stage": og.GraphPipelineStage.GRAPH_PIPELINE_STAGE_ONDEMAND}, graph_data)
     og.Controller.evaluate_sync(camera_graph)
     return camera_graph
 
@@ -454,6 +463,11 @@ def limit_camera_publish_rate():
         ),
     )
     for gate_path in gate_paths:
+        if ARGS.camera_profile == "mv-ch100-60um" and depth_rendervar in gate_path:
+            continue
+        if not omni.usd.get_context().get_stage().GetPrimAtPath(gate_path).IsValid():
+            print(f"Optional camera rate gate unavailable: {gate_path}", flush=True)
+            continue
         attribute = og.Controller.attribute(f"{gate_path}.inputs:step")
         if attribute.is_valid():
             attribute.set(3)
@@ -723,7 +737,7 @@ def main():
         f"  states: {ARGS.state_topic}\n"
         f"  base commands: {ARGS.cmd_vel_topic}\n"
         f"  odometry: {ARGS.odom_topic}\n"
-        "  camera: /camera/color/image_raw, /camera/depth/image_raw\n"
+        f"  camera profile: {ARGS.camera_profile} ({ARGS.camera_resolution})\n"
         "  lidar scans: /front_lidar/scan, /back_lidar/scan\n"
         "  lidar points: /front_lidar/points, /back_lidar/points",
         flush=True,

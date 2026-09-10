@@ -32,7 +32,7 @@ class CameraVideo(Node):
 
             def do_GET(self):
                 if self.path == '/':
-                    body = b'<!doctype html><meta charset="utf-8"><title>Wrist camera</title><h1>Wrist RGB camera</h1><img src="/stream.mjpg" width="640"><p>640 x 480 live simulation feed</p>'
+                    body = b'<!doctype html><meta charset="utf-8"><title>Wrist camera</title><h1>Wrist camera</h1><img src="/stream.mjpg" style="max-width:100%;height:auto"><p>Live simulation feed</p>'
                     self.send_response(200)
                     self.send_header('Content-Type', 'text/html; charset=utf-8')
                     self.end_headers()

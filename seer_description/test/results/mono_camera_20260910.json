@@ -1,0 +1,98 @@
+{
+  "camera": "MV-CH100-60UM",
+  "lens_focal_length_mm": 12.0,
+  "environment": "Ubuntu 26.04.1 / ROS Lyrical / Isaac 6.0.1-rc.7 / bundled Jazzy / RTX 4090",
+  "full": {
+    "width": 4096,
+    "height": 2460,
+    "encoding": "mono8",
+    "frame": "camera_optical_frame",
+    "k": [
+      3478.2609097523446,
+      0.0,
+      2048.0,
+      0.0,
+      3478.2609097523446,
+      1230.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "d": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "frames_in_10_wall_seconds": 5,
+    "depth_publishers": 0,
+    "pixel_stddev": 79.14613833015135
+  },
+  "preview": {
+    "width": 1024,
+    "height": 615,
+    "encoding": "mono8",
+    "frame": "camera_optical_frame",
+    "k": [
+      869.5652274380861,
+      0.0,
+      512.0,
+      0.0,
+      869.5652274380861,
+      307.5,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "d": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "frames_in_10_wall_seconds": 19,
+    "depth_publishers": 0,
+    "pixel_stddev": 78.50881380290032
+  },
+  "arm_preview": [
+    {
+      "test": "six_axis_joint_plan",
+      "planning_code": 1,
+      "points": 14,
+      "execution_code": 1,
+      "max_joint_error": 0.0009548335153609644
+    },
+    {
+      "test": "wrist_pose_ik",
+      "code": 1
+    },
+    {
+      "test": "cartesian_wrist_path",
+      "fraction": 1.0,
+      "code": 1,
+      "points": 7,
+      "execution_code": 1,
+      "max_joint_error": 0.0012130891873685101
+    },
+    {
+      "test": "return_to_start",
+      "planning_code": 1,
+      "points": 15,
+      "execution_code": 1,
+      "max_joint_error": 0.00041762371892109523
+    },
+    {
+      "test": "unreachable_pose_rejected",
+      "code": -31
+    }
+  ],
+  "sdf_validation": "gz sdf -k: Valid",
+  "gazebo_runtime_tested": false,
+  "limitations": [
+    "Ideal zero-distortion pinhole, not real lens calibration",
+    "Lens envelope, mass, inertia and mount extrinsics are estimates",
+    "Image output is ideal rendered RGB converted to mono8, not sensor spectral simulation"
+  ]
+}

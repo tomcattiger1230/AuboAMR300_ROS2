@@ -15,6 +15,8 @@ MOVEIT_PACKAGE="seer_aubo_moveit_config"
 ACTION_NAME="/aubo_arm_controller_wo_gripper/follow_joint_trajectory"
 COMMAND_TOPIC="/isaac_joint_commands"
 STATE_TOPIC="/joint_states"
+CAMERA_PROFILE="gemini"
+CAMERA_RESOLUTION="preview"
 
 usage() {
   printf '%s\n' \
@@ -33,6 +35,8 @@ usage() {
     "  --ros-bridge-mode MODE auto (Lyrical: internal), system, or internal" \
     "  --bridge-distro NAME   Bundled backend: jazzy (default) or humble" \
     "  --renderer NAME       RaytracedLighting or RealTimePathTracing" \
+    "  --camera-profile NAME gemini or mv-ch100-60um" \
+    "  --camera-resolution MODE preview or full" \
     "  --help                 Show this help"
 }
 
@@ -84,6 +88,14 @@ while (($#)); do
       RENDERER="${2:?--renderer requires a value}"
       shift
       ;;
+    --camera-profile)
+      CAMERA_PROFILE="${2:?--camera-profile requires a value}"
+      shift
+      ;;
+    --camera-resolution)
+      CAMERA_RESOLUTION="${2:?--camera-resolution requires a value}"
+      shift
+      ;;
     --help|-h)
       usage
       exit 0
@@ -96,6 +108,9 @@ while (($#)); do
   esac
   shift
 done
+
+case "$CAMERA_PROFILE" in gemini|mv-ch100-60um) ;; *) usage >&2; exit 2 ;; esac
+case "$CAMERA_RESOLUTION" in preview|full) ;; *) usage >&2; exit 2 ;; esac
 
 case "$ROS_BRIDGE_MODE" in auto|system|internal) ;; *) usage >&2; exit 2 ;; esac
 case "$BRIDGE_DISTRO" in jazzy|humble) ;; *) usage >&2; exit 2 ;; esac
@@ -226,6 +241,8 @@ RUNNER_ARGS=(
   --state-topic "$STATE_TOPIC"
   --cmd-vel-topic /isaac_cmd_vel
   --renderer "$RENDERER"
+  --camera-profile "$CAMERA_PROFILE"
+  --camera-resolution "$CAMERA_RESOLUTION"
 )
 if [[ "$ROS_BRIDGE_MODE" == internal ]]; then
   RUNNER_ARGS+=(--internal-ros-distro "$BRIDGE_DISTRO")
@@ -286,4 +303,5 @@ ros2 launch seer_description bringup_isaac.launch.py \
   command_topic:="$COMMAND_TOPIC" \
   robot_xacro:="$ROBOT_XACRO" \
   moveit_package:="$MOVEIT_PACKAGE" \
+  camera_profile:="$CAMERA_PROFILE" \
   action_name:="$ACTION_NAME"

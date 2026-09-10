@@ -22,6 +22,11 @@ install(
 install(PROGRAMS
   scripts/scan_filter.py
   scripts/camera_video.py
+  scripts/camera_mono.py
+  scripts/generate_mono_camera_usd.py
+  scripts/generate_mono_robot_models.py
+  scripts/test_mono_camera.py
+  scripts/start_warehouse_stick_mono_demo.sh
   scripts/cmd_vel_watchdog.py
   scripts/test_isaac_navigation.py
   scripts/test_isaac_arm.py
@@ -42,6 +47,7 @@ install(PROGRAMS
 install(FILES
   README_ISAAC_ROS2.md
   ISAAC_NAVIGATION_CAMERA.md
+  README_MONO_CAMERA.md
   DESTINATION share/${PROJECT_NAME}
 )
 install(DIRECTORY test/results DESTINATION share/${PROJECT_NAME}/test)

@@ -4,3 +4,4 @@ a ROS2 package to control the AUBO-AMR300 robot with ROS2, which is composed of 
 
 - [Isaac ROS 2 startup](seer_description/README_ISAAC_ROS2.md)
 - [SLAM、室内导航、机械臂和腕部视频](seer_description/ISAAC_NAVIGATION_CAMERA.md)
+- [MV-CH100-60UM 黑白相机 + 12 mm 镜头独立版本](seer_description/README_MONO_CAMERA.md)

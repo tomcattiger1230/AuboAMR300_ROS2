@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<robot name="seer_aubo_composite" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find seer_description)/urdf/seer_robot_base.urdf.xacro" />
+
+  <xacro:include filename="$(find seer_description)/urdf/aubo_i16H_simple.urdf" />
+
+  <xacro:include filename="$(find seer_description)/urdf/gripper_stick_simple.urdf.xacro" />
+
+  <joint name="arm_mount_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="aubo_base_link" />
+
+    <origin xyz="-0.3 0.0 0.6" rpy="0 0 ${pi}" />
+  </joint>
+
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+
+    <xacro:macro name="aubo_joint_interface" params="joint_name joint_min joint_max">
+      <joint name="${joint_name}">
+        <command_interface name="position">
+          <param name="min">${joint_min}</param>
+          <param name="max">${joint_max}</param>
+        </command_interface>
+        <state_interface name="position" />
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+    </xacro:macro>
+
+    <xacro:aubo_joint_interface joint_name="shoulder_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="upperArm_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="foreArm_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="wrist1_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="wrist2_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="wrist3_joint" joint_min="-6.28" joint_max="6.28" />
+    <xacro:aubo_joint_interface joint_name="gripper1_joint" joint_min="0.0" joint_max="0.04" />
+    <xacro:aubo_joint_interface joint_name="gripper2_joint" joint_min="0.0" joint_max="0.04" />
+  </ros2_control>
+
+
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find seer_description)/config/aubo_controllers_with_gripper.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <xacro:include filename="$(find seer_description)/urdf/mv_ch100_60um_12mm.urdf.xacro" />
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="wrist3_Link" />
+    <child link="camera_link" />
+    <origin xyz="0.00 0.1 0.00" rpy="0 0 ${pi}" />
+  </joint>
+
+  <xacro:my_custom_gripper parent="wrist3_Link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:my_custom_gripper>
+
+</robot>

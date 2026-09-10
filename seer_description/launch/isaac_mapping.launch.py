@@ -14,6 +14,8 @@ def generate_launch_description():
         DeclareLaunchArgument('video_host', default_value='127.0.0.1'),
         DeclareLaunchArgument('video_port', default_value='8080'),
         DeclareLaunchArgument('start_rviz', default_value='false'),
+        DeclareLaunchArgument('image_topic', default_value='/camera/color/image_raw'),
+        DeclareLaunchArgument('rviz_config', default_value='isaac_navigation.rviz'),
         Node(package='seer_description', executable='scan_filter.py', output='screen', prefix=sys.executable,
              parameters=[{'use_sim_time': True}]),
         IncludeLaunchDescription(PythonLaunchDescriptionSource(PathJoinSubstitution([
@@ -22,9 +24,10 @@ def generate_launch_description():
                 FindPackageShare('seer_description'), 'config', 'isaac_slam.yaml'])}.items()),
         Node(package='seer_description', executable='camera_video.py', output='screen', prefix=sys.executable,
              parameters=[{'host': LaunchConfiguration('video_host'),
+                          'image_topic': LaunchConfiguration('image_topic'),
                           'port': LaunchConfiguration('video_port')}]),
         Node(package='rviz2', executable='rviz2', parameters=[{'use_sim_time': True}],
              arguments=['-d', PathJoinSubstitution([FindPackageShare('seer_description'),
-                                                   'rviz', 'isaac_navigation.rviz'])],
+                                                   'rviz', LaunchConfiguration('rviz_config')])],
              condition=IfCondition(LaunchConfiguration('start_rviz'))),
     ])

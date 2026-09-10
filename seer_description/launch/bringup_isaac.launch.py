@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # coding=UTF-8
 """Launch MoveIt and the trajectory bridge for an Isaac Sim articulation."""
+import sys
 
 from launch import LaunchDescription
 from launch.actions import (
@@ -11,7 +12,7 @@ from launch.actions import (
 )
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution, EqualsSubstitution
 from launch_ros.actions import Node, SetParameter
 from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
@@ -90,6 +91,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             DeclareLaunchArgument("use_sim_time", default_value="true"),
+            DeclareLaunchArgument("camera_profile", default_value="gemini"),
             DeclareLaunchArgument("start_rviz", default_value="true"),
             DeclareLaunchArgument(
                 "robot_xacro",
@@ -109,6 +111,9 @@ def generate_launch_description():
                 "command_topic", default_value="/isaac_joint_commands"
             ),
             rsp_node,
+            Node(package='seer_description', executable='camera_mono.py', prefix=sys.executable,
+                 condition=IfCondition(EqualsSubstitution(LaunchConfiguration('camera_profile'), 'mv-ch100-60um')),
+                 output='screen'),
             Node(package='seer_description', executable='cmd_vel_watchdog.py', output='screen'),
             start_action_bridge,
             delay_moveit,
