@@ -4,10 +4,11 @@ import math
 import sys
 import xml.etree.ElementTree as ET
 import numpy as np
-from PySide6.QtCore import QUrl
+from PySide6.QtCore import QUrl, Signal
 from PySide6.QtGui import QMatrix3x3, QQuaternion
 from .resources import get_package_share_directory
-from .tool_preview import tool_visuals
+from .tool_preview import tool_visuals, origin as urdf_origin
+from .view_math import rotate_world
 from pathlib import Path
 from PySide6.QtQuickWidgets import QQuickWidget
 
@@ -21,10 +22,12 @@ def _transform(xyz=(0,0,0),rot=None):
     m=np.eye(4); m[:3,:3]=np.eye(3) if rot is None else rot; m[:3,3]=xyz; return m
 
 class UrdfRobotView(QQuickWidget):
+    target_changed = Signal(object)
     """Loads arm meshes and attaches URDF-derived tool visuals to wrist3."""
     def __init__(self,urdf_path,qml_path,parent=None):
         super().__init__(parent); self.setMinimumSize(560,520); self.setResizeMode(QQuickWidget.SizeRootObjectToView)
         self.joints=[]; self.angles=[0.0]*6
+        self.target_pose = None
         root=ET.parse(urdf_path).getroot()
         for joint in root.findall("joint"):
             if joint.get("type") not in ("revolute","continuous"): continue
@@ -40,6 +43,16 @@ class UrdfRobotView(QQuickWidget):
             self.rootObject().setProperty("meshExtension", "glb")
         self.rootObject().setProperty("meshRoot",QUrl.fromLocalFile(str(mesh_dir)))
         description = Path(get_package_share_directory("seer_description"))
+        composed = ET.parse(description / "urdf/composite_robot_stick_mono.urdf").getroot()
+        fixed = {j.find('child').get('link'): j for j in composed.findall('joint') if j.get('type') == 'fixed'}
+        def mount(link):
+            if link == 'base_footprint': return np.eye(4)
+            joint = fixed[link]
+            return mount(joint.find('parent').get('link')) @ urdf_origin(joint.find('origin'))
+        self.planning_to_scene = _transform((0,-45,0), _rpy(-math.pi/2,0,0)) @ np.diag([100,100,100,1]) @ np.linalg.inv(mount('aubo_base_link'))
+        basis = [self.planning_to_scene[:3,i].tolist() for i in range(3)]
+        self.rootObject().setProperty('targetBasis', (np.array(basis)/100).tolist())
+        self.rootObject().targetDrag.connect(self._drag_target)
         visuals = tool_visuals(description / "urdf/composite_robot_stick_mono.urdf")
         for visual in visuals:
             visual['quaternion'] = QQuaternion.fromRotationMatrix(QMatrix3x3(np.array(visual['rotation']).flatten().tolist()))
@@ -61,3 +74,36 @@ class UrdfRobotView(QQuickWidget):
         for (_,xyz,rpy,axis),angle in zip(self.joints,self.angles):
             pose=pose@_transform(xyz,_rpy(*rpy))@_transform(rot=_axis_angle(axis,angle)); points.append(pose[:3,3].copy())
         return points
+
+    def set_target_pose(self, pose, emit=False):
+        self.target_pose = list(pose)
+        point = self.planning_to_scene @ np.array([*pose[:3],1.])
+        from PySide6.QtGui import QVector3D
+        self.rootObject().setProperty('targetScene', QVector3D(*point[:3]))
+        q = QQuaternion(pose[6],pose[3],pose[4],pose[5])
+        basis = []
+        for axis in (QVector3D(1,0,0),QVector3D(0,1,0),QVector3D(0,0,1)):
+            v = q.rotatedVector(axis)
+            basis.append((self.planning_to_scene[:3,:3] @ np.array([v.x(),v.y(),v.z()])/100).tolist())
+        self.rootObject().setProperty('targetOrientation', basis)
+        self.rootObject().setProperty('targetEnabled', True)
+        if emit: self.target_changed.emit(self.target_pose)
+
+    def _drag_target(self, axis, amount, rotation):
+        if self.target_pose is None: return
+        pose = list(self.target_pose)
+        if rotation:
+            pose[3:] = rotate_world(pose[3:],axis,amount)
+        else:
+            pose[axis] = max(-5.,min(5.,pose[axis]+amount))
+        self.set_target_pose(pose, emit=True)
+
+    def set_ghost(self, joints=None, fingers=None):
+        root = self.rootObject()
+        root.setProperty('ghostVisible', joints is not None)
+        if joints is not None:
+            root.setProperty('ghostJoints', [math.degrees(v) for v in joints])
+            root.setProperty('ghostFingers', list(fingers or [root.property('finger1'),root.property('finger2')]))
+
+    def set_target_status(self, text):
+        self.rootObject().setProperty('targetStatus', text)

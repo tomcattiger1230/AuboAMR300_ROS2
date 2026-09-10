@@ -2,12 +2,14 @@ import importlib.util
 from pathlib import Path
 from types import SimpleNamespace
 import rclpy
+import pytest
 from sensor_msgs.msg import JointState
 from trajectory_msgs.msg import JointTrajectory
 from rclpy.action import CancelResponse
 
 
 def test_cancel_publishes_feedback_hold_with_zero_velocity():
+    pytest.importorskip("control_msgs", reason="Isaac controller test requires the Ubuntu backend dependencies")
     source=Path(__file__).resolve().parents[2]/'seer_description/scripts/action_bridge.py'
     spec=importlib.util.spec_from_file_location('sim_action_bridge',source)
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)

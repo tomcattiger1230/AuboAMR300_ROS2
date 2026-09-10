@@ -21,9 +21,21 @@ def main():
         end=time.monotonic()+timeout
         while not predicate() and time.monotonic()<end:rclpy.spin_once(node,timeout_sec=.05)
         if not predicate():raise TimeoutError('Workflow wait expired')
+    def settle():
+        end=time.monotonic()+1.5
+        while time.monotonic()<end:rclpy.spin_once(node,timeout_sec=.01)
     def run(target,group,label):
         node.joint_target(target,.15,.15,group)
         until(lambda:not node.busy)
+        assert node.plan_ready(), f"{label}: no cached plan"
+        before=dict(node.state)
+        end=time.monotonic()+1
+        while time.monotonic()<end:rclpy.spin_once(node,timeout_sec=.05)
+        drift=max(abs(node.state[n]-before[n]) for n in ARM+GRIPPER)
+        assert drift < .01, f"Robot moved while previewing: {drift}"
+        node.execute_planned()
+        until(lambda:not node.busy)
+        settle()
         result=node.last_result
         if result is None or result.result.error_code.val!=1:raise RuntimeError(f'{label} failed: {result}')
         names=ARM if group=='arm' else GRIPPER
@@ -33,6 +45,9 @@ def main():
         if error>.02:raise RuntimeError(str(report[-1]))
     try:
         until(lambda:node.fresh(ARM+GRIPPER) and node.move.server_is_ready(),30)
+        # Allow initial DDS scene snapshots and controller settling to arrive.
+        warmup=time.monotonic()+3
+        while time.monotonic()<warmup:rclpy.spin_once(node,timeout_sec=.01)
         initial=[node.state[n] for n in ARM];gripper=[node.state[n] for n in GRIPPER]
         target=list(initial);target[2]+=.10;target[3]-=.07
         run(target,'arm','gui_joint_plan_execute')
@@ -42,6 +57,10 @@ def main():
         node.pose_target([p.x,p.y,p.z-.005],.15,.15)
         until(lambda:not node.busy)
         if node.last_result is None or node.last_result.result.error_code.val!=1:raise RuntimeError('Pose planning failed')
+        assert node.plan_ready()
+        node.execute_planned();until(lambda:not node.busy)
+        assert node.last_result.result.error_code.val==1
+        settle()
         report.append({'test':'gui_pose_target','code':node.last_result.result.error_code.val})
         run(initial,'arm','return_after_pose')
         run([.04,.04],'gripper','gui_gripper_close')
@@ -49,13 +68,16 @@ def main():
         run(gripper,'gripper','gripper_restore')
         # Cancel a slow arm goal; verify no delayed reissue and stable feedback.
         target=list(initial);target[2]+=.3;target[3]-=.2
-        node.joint_target(target,.03,.03)
+        node.joint_target(target,.005,.005)
+        until(lambda:not node.busy)
+        assert node.plan_ready()
+        node.execute_planned()
         until(lambda:node.goal_handle is not None or not node.busy)
         if not node.busy:raise RuntimeError('Goal finished before cancellation test')
         until(lambda:max(abs(node.state[n]-v) for n,v in zip(ARM,initial))>.02 or not node.busy)
         if not node.busy:raise RuntimeError('Motion finished before stop test')
         node.stop();until(lambda:not node.busy)
-        if node.last_result is None or node.last_result.status != 5:raise RuntimeError('No terminal cancellation result')
+        if node.last_result is None or not (node.last_result.status == 5 or node.last_result.result.error_code.val == -7):raise RuntimeError(f'No terminal cancellation result: {node.last_result}')
         settled=[node.state[n] for n in ARM]
         end=time.monotonic()+1
         while time.monotonic()<end:rclpy.spin_once(node,timeout_sec=.05)

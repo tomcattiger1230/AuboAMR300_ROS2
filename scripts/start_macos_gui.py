@@ -9,8 +9,9 @@ import sys
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--peer', default='192.168.3.133', type=ipaddress.ip_address)
 parser.add_argument('--domain-id', default=133, type=int)
-parser.add_argument('--execute', action='store_true', help='Enable Isaac simulation execution (default: plan only)')
+parser.add_argument('--execute', action='store_true', help='Allow explicit execution (the default); planning never executes')
 parser.add_argument('--check', action='store_true', help='Check feedback, FK and planning without opening a window or executing')
+parser.add_argument('--plan-only', action='store_true', help='Disable the explicit Execute button')
 args = parser.parse_args()
 if args.check and args.execute:
     parser.error('--check cannot be combined with --execute')
@@ -27,7 +28,7 @@ os.environ['FASTDDS_DEFAULT_PROFILES_FILE'] = str(Path(__file__).resolve().paren
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'aubo_control_gui'))
 # ROS receives only ROS arguments, not this launcher's arguments.
 sys.argv = [sys.argv[0], '--ros-args', '-p', 'use_sim_time:=true',
-            '-p', 'enable_motion:='+str(args.execute).lower()]
+            '-p', 'enable_motion:='+str(not args.plan_only and not args.check).lower()]
 if args.check:
     import runpy
     runpy.run_path(str(Path(__file__).resolve().parents[1] / 'aubo_control_gui/test/check_fastdds_client.py'), run_name='__main__')

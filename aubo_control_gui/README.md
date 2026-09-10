@@ -14,7 +14,7 @@ GUI → `moveit_msgs/action/MoveGroup` (`/move_action`) → MoveIt →
 - 用单调时钟判断反馈是否过期；超过 1.5 秒拒绝新运动，活动请求发起取消。
 - 末端位姿通过 `/compute_fk` 获取，坐标系为 `base_footprint`，参考末端为 `wrist3_Link`。
   这是腕部坐标，不是夹爪尖端 TCP；实际工具标定留到实机阶段。
-- 关节目标和末端 XYZ 目标都经过 MoveIt 规划。XYZ 保持当前腕部姿态，但运动路径不保证为直线。
+- 关节目标和末端位姿目标都经过 MoveIt 规划。末端支持 XYZ / RPY 和鼠标拖动；运动路径不保证为直线。
 - 速度/加速度为模型限值的比例 `(0, 1]`，不是输入 rad/s 或 m/s。
 - 快捷位保存六个关节角，再次运行时使用保存后的值。去掉原先固定路径及失败后自动插值重试。
 - 停止时取消当前 action；即使请求尚未被服务器接受，稍后接受也立即取消。
@@ -68,7 +68,7 @@ ros2 run seer_description start_warehouse_stick_mono_demo.sh \
 ros2 launch aubo_control_gui aubo_i16_gui.launch.py backend:=isaac
 ```
 
-规划并执行仿真运动：
+允许单独点击执行按钮（规划操作始终不会运动）：
 
 ```bash
 ros2 launch aubo_control_gui aubo_i16_gui.launch.py backend:=isaac enable_motion:=true
@@ -80,7 +80,7 @@ GUI 只连接已有 MoveIt，不启动第二套控制器。右侧为 i16 机械�
 
 ## 验证
 
-14 项回归测试通过，另完成 GUI 窗口及模型渲染检查。
+Ubuntu 端 32 项回归测试通过；Mac 端 31 项客户端测试通过，控制器测试仅在 Ubuntu 运行。另完成 GUI 窗口、模型渲染与实际鼠标拖动检查。
 
 在 source 工作空间环境后运行：
 
@@ -131,7 +131,7 @@ micromamba env create -p ~/.venvs/aubo-ros-lyrical \
 上面的构建脚本将官方 2.7.2 消息包编译到独立 overlay；启动器优先加载它，不替换远端软件。
 后续远端消息版本升级时，需要重新核对并同步此 overlay。
 
-启动仅规划模式：
+启动 Mac GUI（默认允许单独点击执行）：
 
 ```bash
 cd ~/Develop/github/AuboAMR300_ROS2
@@ -139,10 +139,10 @@ cd ~/Develop/github/AuboAMR300_ROS2
 ```
 
 也可在 Finder 中双击 `scripts/start_macos_gui.command`。
-指定仿真执行模式：
+禁用执行按钮，仅查看规划预览：
 
 ```bash
-./scripts/start_macos_gui.command --execute
+./scripts/start_macos_gui.command --plan-only
 ```
 
 切换仿真机或 DDS domain：
@@ -168,8 +168,9 @@ export ROS_STATIC_PEERS=192.168.3.131
 
 环境变量只影响之后启动的进程。Mac IP 变化时同步调整配置。
 启动 GUI 不会启动远端仿真；Ubuntu 仿真与 MoveIt 须先按上文启动。
-默认仅规划模式中，机械臂和夹爪按钮均只请求规划；`--execute` 才允许执行。
-首次操作先使用“当前关节角 → 初始”，然后设置目标及速度/加速度比例。
+机械臂、快捷位和夹爪按钮均只请求规划；需要单独点击“执行已规划轨迹”才会运动。
+`--execute` 保留为默认模式的兼容别名，`--plan-only` 禁用执行按钮。
+首次操作先使用“将当前关节角设为目标”或“同步当前末端目标”，再设置目标和速度/加速度比例。
 快捷位保存于 Mac 的 Qt AppConfigLocation，不会自动同步 Ubuntu 的快捷位文件。
 末端显示仍是 `base_footprint` 下的 `wrist3_Link`，不是夹爪尖端 TCP。
 
@@ -199,7 +200,7 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 右侧模型包含连接板、电机和两片长夹指。安装位姿及夹指运动轴从当前
 `seer_description/urdf/composite_robot_stick_mono.urdf` 读取，挂在 `wrist3_Link` 下。
 `gripper1_joint` 和 `gripper2_joint` 的实际反馈分别驱动两片夹指，单位为米；
-点击开合按钮不会直接伪造模型位置，仍需等待仿真反馈。默认仅规划模式不会使夹爪实际开合。
+点击开合按钮不会直接伪造模型位置，仍需等待仿真反馈。点击“规划夹爪打开/闭合”后先显示预览，再点击“执行已规划轨迹”才会实际开合。
 
 预览 GLB 来自本地及仿真机一致的 STL，来源哈希、面数和边界核验在
 `meshes/gripper/provenance.json`。转换合并重复顶点并使用 URDF 的灰/黑/白材质；
@@ -218,3 +219,30 @@ GUI 的 J3 初始/目标输入框限制为 ±161°，快捷位等绕过输入框
 16 项 GUI/控制回归测试、5 项 USD 测试通过，包括 J3 边界与越界拒绝。
 [运行核验记录](test/results/i16h_j3_limits_20260910.json)。本次没有执行机械臂运动。
 原四个存储位的 J3 均在该范围内，因此这次修改不消除此前的夹爪与底盘碰撞。
+
+
+## 鼠标拖动末端、规划预览与执行
+
+Mac 启动：`./scripts/start_macos_gui.command`。连接现有 Ubuntu Isaac / MoveIt，通讯仍为 Fast DDS。
+
+1. 选择“拖动末端 / 位姿”，点击“同步当前末端目标”。拖动红、绿、蓝轴分别修改规划坐标系 X、Y、Z；拖动对应圆环修改姿态。空白处拖动旋转视角，滚轮缩放。
+2. 拖动仅更新目标，并调用碰撞感知 IK 检查。IK 有解只表示目标状态可行，仍需点击“规划末端目标”寻找完整路径。也可直接输入 XYZ / Roll / Pitch / Yaw。
+3. 规划成功后，半透明模型播放轨迹；实体模型持续显示实际反馈。使用滑条检查任意时刻，或点击“播放预览”重播。
+4. 检查轨迹后单独点击蓝色“执行已规划轨迹”。发送的是缓存的原始 MoveIt RobotTrajectory，不再次规划；每条缓存轨迹只能执行一次。预览插值仅用于显示，实际运动以控制器和反馈为准。
+5. 红色“停止 / 丢弃轨迹”清除待执行轨迹，或取消正在进行的请求，并等待终态。若取消到达前运动已完成，界面会明确说明。
+
+关节目标、快捷位和夹爪遵循同样的两步流程。状态依次为待规划、规划中、可执行、执行中、执行完成；失败或停止有独立提示。执行按钮位于窗口底部，规划失败或缓存失效时禁用。
+
+修改目标、规划参数、目标页签、碰撞场景，或起始关节状态偏离/反馈过期，都会使旧轨迹失效。机体场景坐标变换累计超过 1 mm / 0.001 rad 也会使轨迹失效，以容忍仿真静止时的微小数值抖动。关节起点检查为机械臂 0.01 rad、夹指 0.003 m；反馈时效 1.5 s。
+
+末端目标是 `base_footprint` 下的 `wrist3_Link` 腕部法兰，尚未定义夹爪抓取 TCP。GUI 正确转换该坐标系到独立机械臂视图；控制使用 i16H 参数，外观沿用学生 i16 网格。完整底盘、相机和仓库仍在 Isaac / RViz 查看。碰撞判断受 MoveIt 已加载场景范围限制；本次没有修改此前四个关键位置或关闭碰撞检查。
+
+
+2026-09-10 分离规划/执行验证：关节目标、末端位姿、夹爪开合、停止及返回均在 Isaac 验证。
+规划完成后保留 1 秒预览等待，检查机器人未运动，然后显式发送 ExecuteTrajectory。
+[Ubuntu 仿真测试记录](test/results/isaac_plan_execute_20260910.json)。
+停止使用 `trajectory_execution_event` 的 `stop`，与 [MoveGroupInterface.stop()](https://github.com/moveit/moveit2/blob/main/moveit_ros/planning_interface/move_group_interface/src/move_group_interface.cpp) 相同，同时取消 action；当前 MoveIt 的 ExecuteTrajectory 返回 ABORTED / PREEMPTED（状态 6、错误码 -7）表示被停止，需要结合错误码解释。
+该事件作用于同一 MoveIt 执行管理器；GUI 会等待执行终态后才允许新规划。Ubuntu 实测停止后 1 秒关节漂移最大 0.0004 rad。
+
+Mac 通过 Fast DDS 的同样流程也通过：[Mac 跨机测试记录](test/results/macos_plan_execute_20260910.json)。等待控制器稳定后，机械臂最大目标误差 0.0019 rad，夹指最大误差 0.001 m；停止后 1 秒最大关节漂移 0.0015 rad。
+可在 GUI 相同 Python/ROS 环境下运行 `test/check_gui_drag.py --ros-args -p use_sim_time:=true -p enable_motion:=true` 复查鼠标平移、旋转、预览及轨迹失效；该检查只规划、不执行，要求 Isaac 处于无碰撞的近零位姿。

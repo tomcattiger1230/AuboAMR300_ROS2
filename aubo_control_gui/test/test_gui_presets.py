@@ -12,7 +12,7 @@ def test_run_preset_dispatches_updated_saved_values(tmp_path):
         presets=store,actual=[0.]*6,velocity=SimpleNamespace(value=lambda:.2),
         acceleration=SimpleNamespace(value=lambda:.2),log=lambda *args:None,
         bridge=SimpleNamespace(node=SimpleNamespace(fresh=lambda:True),
-            execute_with_fallback=lambda *args:calls.append(args)))
+            plan_joints=lambda *args:calls.append(args)))
     MainWindow.run_preset(window,'放置位')
     assert calls[0][1]==[math.radians(v) for v in [6,5,4,3,2,1]]
     window.bridge.node.fresh=lambda:False
