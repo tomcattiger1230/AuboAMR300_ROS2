@@ -86,11 +86,31 @@ Launch the warehouse and the matching stick-gripper MoveIt configuration:
 ros2 run seer_description start_warehouse_stick_demo.sh
 ```
 
-The current USD keeps the adapter and motor as fixed rigid bodies while the two
-finger links are visual-only. The 0–40 mm dynamic finger joints are still under
-investigation and are not currently exposed by the Isaac articulation. Arm and
-base control remain available; do not use the gripper command until those
-joints are restored.
+The USD includes two physical prismatic finger joints (`gripper1_joint` and
+`gripper2_joint`), each with 0–40 mm travel, position drives, and collision
+geometry. Adapter, motor and fingers are sibling rigid bodies connected by
+fixed/prismatic joints; their initial joint frames match the URDF. This avoids
+nesting a dynamic rigid body inside another rigid body.
+
+Both finger states are published on `/joint_states`. In RViz select the
+`gripper` planning group and `gripper_open` or `gripper_closed`, then use
+**Plan & Execute**. The existing eight-joint `aubo_arm_controller` covers the
+six arm joints and two fingers. The action bridge waits for fresh, measured
+joint positions before reporting success (default finger tolerance: 1 mm).
+
+For a direct trajectory command, without MoveIt planning:
+
+```bash
+ros2 run seer_description mobile_manipulator_control.py gripper --position 0.04
+ros2 run seer_description mobile_manipulator_control.py gripper --position 0.0
+```
+
+Open/close planning and execution have been checked on Ubuntu 26.04 / Lyrical
+with Isaac Sim 6.0.1-rc.7 using the internal Jazzy bridge. This does not validate
+contact grasping, payload retention, or force control. The `manipulator` SRDF
+group still includes the branched gripper, so its KDL Cartesian IK solver
+cannot initialize; named **joint-space** goals and the separate gripper group
+remain usable.
 
 ### Wheel contact fix
 
@@ -110,25 +130,41 @@ friction is 0.0, matching the Gazebo URDF settings. In the regression probe:
 Regenerate the warehouse composition with another robot layer using
 `generate_warehouse_scene.py --robot-layer FILE`.
 
-## ROS 2 Lyrical with uv
+## ROS distribution and Python compatibility
 
-Isaac Sim uses Python 3.12, while the ROS 2 Lyrical installation on Ubuntu
-26.04 uses Python 3.14. Pure-Python dependencies required by the Isaac camera
-graph can be supplied from a workspace-level uv environment:
+Keep each host's ROS and Python environment. For example, the Ubuntu 26.04
+host uses Lyrical and a workspace `.venv` with Python 3.14, whereas Isaac Sim
+6.0.1 uses its bundled Python 3.12.
+
+`start_isaac_ros2_stack.sh` defaults to `--ros-bridge-mode auto`: on Lyrical it
+isolates **only the Isaac process**, using Isaac's internal Jazzy backend and
+`RaytracedLighting`. ROS nodes, MoveIt and the workspace continue to use
+Lyrical. System `PYTHONPATH` and ROS shared libraries are removed from the
+Isaac child process; the parent environment is preserved. On other ROS
+releases, auto keeps the original system-library path and renderer.
 
 ```bash
-cd ~/Develop/ROS2_ws/amr_ws
-uv venv --python 3.12 .venv-isaac
-uv pip install --python .venv-isaac/bin/python \
-  'empy==3.3.4' lark
-sudo apt install ros-lyrical-xacro
+source /opt/ros/lyrical/setup.bash
+source install/setup.bash
+source .venv/bin/activate
+ros2 run seer_description start_warehouse_stick_demo.sh --gui
 ```
 
-`start_isaac_ros2_stack.sh` detects the installed ROS distribution and
-automatically prepends `.venv-isaac` site-packages when present. Isaac may
-still warn that the system Lyrical `rclpy` extension has a different Python
-ABI; its internal ROS bridge backend continues to start and the camera graph
-reaches the ready state.
+Explicit host-specific overrides are available:
+
+```text
+--ros-bridge-mode system|internal|auto
+--bridge-distro jazzy|humble
+--renderer RaytracedLighting|RealTimePathTracing
+--isaac-sim /path/to/isaacsim
+```
+
+Internal mode requires the selected backend's libraries in the Isaac
+installation; it does not install or change the host ROS distro. Cross-distro
+communication was checked for this robot's standard messages and actions,
+not for arbitrary custom messages. System mode can still use `.venv-isaac`
+pure-Python dependencies when needed. `xacro` must be installed for the host
+ROS distribution.
 
 ## ROS 2 interfaces
 

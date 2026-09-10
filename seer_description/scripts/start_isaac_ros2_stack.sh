@@ -2,7 +2,10 @@
 set -eo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-ISAAC_SIM_PATH="${ISAAC_SIM_PATH:-/home/arnold/isaacsim}"
+ISAAC_SIM_PATH="${ISAAC_SIM_PATH:-$HOME/isaacsim}"
+ROS_BRIDGE_MODE="auto"
+BRIDGE_DISTRO="jazzy"
+RENDERER=""
 HEADLESS=true
 START_RVIZ=true
 USD_PATH=""
@@ -27,6 +30,9 @@ usage() {
     "  --action-name NAME     FollowJointTrajectory action name" \
     "  --isaac-sim PATH       Isaac Sim directory (default: $ISAAC_SIM_PATH)" \
     "  --domain-id ID         Set ROS_DOMAIN_ID" \
+    "  --ros-bridge-mode MODE auto (Lyrical: internal), system, or internal" \
+    "  --bridge-distro NAME   Bundled backend: jazzy (default) or humble" \
+    "  --renderer NAME       RaytracedLighting or RealTimePathTracing" \
     "  --help                 Show this help"
 }
 
@@ -66,6 +72,18 @@ while (($#)); do
       export ROS_DOMAIN_ID="${2:?--domain-id requires an integer}"
       shift
       ;;
+    --ros-bridge-mode)
+      ROS_BRIDGE_MODE="${2:?--ros-bridge-mode requires a value}"
+      shift
+      ;;
+    --bridge-distro)
+      BRIDGE_DISTRO="${2:?--bridge-distro requires a value}"
+      shift
+      ;;
+    --renderer)
+      RENDERER="${2:?--renderer requires a value}"
+      shift
+      ;;
     --help|-h)
       usage
       exit 0
@@ -78,6 +96,10 @@ while (($#)); do
   esac
   shift
 done
+
+case "$ROS_BRIDGE_MODE" in auto|system|internal) ;; *) usage >&2; exit 2 ;; esac
+case "$BRIDGE_DISTRO" in jazzy|humble) ;; *) usage >&2; exit 2 ;; esac
+case "$RENDERER" in ""|RaytracedLighting|RealTimePathTracing) ;; *) usage >&2; exit 2 ;; esac
 
 ROS_DOMAIN_KEY="${ROS_DOMAIN_ID:-0}"
 LOCK_FILE="/tmp/seer_isaac_ros2_domain_${ROS_DOMAIN_KEY}.lock"
@@ -133,6 +155,36 @@ fi
 
 source "$WORKSPACE_ROOT/install/setup.bash"
 
+if [[ "$ROS_BRIDGE_MODE" == auto ]]; then
+  if [[ "$ROS_DISTRO" == lyrical ]]; then
+    ROS_BRIDGE_MODE=internal
+  else
+    ROS_BRIDGE_MODE=system
+  fi
+fi
+
+ISAAC_ENV=()
+if [[ "$ROS_BRIDGE_MODE" == internal ]]; then
+  BRIDGE_LIB=""
+  for extension in isaacsim.ros2.core isaacsim.ros2.bridge; do
+    candidate="$ISAAC_SIM_PATH/exts/$extension/$BRIDGE_DISTRO/lib"
+    if [[ -f "$candidate/librmw_implementation.so" ]]; then
+      BRIDGE_LIB="$candidate"
+      break
+    fi
+  done
+  if [[ -z "$BRIDGE_LIB" ]]; then
+    printf 'Bundled ROS backend %s was not found under %s\n' "$BRIDGE_DISTRO" "$ISAAC_SIM_PATH" >&2
+    exit 1
+  fi
+  ISAAC_ENV=(env -u ROS_DISTRO -u AMENT_PREFIX_PATH -u CMAKE_PREFIX_PATH
+    -u VIRTUAL_ENV -u PYTHONPATH -u PYTHONHOME
+    "LD_LIBRARY_PATH=$BRIDGE_LIB" "RMW_IMPLEMENTATION=rmw_fastrtps_cpp")
+  RENDERER="${RENDERER:-RaytracedLighting}"
+else
+  RENDERER="${RENDERER:-RealTimePathTracing}"
+fi
+
 for candidate in "$WORKSPACE_ROOT"/.venv-isaac/lib/python*/site-packages; do
   if [[ -d "$candidate" ]]; then
     export PYTHONPATH="$candidate:${PYTHONPATH:-}"
@@ -154,9 +206,9 @@ fi
 
 # Running two Kit/Isaac instances on this workstation has already caused a
 # renderer crash. Make the operator close a manually opened GUI first.
-if pgrep -u "$USER" -f '/isaacsim[^ ]*/kit/kit .*isaacsim' >/dev/null; then
+if pgrep -u "$USER" -f '/isaacsim[^ ]*/kit/(kit .*isaacsim|python/bin/python3 .*\.py)' >/dev/null; then
   printf '%s\n' \
-    'An Isaac Sim GUI process is already running.' \
+    'An Isaac Sim process is already running.' \
     'Close it before starting this automated stack.' >&2
   exit 1
 fi
@@ -172,12 +224,18 @@ RUNNER_ARGS=(
   --robot-prim "$ROBOT_PRIM"
   --command-topic "$COMMAND_TOPIC"
   --state-topic "$STATE_TOPIC"
+  --renderer "$RENDERER"
 )
+if [[ "$ROS_BRIDGE_MODE" == internal ]]; then
+  RUNNER_ARGS+=(--internal-ros-distro "$BRIDGE_DISTRO")
+fi
 if [[ "$HEADLESS" == true ]]; then
   RUNNER_ARGS+=(--headless)
 fi
 
 ISAAC_PID=""
+READY_DIR="$(mktemp -d /tmp/seer_isaac_ready.XXXXXX)"
+RUNNER_ARGS+=(--ready-file "$READY_DIR/ready")
 cleanup() {
   if [[ -n "$ISAAC_PID" ]]; then
     kill -TERM -- "-$ISAAC_PID" 2>/dev/null || true
@@ -190,15 +248,17 @@ cleanup() {
     fi
     wait "$ISAAC_PID" 2>/dev/null || true
   fi
+  rm -rf -- "$READY_DIR"
 }
 trap cleanup EXIT
 trap 'exit 130' INT TERM
 
 printf 'Starting Isaac Sim with %s\n' "$USD_PATH"
-setsid "$ISAAC_SIM_PATH/python.sh" "$RUNNER" "${RUNNER_ARGS[@]}" &
+printf 'Host ROS: %s; Isaac ROS mode: %s; renderer: %s\n' "$ROS_DISTRO" "$ROS_BRIDGE_MODE" "$RENDERER"
+setsid "${ISAAC_ENV[@]}" "$ISAAC_SIM_PATH/python.sh" "$RUNNER" "${RUNNER_ARGS[@]}" &
 ISAAC_PID=$!
 
-printf 'Waiting for %s' "$STATE_TOPIC"
+printf 'Waiting for Isaac simulation startup'
 ready=false
 for _ in $(seq 1 120); do
   if ! kill -0 "$ISAAC_PID" 2>/dev/null; then
@@ -206,7 +266,7 @@ for _ in $(seq 1 120); do
     wait "$ISAAC_PID" || true
     exit 1
   fi
-  if ros2 topic list 2>/dev/null | grep -Fxq "$STATE_TOPIC"; then
+  if [[ -f "$READY_DIR/ready" ]]; then
     ready=true
     break
   fi
@@ -216,7 +276,7 @@ done
 printf '\n'
 
 if [[ "$ready" != true ]]; then
-  printf 'Timed out waiting for %s\n' "$STATE_TOPIC" >&2
+  printf 'Timed out waiting for Isaac simulation startup\n' >&2
   exit 1
 fi
 

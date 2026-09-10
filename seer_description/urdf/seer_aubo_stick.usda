@@ -1,4 +1,7 @@
 #usda 1.0
+# Keep gripper rigid bodies at the robot root, not under another rigid body.
+# Transforms below are the neutral-pose link frames; meshes/colliders come
+# from the URDF import, with nested child links disabled to avoid duplicates.
 (
     defaultPrim = "World"
     metersPerUnit = 1
@@ -39,9 +42,9 @@ def Xform "World"
             )
             {
                 float3[] extent = [(-0.1, -0.1, -0.1), (0.1, 0.1, 0.1)]
+                rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/WheelMaterial>
                 bool physics:collisionEnabled = 1
                 double radius = 0.1
-                rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/WheelMaterial>
             }
         }
 
@@ -52,9 +55,9 @@ def Xform "World"
             )
             {
                 float3[] extent = [(-0.1, -0.1, -0.1), (0.1, 0.1, 0.1)]
+                rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/WheelMaterial>
                 bool physics:collisionEnabled = 1
                 double radius = 0.1
-                rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/WheelMaterial>
             }
         }
 
@@ -76,36 +79,6 @@ def Xform "World"
             )
         }
 
-        over "wrist3_Link"
-        {
-            def Xform "gripper_adapter_link" (
-                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "IsaacLinkAPI"]
-                prepend references = @./composite_robot_stick_usd/payloads/base.usda@</seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link>
-            )
-            {
-                float3 physics:diagonalInertia = (0.001, 0.001, 0.001)
-                float physics:mass = 0.001
-                quatf physics:principalAxes = (1, 0, 0, 0)
-
-                over "gripper_motor_link" (
-                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "IsaacLinkAPI"]
-                )
-                {
-                    float3 physics:diagonalInertia = (0.002, 0.002, 0.002)
-                    float physics:mass = 0.001
-                    quatf physics:principalAxes = (1, 0, 0, 0)
-
-                    over "gripper1_link"
-                    {
-                    }
-
-                    over "gripper2_link"
-                    {
-                    }
-                }
-            }
-        }
-
         over "joints"
         {
             def PhysicsFixedJoint "adapter_mount_joint" (
@@ -113,10 +86,11 @@ def Xform "World"
             )
             {
                 rel physics:body0 = </World/seer_aubo_composite/wrist3_Link>
-                rel physics:body1 = </World/seer_aubo_composite/wrist3_Link/gripper_adapter_link>
+                rel physics:body1 = </World/seer_aubo_composite/gripper_adapter_link>
+                bool physics:collisionEnabled = 0
                 point3f physics:localPos0 = (0, 0, 0)
                 point3f physics:localPos1 = (0, 0, 0)
-                quatf physics:localRot0 = (1, 0, 0, 0)
+                quatf physics:localRot0 = (1, 0, 9.913271e-25, 8.271806e-25)
                 quatf physics:localRot1 = (1, 0, 0, 0)
             }
 
@@ -124,14 +98,132 @@ def Xform "World"
                 prepend apiSchemas = ["IsaacJointAPI"]
             )
             {
-                rel physics:body0 = </World/seer_aubo_composite/wrist3_Link/gripper_adapter_link>
-                rel physics:body1 = </World/seer_aubo_composite/wrist3_Link/gripper_adapter_link/gripper_motor_link>
-                point3f physics:localPos0 = (-0.02, 0, 0.035)
+                rel physics:body0 = </World/seer_aubo_composite/gripper_adapter_link>
+                rel physics:body1 = </World/seer_aubo_composite/gripper_motor_link>
+                bool physics:collisionEnabled = 0
+                point3f physics:localPos0 = (-0.02, -2.220446e-16, 0.035)
                 point3f physics:localPos1 = (0, 0, 0)
                 quatf physics:localRot0 = (0.5, 0.5, 0.5, 0.5)
                 quatf physics:localRot1 = (1, 0, 0, 0)
             }
 
+            def PhysicsPrismaticJoint "gripper1_joint" (
+                prepend apiSchemas = ["PhysicsDriveAPI:linear"]
+            )
+            {
+                float drive:linear:physics:damping = 500
+                float drive:linear:physics:maxForce = 50
+                float drive:linear:physics:stiffness = 5000
+                float drive:linear:physics:targetPosition = 0
+                float drive:linear:physics:targetVelocity = 0
+                uniform token drive:linear:physics:type = "force"
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/seer_aubo_composite/gripper_motor_link>
+                rel physics:body1 = </World/seer_aubo_composite/gripper1_link>
+                bool physics:collisionEnabled = 0
+                point3f physics:localPos0 = (2.220446e-16, 0.1, -0.07)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (0.70710677, 0.70710677, -1.0894705e-32, 3.4863055e-32)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+                float physics:lowerLimit = 0
+                float physics:upperLimit = 0.04
+            }
+
+            def PhysicsPrismaticJoint "gripper2_joint" (
+                prepend apiSchemas = ["PhysicsDriveAPI:linear"]
+            )
+            {
+                float drive:linear:physics:damping = 500
+                float drive:linear:physics:maxForce = 50
+                float drive:linear:physics:stiffness = 5000
+                float drive:linear:physics:targetPosition = 0
+                float drive:linear:physics:targetVelocity = 0
+                uniform token drive:linear:physics:type = "force"
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/seer_aubo_composite/gripper_motor_link>
+                rel physics:body1 = </World/seer_aubo_composite/gripper2_link>
+                bool physics:collisionEnabled = 0
+                point3f physics:localPos0 = (2.220446e-16, 0.1, 0.12)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (-1.6081226e-16, -8.591743e-17, -0.70710677, 0.70710677)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+                float physics:lowerLimit = 0
+                float physics:upperLimit = 0.04
+            }
+        }
+
+        def Xform "gripper_adapter_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            prepend references = @./composite_robot_stick_usd/payloads/base.usda@</seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link>
+        )
+        {
+            float3 physics:diagonalInertia = (0.001, 0.001, 0.001)
+            float physics:mass = 0.2
+            quatf physics:principalAxes = (1, 0, 0, 0)
+            bool physics:rigidBodyEnabled = 1
+            quatf xformOp:orient = (-1.4348013e-8, 0, 0.70710677, 0.70710677)
+            double3 xformOp:translate = (-0.3000001311302185, 0.2944999933242798, 1.7304998636245728)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+            over "gripper_motor_link" (
+                active = false
+            )
+            {
+            }
+        }
+
+        def Xform "gripper_motor_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            prepend references = @./composite_robot_stick_usd/payloads/base.usda@</seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link>
+        )
+        {
+            float3 physics:diagonalInertia = (0.002, 0.002, 0.002)
+            float physics:mass = 0.5
+            quatf physics:principalAxes = (1, 0, 0, 0)
+            bool physics:rigidBodyEnabled = 1
+            quatf xformOp:orient = (0.70710677, 7.1740067e-9, -0.70710677, 7.1740067e-9)
+            double3 xformOp:translate = (-0.28000013184040895, 0.32949999373010286, 1.7304998632187496)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+            over "gripper1_link" (
+                active = false
+            )
+            {
+            }
+
+            over "gripper2_link" (
+                active = false
+            )
+            {
+            }
+        }
+
+        def Xform "gripper1_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            prepend references = @./composite_robot_stick_usd/payloads/base.usda@</seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link/gripper1_link>
+        )
+        {
+            float3 physics:diagonalInertia = (0.001, 0.001, 0.001)
+            float physics:mass = 0.3
+            quatf physics:principalAxes = (1, 0, 0, 0)
+            bool physics:rigidBodyEnabled = 1
+            quatf xformOp:orient = (0.5, 0.5, -0.49999997, 0.5)
+            double3 xformOp:translate = (-0.21000013386952449, 0.42949999515048376, 1.7304998617983687)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+        }
+
+        def Xform "gripper2_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            prepend references = @./composite_robot_stick_usd/payloads/base.usda@</seer_aubo_composite/Geometry/base_footprint/base_link/aubo_base_link/shoulder_Link/upperArm_Link/foreArm_Link/wrist1_Link/wrist2_Link/wrist3_Link/gripper_adapter_link/gripper_motor_link/gripper2_link>
+        )
+        {
+            float3 physics:diagonalInertia = (0.001, 0.001, 0.001)
+            float physics:mass = 0.3
+            quatf physics:principalAxes = (1, 0, 0, 0)
+            bool physics:rigidBodyEnabled = 1
+            quatf xformOp:orient = (0.5, 0.5, 0.5, -0.5)
+            double3 xformOp:translate = (-0.40000013386952443, 0.4294999912951642, 1.7304998656536883)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
         }
     }
 }

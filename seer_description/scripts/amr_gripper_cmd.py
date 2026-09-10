@@ -32,7 +32,7 @@ def main(args=None):
     # 注意：请确保 "seer_aubo_moveit_config" 是你的配置包真名
     # file_path 必须指向你真实的 xacro 模型文件（如果在 urdf 文件夹下，就是 "urdf/你的模型.urdf.xacro"）
     moveit_config_dict = (
-        MoveItConfigsBuilder("seer_aubo_stick")
+        MoveItConfigsBuilder("seer_aubo_composite", package_name="seer_aubo_stick_moveit_config")
         .robot_description(
             file_path="config/seer_aubo_composite.urdf.xacro"
         )  # <== 这里检查一下路径对不对！
@@ -43,7 +43,7 @@ def main(args=None):
     # 强制同步仿真时间
     moveit_config_dict.update(
         {
-            # "use_sim_time": True,
+            "use_sim_time": True,
             "planning_pipelines": {
                 "pipeline_names": ["ompl", "pilz_industrial_motion_planner"]
             },
@@ -89,7 +89,7 @@ def main(args=None):
     print("⏳ 保持张开状态 13 秒钟...")
     time.sleep(13.0)
 
-    execute_pose("gripper_close")
+    execute_pose("gripper_closed")
 
     print("\n👋 指令发送结束，退出脚本。")
     rclpy.shutdown()

@@ -49,6 +49,11 @@ def parse_args():
         default="RealTimePathTracing",
         choices=("RaytracedLighting", "RealTimePathTracing"),
     )
+    parser.add_argument(
+        "--internal-ros-distro", choices=("jazzy", "humble"),
+        help="Use Isaac's bundled ROS backend in an isolated process environment",
+    )
+    parser.add_argument("--ready-file", help="Write this marker after simulation startup")
     return parser.parse_args()
 
 
@@ -58,10 +63,12 @@ USD_PATH = os.path.abspath(os.path.expanduser(ARGS.usd))
 if not os.path.isfile(USD_PATH):
     raise SystemExit(f"USD file does not exist: {USD_PATH}")
 
-# Isaac Sim 5.1 ships Jazzy and Humble ROS 2 bridge libraries. The surrounding
-# shell normally sources Jazzy first; these defaults also make direct execution
-# deterministic.
-os.environ.setdefault("ROS_DISTRO", "jazzy")
+# System mode inherits the host distribution. Internal mode is selected only
+# for the Isaac process; the ROS launch and workspace keep their own distro.
+if ARGS.internal_ros_distro:
+    os.environ.pop("ROS_DISTRO", None)
+else:
+    os.environ.setdefault("ROS_DISTRO", "jazzy")
 os.environ.setdefault("RMW_IMPLEMENTATION", "rmw_fastrtps_cpp")
 
 from isaacsim import SimulationApp
@@ -447,7 +454,11 @@ def limit_camera_publish_rate():
         ),
     )
     for gate_path in gate_paths:
-        og.Controller.attribute(f"{gate_path}.inputs:step").set(3)
+        attribute = og.Controller.attribute(f"{gate_path}.inputs:step")
+        if attribute.is_valid():
+            attribute.set(3)
+        else:
+            print(f"Optional camera rate gate unavailable: {gate_path}", flush=True)
 
 
 def create_ros_graph(stage):
@@ -667,6 +678,12 @@ def main():
     signal.signal(signal.SIGINT, request_stop)
     signal.signal(signal.SIGTERM, request_stop)
 
+    if ARGS.internal_ros_distro:
+        import carb
+
+        carb.settings.get_settings().set_string(
+            "/exts/isaacsim.ros2.bridge/ros_distro", ARGS.internal_ros_distro
+        )
     app_utils.enable_extension("isaacsim.ros2.bridge")
     app_utils.enable_extension("isaacsim.robot.wheeled_robots.nodes")
     app_utils.enable_extension("isaacsim.sensors.experimental.rtx")
@@ -687,6 +704,10 @@ def main():
     simulation_app.update()
 
     stage_utils.set_stage_units(meters_per_unit=1.0)
+    # Robot and warehouse assets use Z-up. Fail instead of silently simulating
+    # an incorrectly composed scene with USD's default Y-up gravity.
+    if UsdGeom.GetStageUpAxis(stage) != UsdGeom.Tokens.z:
+        raise RuntimeError("SEER scenes must declare upAxis = Z in the root USD layer")
     SimulationManager.setup_simulation(dt=1.0 / 60.0, device="cpu")
     attach_lidar_publishers(lidar_specs)
     limit_camera_publish_rate()
@@ -707,6 +728,10 @@ def main():
         "  lidar points: /front_lidar/points, /back_lidar/points",
         flush=True,
     )
+
+    if ARGS.ready_file:
+        with open(ARGS.ready_file, "w", encoding="utf-8") as ready_file:
+            ready_file.write("ready\n")
 
     while simulation_app.is_running() and not stop_requested:
         simulation_app.update()

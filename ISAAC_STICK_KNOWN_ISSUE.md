@@ -1,7 +1,31 @@
-# Isaac Sim stick model: known USD issue
+# Isaac Sim stick model: status and historical issues
 
-Status: wheel penetration and chassis roll fixed on 2026-07-24. The remaining
-stick work concerns gripper dynamics and ROS 2 distribution compatibility.
+## Current status — 2026-09-10
+
+The stick model now has two physical prismatic finger joints with 0–40 mm
+travel, collision geometry and position drives. Adapter, motor and fingers
+are sibling rigid bodies; fixed and prismatic joint frames agree at the
+neutral pose. The existing wheel-contact fix is retained.
+
+MoveIt `gripper_open` / `gripper_closed` planning and execution are supported
+through `/aubo_arm_controller/follow_joint_trajectory`, with both finger
+positions in `/joint_states`. The bridge checks actual position feedback
+before reporting success.
+
+On the Ubuntu 26.04 / Lyrical host, use the launcher's auto/internal bridge
+mode to isolate Isaac's Python 3.12 and bundled Jazzy libraries from the ROS
+Python 3.14 environment. Other hosts can retain system mode. See
+`seer_description/README_ISAAC_ROS2.md` for startup and overrides.
+
+Remaining limitations: object grasping and payload retention are not yet
+validated; the branched `manipulator` group cannot use KDL Cartesian IK;
+RTX lidar motion compensation and long-duration stability need separate
+validation. Named joint-space goals do not require that IK solver.
+
+The sections below record the earlier visual-only model and investigation.
+They are historical observations, not the current gripper implementation.
+
+---
 
 ## Wheel penetration fix
 
