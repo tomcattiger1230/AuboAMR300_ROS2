@@ -36,6 +36,14 @@ if args.check_gui:
     runpy.run_path(str(Path(__file__).resolve().parents[1] / 'aubo_control_gui/test/check_gui_feedback.py'), run_name='__main__')
     sys.exit(0)
 if args.check:
+    import socket
+    try:
+        with socket.socket(socket.AF_INET if args.peer.version == 4 else socket.AF_INET6, socket.SOCK_DGRAM) as probe:
+            probe.connect((str(args.peer), 9))
+            probe.send(b'AUBO GUI network diagnostic')
+            print(f"[AUBO GUI] UDP send accepted, local={probe.getsockname()[0]} (does not verify reception)", flush=True)
+    except OSError as exc:
+        print(f"[AUBO GUI] UDP send failed: {exc}. Check the launching terminal's local-network permission and network route.", flush=True)
     import runpy
     runpy.run_path(str(Path(__file__).resolve().parents[1] / 'aubo_control_gui/test/check_fastdds_client.py'), run_name='__main__')
     sys.exit(0)

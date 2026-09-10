@@ -203,6 +203,7 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 
 请在出现问题的同一个终端运行检查。`--check` 成功而 `--check-gui` 失败，
 说明需要检查 GUI 更新链路；两者均失败则检查 DDS 发现、远端仿真、终端本地网络权限和防火墙。
+`--check` 还会向 peer 的 UDP discard 端口 9 发送一个诊断数据报。`UDP send failed` 表示系统 socket 发送已失败，应先检查启动终端的网络访问；发送成功本身不证明远端收到。
 正常启动会输出 Python 路径、PID、peer、domain；连接建立或等待 10 秒后输出
 `feedback`、`moveit` 和缺失关节名。输入法 `IMKCFRunLoopWakeUpReliable` 日志本身不能说明 ROS 是否连通。
 
