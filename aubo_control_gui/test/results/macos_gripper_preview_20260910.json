@@ -1,0 +1,17 @@
+{
+  "feedback": [
+    0.0003,
+    0.0017
+  ],
+  "display": [
+    0.0003,
+    0.0017
+  ],
+  "local_preview_closed": [
+    0.04,
+    0.04
+  ],
+  "commands_sent": 0,
+  "connection": "● 反馈正常 / MoveIt 可用",
+  "note": "Closed pose was applied only to the local viewer, then restored to live feedback. No ROS motion request was sent."
+}

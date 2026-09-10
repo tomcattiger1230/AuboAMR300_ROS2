@@ -1,10 +1,14 @@
-"""Qt Quick 3D viewer for the real AUBO i16 COLLADA visual meshes."""
+"""Qt Quick 3D preview of the i16 arm and the simulation gripper."""
 from __future__ import annotations
 import math
 import sys
 import xml.etree.ElementTree as ET
 import numpy as np
 from PySide6.QtCore import QUrl
+from PySide6.QtGui import QMatrix3x3, QQuaternion
+from .resources import get_package_share_directory
+from .tool_preview import tool_visuals
+from pathlib import Path
 from PySide6.QtQuickWidgets import QQuickWidget
 
 def _rpy(r,p,y):
@@ -17,7 +21,7 @@ def _transform(xyz=(0,0,0),rot=None):
     m=np.eye(4); m[:3,:3]=np.eye(3) if rot is None else rot; m[:3,3]=xyz; return m
 
 class UrdfRobotView(QQuickWidget):
-    """Loads link0-link6.DAE and drives their URDF transform hierarchy."""
+    """Loads arm meshes and attaches URDF-derived tool visuals to wrist3."""
     def __init__(self,urdf_path,qml_path,parent=None):
         super().__init__(parent); self.setMinimumSize(560,520); self.setResizeMode(QQuickWidget.SizeRootObjectToView)
         self.joints=[]; self.angles=[0.0]*6
@@ -35,6 +39,19 @@ class UrdfRobotView(QQuickWidget):
         if sys.platform == "darwin":
             self.rootObject().setProperty("meshExtension", "glb")
         self.rootObject().setProperty("meshRoot",QUrl.fromLocalFile(str(mesh_dir)))
+        description = Path(get_package_share_directory("seer_description"))
+        visuals = tool_visuals(description / "urdf/composite_robot_stick_mono.urdf")
+        for visual in visuals:
+            visual['quaternion'] = QQuaternion.fromRotationMatrix(QMatrix3x3(np.array(visual['rotation']).flatten().tolist()))
+        self.rootObject().setProperty("toolMeshRoot", QUrl.fromLocalFile(str(qml_path.parent.parent / "meshes/gripper")))
+        self.rootObject().setProperty("toolVisuals", visuals)
+    def set_gripper_positions(self, positions):
+        if len(positions) != 2 or not all(math.isfinite(v) for v in positions):
+            return
+        root = self.rootObject()
+        if root:
+            root.setProperty("finger1", float(positions[0]))
+            root.setProperty("finger2", float(positions[1]))
     def set_joint_positions(self,angles):
         self.angles=list(angles)[:6]; root=self.rootObject()
         if root:

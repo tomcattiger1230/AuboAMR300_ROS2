@@ -1,0 +1,66 @@
+{
+  "converter": "trimesh 5.1.0",
+  "note": "STL duplicate vertices merged; triangle count and bounds verified after GLB reload. Materials follow URDF visual colors.",
+  "meshes": [
+    {
+      "source": "seer_description/meshes/adapter.stl",
+      "sha256": "070ac147f0f25b0252fe4b789a917442cc5c0acf09ea6e216f05b3ef40e80c2e",
+      "output": "aubo_control_gui/meshes/gripper/adapter.glb",
+      "faces": 2376,
+      "vertices": 1170,
+      "bounds": [
+        [
+          -0.14073054492473602,
+          -0.07942093908786774,
+          -0.005800854880362749
+        ],
+        [
+          0.14326946437358856,
+          0.08057906478643417,
+          0.011199145577847958
+        ]
+      ],
+      "max_bound_error": 0.0
+    },
+    {
+      "source": "seer_description/meshes/motor.stl",
+      "sha256": "4ed00e82791c8a1dc960b13ce7a907e4eb227f850760e3b325ec4a5195f975c8",
+      "output": "aubo_control_gui/meshes/gripper/motor.glb",
+      "faces": 624913,
+      "vertices": 311325,
+      "bounds": [
+        [
+          -0.03588851913809776,
+          -0.03262176364660263,
+          -0.11633964627981186
+        ],
+        [
+          0.042111486196517944,
+          0.05237823724746704,
+          0.417110413312912
+        ]
+      ],
+      "max_bound_error": 0.0
+    },
+    {
+      "source": "seer_description/meshes/gripper_stick.stl",
+      "sha256": "c28717db397108e47085e6d7d1651e81251e66566b0e49e800f0e0bf14955763",
+      "output": "aubo_control_gui/meshes/gripper/gripper_stick.glb",
+      "faces": 768,
+      "vertices": 378,
+      "bounds": [
+        [
+          -0.1720699816942215,
+          -0.03179295361042023,
+          -0.15809543430805206
+        ],
+        [
+          0.17207001149654388,
+          0.027907049283385277,
+          0.04190455377101898
+        ]
+      ],
+      "max_bound_error": 0.0
+    }
+  ]
+}

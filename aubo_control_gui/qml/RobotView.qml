@@ -4,6 +4,10 @@ import QtQuick3D.AssetUtils
 
 View3D {
     id: view
+    property url toolMeshRoot
+    property var toolVisuals: []
+    property real finger1: 0
+    property real finger2: 0
     property url meshRoot
     property string meshExtension: "DAE"
     property real j1: 0; property real j2: 0; property real j3: 0
@@ -11,7 +15,7 @@ View3D {
     environment: SceneEnvironment { backgroundMode: SceneEnvironment.Color; clearColor: "#101722"; antialiasingMode: SceneEnvironment.MSAA; antialiasingQuality: SceneEnvironment.High }
     Node {
         id: cameraRig; eulerRotation.x: -22; eulerRotation.y: -42
-        PerspectiveCamera { id: camera; z: 185; clipFar: 2000 }
+        PerspectiveCamera { id: camera; z: 230; clipFar: 2000 }
     }
     DirectionalLight { eulerRotation: Qt.vector3d(-45,-30,0); brightness: 1.4; castsShadow: true }
     DirectionalLight { eulerRotation: Qt.vector3d(40,140,0); brightness: 0.7 }
@@ -57,6 +61,7 @@ View3D {
                                                                 Node {
                                                                     eulerRotation.z: view.j6
                                                                     RuntimeLoader { source: view.meshRoot + "/link6." + view.meshExtension; scale: Qt.vector3d(100,100,100); eulerRotation.x: 90 }
+                                                                    ToolPreview { meshRoot: view.toolMeshRoot; visuals: view.toolVisuals; finger1: view.finger1; finger2: view.finger2 }
                                                                 }
                                                             }
                                                         }

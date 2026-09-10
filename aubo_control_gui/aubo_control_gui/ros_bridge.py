@@ -6,6 +6,7 @@ import rclpy
 from .motion_client import MotionClient, ARM, GRIPPER
 
 class RosBridge(QObject):
+    gripper_joints=Signal(object)
     joints=Signal(object); joint_speed=Signal(float); tool_speed=Signal(float)
     status=Signal(object); gripper=Signal(float); connection=Signal(bool); result=Signal(str,bool)
     def __init__(self,parent=None):
@@ -45,6 +46,7 @@ class RosBridge(QObject):
         if self.node.fresh(GRIPPER):
             # Display model joint displacement, not an assumed hardware jaw gap.
             self.gripper.emit(self.node.state[GRIPPER[0]]*1000.0)
+            self.gripper_joints.emit([self.node.state[name] for name in GRIPPER])
     def _call(self,fn,*args):
         try: fn(*args)
         except (ValueError,RuntimeError) as exc: self.result.emit(str(exc),True)

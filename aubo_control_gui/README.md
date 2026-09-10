@@ -74,8 +74,8 @@ ros2 launch aubo_control_gui aubo_i16_gui.launch.py backend:=isaac
 ros2 launch aubo_control_gui aubo_i16_gui.launch.py backend:=isaac enable_motion:=true
 ```
 
-GUI 只连接已有 MoveIt，不启动第二套控制器。右侧为学生版 i16 机械臂模型预览；
-完整底盘、夹爪和相机模型仍在 Isaac / RViz 中显示。
+GUI 只连接已有 MoveIt，不启动第二套控制器。右侧为 i16 机械臂和末端夹爪预览；
+完整底盘与相机模型仍在 Isaac / RViz 中显示。
 快捷位保存于 Qt AppConfigLocation 下的 `quick_positions.json`，不会自动导入学生现场坐标。
 
 ## 验证
@@ -193,3 +193,14 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 转换前后面数及变换后的边界一致（GLB 对顶点进行了去重）。
 这些文件仅用于 GUI 预览，不改变仿真 URDF、碰撞网格或目标参数。
 [转换核验](test/results/macos_mesh_conversion_20260910.json)。
+
+### GUI 夹爪预览
+
+右侧模型包含连接板、电机和两片长夹指。安装位姿及夹指运动轴从当前
+`seer_description/urdf/composite_robot_stick_mono.urdf` 读取，挂在 `wrist3_Link` 下。
+`gripper1_joint` 和 `gripper2_joint` 的实际反馈分别驱动两片夹指，单位为米；
+点击开合按钮不会直接伪造模型位置，仍需等待仿真反馈。默认仅规划模式不会使夹爪实际开合。
+
+预览 GLB 来自本地及仿真机一致的 STL，来源哈希、面数和边界核验在
+`meshes/gripper/provenance.json`。转换合并重复顶点并使用 URDF 的灰/黑/白材质；
+仅增加显示资源，原始 STL、仿真模型及目标参数不变。
