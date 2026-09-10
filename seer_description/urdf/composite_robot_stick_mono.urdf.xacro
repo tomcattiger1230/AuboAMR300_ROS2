@@ -54,9 +54,9 @@
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:my_custom_gripper>
 
-  <!-- 末端夹爪后端安装：挂在 gripper_motor_link 上，避免停在 wrist3 中段。 -->
+  <!-- 相机安装与已验证的 Ubuntu 运行模型一致，固定在腕部坐标系。 -->
   <joint name="camera_joint" type="fixed">
-    <parent link="gripper_motor_link" />
+    <parent link="wrist3_Link" />
     <child link="camera_link" />
     <origin xyz="0.00 0.1 0.00" rpy="0 0 ${pi}" />
   </joint>

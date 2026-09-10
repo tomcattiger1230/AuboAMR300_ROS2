@@ -20,7 +20,7 @@ def generate(directory):
     path=root+'/mono_camera_link'
     prim=UsdGeom.Xform.Define(stage,path).GetPrim()
     mount=Gf.Matrix4d(1);mount.SetRotate(Gf.Rotation(Gf.Vec3d(0,0,1),180));mount.SetTranslateOnly(Gf.Vec3d(0,.1,0))
-    world=mount*UsdGeom.Xformable(source.GetPrimAtPath(root+'/gripper_motor_link')).ComputeLocalToWorldTransform(0)
+    world=mount*UsdGeom.Xformable(source.GetPrimAtPath(root+'/wrist3_Link')).ComputeLocalToWorldTransform(0)
     xf=UsdGeom.Xformable(prim);xf.AddTranslateOp().Set(world.ExtractTranslation());xf.AddOrientOp().Set(Gf.Quatf(world.ExtractRotationQuat()))
     UsdPhysics.RigidBodyAPI.Apply(prim)
     mass=UsdPhysics.MassAPI.Apply(prim);mass.CreateMassAttr(.193);mass.CreateCenterOfMassAttr(Gf.Vec3f(0,0,-.011));mass.CreateDiagonalInertiaAttr(Gf.Vec3f(.00014,.00013,.00004))
@@ -34,7 +34,7 @@ def generate(directory):
     camera.GetPrim().CreateAttribute('sensor:model',Sdf.ValueTypeNames.String).Set('MV-CH100-60UM')
     camera.GetPrim().CreateAttribute('sensor:nativeResolution',Sdf.ValueTypeNames.Int2).Set(Gf.Vec2i(4096,2460))
     camera.GetPrim().CreateAttribute('sensor:pixelFormat',Sdf.ValueTypeNames.String).Set('mono8')
-    joint=UsdPhysics.FixedJoint.Define(stage,root+'/joints/mono_camera_joint');joint.CreateBody0Rel().SetTargets([root+'/gripper_motor_link']);joint.CreateBody1Rel().SetTargets([path]);joint.CreateLocalPos0Attr(Gf.Vec3f(0,.1,0));joint.CreateLocalRot0Attr(Gf.Quatf(0,0,0,1));joint.CreateLocalPos1Attr(Gf.Vec3f(0));joint.CreateLocalRot1Attr(Gf.Quatf(1));joint.CreateCollisionEnabledAttr(False)
+    joint=UsdPhysics.FixedJoint.Define(stage,root+'/joints/mono_camera_joint');joint.CreateBody0Rel().SetTargets([root+'/wrist3_Link']);joint.CreateBody1Rel().SetTargets([path]);joint.CreateLocalPos0Attr(Gf.Vec3f(0,.1,0));joint.CreateLocalRot0Attr(Gf.Quatf(0,0,0,1));joint.CreateLocalPos1Attr(Gf.Vec3f(0));joint.CreateLocalRot1Attr(Gf.Quatf(1));joint.CreateCollisionEnabledAttr(False)
     stage.GetRootLayer().Save()
     warehouse=directory/'warehouse_stick_mono_demo.usda'
     # Reuse the scene, then apply the new robot as the stronger sublayer.

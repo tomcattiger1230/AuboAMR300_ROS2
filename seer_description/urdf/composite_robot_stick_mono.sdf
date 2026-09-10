@@ -951,7 +951,7 @@
     <frame name='camera_optical_frame' attached_to='camera_optical_joint'>
       <pose>0 0 0 0 0 0</pose>
     </frame>
-    <frame name='camera_joint' attached_to='gripper_motor_link'>
+    <frame name='camera_joint' attached_to='wrist3_Link'>
       <pose>0 0.10000000000000001 0 0 0 3.1415926535897931</pose>
     </frame>
     <frame name='camera_link' attached_to='camera_joint'>

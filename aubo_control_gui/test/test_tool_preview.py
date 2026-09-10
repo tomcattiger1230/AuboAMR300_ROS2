@@ -24,7 +24,7 @@ def test_tool_mount_and_independent_finger_axes():
             assert (repo/'aubo_control_gui/meshes/gripper'/part['mesh']).is_file()
 
 
-def test_camera_body_and_lens_follow_gripper_mount():
+def test_camera_body_and_lens_follow_wrist_mount():
     repo = Path(__file__).parents[2]
     parts = tool_visuals(repo/'seer_description/urdf/composite_robot_stick_mono.urdf')
     camera = [p for p in parts if p['link'] == 'camera_link']
@@ -59,6 +59,7 @@ def test_running_description_old_and_new_parent():
     import xml.etree.ElementTree as ET
     repo = Path(__file__).parents[2]
     root = ET.parse(repo/'seer_description/urdf/composite_robot_stick_mono.urdf').getroot()
+    root.find("joint[@name='camera_joint']/parent").set('link','gripper_motor_link')
     new = camera_mount_from_description(ET.tostring(root,encoding='unicode'))
     np.testing.assert_allclose(new[:3,3], [-.02,0,.135],atol=1e-12)
     root.find("joint[@name='camera_joint']/parent").set('link','wrist3_Link')
