@@ -1,0 +1,820 @@
+{
+  "frame": "aubo_base_link",
+  "tip": "wrist3_Link",
+  "execute_requested": true,
+  "scene_limit": "Current MoveIt collision geometry; warehouse geometry not fully imported.",
+  "targets": [
+    {
+      "name": "放置位",
+      "transit": false,
+      "source_pose": [
+        0.394259,
+        0.157368,
+        1.082352,
+        -0.677517,
+        -0.009685,
+        -0.733668,
+        0.051065
+      ],
+      "source_joint_degrees": [
+        -188.675889,
+        11.537593,
+        -17.495514,
+        -33.854656,
+        -76.56946,
+        94.284894
+      ],
+      "fk_pose": [
+        0.3942583418735511,
+        0.1573684329017679,
+        1.0823522960910261,
+        0.6775169374573546,
+        0.009685883720623751,
+        0.7336683654847659,
+        -0.051065767416828015
+      ],
+      "source_position_error_m": 8.415487265888929e-07,
+      "source_orientation_error_rad": 2.3938519511251927e-06,
+      "target_joint_radians": {
+        "shoulder_joint": -3.293015482177352,
+        "upperArm_joint": 0.20136898560505012,
+        "foreArm_joint": -0.3053543236287632,
+        "wrist1_joint": -0.5908752143300534,
+        "wrist2_joint": -1.3363891834740975,
+        "wrist3_joint": 1.6455818351938465
+      },
+      "gripper_states": {
+        "open": {
+          "valid": true,
+          "contacts": []
+        },
+        "closed": {
+          "valid": true,
+          "contacts": []
+        }
+      },
+      "current_gripper_validity": {
+        "valid": true,
+        "contacts": []
+      },
+      "planning_code": 1,
+      "execution": {
+        "accepted": true,
+        "status": 4,
+        "code": 1,
+        "max_joint_error_rad": 0.0031154821773520247,
+        "position_error_m": 0.002401449485998867,
+        "orientation_error_rad": 0.004958652415358321
+      },
+      "executed": true,
+      "outcome": "passed"
+    },
+    {
+      "name": "存储位 1",
+      "transit": false,
+      "source_pose": [
+        -0.59271644,
+        0.01323178,
+        0.21504936,
+        0.70359345,
+        0.71049719,
+        0.00645688,
+        0.01040737
+      ],
+      "source_joint_degrees": [
+        -20.040608,
+        24.815827,
+        -113.728578,
+        -47.151764,
+        -90.174268,
+        159.402067
+      ],
+      "fk_pose": [
+        -0.5927164885091978,
+        0.013231653977239051,
+        0.21504937066489704,
+        0.7035934533368235,
+        0.7104971851714615,
+        0.0064562774029838154,
+        0.010407630234039119
+      ],
+      "source_position_error_m": 1.3545707281102467e-07,
+      "source_orientation_error_rad": 1.3126561370817206e-06,
+      "target_joint_radians": {
+        "shoulder_joint": -0.34977459370151576,
+        "upperArm_joint": 0.43311788775530685,
+        "foreArm_joint": -1.9849381397111876,
+        "wrist1_joint": -0.8229535299233316,
+        "wrist2_joint": -1.573837877175762,
+        "wrist3_joint": 2.7820909036345998
+      },
+      "gripper_states": {
+        "open": {
+          "valid": false,
+          "contacts": [
+            {
+              "bodies": [
+                "gripper1_link",
+                "base_link"
+              ],
+              "depth_m": 0.04296713955476178,
+              "position": [
+                0.45704355961338816,
+                0.06163898153954212,
+                0.5185918992943868
+              ]
+            },
+            {
+              "bodies": [
+                "gripper2_link",
+                "base_link"
+              ],
+              "depth_m": 0.07432771635547442,
+              "position": [
+                0.11450481649082009,
+                -0.09366203196399234,
+                0.5265048988197201
+              ]
+            }
+          ]
+        },
+        "closed": {
+          "valid": false,
+          "contacts": [
+            {
+              "bodies": [
+                "gripper1_link",
+                "base_link"
+              ],
+              "depth_m": 0.0425793048624038,
+              "position": [
+                0.4574312977317449,
+                0.021646139621332217,
+                0.5183615958363087
+              ]
+            },
+            {
+              "bodies": [
+                "gripper2_link",
+                "base_link"
+              ],
+              "depth_m": 0.07409955655772049,
+              "position": [
+                0.11411697356969136,
+                -0.053669919826413726,
+                0.5267305027834016
+              ]
+            }
+          ]
+        }
+      },
+      "current_gripper_validity": {
+        "valid": false,
+        "contacts": [
+          {
+            "bodies": [
+              "gripper1_link",
+              "base_link"
+            ],
+            "depth_m": 0.04296423079456907,
+            "position": [
+              0.45704646764927587,
+              0.061339035225155526,
+              0.5185901720184511
+            ]
+          },
+          {
+            "bodies": [
+              "gripper2_link",
+              "base_link"
+            ],
+            "depth_m": 0.07431801956406991,
+            "position": [
+              0.11448833316667217,
+              -0.09196236719814524,
+              0.5265144869881765
+            ]
+          }
+        ]
+      },
+      "planning_code": 99999,
+      "outcome": "blocked_collision",
+      "executed": false
+    },
+    {
+      "name": "存储位 2",
+      "transit": false,
+      "source_pose": [
+        -0.49691673,
+        0.01323225,
+        0.21216157,
+        0.70359411,
+        0.71049654,
+        0.00645673,
+        0.01040759
+      ],
+      "source_joint_degrees": [
+        -24.060332,
+        16.329826,
+        -129.23987,
+        -54.192838,
+        -90.271503,
+        155.383593
+      ],
+      "fk_pose": [
+        -0.49691719830394065,
+        0.013232459224715214,
+        0.21216266542807305,
+        0.7035941183227047,
+        0.7104965467238319,
+        0.006456238879145123,
+        0.010406283425942032
+      ],
+      "source_position_error_m": 1.2095644776336398e-06,
+      "source_orientation_error_rad": 2.79157257732092e-06,
+      "target_joint_radians": {
+        "shoulder_joint": -0.4199320125229523,
+        "upperArm_joint": 0.28500922997777556,
+        "foreArm_joint": -2.255661256349444,
+        "wrist1_joint": -0.9458434540998988,
+        "wrist2_joint": -1.5755349480739387,
+        "wrist3_joint": 2.711955301428813
+      },
+      "gripper_states": {
+        "open": {
+          "valid": false,
+          "contacts": [
+            {
+              "bodies": [
+                "gripper1_link",
+                "base_link"
+              ],
+              "depth_m": 0.13876570954786616,
+              "position": [
+                0.36126883971642004,
+                0.06049439210693343,
+                0.5162348823328757
+              ]
+            },
+            {
+              "bodies": [
+                "gripper2_link",
+                "base_link"
+              ],
+              "depth_m": 0.07721461842613497,
+              "position": [
+                0.018706050040366413,
+                -0.09359526851091612,
+                0.5236503323410666
+              ]
+            }
+          ]
+        },
+        "closed": {
+          "valid": false,
+          "contacts": [
+            {
+              "bodies": [
+                "gripper1_link",
+                "base_link"
+              ],
+              "depth_m": 0.13837794747370974,
+              "position": [
+                0.3616565052473136,
+                0.020501548185374155,
+                0.5160046545261342
+              ]
+            },
+            {
+              "bodies": [
+                "gripper2_link",
+                "base_link"
+              ],
+              "depth_m": 0.07698653388721433,
+              "position": [
+                0.018318279735386807,
+                -0.05360315347803504,
+                0.5238758618988071
+              ]
+            }
+          ]
+        }
+      },
+      "current_gripper_validity": {
+        "valid": false,
+        "contacts": [
+          {
+            "bodies": [
+              "gripper1_link",
+              "base_link"
+            ],
+            "depth_m": 0.13876280133230995,
+            "position": [
+              0.3612717472079018,
+              0.060194445777521734,
+              0.5162331556243254
+            ]
+          },
+          {
+            "bodies": [
+              "gripper2_link",
+              "base_link"
+            ],
+            "depth_m": 0.07720492483323083,
+            "position": [
+              0.018689569802404764,
+              -0.09189560362201869,
+              0.5236599173472707
+            ]
+          }
+        ]
+      },
+      "planning_code": 99999,
+      "outcome": "blocked_collision",
+      "executed": false
+    },
+    {
+      "name": "存储位 3",
+      "transit": false,
+      "source_pose": [
+        -0.41375597,
+        0.01323245,
+        0.20952409,
+        0.7035943,
+        0.71049635,
+        0.00645689,
+        0.01040731
+      ],
+      "source_joint_degrees": [
+        -29.197635,
+        8.438428,
+        -142.066842,
+        -59.158031,
+        -90.393729,
+        150.247687
+      ],
+      "fk_pose": [
+        -0.4137554315945682,
+        0.013232156564480428,
+        0.20952366198733852,
+        0.7035942887019624,
+        0.7104963453526464,
+        0.006457079802163046,
+        0.010407990533296056
+      ],
+      "source_position_error_m": 7.477831580868289e-07,
+      "source_orientation_error_rad": 1.413648274616202e-06,
+      "target_joint_radians": {
+        "shoulder_joint": -0.5095948645455345,
+        "upperArm_joint": 0.14727835229248007,
+        "foreArm_joint": -2.479534150810566,
+        "wrist1_joint": -1.0325024199468735,
+        "wrist2_joint": -1.5776681942054813,
+        "wrist3_joint": 2.6223168316558816
+      },
+      "gripper_states": {
+        "open": {
+          "valid": false,
+          "contacts": [
+            {
+              "bodies": [
+                "gripper1_link",
+                "base_link"
+              ],
+              "depth_m": 0.0872286537442849,
+              "position": [
+                0.2781779466426664,
+                0.053542478481076405,
+                0.5137447716647434
+              ]
+            },
+            {
+              "bodies": [
+                "gripper2_link",
+                "base_link"
+              ],
+              "depth_m": 0.07985307701713729,
+              "position": [
+                -0.06445670576012169,
+                -0.09353257755241462,
+                0.5210414317271385
+              ]
+            }
+          ]
+        },
+        "closed": {
+          "valid": false,
+          "contacts": [
+            {
+              "bodies": [
+                "gripper1_link",
+                "base_link"
+              ],
+              "depth_m": 0.0874567877255551,
+              "position": [
+                0.2785657115901931,
+                0.013548647225472596,
+                0.5135191835374386
+              ]
+            },
+            {
+              "bodies": [
+                "gripper2_link",
+                "base_link"
+              ],
+              "depth_m": 0.07962494303586709,
+              "position": [
+                -0.06484445405591918,
+                -0.053540463745622324,
+                0.5212670101670478
+              ]
+            }
+          ]
+        }
+      },
+      "current_gripper_validity": {
+        "valid": false,
+        "contacts": [
+          {
+            "bodies": [
+              "gripper1_link",
+              "base_link"
+            ],
+            "depth_m": 0.08723036474914447,
+            "position": [
+              0.2781808548797728,
+              0.05324252474665937,
+              0.5137430797537886
+            ]
+          },
+          {
+            "bodies": [
+              "gripper2_link",
+              "base_link"
+            ],
+            "depth_m": 0.07984338132293334,
+            "position": [
+              -0.06447318506269309,
+              -0.09183291271562596,
+              0.5210510188108345
+            ]
+          }
+        ]
+      },
+      "planning_code": 99999,
+      "outcome": "blocked_collision",
+      "executed": false
+    },
+    {
+      "name": "存储位 4",
+      "transit": false,
+      "source_pose": [
+        -0.31180838,
+        0.0132321,
+        0.20705448,
+        0.70359269,
+        0.71049791,
+        0.00645827,
+        0.01040825
+      ],
+      "source_joint_degrees": [
+        -39.897898,
+        -4.533648,
+        -157.106044,
+        -61.321705,
+        -90.637068,
+        139.549494
+      ],
+      "fk_pose": [
+        -0.31180894855633123,
+        0.013232396937975892,
+        0.2070548892426346,
+        0.7035927129192259,
+        0.7104979073099498,
+        0.006457553537887832,
+        0.010407595180975003
+      ],
+      "source_position_error_m": 7.608600379042197e-07,
+      "source_orientation_error_rad": 1.9415017932537757e-06,
+      "target_joint_radians": {
+        "shoulder_joint": -0.6963496847248606,
+        "upperArm_joint": -0.07912708472645588,
+        "foreArm_joint": -2.7420177425830823,
+        "wrist1_joint": -1.0702656551866694,
+        "wrist2_joint": -1.5819152609539917,
+        "wrist3_joint": 2.435598139792072
+      },
+      "gripper_states": {
+        "open": {
+          "valid": false,
+          "contacts": [
+            {
+              "bodies": [
+                "gripper1_link",
+                "base_link"
+              ],
+              "depth_m": 0.08969751865273523,
+              "position": [
+                0.17623140815917096,
+                0.053582001505400635,
+                0.5113034563109407
+              ]
+            },
+            {
+              "bodies": [
+                "gripper2_link",
+                "base_link"
+              ],
+              "depth_m": 0.08232173656213271,
+              "position": [
+                -0.1664027690646664,
+                -0.09347598996183659,
+                0.518600423689857
+              ]
+            }
+          ]
+        },
+        "closed": {
+          "valid": false,
+          "contacts": [
+            {
+              "bodies": [
+                "gripper1_link",
+                "base_link"
+              ],
+              "depth_m": 0.0899256056114287,
+              "position": [
+                0.17661935113764327,
+                0.013588170961220804,
+                0.5110779146772308
+              ]
+            },
+            {
+              "bodies": [
+                "gripper2_link",
+                "base_link"
+              ],
+              "depth_m": 0.08209364960343923,
+              "position": [
+                -0.1667906953871976,
+                -0.053483876512487566,
+                0.5188259556401639
+              ]
+            }
+          ]
+        }
+      },
+      "current_gripper_validity": {
+        "valid": false,
+        "contacts": [
+          {
+            "bodies": [
+              "gripper1_link",
+              "base_link"
+            ],
+            "depth_m": 0.08969922930492547,
+            "position": [
+              0.17623431773150947,
+              0.053282047776319286,
+              0.5113017647486878
+            ]
+          },
+          {
+            "bodies": [
+              "gripper2_link",
+              "base_link"
+            ],
+            "depth_m": 0.08231204286638827,
+            "position": [
+              -0.16641925593337398,
+              -0.09177632514023926,
+              0.518610008797745
+            ]
+          }
+        ]
+      },
+      "planning_code": 99999,
+      "outcome": "blocked_collision",
+      "executed": false
+    },
+    {
+      "name": "WP1",
+      "transit": true,
+      "source_pose": [
+        0.168738,
+        0.327762,
+        0.928637,
+        -0.758736,
+        -0.223662,
+        -0.610618,
+        0.037947
+      ],
+      "ik_codes": [
+        1
+      ],
+      "target_joint_radians": {
+        "shoulder_joint": -2.5020417898672624,
+        "upperArm_joint": -0.21205157001476763,
+        "foreArm_joint": -1.1825649063428658,
+        "wrist1_joint": -0.7057396150686631,
+        "wrist2_joint": -1.8520186272514962,
+        "wrist3_joint": 1.4213064767402646
+      },
+      "gripper_states": {
+        "open": {
+          "valid": true,
+          "contacts": []
+        },
+        "closed": {
+          "valid": true,
+          "contacts": []
+        }
+      },
+      "current_gripper_validity": {
+        "valid": true,
+        "contacts": []
+      },
+      "planning_code": 1,
+      "execution": {
+        "accepted": true,
+        "status": 4,
+        "code": 1,
+        "max_joint_error_rad": 0.0023186272514963413,
+        "position_error_m": 0.0014458570978709414,
+        "orientation_error_rad": 0.001641594368228034
+      },
+      "executed": true,
+      "outcome": "passed"
+    },
+    {
+      "name": "WP2",
+      "transit": true,
+      "source_pose": [
+        -0.063567,
+        0.346313,
+        0.749845,
+        -0.788592,
+        -0.422498,
+        -0.446232,
+        0.02226
+      ],
+      "ik_codes": [
+        1
+      ],
+      "target_joint_radians": {
+        "shoulder_joint": -1.7667093271238885,
+        "upperArm_joint": -0.3527146319063417,
+        "foreArm_joint": -1.592593894470143,
+        "wrist1_joint": -0.3990771255922243,
+        "wrist2_joint": -2.2038907655086595,
+        "wrist3_joint": 1.7129465871247485
+      },
+      "gripper_states": {
+        "open": {
+          "valid": true,
+          "contacts": []
+        },
+        "closed": {
+          "valid": true,
+          "contacts": []
+        }
+      },
+      "current_gripper_validity": {
+        "valid": true,
+        "contacts": []
+      },
+      "planning_code": 1,
+      "execution": {
+        "accepted": true,
+        "status": 4,
+        "code": 1,
+        "max_joint_error_rad": 0.0025906728761115883,
+        "position_error_m": 0.0020990917999398426,
+        "orientation_error_rad": 0.0031811834621824756
+      },
+      "executed": true,
+      "outcome": "passed"
+    },
+    {
+      "name": "WP3",
+      "transit": true,
+      "source_pose": [
+        -0.302656,
+        0.213021,
+        0.545975,
+        -0.765063,
+        -0.592733,
+        -0.251637,
+        0.005067
+      ],
+      "ik_codes": [
+        1
+      ],
+      "target_joint_radians": {
+        "shoulder_joint": -1.0038394424782942,
+        "upperArm_joint": -0.3190143680556484,
+        "foreArm_joint": -1.8621113209865277,
+        "wrist1_joint": -0.034751000086989316,
+        "wrist2_joint": -2.076131811345329,
+        "wrist3_joint": 2.374112420710042
+      },
+      "gripper_states": {
+        "open": {
+          "valid": true,
+          "contacts": []
+        },
+        "closed": {
+          "valid": true,
+          "contacts": []
+        }
+      },
+      "current_gripper_validity": {
+        "valid": true,
+        "contacts": []
+      },
+      "planning_code": 1,
+      "execution": {
+        "accepted": true,
+        "status": 4,
+        "code": 1,
+        "max_joint_error_rad": 0.0028489999130106858,
+        "position_error_m": 0.0011145745714093369,
+        "orientation_error_rad": 0.0011729197691038237
+      },
+      "executed": true,
+      "outcome": "passed"
+    },
+    {
+      "name": "COMMON",
+      "transit": true,
+      "source_pose": [
+        -0.50969026,
+        -0.01676533,
+        0.46659132,
+        -0.69007207,
+        -0.72370913,
+        -0.00666483,
+        0.00109774
+      ],
+      "ik_codes": [
+        1
+      ],
+      "target_joint_radians": {
+        "shoulder_joint": -0.3481505480440651,
+        "upperArm_joint": -0.013735624507768926,
+        "foreArm_joint": -1.7816980582043145,
+        "wrist1_joint": -0.19382086742584453,
+        "wrist2_joint": -1.583885674916781,
+        "wrist3_joint": 2.745888371505854
+      },
+      "gripper_states": {
+        "open": {
+          "valid": true,
+          "contacts": []
+        },
+        "closed": {
+          "valid": true,
+          "contacts": []
+        }
+      },
+      "current_gripper_validity": {
+        "valid": true,
+        "contacts": []
+      },
+      "planning_code": 1,
+      "execution": {
+        "accepted": true,
+        "status": 4,
+        "code": 1,
+        "max_joint_error_rad": 0.004149451955934913,
+        "position_error_m": 0.002385919298739043,
+        "orientation_error_rad": 0.003304869737702141
+      },
+      "executed": true,
+      "outcome": "passed"
+    }
+  ],
+  "return_to_start": {
+    "planning_code": 1,
+    "execution": {
+      "accepted": true,
+      "status": 4,
+      "code": 1,
+      "max_joint_error_rad": 0.0033,
+      "position_error_m": 0.0003027031950274178,
+      "orientation_error_rad": 0.0053413449463963055
+    }
+  },
+  "initial_joint_state": {
+    "left_wheel_joint": -2.3346,
+    "right_wheel_joint": -1.6266,
+    "shoulder_joint": 0.0,
+    "upperArm_joint": 0.0019,
+    "foreArm_joint": -0.0001,
+    "wrist1_joint": 0.003,
+    "wrist2_joint": 0.0008,
+    "wrist3_joint": -0.0011,
+    "gripper1_joint": 0.0003,
+    "gripper2_joint": 0.0017
+  }
+}

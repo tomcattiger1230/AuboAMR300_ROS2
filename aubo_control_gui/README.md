@@ -107,3 +107,5 @@ GUI 基于用户提供的 `aubo_develop_student/aubo_i16_pc_ws/src/aubo_control_
 
 下一轮实机工作需实现/配置标准机械臂、夹爪控制器，并核对 SDK、真实关节状态、
 夹爪行程映射、停止语义和工具坐标。完成后 GUI 继续使用相同 MoveIt 接口。
+
+关键位置另见 [四个存储位、放置位及过渡点验证](KEY_POSITION_VALIDATION.md)：四个存储位在当前完整模型中存在夹爪与底盘碰撞，未启用为默认快捷位。
