@@ -47,3 +47,5 @@ export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
 去掉 `--execute` 仅检查 FK、IK、碰撞和规划。已知碰撞目标无论是否传入该选项都不会执行。
 
 [完整实测记录](test/results/student_key_positions_20260910.json)
+
+后续[详细碰撞原因核查](COLLISION_AUDIT.md)已确认夹指与底盘可视三角网格相交，并验证了抬高目标的只读规划候选。

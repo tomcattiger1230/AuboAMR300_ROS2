@@ -1,0 +1,202 @@
+[
+  {
+    "name": "存储位 1",
+    "lift_m": 0.1,
+    "ik_code": 1,
+    "executed": false,
+    "joint_radians": {
+      "shoulder_joint": -0.34977459224053087,
+      "upperArm_joint": 0.2879783221766908,
+      "foreArm_joint": -1.859882869311001,
+      "wrist1_joint": -0.5527586636418411,
+      "wrist2_joint": -1.573839189603548,
+      "wrist3_joint": 2.7820909095545496
+    },
+    "validity": {
+      "open": {
+        "valid": true,
+        "contacts": []
+      },
+      "closed": {
+        "valid": true,
+        "contacts": []
+      }
+    },
+    "planning_code": 1
+  },
+  {
+    "name": "存储位 1",
+    "lift_m": 0.12,
+    "ik_code": 1,
+    "executed": false,
+    "joint_radians": {
+      "shoulder_joint": -0.349774592240531,
+      "upperArm_joint": 0.26535670734226113,
+      "foreArm_joint": -1.8284937452167822,
+      "wrist1_joint": -0.498747924713193,
+      "wrist2_joint": -1.573839189603548,
+      "wrist3_joint": 2.7820909095545496
+    },
+    "validity": {
+      "open": {
+        "valid": true,
+        "contacts": []
+      },
+      "closed": {
+        "valid": true,
+        "contacts": []
+      }
+    },
+    "planning_code": 1
+  },
+  {
+    "name": "存储位 2",
+    "lift_m": 0.1,
+    "ik_code": 1,
+    "executed": false,
+    "joint_radians": {
+      "shoulder_joint": -0.41993201293173626,
+      "upperArm_joint": 0.1006803639733104,
+      "foreArm_joint": -2.114005702027443,
+      "wrist1_joint": -0.6198562420493793,
+      "wrist2_joint": -1.5755349451028282,
+      "wrist3_joint": 2.7119553052345946
+    },
+    "validity": {
+      "open": {
+        "valid": true,
+        "contacts": []
+      },
+      "closed": {
+        "valid": true,
+        "contacts": []
+      }
+    },
+    "planning_code": 1
+  },
+  {
+    "name": "存储位 2",
+    "lift_m": 0.12,
+    "ik_code": 1,
+    "executed": false,
+    "joint_radians": {
+      "shoulder_joint": -0.41993201293173626,
+      "upperArm_joint": 0.07297017472321617,
+      "foreArm_joint": -2.0794402325035293,
+      "wrist1_joint": -0.5575805832753715,
+      "wrist2_joint": -1.5755349451028282,
+      "wrist3_joint": 2.7119553052345946
+    },
+    "validity": {
+      "open": {
+        "valid": true,
+        "contacts": []
+      },
+      "closed": {
+        "valid": true,
+        "contacts": []
+      }
+    },
+    "planning_code": 1
+  },
+  {
+    "name": "存储位 3",
+    "lift_m": 0.1,
+    "ik_code": 1,
+    "executed": false,
+    "joint_radians": {
+      "shoulder_joint": -0.5095948474389027,
+      "upperArm_joint": -0.08495185630411951,
+      "foreArm_joint": -2.3111707127713457,
+      "wrist1_joint": -0.6319101863636704,
+      "wrist2_joint": -1.5776681922194093,
+      "wrist3_joint": 2.62231685339947
+    },
+    "validity": {
+      "open": {
+        "valid": true,
+        "contacts": []
+      },
+      "closed": {
+        "valid": true,
+        "contacts": []
+      }
+    },
+    "planning_code": 1
+  },
+  {
+    "name": "存储位 3",
+    "lift_m": 0.12,
+    "ik_code": 1,
+    "executed": false,
+    "joint_radians": {
+      "shoulder_joint": -0.5095948474389027,
+      "upperArm_joint": -0.11716947810055253,
+      "foreArm_joint": -2.271790407285793,
+      "wrist1_joint": -0.5603122590816839,
+      "wrist2_joint": -1.5776681922194093,
+      "wrist3_joint": 2.62231685339947
+    },
+    "validity": {
+      "open": {
+        "valid": true,
+        "contacts": []
+      },
+      "closed": {
+        "valid": true,
+        "contacts": []
+      }
+    },
+    "planning_code": 1
+  },
+  {
+    "name": "存储位 4",
+    "lift_m": 0.1,
+    "ik_code": 1,
+    "executed": false,
+    "joint_radians": {
+      "shoulder_joint": -0.6963496865979675,
+      "upperArm_joint": -0.39048952968060435,
+      "foreArm_joint": -2.512505055591132,
+      "wrist1_joint": -0.5293890975496094,
+      "wrist2_joint": -1.5819165790337149,
+      "wrist3_joint": 2.4355981238740783
+    },
+    "validity": {
+      "open": {
+        "valid": true,
+        "contacts": []
+      },
+      "closed": {
+        "valid": true,
+        "contacts": []
+      }
+    },
+    "planning_code": 1
+  },
+  {
+    "name": "存储位 4",
+    "lift_m": 0.12,
+    "ik_code": 1,
+    "executed": false,
+    "joint_radians": {
+      "shoulder_joint": -0.6963496865979677,
+      "upperArm_joint": -0.42398385500067765,
+      "foreArm_joint": -2.464305255845653,
+      "wrist1_joint": -0.4476949724840572,
+      "wrist2_joint": -1.581916579033715,
+      "wrist3_joint": 2.435598123874078
+    },
+    "validity": {
+      "open": {
+        "valid": true,
+        "contacts": []
+      },
+      "closed": {
+        "valid": true,
+        "contacts": []
+      }
+    },
+    "planning_code": 1
+  }
+]
