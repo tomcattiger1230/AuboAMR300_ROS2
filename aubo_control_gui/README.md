@@ -195,9 +195,20 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 这些文件仅用于 GUI 预览，不改变仿真 URDF、碰撞网格或目标参数。
 [转换核验](test/results/macos_mesh_conversion_20260910.json)。
 
-### GUI 夹爪预览
+也可验证 Qt 窗口实际接收和显示反馈（最多 30 秒，成功后自动关闭）：
 
-右侧模型包含连接板、电机和两片长夹指。安装位姿及夹指运动轴从当前
+```bash
+./scripts/start_macos_gui.command --check-gui
+```
+
+请在出现问题的同一个终端运行检查。`--check` 成功而 `--check-gui` 失败，
+说明需要检查 GUI 更新链路；两者均失败则检查 DDS 发现、远端仿真、终端本地网络权限和防火墙。
+正常启动会输出 Python 路径、PID、peer、domain；连接建立或等待 10 秒后输出
+`feedback`、`moveit` 和缺失关节名。输入法 `IMKCFRunLoopWakeUpReliable` 日志本身不能说明 ROS 是否连通。
+
+### GUI 夹爪与相机预览
+
+右侧模型包含连接板、电机、两片长夹指，以及 MV-CH100-60UM 黑白相机机身和 12 mm C 口镜头的示意外形。安装位姿及夹指运动轴从当前
 `seer_description/urdf/composite_robot_stick_mono.urdf` 读取，挂在 `wrist3_Link` 下。
 `gripper1_joint` 和 `gripper2_joint` 的实际反馈分别驱动两片夹指，单位为米；
 点击开合按钮不会直接伪造模型位置，仍需等待仿真反馈。点击“规划夹爪打开/闭合”后先显示预览，再点击“执行已规划轨迹”才会实际开合。
@@ -246,3 +257,5 @@ Mac 启动：`./scripts/start_macos_gui.command`。连接现有 Ubuntu Isaac / M
 
 Mac 通过 Fast DDS 的同样流程也通过：[Mac 跨机测试记录](test/results/macos_plan_execute_20260910.json)。等待控制器稳定后，机械臂最大目标误差 0.0019 rad，夹指最大误差 0.001 m；停止后 1 秒最大关节漂移 0.0015 rad。
 可在 GUI 相同 Python/ROS 环境下运行 `test/check_gui_drag.py --ros-args -p use_sim_time:=true -p enable_motion:=true` 复查鼠标平移、旋转、预览及轨迹失效；该检查只规划、不执行，要求 Isaac 处于无碰撞的近零位姿。
+
+相机直接读取组合 URDF 的 box/cylinder 几何、颜色和安装变换，随夹爪电机座运动；实际模型与轨迹预览使用相同装配。镜头外形仍为未指定具体型号时的近似尺寸。本项仅添加三维模型，不新增视频面板。

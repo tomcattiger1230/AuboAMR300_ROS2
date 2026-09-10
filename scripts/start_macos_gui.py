@@ -10,11 +10,12 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--peer', default='192.168.3.133', type=ipaddress.ip_address)
 parser.add_argument('--domain-id', default=133, type=int)
 parser.add_argument('--execute', action='store_true', help='Allow explicit execution (the default); planning never executes')
+parser.add_argument('--check-gui', action='store_true', help='Open GUI and verify displayed feedback for 30 seconds without executing')
 parser.add_argument('--check', action='store_true', help='Check feedback, FK and planning without opening a window or executing')
 parser.add_argument('--plan-only', action='store_true', help='Disable the explicit Execute button')
 args = parser.parse_args()
-if args.check and args.execute:
-    parser.error('--check cannot be combined with --execute')
+if (args.check or args.check_gui) and args.execute:
+    parser.error('--check/--check-gui cannot be combined with --execute')
 if not 0 <= args.domain_id <= 232:
     parser.error('domain-id must be in 0..232')
 os.environ['RMW_IMPLEMENTATION'] = 'rmw_fastrtps_cpp'
@@ -28,7 +29,12 @@ os.environ['FASTDDS_DEFAULT_PROFILES_FILE'] = str(Path(__file__).resolve().paren
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'aubo_control_gui'))
 # ROS receives only ROS arguments, not this launcher's arguments.
 sys.argv = [sys.argv[0], '--ros-args', '-p', 'use_sim_time:=true',
-            '-p', 'enable_motion:='+str(not args.plan_only and not args.check).lower()]
+            '-p', 'enable_motion:='+str(not args.plan_only and not args.check and not args.check_gui).lower()]
+print(f"[AUBO GUI] pid={os.getpid()} python={sys.executable} peer={args.peer} domain={args.domain_id} rmw=rmw_fastrtps_cpp", flush=True)
+if args.check_gui:
+    import runpy
+    runpy.run_path(str(Path(__file__).resolve().parents[1] / 'aubo_control_gui/test/check_gui_feedback.py'), run_name='__main__')
+    sys.exit(0)
 if args.check:
     import runpy
     runpy.run_path(str(Path(__file__).resolve().parents[1] / 'aubo_control_gui/test/check_fastdds_client.py'), run_name='__main__')

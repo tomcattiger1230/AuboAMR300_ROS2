@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 import numpy as np
 
-TOOL_LINKS = ('gripper_adapter_link', 'gripper_motor_link', 'gripper1_link', 'gripper2_link')
+TOOL_LINKS = ('gripper_adapter_link', 'gripper_motor_link', 'gripper1_link', 'gripper2_link', 'camera_link')
 FINGERS = ('gripper1_joint', 'gripper2_joint')
 
 
@@ -40,8 +40,26 @@ def tool_visuals(urdf_path):
         for visual in links[link].findall('visual'):
             mesh = visual.find('geometry/mesh')
             transform = pose(link) @ origin(visual.find('origin'))
+            geometry = visual.find('geometry')
+            color = visual.find('material/color')
+            shape = 'mesh'
+            scale = [1., 1., 1.]
+            source = ''
+            if mesh is not None:
+                scale = list(map(float, mesh.get('scale', '1 1 1').split()))
+                source = Path(mesh.get('filename')).stem.lower()+'.glb'
+            elif geometry.find('box') is not None:
+                shape = 'box'
+                scale = list(map(float, geometry.find('box').get('size').split()))
+            elif geometry.find('cylinder') is not None:
+                shape = 'cylinder'
+                cylinder = geometry.find('cylinder')
+                diameter = 2*float(cylinder.get('radius'))
+                scale = [diameter, float(cylinder.get('length')), diameter]
+            else:
+                raise ValueError(f'Unsupported tool geometry: {link}')
             result.append(dict(link=link, position=transform[:3, 3].tolist(),
                 rotation=transform[:3, :3].tolist(), axis=axis.tolist(), finger=index,
-                scale=list(map(float, mesh.get('scale', '1 1 1').split())),
-                mesh=Path(mesh.get('filename')).stem.lower()+'.glb'))
+                scale=scale, mesh=source, shape=shape,
+                color=list(map(float, color.get('rgba').split())) if color is not None else [.5,.5,.5,1.]))
     return result

@@ -23,6 +23,8 @@ class RosBridge(QObject):
         self.ik_target=None
         self.ik_timer=QTimer(self); self.ik_timer.setSingleShot(True)
         self.ik_timer.timeout.connect(self._send_ik)
+        self.connection_started=time.monotonic()
+        self.last_connection_report=None
         self.previous=None
         self.previous_tcp=None
         self.timer=QTimer(self)
@@ -39,7 +41,13 @@ class RosBridge(QObject):
             rclpy.spin_once(self.node,timeout_sec=0.0)
             if time.monotonic()>=deadline:break
         fresh=self.node.fresh()
-        self.connection.emit(fresh and self.node.move.server_is_ready())
+        moveit=self.node.move.server_is_ready()
+        self.connection.emit(fresh and moveit)
+        missing=tuple(name for name in ARM+GRIPPER if not self.node.fresh((name,)))
+        report=(missing,moveit)
+        if report != self.last_connection_report and (fresh or time.monotonic()-self.connection_started>10):
+            print(f"[AUBO GUI] feedback={fresh} moveit={moveit} missing={','.join(missing) or 'none'}", flush=True)
+            self.last_connection_report=report
         if fresh:
             values=[self.node.state[n] for n in ARM]
             self.joints.emit(values)
