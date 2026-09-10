@@ -97,7 +97,8 @@ class MainWindow(QMainWindow):
         scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setWidget(left)
         viewport=QWidget();view_layout=QVBoxLayout(viewport);view_layout.setContentsMargins(0,0,0,0)
         view_buttons=QHBoxLayout()
-        view_buttons.addWidget(QLabel('末端：夹爪 + MV-CH100-60UM / 12 mm'))
+        self.camera_source=QLabel('相机：本地模型（等待远端模型）')
+        view_buttons.addWidget(self.camera_source)
         view_buttons.addStretch()
         view_buttons.addWidget(self.button('相机特写',self.view.focus_camera))
         view_buttons.addWidget(self.button('整体视图',self.view.reset_view))
@@ -119,6 +120,8 @@ class MainWindow(QMainWindow):
 
     def _wire(self):
         b=self.bridge
+        b.camera_mount.connect(self.view.set_camera_mount)
+        b.camera_mount.connect(lambda _: self.camera_source.setText('相机：远端模型 · MV-CH100-60UM / 12 mm'))
         b.joints.connect(self.on_joints);b.gripper_joints.connect(self.view.set_gripper_positions)
         b.pose_changed.connect(self.on_pose)
         b.gripper.connect(lambda v:self.grip.setText(f'{v:.2f} mm（模型单指）'))

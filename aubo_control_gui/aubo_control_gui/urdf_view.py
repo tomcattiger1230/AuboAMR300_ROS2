@@ -53,11 +53,15 @@ class UrdfRobotView(QQuickWidget):
         basis = [self.planning_to_scene[:3,i].tolist() for i in range(3)]
         self.rootObject().setProperty('targetBasis', (np.array(basis)/100).tolist())
         self.rootObject().targetDrag.connect(self._drag_target)
-        visuals = tool_visuals(description / "urdf/composite_robot_stick_mono.urdf")
+        self.tool_urdf = description / "urdf/composite_robot_stick_mono.urdf"
+        self.rootObject().setProperty("toolMeshRoot", QUrl.fromLocalFile(str(qml_path.parent.parent / "meshes/gripper")))
+        self._load_tools()
+
+    def _load_tools(self, camera_mount=None):
+        visuals = tool_visuals(self.tool_urdf, camera_mount)
         self.camera_center = np.array(next(v['position'] for v in visuals if v['link'] == 'camera_link'))
         for visual in visuals:
             visual['quaternion'] = QQuaternion.fromRotationMatrix(QMatrix3x3(np.array(visual['rotation']).flatten().tolist()))
-        self.rootObject().setProperty("toolMeshRoot", QUrl.fromLocalFile(str(qml_path.parent.parent / "meshes/gripper")))
         self.rootObject().setProperty("toolVisuals", visuals)
     def set_gripper_positions(self, positions):
         if len(positions) != 2 or not all(math.isfinite(v) for v in positions):
@@ -121,3 +125,6 @@ class UrdfRobotView(QQuickWidget):
 
     def reset_view(self):
         self.rootObject().resetView()
+
+    def set_camera_mount(self, transform):
+        self._load_tools(transform)

@@ -36,3 +36,32 @@ def test_camera_body_and_lens_follow_gripper_mount():
     assert body['finger'] == lens['finger'] == -1
     np.testing.assert_allclose(np.linalg.norm(np.array(lens['position'])-body['position']), .0495)
     assert np.linalg.norm(body['position']) < .25
+
+
+def test_remote_camera_mount_overrides_only_camera():
+    repo = Path(__file__).parents[2]
+    urdf = repo/'seer_description/urdf/composite_robot_stick_mono.urdf'
+    mount = np.diag([-1.,-1.,1.,1.])
+    mount[1,3] = .1
+    local = tool_visuals(urdf)
+    remote = tool_visuals(urdf, mount)
+    for before, after in zip(local,remote):
+        if before['link'] != 'camera_link':
+            assert before == after
+    body,lens = [p for p in remote if p['link']=='camera_link']
+    np.testing.assert_allclose(body['position'], [0,.1,-.0295])
+    np.testing.assert_allclose(lens['position'], [0,.1,.02])
+    np.testing.assert_allclose(body['rotation'], mount[:3,:3])
+
+
+def test_running_description_old_and_new_parent():
+    from aubo_control_gui.tool_preview import camera_mount_from_description
+    import xml.etree.ElementTree as ET
+    repo = Path(__file__).parents[2]
+    root = ET.parse(repo/'seer_description/urdf/composite_robot_stick_mono.urdf').getroot()
+    new = camera_mount_from_description(ET.tostring(root,encoding='unicode'))
+    np.testing.assert_allclose(new[:3,3], [-.02,0,.135],atol=1e-12)
+    root.find("joint[@name='camera_joint']/parent").set('link','wrist3_Link')
+    old = camera_mount_from_description(ET.tostring(root,encoding='unicode'))
+    np.testing.assert_allclose(old[:3,3], [0,.1,0])
+    np.testing.assert_allclose(old[:3,:3],np.diag([-1,-1,1]),atol=1e-12)

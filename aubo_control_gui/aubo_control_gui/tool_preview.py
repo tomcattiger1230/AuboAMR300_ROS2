@@ -20,11 +20,13 @@ def origin(element):
     return t
 
 
-def tool_visuals(urdf_path):
+def tool_visuals(urdf_path, camera_mount=None):
     root = ET.parse(urdf_path).getroot()
     links = {link.get('name'): link for link in root.findall('link')}
     joints = {j.find('child').get('link'): j for j in root.findall('joint')}
     transforms = {'wrist3_Link': np.eye(4)}
+    if camera_mount is not None:
+        transforms['camera_link'] = np.asarray(camera_mount, dtype=float)
     def pose(link):
         if link not in transforms:
             joint = joints[link]
@@ -63,3 +65,25 @@ def tool_visuals(urdf_path):
                 scale=scale, mesh=source, shape=shape,
                 color=list(map(float, color.get('rgba').split())) if color is not None else [.5,.5,.5,1.]))
     return result
+
+
+def camera_mount_from_description(description):
+    """Read the running robot's fixed camera chain, independent of local assets."""
+    try:
+        root = ET.fromstring(description)
+    except ET.ParseError as exc:
+        raise ValueError('Invalid robot_description XML') from exc
+    joints = {j.find('child').get('link'): j for j in root.findall('joint')}
+    link = 'camera_link'
+    transform = np.eye(4)
+    visited = set()
+    while link != 'wrist3_Link':
+        if link in visited:
+            raise ValueError('Cycle in camera mount chain')
+        visited.add(link)
+        joint = joints[link]
+        if joint.get('type') != 'fixed':
+            raise ValueError('Camera mount chain must be fixed relative to wrist3_Link')
+        transform = origin(joint.find('origin')) @ transform
+        link = joint.find('parent').get('link')
+    return transform

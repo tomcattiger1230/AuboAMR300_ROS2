@@ -98,3 +98,11 @@ ros2 run seer_description test_isaac_arm.py --execute --output /tmp/mono_arm.jso
 按 [GUI README](../aubo_control_gui/README.md) 启动后，使用“相机特写”查看机身和镜头，再用“整体视图”返回全景。
 GUI 从本文件所列的组合 URDF 读取相机几何和安装位置，不需要另行导入 USD。
 这只显示三维外观；实时视频仍使用上面的网页服务。更新源码后需要重启 GUI，已打开的窗口不会热加载模型。
+
+### 2026-09-10：GUI 相机安装位置跟随运行中的 Ubuntu 模型
+
+Ubuntu 当前运行的相机相对 `wrist3_Link` 为 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
+此前本地 URDF 已将父节点改为 `gripper_motor_link`，但 Ubuntu 运行中的模型未重载，导致两端显示不同。
+GUI 现在订阅远端 `/robot_description`（transient-local），解析腕部到相机的固定关节链，用它覆盖本地相机安装变换。
+工具栏显示“相机：远端模型”后，安装位置以运行中的机器人描述为准；未收到描述时显示“本地模型（等待远端模型）”。
+机身和镜头几何仍来自本地黑白相机 URDF。本次不修改或重启 Ubuntu 仿真；磁盘上的安装配置与当前运行模型仍有差异，之后重启仿真前须先确认安装参数。

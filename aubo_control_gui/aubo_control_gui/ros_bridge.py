@@ -5,9 +5,13 @@ from PySide6.QtCore import QObject, QTimer, Signal, QCoreApplication
 import rclpy
 from .motion_client import MotionClient, ARM, GRIPPER
 from moveit_msgs.srv import GetPositionIK
+from std_msgs.msg import String
+from rclpy.qos import QoSProfile, DurabilityPolicy
+from .tool_preview import camera_mount_from_description
 
 class RosBridge(QObject):
     plan_changed=Signal(object); pose_changed=Signal(object); ik_result=Signal(object, str)
+    camera_mount=Signal(object)
     gripper_joints=Signal(object)
     joints=Signal(object); joint_speed=Signal(float); tool_speed=Signal(float)
     status=Signal(object); gripper=Signal(float); connection=Signal(bool); result=Signal(str,bool)
@@ -15,6 +19,9 @@ class RosBridge(QObject):
         super().__init__(parent)
         rclpy.init(args=None)
         self.node=MotionClient()
+        self.last_camera_description=None
+        self.camera_subscription=self.node.create_subscription(String,'robot_description',self._camera_description,
+            QoSProfile(depth=1,durability=DurabilityPolicy.TRANSIENT_LOCAL))
         self.node.on_result=self.result.emit
         self.node.on_plan=self.plan_changed.emit
         self.ik=self.node.create_client(GetPositionIK,'compute_ik')
@@ -30,6 +37,18 @@ class RosBridge(QObject):
         self.timer=QTimer(self)
         self.timer.timeout.connect(self.spin)
         self.timer.start(20)
+    def _camera_description(self,msg):
+        if msg.data == self.last_camera_description:
+            return
+        try:
+            mount=camera_mount_from_description(msg.data)
+        except (ValueError, KeyError) as exc:
+            self.result.emit(f'远端相机安装变换不可用：{exc}',True)
+            return
+        self.camera_mount.emit(mount)
+        self.last_camera_description=msg.data
+        print(f"[AUBO GUI] camera mount from remote robot_description: {mount.tolist()}",flush=True)
+
     def spin(self):
         if not rclpy.ok():
             self.timer.stop()

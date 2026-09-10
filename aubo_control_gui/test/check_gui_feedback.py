@@ -21,10 +21,10 @@ result = {}
 def check():
     global successes, result
     n = window.bridge.node
-    ready = n.fresh(ARM+GRIPPER) and n.move.server_is_ready() and window.actual is not None and window.actual_pose is not None
+    ready = n.fresh(ARM+GRIPPER) and n.move.server_is_ready() and window.actual is not None and window.actual_pose is not None and window.bridge.last_camera_description is not None
     successes = successes+1 if ready else 0
     if successes >= 5 or time.monotonic()-started >= 30:
-        result = dict(ok=successes>=5, connection=window.conn.text(), joints=[label.text() for label in window.joint_labels], executed=False)
+        result = dict(ok=successes>=5, connection=window.conn.text(), camera_source=window.camera_source.text(), joints=[label.text() for label in window.joint_labels], executed=False)
         print(json.dumps(result, ensure_ascii=False, indent=2), flush=True)
         timer.stop()
         window.close()
