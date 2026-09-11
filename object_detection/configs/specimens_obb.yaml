@@ -1,0 +1,15 @@
+# 三类建筑试样 OBB 数据集配置:
+#   rebar            建筑钢筋(整根/侧面形态)
+#   concrete_cube    混凝土抗压立方体试块(边长 100mm)
+#   permeability_cone 混凝土抗渗试块(圆台, 顶175/底185/高150mm)
+# 数据来源: Isaac Sim 合成(isaac/synth_rebar_sdg.py 生成) + 实拍补充,
+# 合并放在 datasets/specimens_yolo_obb 下。
+# 用 scripts/03_train_obb.py --data specimens 训练时自动改写绝对路径。
+path: datasets/specimens_yolo_obb
+train: images/train
+val: images/val
+
+names:
+  0: rebar
+  1: concrete_cube
+  2: permeability_cone

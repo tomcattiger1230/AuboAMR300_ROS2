@@ -49,3 +49,7 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
+
+# Ultralytics 训练/验证产物与缓存权重(不入库)
+runs/
+weights/

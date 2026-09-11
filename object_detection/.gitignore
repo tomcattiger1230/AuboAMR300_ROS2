@@ -1,0 +1,13 @@
+# 数据与产物不入库
+datasets/
+runs/
+weights/
+*.onnx
+*.pt
+
+# 本任务专用虚拟环境
+.venv/
+
+# Python
+__pycache__/
+*.pyc

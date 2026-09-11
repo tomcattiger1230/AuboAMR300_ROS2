@@ -1,0 +1,12 @@
+# ROI-1555 转换后的钢筋 OBB 数据集配置(默认两类)。
+# straight = 直条钢筋(整根长条形态), hoop = 箱筋/弯箍。
+# 若转换时用了 --single-rebar, 把 names 改为 {0: rebar} 即可。
+# 用 scripts/03_train_obb.py --data rebar 训练时自动改写绝对路径。
+path: datasets/roi1555_yolo_obb
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: straight
+  1: hoop
