@@ -37,6 +37,10 @@ DATASETS = {
         REPO_ROOT / "configs/specimens_obb.yaml",
         REPO_ROOT / "datasets/specimens_yolo_obb",
     ),
+    "cement": (
+        REPO_ROOT / "configs/cementblocks_obb.yaml",
+        REPO_ROOT / "datasets/CementBlocks",
+    ),
 }
 
 

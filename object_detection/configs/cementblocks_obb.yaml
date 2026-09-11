@@ -1,0 +1,10 @@
+# CementBlocks (Roboflow test-cement-blocks v8, CC BY 4.0)
+# 单类混凝土试块 OBB 数据集 — 经 06_convert_cementblocks_obb.py 清洗统一为 OBB 格式
+# (原标注混合 AABB 5 值 / 多边形 >9 值 / 9 值 OBB, 无法直接训练)
+path: /home/arnold/Develop/ROS_ws/amr_ws/src/AuboAMR300_ROS2/object_detection/datasets/CementBlocks_obb
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 1
+names: ['cement-blocks']

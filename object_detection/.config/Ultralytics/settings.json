@@ -1,0 +1,19 @@
+{
+  "settings_version": "0.0.8",
+  "datasets_dir": "/home/arnold/Develop/ROS_ws/amr_ws/src/datasets",
+  "weights_dir": "/home/arnold/Develop/ROS_ws/amr_ws/src/AuboAMR300_ROS2/weights",
+  "runs_dir": "/home/arnold/Develop/ROS_ws/amr_ws/src/AuboAMR300_ROS2/runs",
+  "uuid": "34b230cf5833f5bbe2f3dcfbf2b44ba1969e9cca5498f315757bb458498a789b",
+  "sync": true,
+  "api_key": "",
+  "openai_api_key": "",
+  "clearml": true,
+  "comet": true,
+  "dvc": true,
+  "mlflow": true,
+  "raytune": true,
+  "tensorboard": false,
+  "wandb": false,
+  "vscode_msg": true,
+  "openvino_msg": true
+}
