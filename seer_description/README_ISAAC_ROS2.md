@@ -154,6 +154,36 @@ friction is 0.0, matching the Gazebo URDF settings. In the regression probe:
 Regenerate the warehouse composition with another robot layer using
 `generate_warehouse_scene.py --robot-layer FILE`.
 
+### Open issue: stationary base drift and RViz jitter
+
+This issue remains open as of 2026-09-11. With Isaac running and no incoming
+`/cmd_vel`, a 12-second sample of `/odom` measured approximately 0.205 mm of X
+motion and 0.000276 rad (0.0158 degrees) of yaw variation. A separate 10-second
+sample measured 0.0030 rad and 0.0033 rad of motion at the left and right wheel
+joints. The six arm joints and both gripper positions stayed constant at the
+precision published on `/joint_states`. This confirms that the visible effect
+comes from base/wheel physics and odometry, rather than commanded arm motion or
+Fast DDS transport.
+
+The velocity watchdog was running, and `/isaac_cmd_vel` was publishing an
+all-zero command at approximately 20 Hz. The current leading hypothesis is that
+the Action Graph executes both articulation controllers every simulation frame,
+while the watchdog continuously republishes the unchanged zero wheel target.
+This can keep the PhysX articulation awake and allow small wheel/ground contact
+solver errors to accumulate. This hypothesis has not yet been verified, so the
+controller graph, watchdog, wheel damping, collision supports, and PhysX solver
+settings have not been changed for it.
+
+For the next test session, first repeat the stationary baseline, then compare an
+event-driven controller graph plus a single watchdog stop message. Verify at
+least stationary odometry and wheel-joint drift, a short forward/turn/stop drive,
+arm planning/execution, lidar/SLAM continuity, and restart behavior. If that
+does not remove the drift, inspect the four wheel/caster contacts, articulation
+sleep and stabilization thresholds, solver iteration counts, and wheel-drive
+damping. The Mac GUI currently ignores `odom` drift when MoveIt has no external
+collision geometry; that prevents false plan invalidation but does not hide or
+correct Isaac odometry.
+
 ## ROS distribution and Python compatibility
 
 Keep each host's ROS and Python environment. For example, the Ubuntu 26.04
