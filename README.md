@@ -11,6 +11,7 @@ SEER AMB-300 底盘、AUBO i16H 机械臂、末端夹爪和工业相机的 ROS 2
 | Isaac 与 ROS 2 启动及发行版兼容性 | [Isaac ROS 2](seer_description/README_ISAAC_ROS2.md) |
 | 双雷达、SLAM、导航和视频 | [导航与相机](seer_description/ISAAC_NAVIGATION_CAMERA.md) |
 | 黑白相机参数、URDF/SDF/USD、视频入口 | [MV-CH100-60UM + 12 mm](seer_description/README_MONO_CAMERA.md) |
+| 新 finger + motor_adapter 夹爪模型与启动 | [新夹爪版本](seer_description/README_FINGER_GRIPPER.md) |
 | GUI 模型资源来源与 i16H 限位 | [模型资源 README](aubo_student_description/README.md) |
 | 学生关键位置与碰撞验证 | [关键位置验证](aubo_control_gui/KEY_POSITION_VALIDATION.md) |
 
@@ -32,6 +33,12 @@ cd ~/Develop/github/AuboAMR300_ROS2
 窗口右上方“相机特写”定位并放大末端相机，拖动空白处旋转、滚轮缩放；“整体视图”恢复机械臂全景。
 修改代码后须关闭旧 GUI 并重新启动；源码启动优先读取当前仓库的模型与 QML。
 
+## 2026-09-11 更新
+
+- 使用新增的 `finger.STL` 和 `motor_adapter.STL` 建立独立 URDF、SDF、USD 和 MoveIt 版本，原 stick 夹爪继续保留。
+- 新旧夹爪沿用相同 ROS 关节接口；macOS GUI 现在从远端 `/robot_description` 同步整套夹爪与相机外观。
+- 新版本构建、URDF/SDF 解析、USD 结构及 GUI 模型解析已通过离线检查；实际 Isaac 运动测试需在切换 stack 后执行。
+
 ## 2026-09-10 更新
 
 - GUI 分离目标设置、规划预览与执行，支持鼠标拖动末端、关节目标及夹爪规划。
@@ -47,6 +54,6 @@ cd ~/Develop/github/AuboAMR300_ROS2
 
 Ubuntu 当前运行的相机相对 `wrist3_Link` 为 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
 此前本地 URDF 已将父节点改为 `gripper_motor_link`，但 Ubuntu 运行中的模型未重载，导致两端显示不同。
-GUI 现在订阅远端 `/robot_description`（transient-local），解析腕部到相机的固定关节链，用它覆盖本地相机安装变换。
-工具栏显示“相机：远端模型”后，安装位置以运行中的机器人描述为准；未收到描述时显示“本地模型（等待远端模型）”。
-机身和镜头几何仍来自本地黑白相机 URDF。随后按用户确认，将磁盘 URDF/Xacro、SDF、USD 及 USD 生成脚本统一恢复到 `wrist3_Link` 安装，与当前运行模型一致；本次无需重启正在运行的仿真。GUI 保留远端模型同步功能。
+GUI 订阅远端 `/robot_description`（transient-local），同步工具几何、夹指运动轴及相机安装变换。
+工具栏显示“模型：远端 robot_description”后，右侧夹爪与相机以运行中的机器人描述为准；收到描述前使用本地 stick 模型。
+按用户确认，磁盘中的相机 URDF/Xacro、SDF、USD 及 USD 生成脚本均保持 `wrist3_Link` 安装，与当前运行模型一致。

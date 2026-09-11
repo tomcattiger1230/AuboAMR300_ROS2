@@ -2,6 +2,9 @@
 
 本版本保留底盘、六轴机械臂、末端夹爪和双雷达，将末端的 Gemini RGB-D 模型换为黑白工业相机（挂接在 `wrist3_Link`）。原 Gemini 版本仍使用原来的文件和启动入口。
 
+另有保留同一相机、改用 `finger.STL` 与 `motor_adapter.STL` 的
+[新夹爪版本](README_FINGER_GRIPPER.md)。
+
 ## 独立模型
 
 | 用途 | 文件 |
@@ -96,13 +99,13 @@ ros2 run seer_description test_isaac_arm.py --execute --output /tmp/mono_arm.jso
 ## macOS GUI 中查看相机
 
 按 [GUI README](../aubo_control_gui/README.md) 启动后，使用“相机特写”查看机身和镜头，再用“整体视图”返回全景。
-GUI 从本文件所列的组合 URDF 读取相机几何，安装位置优先读取远端运行中的 `/robot_description`；尚未收到远端描述时使用本地 URDF，不需要另行导入 USD。
+GUI 启动时从本文件所列的组合 URDF 读取工具几何；连接后从远端运行中的 `/robot_description` 同步夹爪、相机几何及安装位置，不需要另行导入 USD。
 这只显示三维外观；实时视频仍使用上面的网页服务。更新源码后需要重启 GUI，已打开的窗口不会热加载模型。
 
 ### 2026-09-10：GUI 相机安装位置跟随运行中的 Ubuntu 模型
 
 Ubuntu 当前运行的相机相对 `wrist3_Link` 为 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
 此前本地 URDF 已将父节点改为 `gripper_motor_link`，但 Ubuntu 运行中的模型未重载，导致两端显示不同。
-GUI 现在订阅远端 `/robot_description`（transient-local），解析腕部到相机的固定关节链，用它覆盖本地相机安装变换。
-工具栏显示“相机：远端模型”后，安装位置以运行中的机器人描述为准；未收到描述时显示“本地模型（等待远端模型）”。
-机身和镜头几何仍来自本地黑白相机 URDF。随后按用户确认，将磁盘 URDF/Xacro、SDF、USD 及 USD 生成脚本统一恢复到 `wrist3_Link` 安装，与当前运行模型一致；本次无需重启正在运行的仿真。GUI 保留远端模型同步功能。
+GUI 订阅远端 `/robot_description`（transient-local），同步夹爪、相机几何和腕部固定关节链。
+工具栏显示“模型：远端 robot_description”后，右侧工具外观以运行中的机器人描述为准；收到描述前使用本地 stick 模型。
+按用户确认，相机 URDF/Xacro、SDF、USD 及 USD 生成脚本均保持 `wrist3_Link` 安装，与当前运行模型一致。

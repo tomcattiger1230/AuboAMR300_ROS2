@@ -20,8 +20,12 @@ def origin(element):
     return t
 
 
-def tool_visuals(urdf_path, camera_mount=None):
-    root = ET.parse(urdf_path).getroot()
+def tool_visuals(urdf_source, camera_mount=None):
+    """Return tool visuals from either a URDF path or expanded XML text."""
+    if isinstance(urdf_source, str) and urdf_source.lstrip().startswith('<'):
+        root = ET.fromstring(urdf_source)
+    else:
+        root = ET.parse(urdf_source).getroot()
     links = {link.get('name'): link for link in root.findall('link')}
     joints = {j.find('child').get('link'): j for j in root.findall('joint')}
     transforms = {'wrist3_Link': np.eye(4)}

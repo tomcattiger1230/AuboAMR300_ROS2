@@ -54,11 +54,12 @@ class UrdfRobotView(QQuickWidget):
         self.rootObject().setProperty('targetBasis', (np.array(basis)/100).tolist())
         self.rootObject().targetDrag.connect(self._drag_target)
         self.tool_urdf = description / "urdf/composite_robot_stick_mono.urdf"
+        self.tool_description = None
         self.rootObject().setProperty("toolMeshRoot", QUrl.fromLocalFile(str(qml_path.parent.parent / "meshes/gripper")))
         self._load_tools()
 
     def _load_tools(self, camera_mount=None):
-        visuals = tool_visuals(self.tool_urdf, camera_mount)
+        visuals = tool_visuals(self.tool_description or self.tool_urdf, camera_mount)
         self.camera_center = np.array(next(v['position'] for v in visuals if v['link'] == 'camera_link'))
         for visual in visuals:
             visual['quaternion'] = QQuaternion.fromRotationMatrix(QMatrix3x3(np.array(visual['rotation']).flatten().tolist()))
@@ -128,3 +129,8 @@ class UrdfRobotView(QQuickWidget):
 
     def set_camera_mount(self, transform):
         self._load_tools(transform)
+
+    def set_tool_description(self, description):
+        """Replace the tool preview with the URDF published by the running robot."""
+        self.tool_description = description
+        self._load_tools()

@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!--
+    Alternative two-finger gripper made from the user-supplied millimetre STL files.
+    Joint names and 0=open / 0.04=closed semantics intentionally match the existing
+    stick gripper so the ROS 2 control, MoveIt and GUI interfaces stay unchanged.
+  -->
+  <xacro:macro name="finger_motor_adapter_gripper" params="parent *origin">
+    <link name="gripper_adapter_link">
+      <inertial>
+        <mass value="0.01"/>
+        <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+      </inertial>
+    </link>
+
+    <joint name="adapter_mount_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="gripper_adapter_link"/>
+      <xacro:insert_block name="origin"/>
+    </joint>
+
+    <link name="gripper_motor_link">
+      <visual>
+        <!-- Source bounds: X 0.750..199.250, Y 0.315..63.315, Z 0.630..137.630 mm. -->
+        <origin xyz="-0.1 -0.031815 -0.00063" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://seer_description/meshes/motor_adapter.STL" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="new_gripper_dark">
+          <color rgba="0.16 0.18 0.21 1"/>
+        </material>
+      </visual>
+      <!-- Conservative primitive avoids a 42k-face planning/physics collider. -->
+      <collision>
+        <origin xyz="0 0 0.0685" rpy="0 0 0"/>
+        <geometry><box size="0.1985 0.063 0.137"/></geometry>
+      </collision>
+      <inertial>
+        <!-- Temporary 1.2 kg box estimate; replace after weighing the assembly. -->
+        <origin xyz="0 0 0.0685"/>
+        <mass value="1.2"/>
+        <inertia ixx="0.00227" ixy="0" ixz="0" iyy="0.00588" iyz="0" izz="0.00437"/>
+      </inertial>
+    </link>
+
+    <joint name="motor_mount_joint" type="fixed">
+      <parent link="gripper_adapter_link"/>
+      <child link="gripper_motor_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="gripper1_link">
+      <visual>
+        <!-- Centre the 47.786 mm mesh thickness on the link Y axis. -->
+        <origin xyz="0 -0.023892963 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://seer_description/meshes/finger.STL" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="new_gripper_finger"><color rgba="0.76 0.78 0.82 1"/></material>
+      </visual>
+      <collision>
+        <origin xyz="0.0245 0 0.075"/>
+        <geometry><box size="0.049 0.047786 0.15"/></geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0.0245 0 0.075"/>
+        <mass value="0.18"/>
+        <inertia ixx="0.00037" ixy="0" ixz="0" iyy="0.00037" iyz="0" izz="0.00007"/>
+      </inertial>
+    </link>
+
+    <link name="gripper2_link">
+      <visual>
+        <origin xyz="0 0.023892963 0" rpy="0 0 ${pi}"/>
+        <geometry>
+          <mesh filename="package://seer_description/meshes/finger.STL" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="new_gripper_finger"/>
+      </visual>
+      <collision>
+        <origin xyz="-0.0245 0 0.075"/>
+        <geometry><box size="0.049 0.047786 0.15"/></geometry>
+      </collision>
+      <inertial>
+        <origin xyz="-0.0245 0 0.075"/>
+        <mass value="0.18"/>
+        <inertia ixx="0.00037" ixy="0" ixz="0" iyy="0.00037" iyz="0" izz="0.00007"/>
+      </inertial>
+    </link>
+
+    <!-- Meshes are 200 mm wide at q=0. Increasing q moves both fingers inward. -->
+    <joint name="gripper1_joint" type="prismatic">
+      <parent link="gripper_motor_link"/>
+      <child link="gripper1_link"/>
+      <origin xyz="-0.1 0 0.115" rpy="0 0 0"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="0" upper="0.04" effort="50" velocity="0.1"/>
+    </joint>
+
+    <joint name="gripper2_joint" type="prismatic">
+      <parent link="gripper_motor_link"/>
+      <child link="gripper2_link"/>
+      <origin xyz="0.1 0 0.115" rpy="0 0 0"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="0" upper="0.04" effort="50" velocity="0.1"/>
+    </joint>
+  </xacro:macro>
+</robot>

@@ -66,3 +66,20 @@ def test_running_description_old_and_new_parent():
     old = camera_mount_from_description(ET.tostring(root,encoding='unicode'))
     np.testing.assert_allclose(old[:3,3], [0,.1,0])
     np.testing.assert_allclose(old[:3,:3],np.diag([-1,-1,1]),atol=1e-12)
+
+
+def test_new_finger_gripper_can_be_loaded_from_remote_description_text():
+    import xml.etree.ElementTree as ET
+    repo = Path(__file__).parents[2]
+    urdf = repo/'seer_description/urdf/composite_robot_finger_mono.urdf'
+    if not urdf.exists():
+        return
+    description = urdf.read_text(encoding='utf-8')
+    parts = {part['link']: part for part in tool_visuals(description)}
+    assert parts['gripper_motor_link']['mesh'] == 'motor_adapter.glb'
+    assert parts['gripper1_link']['mesh'] == 'finger.glb'
+    assert parts['gripper2_link']['mesh'] == 'finger.glb'
+    np.testing.assert_allclose(parts['gripper1_link']['axis'], [1, 0, 0])
+    np.testing.assert_allclose(parts['gripper2_link']['axis'], [-1, 0, 0])
+    root = ET.fromstring(description)
+    assert root.find("joint[@name='gripper1_joint']/limit").get('upper') == '0.04'

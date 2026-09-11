@@ -17,6 +17,10 @@ source install/setup.bash
 ros2 run seer_description start_warehouse_stick_mono_demo.sh --gui --domain-id 133
 ```
 
+使用 `finger.STL` 与 `motor_adapter.STL` 的独立夹爪版本见
+[finger + motor_adapter 夹爪说明](README_FINGER_GRIPPER.md)，对应启动命令为
+`ros2 run seer_description start_warehouse_finger_mono_demo.sh --gui --domain-id 133`。
+
 The validated camera mount is fixed to `wrist3_Link`, at `(0, 0.1, 0)` m with a 180° Z rotation.
 URDF/Xacro, SDF, USD and the USD generator have been restored to this mount.
 The Mac GUI follows the running `/robot_description` for camera placement and includes a camera close-up view.

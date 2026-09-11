@@ -1,6 +1,6 @@
 {
-  "converter": "trimesh 5.1.0",
-  "note": "STL duplicate vertices merged; triangle count and bounds verified after GLB reload. Materials follow URDF visual colors.",
+  "converter": "trimesh 5.1.0 for original assets; Assimp 6.0 for finger and motor_adapter",
+  "note": "Triangle count and bounds verified after GLB reload. Materials follow URDF visual colors.",
   "meshes": [
     {
       "source": "seer_description/meshes/adapter.stl",
@@ -60,6 +60,24 @@
           0.04190455377101898
         ]
       ],
+      "max_bound_error": 0.0
+    },
+    {
+      "source": "seer_description/meshes/finger.STL",
+      "sha256": "ec65465e9988417de465cf1a15fe1c443b58acd251ca0b81c533a1b63c74a069",
+      "output": "aubo_control_gui/meshes/gripper/finger.glb",
+      "faces": 2840,
+      "vertices": 4424,
+      "bounds_mm": [[0.0, 0.0, 0.0], [49.0, 47.785926818847656, 150.0]],
+      "max_bound_error": 0.0
+    },
+    {
+      "source": "seer_description/meshes/motor_adapter.STL",
+      "sha256": "fd08025df2d9639fc9a2677e205003a1cebdb3f95ba4a6f08ee7da5783622060",
+      "output": "aubo_control_gui/meshes/gripper/motor_adapter.glb",
+      "faces": 42468,
+      "vertices": 87463,
+      "bounds_mm": [[0.7499977946281433, 0.31499937176704407, 0.6299987435340881], [199.25, 63.314998626708984, 137.6300048828125]],
       "max_bound_error": 0.0
     }
   ]

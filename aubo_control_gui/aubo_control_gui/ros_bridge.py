@@ -12,6 +12,7 @@ from .tool_preview import camera_mount_from_description
 class RosBridge(QObject):
     plan_changed=Signal(object); pose_changed=Signal(object); ik_result=Signal(object, str)
     camera_mount=Signal(object)
+    robot_description=Signal(str)
     gripper_joints=Signal(object)
     joints=Signal(object); joint_speed=Signal(float); tool_speed=Signal(float)
     status=Signal(object); gripper=Signal(float); connection=Signal(bool); result=Signal(str,bool)
@@ -46,8 +47,9 @@ class RosBridge(QObject):
             self.result.emit(f'远端相机安装变换不可用：{exc}',True)
             return
         self.camera_mount.emit(mount)
+        self.robot_description.emit(msg.data)
         self.last_camera_description=msg.data
-        print(f"[AUBO GUI] camera mount from remote robot_description: {mount.tolist()}",flush=True)
+        print(f"[AUBO GUI] tool model and camera mount loaded from remote robot_description: {mount.tolist()}",flush=True)
 
     def spin(self):
         if not rclpy.ok():

@@ -1,0 +1,191 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    subLayers = [
+        @./seer_aubo_stick_mono.usda@
+    ]
+    upAxis = "Z"
+)
+
+over "World"
+{
+    over "seer_aubo_composite"
+    {
+        over "gripper_adapter_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+        )
+        {
+            float3 physics:diagonalInertia = (0.000001, 0.000001, 0.000001)
+            float physics:mass = 0.01
+            quatf physics:principalAxes = (1, 0, 0, 0)
+            quatf xformOp:orient = (-1.4348013e-8, 0, 0.70710677, 0.70710677)
+            double3 xformOp:translate = (-0.3000001311302185, 0.2944999933242798, 1.7304998636245728)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+        }
+
+        over "gripper_motor_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+        )
+        {
+            float3 physics:diagonalInertia = (0.00227, 0.00588, 0.00437)
+            float physics:mass = 1.2
+            quatf physics:principalAxes = (1, 0, 0, 0)
+            quatf xformOp:orient = (-1.4348013e-8, 0, 0.70710677, 0.70710677)
+            double3 xformOp:translate = (-0.3000001311302185, 0.2944999933242798, 1.7304998636245728)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+            def Xform "visual" (
+                prepend references = @../meshes/usd/motor_adapter.usdc@
+            )
+            {
+                double3 xformOp:translate = (-0.1, -0.031815, -0.00063)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cube "collision" (
+                prepend apiSchemas = ["PhysicsCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                uniform token purpose = "guide"
+                double size = 1
+                float3 xformOp:scale = (0.1985, 0.063, 0.137)
+                double3 xformOp:translate = (0, 0, 0.0685)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        over "gripper1_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+        )
+        {
+            float3 physics:diagonalInertia = (0.00037, 0.00037, 0.00007)
+            float physics:mass = 0.18
+            quatf physics:principalAxes = (1, 0, 0, 0)
+            quatf xformOp:orient = (-1.4348013e-8, 0, 0.70710677, 0.70710677)
+            double3 xformOp:translate = (-0.20000013346370138, 0.40949999535339526, 1.7304998615954572)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+            def Xform "visual" (
+                prepend references = @../meshes/usd/finger.usdc@
+            )
+            {
+                double3 xformOp:translate = (0, -0.023892963, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cube "collision" (
+                prepend apiSchemas = ["PhysicsCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                uniform token purpose = "guide"
+                double size = 1
+                float3 xformOp:scale = (0.049, 0.047786, 0.15)
+                double3 xformOp:translate = (0.0245, 0, 0.075)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        over "gripper2_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+        )
+        {
+            float3 physics:diagonalInertia = (0.00037, 0.00037, 0.00007)
+            float physics:mass = 0.18
+            quatf physics:principalAxes = (1, 0, 0, 0)
+            quatf xformOp:orient = (-1.4348013e-8, 0, 0.70710677, 0.70710677)
+            double3 xformOp:translate = (-0.40000013346370134, 0.40949999129516423, 1.7304998656536883)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+            def Xform "visual" (
+                prepend references = @../meshes/usd/finger.usdc@
+            )
+            {
+                float xformOp:rotateZ = 180
+                double3 xformOp:translate = (0, 0.023892963, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZ"]
+            }
+
+            def Cube "collision" (
+                prepend apiSchemas = ["PhysicsCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                uniform token purpose = "guide"
+                double size = 1
+                float3 xformOp:scale = (0.049, 0.047786, 0.15)
+                double3 xformOp:translate = (-0.0245, 0, 0.075)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        over "joints"
+        {
+            over "adapter_mount_joint"
+            {
+                rel physics:body0 = </World/seer_aubo_composite/wrist3_Link>
+                rel physics:body1 = </World/seer_aubo_composite/gripper_adapter_link>
+                bool physics:collisionEnabled = 0
+                point3f physics:localPos0 = (0, 0, 0)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (1, 0, 0, 0)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+            }
+
+            over "motor_mount_joint"
+            {
+                rel physics:body0 = </World/seer_aubo_composite/gripper_adapter_link>
+                rel physics:body1 = </World/seer_aubo_composite/gripper_motor_link>
+                bool physics:collisionEnabled = 0
+                point3f physics:localPos0 = (0, 0, 0)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (1, 0, 0, 0)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+            }
+
+            over "gripper1_joint" (
+                prepend apiSchemas = ["PhysicsDriveAPI:linear"]
+            )
+            {
+                float drive:linear:physics:damping = 500
+                float drive:linear:physics:maxForce = 50
+                float drive:linear:physics:stiffness = 5000
+                float drive:linear:physics:targetPosition = 0
+                uniform token drive:linear:physics:type = "force"
+                uniform token physics:axis = "X"
+                rel physics:body0 = </World/seer_aubo_composite/gripper_motor_link>
+                rel physics:body1 = </World/seer_aubo_composite/gripper1_link>
+                bool physics:collisionEnabled = 0
+                point3f physics:localPos0 = (-0.1, 0, 0.115)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (1, 0, 0, 0)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+                float physics:lowerLimit = 0
+                float physics:upperLimit = 0.04
+            }
+
+            over "gripper2_joint" (
+                prepend apiSchemas = ["PhysicsDriveAPI:linear"]
+            )
+            {
+                float drive:linear:physics:damping = 500
+                float drive:linear:physics:maxForce = 50
+                float drive:linear:physics:stiffness = 5000
+                float drive:linear:physics:targetPosition = 0
+                uniform token drive:linear:physics:type = "force"
+                uniform token physics:axis = "X"
+                rel physics:body0 = </World/seer_aubo_composite/gripper_motor_link>
+                rel physics:body1 = </World/seer_aubo_composite/gripper2_link>
+                bool physics:collisionEnabled = 0
+                point3f physics:localPos0 = (0.1, 0, 0.115)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (0, 0, 0, 1)
+                quatf physics:localRot1 = (0, 0, 0, 1)
+                float physics:lowerLimit = 0
+                float physics:upperLimit = 0.04
+            }
+        }
+    }
+}

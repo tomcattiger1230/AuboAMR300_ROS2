@@ -210,7 +210,7 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 
 ### GUI 夹爪与相机预览
 
-相机由深灰色机身和黑色圆柱镜头组成，几何与颜色读取本地组合 URDF，安装变换优先读取远端运行中的机器人描述；尚未收到远端描述时使用本地安装变换（收到后保留最近的远端描述）。
+相机由深灰色机身和黑色圆柱镜头组成。GUI 启动时使用本地 stick 组合 URDF；收到远端运行中的 `/robot_description` 后，同时更新夹爪、相机几何和安装变换。工具栏显示“模型：远端 robot_description”后，可据此确认新 `finger + motor_adapter` 夹爪版本已经被 GUI 采用。
 整体视角下体积较小，可点击视图上方的“相机特写”放大当前相机位置；拖动空白处绕该位置观察，滚轮继续缩放。
 特写时隐藏末端拖动控件，避免遮挡相机；“整体视图”恢复全景及目标控件。视角按钮不发送机器人运动命令，也不修改规划目标。
 特写定位的是点击时的相机位置；机器人运动后可再次点击定位。
@@ -219,8 +219,8 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 视频尚未嵌入 GUI，见 [相机与视频说明](../seer_description/README_MONO_CAMERA.md)。
 
 
-右侧模型包含连接板、电机、两片长夹指，以及 MV-CH100-60UM 黑白相机机身和 12 mm C 口镜头的示意外形。夹爪安装位姿、夹指运动轴和相机几何从
-`seer_description/urdf/composite_robot_stick_mono.urdf` 读取。相机安装变换优先使用远端模型；当前两端均为 `wrist3_Link` 下 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
+右侧模型包含连接板、电机、两片夹指，以及 MV-CH100-60UM 黑白相机机身和 12 mm C 口镜头的示意外形。初始几何从
+`seer_description/urdf/composite_robot_stick_mono.urdf` 读取；连接后以远端完整模型为准，可显示独立的 [finger + motor_adapter 版本](../seer_description/README_FINGER_GRIPPER.md)。相机当前均为 `wrist3_Link` 下 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
 `gripper1_joint` 和 `gripper2_joint` 的实际反馈分别驱动两片夹指，单位为米；
 点击开合按钮不会直接伪造模型位置，仍需等待仿真反馈。点击“规划夹爪打开/闭合”后先显示预览，再点击“执行已规划轨迹”才会实际开合。
 
@@ -287,6 +287,6 @@ Mac 通过 Fast DDS 的同样流程也通过：[Mac 跨机测试记录](test/res
 
 Ubuntu 当前运行的相机相对 `wrist3_Link` 为 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
 此前本地 URDF 已将父节点改为 `gripper_motor_link`，但 Ubuntu 运行中的模型未重载，导致两端显示不同。
-GUI 现在订阅远端 `/robot_description`（transient-local），解析腕部到相机的固定关节链，用它覆盖本地相机安装变换。
-工具栏显示“相机：远端模型”后，安装位置以运行中的机器人描述为准；未收到描述时显示“本地模型（等待远端模型）”。
-机身和镜头几何仍来自本地黑白相机 URDF。随后按用户确认，将磁盘 URDF/Xacro、SDF、USD 及 USD 生成脚本统一恢复到 `wrist3_Link` 安装，与当前运行模型一致；本次无需重启正在运行的仿真。GUI 保留远端模型同步功能。
+GUI 订阅远端 `/robot_description`（transient-local），同步夹爪、相机几何和腕部固定关节链。
+工具栏显示“模型：远端 robot_description”后，右侧工具外观以运行中的机器人描述为准；收到描述前使用本地 stick 模型。
+按用户确认，相机 URDF/Xacro、SDF、USD 及 USD 生成脚本均保持 `wrist3_Link` 安装，与当前运行模型一致。
