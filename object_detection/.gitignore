@@ -11,3 +11,5 @@ weights/
 # Python
 __pycache__/
 *.pyc
+yolo_models/
+dataset_models.zip

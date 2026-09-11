@@ -18,16 +18,27 @@ object_detection/
 ├── scripts/
 │   ├── 01_download_roi1555.py    下载 ROI-1555(镜像安全版)
 │   ├── 02_convert_yolo_obb.py    LabelMe → YOLO-OBB 转换
-│   ├── 03_train_obb.py           YOLO11-OBB 训练
+│   ├── 03_train_obb.py           YOLO-OBB 训练
 │   ├── 04_predict_obb.py         推理+可视化(输出 4 角点+角度)
 │   ├── 05_export_onnx.py         导出 ONNX / TensorRT
 │   └── obb_utils.py              掩码/多边形 → 旋转框共用工具
 ├── isaac/
 │   ├── synth_specimens_sdg.py    Isaac Sim 合成数据生成(Replicator)
 │   └── postprocess_sdg.py        合成输出 → YOLO-OBB 数据集
+├── yolo_models/            全部模型权重(不入库, ultralytics 下载目录已指向这里)
 ├── datasets/               数据(不入库)
 └── runs/                   训练产物(不入库)
 ```
+
+## 模型权重（yolo_models/，不入库）
+
+| 文件 | 说明 | test 指标 |
+|---|---|---|
+| `rebar_yolo26m_best.pt` | **钢筋检测当前最优**（ROI-1555 真实数据） | mAP50 0.831 / mAP50-95 0.641 |
+| `rebar_yolo26s_best.pt` | 钢筋轻量版（速度优先） | mAP50 0.746 / 0.554 |
+| `rebar_yolo11s_best.pt` | 对照组 | mAP50 0.449 / 0.306 |
+| `specimens_yolo26s_best.pt` | 三类试样（合成数据，需实拍微调） | 合成 val mAP50 0.927 |
+| `yolo26{s,m,l,x}-obb.pt` | 预训练底权（DOTA） | — |
 
 ## 快速开始
 
@@ -41,12 +52,12 @@ python scripts/01_download_roi1555.py
 # 2) 转 YOLO-OBB(直条=0 箍筋=1, 场景级切分 train/val/test)
 python scripts/02_convert_yolo_obb.py
 
-# 3) 训练钢筋模型(预训练权重首次自动下载)
-python scripts/03_train_obb.py --data rebar --model yolo11s-obb.pt
+# 3) 训练钢筋模型(预训练底权已在 yolo_models/)
+python scripts/03_train_obb.py --data rebar --model yolo_models/yolo26m-obb.pt
 
 # 4) 推理验证(输出 vis/ 可视化 + obb_txt/ 角点与角度)
 python scripts/04_predict_obb.py \
-    --weights runs/obb/rebar_yolo11s_obb/weights/best.pt \
+    --weights yolo_models/rebar_yolo26m_best.pt \
     --source datasets/roi1555_yolo_obb/images/test
 ```
 
@@ -62,7 +73,7 @@ python scripts/04_predict_obb.py \
 python isaac/postprocess_sdg.py
 
 # 三类合并训练(合成 + 实拍补充后)
-python scripts/03_train_obb.py --data specimens --model yolo26s-obb.pt
+python scripts/03_train_obb.py --data specimens --model yolo_models/yolo26m-obb.pt
 ```
 
 Isaac Sim 6.x 注意事项（详见脚本注释）：
