@@ -39,7 +39,7 @@ DATASETS = {
     ),
     "cement": (
         REPO_ROOT / "configs/cementblocks_obb.yaml",
-        REPO_ROOT / "datasets/CementBlocks",
+        REPO_ROOT / "datasets/CementBlocks_obb",  # 清洗后的统一 OBB 格式(06 脚本产出)
     ),
 }
 
