@@ -155,17 +155,33 @@ def test_invalid_planned_trajectory_rejected(client,bad):
     assert client.plan is None and client.phase=='error'
 
 
-def test_frame_jitter_tolerated_but_cumulative_motion_invalidates(client):
-    from moveit_msgs.msg import PlanningScene
+def scene_transform(x, with_obstacle=False):
+    from moveit_msgs.msg import PlanningScene, CollisionObject
     from geometry_msgs.msg import TransformStamped
     scene=PlanningScene();scene.is_diff=True
     t=TransformStamped();t.header.frame_id='map';t.child_frame_id='base_footprint';t.transform.rotation.w=1.
-    scene.fixed_frame_transforms=[t];client._scene(scene)
+    t.transform.translation.x=x;scene.fixed_frame_transforms=[t]
+    if with_obstacle:
+        obj=CollisionObject();obj.id='warehouse';obj.header.frame_id='map'
+        scene.world.collision_objects=[obj]
+    return scene
+
+
+def test_odometry_motion_does_not_invalidate_plan_in_empty_world(client):
+    client._scene(scene_transform(0.0))
+    future,traj=planned(client);complete(future,traj)
+    for value in (.0001,.0008,.0012,.01):
+        client._scene(scene_transform(value))
+        assert client.plan_ready()
+
+
+def test_frame_jitter_tolerated_but_cumulative_motion_invalidates_with_world_geometry(client):
+    client._scene(scene_transform(0.0, with_obstacle=True))
     future,traj=planned(client);complete(future,traj)
     for value in (.0001,.0003,.0008):
-        t.transform.translation.x=value;client._scene(scene)
+        client._scene(scene_transform(value))
         assert client.plan_ready()
-    t.transform.translation.x=.0012;client._scene(scene)
+    client._scene(scene_transform(.0012))
     assert not client.plan_ready()
 
 

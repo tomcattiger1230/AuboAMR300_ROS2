@@ -45,6 +45,7 @@ class MotionClient(Node):
         self.on_plan = lambda trajectory: None
         self.scene_signature = None
         self.scene_frames = {}
+        self.has_external_scene_geometry = False
         self.on_result = lambda message, error: None
         self.move = ActionClient(self, MoveGroup, 'move_action')
         self.execute = ActionClient(self, ExecuteTrajectory, 'execute_trajectory')
@@ -63,6 +64,13 @@ class MotionClient(Node):
                 self.received[name] = now
 
     def _scene(self, scene):
+        external_geometry = bool(scene.world.collision_objects or scene.world.octomap.octomap.data)
+        if not scene.is_diff:
+            self.has_external_scene_geometry = external_geometry
+        elif external_geometry:
+            # Stay conservative after a geometry diff. A later full scene can prove
+            # that all external geometry has been removed.
+            self.has_external_scene_geometry = True
         # Keep a baseline so tiny odometry/physics jitter does not invalidate every preview.
         # Cumulative frame movement beyond 1 mm or 0.001 rad still invalidates the plan.
         frame_changed = False
@@ -71,7 +79,7 @@ class MotionClient(Node):
             t, q = frame.transform.translation, frame.transform.rotation
             value = ([t.x,t.y,t.z], [q.x,q.y,q.z,q.w])
             old = self.scene_frames.get(key)
-            if old is None:
+            if old is None or not self.has_external_scene_geometry:
                 frame_changed |= bool(self.scene_frames)
                 self.scene_frames[key] = value
             else:
@@ -79,7 +87,10 @@ class MotionClient(Node):
                 if math.dist(old[0],value[0]) > .001 or 2*math.acos(dot) > .001:
                     frame_changed = True
                     self.scene_frames[key] = value
-        if frame_changed:
+        # A joint trajectory expressed in base_footprint remains valid while an
+        # otherwise empty world reports odometry drift. Once MoveIt contains world
+        # geometry, the same transform can change robot-to-obstacle clearance.
+        if frame_changed and self.has_external_scene_geometry:
             self.invalidate_plan('场景坐标变换已变化，请重新规划')
         if (scene.is_diff and not scene.world.collision_objects
                 and not scene.world.octomap.octomap.data
