@@ -29,8 +29,8 @@
     <xacro:aubo_joint_interface joint_name="wrist1_joint" joint_min="-6.28" joint_max="6.28"/>
     <xacro:aubo_joint_interface joint_name="wrist2_joint" joint_min="-6.28" joint_max="6.28"/>
     <xacro:aubo_joint_interface joint_name="wrist3_joint" joint_min="-6.28" joint_max="6.28"/>
-    <xacro:aubo_joint_interface joint_name="gripper1_joint" joint_min="0" joint_max="0.04"/>
-    <xacro:aubo_joint_interface joint_name="gripper2_joint" joint_min="0" joint_max="0.04"/>
+    <xacro:aubo_joint_interface joint_name="gripper1_joint" joint_min="0" joint_max="0.0285"/>
+    <xacro:aubo_joint_interface joint_name="gripper2_joint" joint_min="0" joint_max="0.0285"/>
   </ros2_control>
 
   <gazebo>

@@ -222,7 +222,7 @@ Mac 本地窗口及机械臂预览已验证。PySide6 6.11.2 的 RuntimeLoader �
 右侧模型包含连接板、电机、两片夹指，以及 MV-CH100-60UM 黑白相机机身和 12 mm C 口镜头的示意外形。初始几何从
 `seer_description/urdf/composite_robot_stick_mono.urdf` 读取；连接后以远端完整模型为准，可显示独立的 [finger + motor_adapter 版本](../seer_description/README_FINGER_GRIPPER.md)。相机当前均为 `wrist3_Link` 下 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
 `gripper1_joint` 和 `gripper2_joint` 的实际反馈分别驱动两片夹指，单位为米；
-点击开合按钮不会直接伪造模型位置，仍需等待仿真反馈。点击“规划夹爪打开/闭合”后先显示预览，再点击“执行已规划轨迹”才会实际开合。
+点击开合按钮不会直接伪造模型位置，仍需等待仿真反馈。闭合位置从远端 `/robot_description` 的夹指上限读取，因此 stick 版本为 40 mm，Blender 原点调整后的 finger 版本为 28.5 mm。点击“规划夹爪打开/闭合”后先显示预览，再点击“执行已规划轨迹”才会实际开合。
 
 预览 GLB 来自本地及仿真机一致的 STL，来源哈希、面数和边界核验在
 `meshes/gripper/provenance.json`。转换合并重复顶点并使用 URDF 的灰/黑/白材质；

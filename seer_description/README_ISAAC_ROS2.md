@@ -17,7 +17,7 @@ source install/setup.bash
 ros2 run seer_description start_warehouse_stick_mono_demo.sh --gui --domain-id 133
 ```
 
-使用 `finger.STL` 与 `motor_adapter.STL` 的独立夹爪版本见
+使用 `finger_centered.stl` 与 `motor_new.stl` 的独立夹爪版本见
 [finger + motor_adapter 夹爪说明](README_FINGER_GRIPPER.md)，对应启动命令为
 `ros2 run seer_description start_warehouse_finger_mono_demo.sh --gui --domain-id 133`。
 

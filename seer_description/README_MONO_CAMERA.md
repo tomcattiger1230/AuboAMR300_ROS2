@@ -2,7 +2,7 @@
 
 本版本保留底盘、六轴机械臂、末端夹爪和双雷达，将末端的 Gemini RGB-D 模型换为黑白工业相机（挂接在 `wrist3_Link`）。原 Gemini 版本仍使用原来的文件和启动入口。
 
-另有保留同一相机、改用 `finger.STL` 与 `motor_adapter.STL` 的
+另有保留同一相机、改用 Blender 调整原点后的 `finger_centered.stl` 与 `motor_new.stl` 的
 [新夹爪版本](README_FINGER_GRIPPER.md)。
 
 ## 独立模型

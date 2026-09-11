@@ -7,7 +7,7 @@ from .motion_client import MotionClient, ARM, GRIPPER
 from moveit_msgs.srv import GetPositionIK
 from std_msgs.msg import String
 from rclpy.qos import QoSProfile, DurabilityPolicy
-from .tool_preview import camera_mount_from_description
+from .tool_preview import camera_mount_from_description, gripper_closed_from_description
 
 class RosBridge(QObject):
     plan_changed=Signal(object); pose_changed=Signal(object); ik_result=Signal(object, str)
@@ -20,6 +20,7 @@ class RosBridge(QObject):
         super().__init__(parent)
         rclpy.init(args=None)
         self.node=MotionClient()
+        self.gripper_closed=0.04
         self.last_camera_description=None
         self.camera_subscription=self.node.create_subscription(String,'robot_description',self._camera_description,
             QoSProfile(depth=1,durability=DurabilityPolicy.TRANSIENT_LOCAL))
@@ -43,13 +44,15 @@ class RosBridge(QObject):
             return
         try:
             mount=camera_mount_from_description(msg.data)
+            closed=gripper_closed_from_description(msg.data)
         except (ValueError, KeyError) as exc:
             self.result.emit(f'远端相机安装变换不可用：{exc}',True)
             return
         self.camera_mount.emit(mount)
         self.robot_description.emit(msg.data)
+        self.gripper_closed=closed
         self.last_camera_description=msg.data
-        print(f"[AUBO GUI] tool model and camera mount loaded from remote robot_description: {mount.tolist()}",flush=True)
+        print(f"[AUBO GUI] tool model loaded from remote robot_description: camera={mount.tolist()} gripper_closed={closed}",flush=True)
 
     def spin(self):
         if not rclpy.ok():
@@ -101,7 +104,8 @@ class RosBridge(QObject):
     def execute_plan(self): self._call(self.node.execute_planned)
     def stop(self): self.node.stop()
     def command_gripper(self,command,velocity=.2,acceleration=.2):
-        self._call(self.node.joint_target,[0.0 if command=='open' else .04]*2,velocity,acceleration,'gripper')
+        target=0.0 if command=='open' else self.gripper_closed
+        self._call(self.node.joint_target,[target]*2,velocity,acceleration,'gripper')
     def clear_error(self): self.result.emit('请在对应控制器端检查并复位故障',True)
     def close(self):
         if self.node.busy:

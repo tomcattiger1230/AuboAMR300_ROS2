@@ -79,6 +79,24 @@
       "vertices": 87463,
       "bounds_mm": [[0.7499977946281433, 0.31499937176704407, 0.6299987435340881], [199.25, 63.314998626708984, 137.6300048828125]],
       "max_bound_error": 0.0
+    },
+    {
+      "source": "seer_description/meshes/finger_centered.stl",
+      "sha256": "314d811a2f3fd666e75003867208321db06ff4f70e9f3cf6e84619c21330c7ac",
+      "output": "aubo_control_gui/meshes/gripper/finger_centered.glb",
+      "faces": 2766,
+      "vertices": 4304,
+      "bounds_m": [[-0.02139904722571373, -0.04841264709830284, -0.07490472495555878], [0.027600951492786407, -0.0006267158314585686, 0.0750952810049057]],
+      "max_bound_error": 0.0
+    },
+    {
+      "source": "seer_description/meshes/motor_new.stl",
+      "sha256": "b2efdfa39eff33f23b1b3d365a1a1084673f06eaed6bb69aa9150b75475559d4",
+      "output": "aubo_control_gui/meshes/gripper/motor_new.glb",
+      "faces": 42468,
+      "vertices": 92309,
+      "bounds_m": [[-0.07747279107570648, -0.03139318525791168, -0.13562597334384918], [0.12102721631526947, 0.03160681575536728, 0.0013740435242652893]],
+      "max_bound_error": 0.0
     }
   ]
 }

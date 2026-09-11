@@ -1,6 +1,6 @@
 # finger + motor_adapter 夹爪版本
 
-本版本使用 `finger.STL` 和 `motor_adapter.STL` 新建夹爪模型，保留原来的 stick 夹爪及其启动入口。新版本继续使用 AUBO i16H、双激光雷达和 MV-CH100-60UM 黑白相机；相机安装位保持为 `wrist3_Link` 下 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
+本版本使用 Blender 调整原点后的 `finger_centered.stl` 和 `motor_new.stl` 新建夹爪模型，保留原始 `finger.STL`、`motor_adapter.STL`、stick 夹爪及其启动入口。新版本继续使用 AUBO i16H、双激光雷达和 MV-CH100-60UM 黑白相机；相机安装位保持为 `wrist3_Link` 下 `(0, 0.1, 0)` m、绕 Z 旋转 180°。
 
 ## 文件与接口
 
@@ -13,7 +13,7 @@
 | MoveIt 配置 | `seer_aubo_finger_mono_moveit_config` |
 | 启动脚本 | `start_warehouse_finger_mono_demo.sh` |
 
-上层接口仍是 `gripper1_joint` 和 `gripper2_joint`。`0` 表示打开，`0.04 m` 表示闭合；两个关节沿相反方向各移动 40 mm。GUI、MoveIt 和 Isaac 控制器因此可以继续使用同一套规划、预览、执行及反馈逻辑。macOS GUI 收到远端 `/robot_description` 后会同时切换夹爪和相机外观；工具栏显示“模型：远端 robot_description”表示远端模型已经生效。
+上层接口仍是 `gripper1_joint` 和 `gripper2_joint`。`0` 表示打开；当前保守闭合位置为 `0.0285 m`，两个关节沿相反方向各移动 28.5 mm。macOS GUI 从远端 `/robot_description` 自动读取这个上限，旧 stick 版本仍使用 40 mm。工具栏显示“模型：远端 robot_description”表示远端模型已经生效。
 
 ## STL 尺寸及当前装配假设
 
@@ -21,10 +21,10 @@
 
 | STL | SHA-256 | 原始边界（mm） |
 |---|---|---|
-| `finger.STL` | `ec65465e9988417de465cf1a15fe1c443b58acd251ca0b81c533a1b63c74a069` | X 0…49，Y 0…47.785927，Z 0…150 |
-| `motor_adapter.STL` | `fd08025df2d9639fc9a2677e205003a1cebdb3f95ba4a6f08ee7da5783622060` | X 0.749998…199.25，Y 0.314999…63.314999，Z 0.629999…137.630005 |
+| `finger_centered.stl` | `314d811a2f3fd666e75003867208321db06ff4f70e9f3cf6e84619c21330c7ac` | X -0.021399…0.027601，Y -0.048413…-0.000627，Z -0.074905…0.075095 m |
+| `motor_new.stl` | `b2efdfa39eff33f23b1b3d365a1a1084673f06eaed6bb69aa9150b75475559d4` | X -0.077473…0.121027，Y -0.031393…0.031607，Z -0.135626…0.001374 m |
 
-当前模型根据网格边界把电机法兰底面放在腕部法兰，使用一份 finger 网格及其镜像组成左右夹指。推算的开口内间距约 102 mm，闭合内间距约 22 mm。质量、惯量及规划碰撞体目前采用保守估计：电机组件为一个 198.5×63×137 mm 盒体，夹指各为一个 49×47.786×150 mm 盒体。收到装配图、关节零位、实测行程与质量后，应再校正安装外参、TCP、惯量及碰撞包络。
+当前模型按用户在 Blender 中调整的原点与方向装配：电机绕 X 旋转 180°，夹指绕 X 旋转 -90°，左右关节位于 X=±56.4 mm、Z=135 mm。旋转后的电机碰撞盒为 198.5×63×137 mm；夹指碰撞盒为 49×150×47.786 mm。全开时两盒内侧间距约 57.6 mm；每侧移动 28.5 mm 后保留约 0.6 mm 间隙。两份 STL 都不是封闭实体，因此质量仍使用 1.2 kg 与 0.18 kg 的暂估值，质心采用包围盒中心，惯量按对应盒体重新计算。收到实际质量和 CAD 装配基准后仍需校正。
 
 ## 构建与启动
 
@@ -55,4 +55,4 @@ check_urdf "$MODEL_DIR/composite_robot_finger_mono.urdf"
 gz sdf -k "$MODEL_DIR/composite_robot_finger_mono.sdf"
 ```
 
-2026-09-11 已在 Ubuntu 26 / ROS Lyrical 的隔离工作树中构建 `seer_description` 与新 MoveIt 包，`check_urdf` 和 `gz sdf -k` 通过。新 MoveIt 配置能够加载 KDL、OMPL、STOMP 与 Pilz；在 `init_pose` 下，夹爪 `q=0` 和 `q=0.04` 的 `/check_state_validity` 均返回 `valid=true`、无接触。USD 检查确认左右 prismatic joint 范围、镜像轴、新网格引用及 MV-CH100-60UM Camera 均存在；macOS GUI 回归测试 35 项通过（另 1 项跳过）。此次验证没有启动第二套 Isaac，也没有执行机器人运动。
+2026-09-11 已在 Ubuntu 26 / ROS Lyrical 的隔离工作树中构建 `seer_description` 与新 MoveIt 包，`check_urdf` 和 `gz sdf -k` 通过。MoveIt 在 `init_pose` 下验证 `q=0` 和 `q=0.0285` 均为 `valid=true`；旧闭合量 `q=0.04` 会检测到两夹指约 22.4 mm 穿透并返回 `valid=false`。USD/模型测试 11 项及 9 个子测试通过，macOS GUI 测试 35 项通过（另 1 项跳过）。此次检查不执行机器人运动。

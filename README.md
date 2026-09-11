@@ -35,7 +35,7 @@ cd ~/Develop/github/AuboAMR300_ROS2
 
 ## 2026-09-11 更新
 
-- 使用新增的 `finger.STL` 和 `motor_adapter.STL` 建立独立 URDF、SDF、USD 和 MoveIt 版本，原 stick 夹爪继续保留。
+- 使用 Blender 调整原点后的 `finger_centered.stl` 和 `motor_new.stl` 建立独立 URDF、SDF、USD 和 MoveIt 版本，原始网格与 stick 夹爪继续保留。
 - 新旧夹爪沿用相同 ROS 关节接口；macOS GUI 现在从远端 `/robot_description` 同步整套夹爪与相机外观。
 - 新版本构建、URDF/SDF 解析、USD 结构及 GUI 模型解析已通过离线检查；实际 Isaac 运动测试需在切换 stack 后执行。
 

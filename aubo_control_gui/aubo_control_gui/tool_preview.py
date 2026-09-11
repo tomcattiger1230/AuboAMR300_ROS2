@@ -91,3 +91,26 @@ def camera_mount_from_description(description):
         transform = origin(joint.find('origin')) @ transform
         link = joint.find('parent').get('link')
     return transform
+
+
+def gripper_closed_from_description(description):
+    """Read the common increasing-position close limit for both fingers."""
+    try:
+        root = ET.fromstring(description)
+    except ET.ParseError as exc:
+        raise ValueError('Invalid robot_description XML') from exc
+    limits = []
+    for name in FINGERS:
+        joint = root.find(f"joint[@name='{name}']")
+        if joint is None or joint.get('type') != 'prismatic':
+            raise ValueError(f'Missing prismatic joint {name}')
+        limit = joint.find('limit')
+        if limit is None:
+            raise ValueError(f'Missing limit for {name}')
+        lower, upper = float(limit.get('lower')), float(limit.get('upper'))
+        if not math.isfinite(lower) or not math.isfinite(upper) or upper <= lower:
+            raise ValueError(f'Invalid limit for {name}')
+        limits.append(upper)
+    if abs(limits[0] - limits[1]) > 1e-9:
+        raise ValueError('Finger close limits do not match')
+    return limits[0]

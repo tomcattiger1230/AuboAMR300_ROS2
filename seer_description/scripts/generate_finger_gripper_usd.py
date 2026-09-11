@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import math
 from pathlib import Path
 import struct
 
@@ -10,9 +11,10 @@ from pxr import Gf, Sdf, Usd, UsdGeom, UsdPhysics
 
 
 ROBOT = "/World/seer_aubo_composite"
+GRIPPER_CLOSED = 0.0285
 
 
-def read_binary_stl(path: Path):
+def read_binary_stl(path: Path, scale=1.0, rpy=(0.0, 0.0, 0.0)):
     data = path.read_bytes()
     if len(data) < 84:
         raise ValueError(f"Invalid binary STL: {path}")
@@ -22,10 +24,20 @@ def read_binary_stl(path: Path):
     points = []
     indices = []
     known = {}
+    roll, pitch, yaw = rpy
+    cr, sr = math.cos(roll), math.sin(roll)
+    cp, sp = math.cos(pitch), math.sin(pitch)
+    cy, sy = math.cos(yaw), math.sin(yaw)
+    rotation = (
+        (cy * cp, cy * sp * sr - sy * cr, cy * sp * cr + sy * sr),
+        (sy * cp, sy * sp * sr + cy * cr, sy * sp * cr - cy * sr),
+        (-sp, cp * sr, cp * cr),
+    )
     for face in range(count):
         values = struct.unpack_from("<12fH", data, 84 + 50 * face)
         for vertex in range(3):
-            point = tuple(values[3 + vertex * 3 + axis] * 0.001 for axis in range(3))
+            source = tuple(values[3 + vertex * 3 + axis] * scale for axis in range(3))
+            point = tuple(sum(rotation[row][axis] * source[axis] for axis in range(3)) for row in range(3))
             index = known.get(point)
             if index is None:
                 index = len(points)
@@ -35,8 +47,8 @@ def read_binary_stl(path: Path):
     return points, indices
 
 
-def mesh_asset(stl: Path, output: Path, root_name: str, color):
-    points, indices = read_binary_stl(stl)
+def mesh_asset(stl: Path, output: Path, root_name: str, color, scale=1.0, rpy=(0.0, 0.0, 0.0)):
+    points, indices = read_binary_stl(stl, scale, rpy)
     stage = Usd.Stage.CreateNew(str(output))
     UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.z)
     UsdGeom.SetStageMetersPerUnit(stage, 1.0)
@@ -107,7 +119,7 @@ def prismatic_joint(stage, name, child, origin, reverse=False):
     joint.CreateBody1Rel().SetTargets([child])
     joint.CreateAxisAttr("X")
     joint.CreateLowerLimitAttr(0.0)
-    joint.CreateUpperLimitAttr(0.04)
+    joint.CreateUpperLimitAttr(GRIPPER_CLOSED)
     joint.CreateLocalPos0Attr(Gf.Vec3f(*origin))
     joint.CreateLocalPos1Attr(Gf.Vec3f(0))
     rotation = Gf.Quatf(0, 0, 0, 1) if reverse else Gf.Quatf(1)
@@ -127,8 +139,12 @@ def generate(urdf_directory: Path, mesh_directory: Path):
     mesh_directory = mesh_directory.resolve()
     usd_meshes = mesh_directory / "usd"
     usd_meshes.mkdir(exist_ok=True)
-    mesh_asset(mesh_directory / "finger.STL", usd_meshes / "finger.usdc", "finger", (0.76, 0.78, 0.82))
-    mesh_asset(mesh_directory / "motor_adapter.STL", usd_meshes / "motor_adapter.usdc", "motor_adapter", (0.16, 0.18, 0.21))
+    # Blender exports are already in metres. Bake the URDF visual rotations into
+    # the mesh assets so each USD rigid-body frame matches its collision box.
+    mesh_asset(mesh_directory / "finger_centered.stl", usd_meshes / "finger.usdc",
+               "finger", (0.76, 0.78, 0.82), rpy=(-math.pi / 2, 0, 0))
+    mesh_asset(mesh_directory / "motor_new.stl", usd_meshes / "motor_adapter.usdc",
+               "motor_adapter", (0.16, 0.18, 0.21), rpy=(math.pi, 0, 0))
 
     source = Usd.Stage.Open(str(urdf_directory / "seer_aubo_stick_mono.usda"))
     if source is None:
@@ -144,25 +160,30 @@ def generate(urdf_directory: Path, mesh_directory: Path):
     stage.SetDefaultPrim(stage.GetPrimAtPath("/World"))
 
     adapter = rigid_body(stage, "gripper_adapter_link", wrist_world, 0.01, (1e-6, 1e-6, 1e-6))
-    motor = rigid_body(stage, "gripper_motor_link", wrist_world, 1.2, (0.00227, 0.00588, 0.00437))
-    referenced_visual(stage, motor, "visual", "../meshes/usd/motor_adapter.usdc", (-0.1, -0.031815, -0.00063))
-    box_collision(stage, motor, "collision", (0, 0, 0.0685), (0.1985, 0.063, 0.137))
+    motor = rigid_body(stage, "gripper_motor_link", wrist_world, 1.2,
+                       (0.0022738, 0.005817125, 0.004337125))
+    referenced_visual(stage, motor, "visual", "../meshes/usd/motor_adapter.usdc", (0, 0, 0))
+    box_collision(stage, motor, "collision", (0.021777213, -0.000106815, 0.067125965),
+                  (0.1985, 0.063, 0.137))
 
     left_local = Gf.Matrix4d(1)
-    left_local.SetTranslateOnly(Gf.Vec3d(-0.1, 0, 0.115))
+    left_local.SetTranslateOnly(Gf.Vec3d(-0.0564, 0, 0.135))
     right_local = Gf.Matrix4d(1)
-    right_local.SetTranslateOnly(Gf.Vec3d(0.1, 0, 0.115))
-    left = rigid_body(stage, "gripper1_link", left_local * wrist_world, 0.18, (0.00037, 0.00037, 0.00007))
-    right = rigid_body(stage, "gripper2_link", right_local * wrist_world, 0.18, (0.00037, 0.00037, 0.00007))
-    referenced_visual(stage, left, "visual", "../meshes/usd/finger.usdc", (0, -0.023892963, 0))
-    referenced_visual(stage, right, "visual", "../meshes/usd/finger.usdc", (0, 0.023892963, 0), 180.0)
-    box_collision(stage, left, "collision", (0.0245, 0, 0.075), (0.049, 0.047786, 0.15))
-    box_collision(stage, right, "collision", (-0.0245, 0, 0.075), (0.049, 0.047786, 0.15))
+    right_local.SetTranslateOnly(Gf.Vec3d(0.0564, 0, 0.135))
+    finger_inertia = (0.000371752, 0.000070267, 0.000373515)
+    left = rigid_body(stage, "gripper1_link", left_local * wrist_world, 0.18, finger_inertia)
+    right = rigid_body(stage, "gripper2_link", right_local * wrist_world, 0.18, finger_inertia)
+    referenced_visual(stage, left, "visual", "../meshes/usd/finger.usdc", (0, 0, 0))
+    referenced_visual(stage, right, "visual", "../meshes/usd/finger.usdc", (0, 0, 0), 180.0)
+    box_collision(stage, left, "collision", (0.003100952, 0.000095278, 0.024519681),
+                  (0.049, 0.15, 0.047786))
+    box_collision(stage, right, "collision", (-0.003100952, -0.000095278, 0.024519681),
+                  (0.049, 0.15, 0.047786))
 
     fixed_joint(stage, "adapter_mount_joint", f"{ROBOT}/wrist3_Link", str(adapter.GetPath()))
     fixed_joint(stage, "motor_mount_joint", str(adapter.GetPath()), str(motor.GetPath()))
-    prismatic_joint(stage, "gripper1_joint", str(left.GetPath()), (-0.1, 0, 0.115))
-    prismatic_joint(stage, "gripper2_joint", str(right.GetPath()), (0.1, 0, 0.115), reverse=True)
+    prismatic_joint(stage, "gripper1_joint", str(left.GetPath()), (-0.0564, 0, 0.135))
+    prismatic_joint(stage, "gripper2_joint", str(right.GetPath()), (0.0564, 0, 0.135), reverse=True)
     stage.GetRootLayer().Save()
 
     warehouse = urdf_directory / "warehouse_finger_mono_demo.usda"

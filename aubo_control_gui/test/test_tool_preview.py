@@ -76,10 +76,12 @@ def test_new_finger_gripper_can_be_loaded_from_remote_description_text():
         return
     description = urdf.read_text(encoding='utf-8')
     parts = {part['link']: part for part in tool_visuals(description)}
-    assert parts['gripper_motor_link']['mesh'] == 'motor_adapter.glb'
-    assert parts['gripper1_link']['mesh'] == 'finger.glb'
-    assert parts['gripper2_link']['mesh'] == 'finger.glb'
+    assert parts['gripper_motor_link']['mesh'] == 'motor_new.glb'
+    assert parts['gripper1_link']['mesh'] == 'finger_centered.glb'
+    assert parts['gripper2_link']['mesh'] == 'finger_centered.glb'
     np.testing.assert_allclose(parts['gripper1_link']['axis'], [1, 0, 0])
     np.testing.assert_allclose(parts['gripper2_link']['axis'], [-1, 0, 0])
     root = ET.fromstring(description)
-    assert root.find("joint[@name='gripper1_joint']/limit").get('upper') == '0.04'
+    assert root.find("joint[@name='gripper1_joint']/limit").get('upper') == '0.0285'
+    from aubo_control_gui.tool_preview import gripper_closed_from_description
+    assert gripper_closed_from_description(description) == 0.0285

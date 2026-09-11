@@ -28,7 +28,7 @@ over "World"
             prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
         )
         {
-            float3 physics:diagonalInertia = (0.00227, 0.00588, 0.00437)
+            float3 physics:diagonalInertia = (0.0022738, 0.005817125, 0.004337125)
             float physics:mass = 1.2
             quatf physics:principalAxes = (1, 0, 0, 0)
             quatf xformOp:orient = (-1.4348013e-8, 0, 0.70710677, 0.70710677)
@@ -39,7 +39,7 @@ over "World"
                 prepend references = @../meshes/usd/motor_adapter.usdc@
             )
             {
-                double3 xformOp:translate = (-0.1, -0.031815, -0.00063)
+                double3 xformOp:translate = (0, 0, 0)
                 uniform token[] xformOpOrder = ["xformOp:translate"]
             }
 
@@ -51,7 +51,7 @@ over "World"
                 uniform token purpose = "guide"
                 double size = 1
                 float3 xformOp:scale = (0.1985, 0.063, 0.137)
-                double3 xformOp:translate = (0, 0, 0.0685)
+                double3 xformOp:translate = (0.021777213, -0.000106815, 0.067125965)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
             }
         }
@@ -60,18 +60,18 @@ over "World"
             prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
         )
         {
-            float3 physics:diagonalInertia = (0.00037, 0.00037, 0.00007)
+            float3 physics:diagonalInertia = (0.000371752, 0.000070267, 0.000373515)
             float physics:mass = 0.18
             quatf physics:principalAxes = (1, 0, 0, 0)
             quatf xformOp:orient = (-1.4348013e-8, 0, 0.70710677, 0.70710677)
-            double3 xformOp:translate = (-0.20000013346370138, 0.40949999535339526, 1.7304998615954572)
+            double3 xformOp:translate = (-0.24360013386952448, 0.4294999944687009, 1.7304998624801515)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
 
             def Xform "visual" (
                 prepend references = @../meshes/usd/finger.usdc@
             )
             {
-                double3 xformOp:translate = (0, -0.023892963, 0)
+                double3 xformOp:translate = (0, 0, 0)
                 uniform token[] xformOpOrder = ["xformOp:translate"]
             }
 
@@ -82,8 +82,8 @@ over "World"
                 bool physics:collisionEnabled = 1
                 uniform token purpose = "guide"
                 double size = 1
-                float3 xformOp:scale = (0.049, 0.047786, 0.15)
-                double3 xformOp:translate = (0.0245, 0, 0.075)
+                float3 xformOp:scale = (0.049, 0.15, 0.047786)
+                double3 xformOp:translate = (0.003100952, 0.000095278, 0.024519681)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
             }
         }
@@ -92,11 +92,11 @@ over "World"
             prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
         )
         {
-            float3 physics:diagonalInertia = (0.00037, 0.00037, 0.00007)
+            float3 physics:diagonalInertia = (0.000371752, 0.000070267, 0.000373515)
             float physics:mass = 0.18
             quatf physics:principalAxes = (1, 0, 0, 0)
             quatf xformOp:orient = (-1.4348013e-8, 0, 0.70710677, 0.70710677)
-            double3 xformOp:translate = (-0.40000013346370134, 0.40949999129516423, 1.7304998656536883)
+            double3 xformOp:translate = (-0.3564001338695244, 0.4294999921798586, 1.730499864768994)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
 
             def Xform "visual" (
@@ -104,7 +104,7 @@ over "World"
             )
             {
                 float xformOp:rotateZ = 180
-                double3 xformOp:translate = (0, 0.023892963, 0)
+                double3 xformOp:translate = (0, 0, 0)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZ"]
             }
 
@@ -115,8 +115,8 @@ over "World"
                 bool physics:collisionEnabled = 1
                 uniform token purpose = "guide"
                 double size = 1
-                float3 xformOp:scale = (0.049, 0.047786, 0.15)
-                double3 xformOp:translate = (-0.0245, 0, 0.075)
+                float3 xformOp:scale = (0.049, 0.15, 0.047786)
+                double3 xformOp:translate = (-0.003100952, -0.000095278, 0.024519681)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
             }
         }
@@ -158,12 +158,12 @@ over "World"
                 rel physics:body0 = </World/seer_aubo_composite/gripper_motor_link>
                 rel physics:body1 = </World/seer_aubo_composite/gripper1_link>
                 bool physics:collisionEnabled = 0
-                point3f physics:localPos0 = (-0.1, 0, 0.115)
+                point3f physics:localPos0 = (-0.0564, 0, 0.135)
                 point3f physics:localPos1 = (0, 0, 0)
                 quatf physics:localRot0 = (1, 0, 0, 0)
                 quatf physics:localRot1 = (1, 0, 0, 0)
                 float physics:lowerLimit = 0
-                float physics:upperLimit = 0.04
+                float physics:upperLimit = 0.0285
             }
 
             over "gripper2_joint" (
@@ -179,12 +179,12 @@ over "World"
                 rel physics:body0 = </World/seer_aubo_composite/gripper_motor_link>
                 rel physics:body1 = </World/seer_aubo_composite/gripper2_link>
                 bool physics:collisionEnabled = 0
-                point3f physics:localPos0 = (0.1, 0, 0.115)
+                point3f physics:localPos0 = (0.0564, 0, 0.135)
                 point3f physics:localPos1 = (0, 0, 0)
                 quatf physics:localRot0 = (0, 0, 0, 1)
                 quatf physics:localRot1 = (0, 0, 0, 1)
                 float physics:lowerLimit = 0
-                float physics:upperLimit = 0.04
+                float physics:upperLimit = 0.0285
             }
         }
     }
