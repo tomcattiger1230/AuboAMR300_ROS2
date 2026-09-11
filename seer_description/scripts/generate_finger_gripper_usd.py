@@ -75,7 +75,10 @@ def set_transform(prim, matrix):
 
 def rigid_body(stage, name, world, mass_value, inertia):
     prim = UsdGeom.Xform.Define(stage, f"{ROBOT}/{name}").GetPrim()
-    prim.GetReferences().ClearReferences()
+    # Author an explicit empty list so references from the stick-gripper
+    # sublayer are blocked. ClearReferences() only removes this layer's
+    # opinion and lets the old motor/stick geometry compose back in.
+    prim.GetReferences().SetReferences([])
     set_transform(prim, world)
     UsdPhysics.RigidBodyAPI.Apply(prim)
     mass = UsdPhysics.MassAPI.Apply(prim)

@@ -75,6 +75,18 @@ class FingerGripperModelTest(unittest.TestCase):
         for name, asset in (("gripper_motor_link", "motor_adapter.usdc"), ("gripper1_link", "finger.usdc"), ("gripper2_link", "finger.usdc")):
             visual = stage.GetPrimAtPath(f"{ROBOT}/{name}/visual")
             self.assertIn(asset, str(visual.GetMetadata("references")))
+        old_children = {
+            "gripper_adapter_link": {"adapter", "box"},
+            "gripper_motor_link": {"motor", "cylinder"},
+            "gripper1_link": {"gripper_stick", "gripper_stick_1"},
+            "gripper2_link": {"gripper_stick", "gripper_stick_1"},
+        }
+        for link, forbidden in old_children.items():
+            prim = stage.GetPrimAtPath(f"{ROBOT}/{link}")
+            references = prim.GetMetadata("references")
+            self.assertFalse(references.GetAddedOrExplicitItems())
+            children = {child.GetName() for child in prim.GetChildren()}
+            self.assertTrue(forbidden.isdisjoint(children))
         camera = stage.GetPrimAtPath(f"{ROBOT}/mono_camera_link/camera_optical_frame/ros2_camera")
         self.assertTrue(camera.IsA(UsdGeom.Camera))
         self.assertEqual(camera.GetAttribute("sensor:model").Get(), "MV-CH100-60UM")

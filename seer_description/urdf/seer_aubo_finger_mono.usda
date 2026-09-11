@@ -14,6 +14,7 @@ over "World"
     {
         over "gripper_adapter_link" (
             prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            references = None
         )
         {
             float3 physics:diagonalInertia = (0.000001, 0.000001, 0.000001)
@@ -26,6 +27,7 @@ over "World"
 
         over "gripper_motor_link" (
             prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            references = None
         )
         {
             float3 physics:diagonalInertia = (0.0022738, 0.005817125, 0.004337125)
@@ -58,6 +60,7 @@ over "World"
 
         over "gripper1_link" (
             prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            references = None
         )
         {
             float3 physics:diagonalInertia = (0.000371752, 0.000070267, 0.000373515)
@@ -90,6 +93,7 @@ over "World"
 
         over "gripper2_link" (
             prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            references = None
         )
         {
             float3 physics:diagonalInertia = (0.000371752, 0.000070267, 0.000373515)
