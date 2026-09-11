@@ -169,6 +169,11 @@ def generate(urdf_directory: Path, mesh_directory: Path):
     layer = Sdf.Layer.CreateNew(str(warehouse))
     layer.subLayerPaths = ["./seer_aubo_finger_mono.usda", "./warehouse_demo.usda"]
     layer.Save()
+    warehouse_stage = Usd.Stage.Open(str(warehouse))
+    UsdGeom.SetStageUpAxis(warehouse_stage, UsdGeom.Tokens.z)
+    UsdGeom.SetStageMetersPerUnit(warehouse_stage, 1.0)
+    warehouse_stage.SetDefaultPrim(warehouse_stage.GetPrimAtPath("/World"))
+    warehouse_stage.GetRootLayer().Save()
     for path in (output, warehouse):
         path.write_text(path.read_text().rstrip() + "\n", encoding="utf-8")
 
