@@ -59,7 +59,8 @@ ros2 run seer_description test_isaac_arm.py --execute --output /tmp/arm_result.j
 - SLAM Toolbox 使用前雷达、0.05 m 栅格，发布 `map → odom`；Isaac 发布 `odom → base_footprint`。前后雷达都进入 Nav2 局部障碍层，远近距离限制显式配置。双雷达点云合并尚未实现。
 - 全局静态层开启 `footprint_clearing_enabled`，清除车体当前占据区域中的扫描盲区；规划禁止穿过其余未知区域。机器人轮廓为 1.0 × 0.8 m，另加 5 cm padding；这是底盘轮廓，导航时应保持机械臂收拢，不能代表伸展机械臂的全部扫掠体积。
 - 万向轮材质使用 `min` 摩擦组合规则，确保零摩擦不会与地面取平均后变成阻力；驱动轮使用 `max`。仅设置摩擦系数不足以保证底盘能移动。
-- Nav2 显式使用 `Twist`，适配 Isaac。`cmd_vel_watchdog.py` 将 `/cmd_vel` 转发到 `/isaac_cmd_vel`，用单调时钟检测 0.5 秒超时并发零速度；仿真暂停也能检测失联。应始终通过正式 stack 启动器启动这两个节点。
+- Nav2 显式使用 `Twist`，适配 Isaac。`cmd_vel_watchdog.py` 将 `/cmd_vel` 转发到 `/isaac_cmd_vel`，用单调时钟检测 0.5 秒超时；超时后只发送一次零速度，然后保持安静，使 PhysX articulation 可以休眠。新的有效指令会重新启用转发，仿真暂停时也能检测失联。应始终通过正式 stack 启动器启动这两个节点。
+- 每个驱动轮只保留一个有效支撑球碰撞体，禁用与其重合的导入圆柱碰撞体，避免两个接触几何互相竞争。轮速度控制器由 ROS 订阅事件触发，不再每个仿真帧重复写入旧目标；驱动阻尼为 1000，最大驱动力为 50。机械臂/夹爪位置控制仍逐仿真帧执行，以可靠达到 MoveIt 目标容差。完整机械臂测试后，20 秒内底盘残余变化为 X 方向 1.91 mm、偏航 0.000261 rad，机械臂与夹爪关节保持不变；当前无外部碰撞物的 GUI 规划不受该 `odom` 变化影响。完整对照指标见 [静止漂移回归记录](test/results/isaac_stationary_drift_20260914.json)。
 - 机械臂增加 `aubo_base_link → wrist3_Link` 的独立 `arm` 链，只给该链加载 KDL，解决原八轴分支组无法初始化 IK 的问题。
 - 相机由 `camera_joint` 固定在 `wrist3_Link`，模型使用 Gemini 33X 简化资产；这证明仿真模型有腕部相机，不代表已经检查实体机器人的相机硬件。RGB、对齐深度和 CameraInfo 分别为 `/camera/color/image_raw`、`/camera/depth/image_raw`、`/camera/color/camera_info`。分辨率 640×480；深度编码 32FC1。视频编码使用 ROS 启动器对应的系统 Python，避免 `.venv` 中缺少 OpenCV 的问题。
 

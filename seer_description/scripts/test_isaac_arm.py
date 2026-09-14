@@ -54,8 +54,10 @@ def main():
         if not active.accepted:raise RuntimeError('Execution rejected')
         result=wait(active.get_result_async(),90);active=None;spin(1)
         last=trajectory.joint_trajectory.points[-1]
-        error=max(abs(state[k]-v) for k,v in zip(trajectory.joint_trajectory.joint_names,last.positions))
-        entry.update(execution_code=result.result.error_code.val,max_joint_error=error)
+        errors={k:state[k]-v for k,v in zip(trajectory.joint_trajectory.joint_names,last.positions)}
+        error=max(abs(value) for value in errors.values())
+        entry.update(execution_code=result.result.error_code.val,
+                     max_joint_error=error,joint_errors_rad=errors)
         if result.result.error_code.val!=1 or error>.02:raise RuntimeError(str(entry))
 
     def joint_plan(target,label):

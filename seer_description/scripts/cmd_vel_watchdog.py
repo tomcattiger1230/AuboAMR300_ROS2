@@ -13,6 +13,7 @@ class VelocityWatchdog(Node):
         super().__init__('isaac_velocity_watchdog')
         self.declare_parameter('timeout', .5)
         self.last = -math.inf
+        self.stopped = False
         self.command = Twist()
         self.pub = self.create_publisher(Twist, '/isaac_cmd_vel', 1)
         self.sub = self.create_subscription(Twist, '/cmd_vel', self.receive, 1)
@@ -21,12 +22,19 @@ class VelocityWatchdog(Node):
     def receive(self, msg):
         if not all(math.isfinite(v) for v in (msg.linear.x,msg.angular.z)):
             self.last = -math.inf
+            self.stopped = False
             return
         self.command = msg
         self.last = time.monotonic()
+        self.stopped = False
 
     def publish(self):
-        self.pub.publish(self.command if time.monotonic()-self.last < self.get_parameter('timeout').value else Twist())
+        if time.monotonic()-self.last < self.get_parameter('timeout').value:
+            self.pub.publish(self.command)
+            return
+        if not self.stopped:
+            self.pub.publish(Twist())
+            self.stopped = True
 
 
 def main():

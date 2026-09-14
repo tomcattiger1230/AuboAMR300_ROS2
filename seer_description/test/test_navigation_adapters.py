@@ -58,6 +58,10 @@ class AdaptersTest(unittest.TestCase):
             while time.monotonic()<end:
                 rclpy.spin_once(node,timeout_sec=.02);rclpy.spin_once(observer,timeout_sec=.02)
             self.assertEqual(messages[-1].linear.x,0.)
+            stopped_count=len(messages)
+            for _ in range(5):
+                node.publish();rclpy.spin_once(observer,timeout_sec=.02)
+            self.assertEqual(len(messages),stopped_count)
             cmd.linear.x=float('nan');node.receive(cmd);node.publish();rclpy.spin_once(observer,timeout_sec=.1)
             self.assertEqual(messages[-1].linear.x,0.)
         finally:observer.destroy_node();node.destroy_node()

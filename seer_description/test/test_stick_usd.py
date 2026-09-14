@@ -31,6 +31,18 @@ class StickArticulationTest(unittest.TestCase):
         self.assertEqual(material.GetAttribute('physxMaterial:frictionCombineMode').Get(), 'min')
         self.assertEqual(material.GetAttribute('physics:dynamicFriction').Get(), 0.)
 
+    def test_each_drive_wheel_has_one_active_contact_shape(self):
+        for wheel in ("left_wheel_link", "right_wheel_link"):
+            with self.subTest(wheel=wheel):
+                imported = UsdPhysics.CollisionAPI(self.stage.GetPrimAtPath(
+                    f"{self.root}/{wheel}/collisions/mesh_0/cylinder"
+                ))
+                support = UsdPhysics.CollisionAPI(self.stage.GetPrimAtPath(
+                    f"{self.root}/{wheel}/support_collision"
+                ))
+                self.assertFalse(imported.GetCollisionEnabledAttr().Get())
+                self.assertTrue(support.GetCollisionEnabledAttr().Get())
+
     def test_joint_frames_match_at_zero_position(self):
         for name in ("adapter_mount_joint", "motor_mount_joint",
                      "gripper1_joint", "gripper2_joint"):

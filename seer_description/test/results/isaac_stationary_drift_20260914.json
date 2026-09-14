@@ -1,0 +1,100 @@
+{
+  "date": "2026-09-14",
+  "environment": {
+    "host": "Ubuntu 26.04",
+    "ros": "Lyrical",
+    "isaac_sim": "6.0.1-rc.7",
+    "ros_domain_id": 133,
+    "scene": "warehouse_finger_mono_demo.usda"
+  },
+  "baseline_warmed_up_20s": {
+    "cmd_vel_messages": 0,
+    "isaac_cmd_vel_zero_messages": 399,
+    "odom_x_span_m": 0.006635554134845734,
+    "odom_yaw_span_rad": 0.0004322597788113357,
+    "left_wheel_span_rad": 0.06689999999999996,
+    "right_wheel_span_rad": 0.06570000000000009
+  },
+  "baseline_fresh_start_20s": {
+    "cmd_vel_messages": 0,
+    "isaac_cmd_vel_zero_messages": 399,
+    "odom_x_span_m": 0.045345,
+    "odom_yaw_span_rad": 0.0081413,
+    "left_wheel_span_rad": 0.473,
+    "right_wheel_span_rad": 0.4292
+  },
+  "final_configuration": {
+    "base_controller_execution": "ROS velocity subscriber execOut",
+    "arm_gripper_controller_execution": "physics playback tick",
+    "watchdog_timeout_s": 0.5,
+    "watchdog_stop_messages_after_timeout": 1,
+    "wheel_drive_damping": 1000.0,
+    "wheel_drive_max_force": 50.0,
+    "active_wheel_colliders_per_wheel": 1,
+    "disabled_wheel_collider": "imported cylinder",
+    "active_wheel_collider": "support sphere"
+  },
+  "motion_checks": {
+    "forward_distance_m": 0.1820905647582549,
+    "turn_yaw_rad": 0.4046510298924083,
+    "post_turn_first_20s": {
+      "isaac_cmd_vel_messages": 0,
+      "odom_x_span_m": 0.0002952116774395108,
+      "odom_yaw_span_rad": 5.636100109857045e-05,
+      "left_wheel_span_rad": 0.0033000000000000806,
+      "right_wheel_span_rad": 0.0029999999999998916,
+      "final_linear_velocity_mps": 0.0,
+      "final_angular_velocity_radps": 0.0
+    },
+    "settled_following_20s": {
+      "isaac_cmd_vel_messages": 0,
+      "odom_position_and_orientation_span": 0.0,
+      "wheel_joint_span_rad": 0.0,
+      "arm_and_gripper_joint_span": 0.0
+    },
+    "single_contact_message_driven_controllers_20s": {
+      "preceding_commands": "0.3 rad/s turn for 2 s, stop, 0.15 m/s forward for 2 s, stop",
+      "isaac_cmd_vel_messages": 0,
+      "odom_position_and_orientation_span": 0.0,
+      "wheel_joint_span_rad": 0.0,
+      "arm_and_gripper_joint_span": 0.0
+    }
+  },
+  "arm_execution": {
+    "six_axis_joint_plan": {
+      "planning_code": 1,
+      "execution_code": 1,
+      "points": 14,
+      "max_joint_error_rad": 0.0015018032587133245
+    },
+    "cartesian_wrist_path": {
+      "code": 1,
+      "execution_code": 1,
+      "fraction": 1.0,
+      "points": 7,
+      "max_joint_error_rad": 0.0016599388455622588
+    },
+    "return_to_start": {
+      "planning_code": 1,
+      "execution_code": 1,
+      "points": 15,
+      "max_joint_error_rad": 0.0013824592507444317
+    },
+    "post_execution_stationary_20s": {
+      "isaac_cmd_vel_messages": 0,
+      "odom_x_span_m": 0.0019056899473071098,
+      "odom_y_span_m": 7.349448424065486e-06,
+      "odom_yaw_span_rad": 0.00026116426810196807,
+      "left_wheel_span_rad": 0.019799999999999998,
+      "right_wheel_span_rad": 0.0184,
+      "arm_and_gripper_joint_span": 0.0,
+      "final_linear_velocity_mps": -0.00019174916068507395,
+      "final_angular_velocity_radps": 0.0006691927555948496
+    }
+  },
+  "sensor_rates_hz": {
+    "front_lidar_scan": 4.7,
+    "back_lidar_scan": 4.7,
+    "monochrome_camera_image": 3.0
+  }
+}

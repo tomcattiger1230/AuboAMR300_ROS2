@@ -39,6 +39,21 @@ def Xform "World"
 
         over "left_wheel_link"
         {
+            # The imported cylinder is coincident with the support sphere. Two
+            # active contacts on one wheel cause solver chatter after motion.
+            over "collisions" (
+                instanceable = false
+            )
+            {
+                over "mesh_0"
+                {
+                    over "cylinder"
+                    {
+                        bool physics:collisionEnabled = 0
+                    }
+                }
+            }
+
             def Sphere "support_collision" (
                 prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
             )
@@ -52,6 +67,19 @@ def Xform "World"
 
         over "right_wheel_link"
         {
+            over "collisions" (
+                instanceable = false
+            )
+            {
+                over "mesh_0"
+                {
+                    over "cylinder"
+                    {
+                        bool physics:collisionEnabled = 0
+                    }
+                }
+            }
+
             def Sphere "support_collision" (
                 prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
             )

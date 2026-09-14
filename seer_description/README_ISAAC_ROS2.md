@@ -154,35 +154,50 @@ friction is 0.0, matching the Gazebo URDF settings. In the regression probe:
 Regenerate the warehouse composition with another robot layer using
 `generate_warehouse_scene.py --robot-layer FILE`.
 
-### Open issue: stationary base drift and RViz jitter
+### Stationary base drift and RViz jitter
 
-This issue remains open as of 2026-09-11. With Isaac running and no incoming
-`/cmd_vel`, a 12-second sample of `/odom` measured approximately 0.205 mm of X
-motion and 0.000276 rad (0.0158 degrees) of yaw variation. A separate 10-second
-sample measured 0.0030 rad and 0.0033 rad of motion at the left and right wheel
-joints. The six arm joints and both gripper positions stayed constant at the
-precision published on `/joint_states`. This confirms that the visible effect
-comes from base/wheel physics and odometry, rather than commanded arm motion or
-Fast DDS transport.
+The persistent jitter was corrected on 2026-09-14. With no incoming
+`/cmd_vel`, the old watchdog still sent 399 all-zero `/isaac_cmd_vel` messages
+in 20 seconds. The warmed-up robot moved 6.64 mm in X while the left and right
+wheel joints moved 0.0669 and 0.0657 rad. A fresh-start sample was worse:
+45.3 mm in X and 0.00814 rad (0.466 degrees) in yaw. The six arm joints and both
+gripper positions remained stable, confirming that the visible RViz motion came
+from base/wheel physics rather than Fast DDS or commanded arm motion.
 
-The velocity watchdog was running, and `/isaac_cmd_vel` was publishing an
-all-zero command at approximately 20 Hz. The current leading hypothesis is that
-the Action Graph executes both articulation controllers every simulation frame,
-while the watchdog continuously republishes the unchanged zero wheel target.
-This can keep the PhysX articulation awake and allow small wheel/ground contact
-solver errors to accumulate. This hypothesis has not yet been verified, so the
-controller graph, watchdog, wheel damping, collision supports, and PhysX solver
-settings have not been changed for it.
+Three conditions combined to produce the drift. Each drive wheel had two active,
+coincident colliders: the imported cylinder and the added support sphere. The
+competing contacts were the remaining physical source of wheel motion. The
+watchdog also continuously repeated an unchanged zero target and the base
+controller executed on every simulation frame, keeping the PhysX articulation
+awake. Finally, the wheel velocity drives used damping 100000 without an explicit
+force limit, so small contact errors could generate very large opposing torques.
 
-For the next test session, first repeat the stationary baseline, then compare an
-event-driven controller graph plus a single watchdog stop message. Verify at
-least stationary odometry and wheel-joint drift, a short forward/turn/stop drive,
-arm planning/execution, lidar/SLAM continuity, and restart behavior. If that
-does not remove the drift, inspect the four wheel/caster contacts, articulation
-sleep and stabilization thresholds, solver iteration counts, and wheel-drive
-damping. The Mac GUI currently ignores `odom` drift when MoveIt has no external
-collision geometry; that prevents false plan invalidation but does not hide or
-correct Isaac odometry.
+The imported wheel cylinders are now disabled, leaving one active support-sphere
+collider per wheel. The watchdog sends one zero command after its 0.5-second
+timeout and then stays quiet until new input arrives. Base control executes only
+when the ROS velocity subscriber produces a message. Wheel drive damping is 1000
+and maximum force is 50. With both articulation controllers message-driven, the
+20-second sample after a turn and forward command reported zero odometry and joint
+variation at the published precision.
+
+The arm/gripper position controller must execute each physics frame for its drives
+to reach MoveIt's goal tolerance reliably. With base control still message-driven,
+the complete arm test succeeds; the following 20-second sample showed 1.91 mm of
+X drift and 0.000261 rad (0.015 degrees) of yaw variation. Arm and gripper joints
+remained exactly stable. This small residual does not invalidate plans in the Mac
+GUI while MoveIt's world contains no external collision geometry, because those
+plans are relative to the mobile base. If world obstacles are later imported into
+MoveIt, stationary base handling should be revisited before relying on millimetre
+clearances.
+
+Both lidars and the monochrome camera continued publishing during the test at
+approximately 4.7, 4.7, and 3.0 Hz. Arm joint, Cartesian, and return plans all
+executed successfully with maximum joint errors of 0.00150, 0.00166, and
+0.00138 rad. See
+[the 2026-09-14 regression record](test/results/isaac_stationary_drift_20260914.json).
+The Mac GUI still ignores `odom` drift when MoveIt has no external collision
+geometry, which remains correct because arm plans are expressed relative to the
+mobile base.
 
 ## ROS distribution and Python compatibility
 

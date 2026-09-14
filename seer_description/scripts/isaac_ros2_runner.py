@@ -213,7 +213,7 @@ def configure_stick_robot_drives(stage):
             ("left_wheel_joint", "right_wheel_joint"),
             "angular",
             0.0,
-            100000.0,
+            1000.0,
         ),
         (
             (
@@ -243,6 +243,10 @@ def configure_stick_robot_drives(stage):
             drive = UsdPhysics.DriveAPI.Apply(joint, drive_type)
             drive.CreateStiffnessAttr(stiffness)
             drive.CreateDampingAttr(damping)
+            if name in ("left_wheel_joint", "right_wheel_joint"):
+                # Bound contact-error corrections so the velocity drive cannot
+                # keep the mobile base awake with very large opposing torques.
+                drive.CreateMaxForceAttr(50.0)
 
     print("Runtime USD: configured stick robot joint drives", flush=True)
 
@@ -556,6 +560,10 @@ def create_ros_graph(stage):
                     "OnPlaybackTick.outputs:tick",
                     "SubscribeJointState.inputs:execIn",
                 ),
+                # Reapply the active arm/gripper position target each physics
+                # frame so the drives can converge inside MoveIt's goal
+                # tolerance. Base velocity control remains message-driven
+                # below, which is what prevents idle wheel commands.
                 (
                     "OnPlaybackTick.outputs:tick",
                     "ArticulationController.inputs:execIn",
@@ -592,7 +600,7 @@ def create_ros_graph(stage):
                 ),
                 ("OnPlaybackTick.outputs:tick", "SubscribeTwist.inputs:execIn"),
                 (
-                    "OnPlaybackTick.outputs:tick",
+                    "SubscribeTwist.outputs:execOut",
                     "BaseArticulationController.inputs:execIn",
                 ),
                 ("Context.outputs:context", "SubscribeTwist.inputs:context"),
