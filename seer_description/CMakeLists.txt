@@ -35,6 +35,7 @@ install(PROGRAMS
   scripts/generate_rebar_station.py
   scripts/generate_rebar_visual.py
   scripts/test_rebar_grasp.py
+  scripts/measure_rebar_settling.py
   scripts/rebar_loading_scene.py
   scripts/start_warehouse_finger_rebar_loading_demo.sh
   scripts/cmd_vel_watchdog.py

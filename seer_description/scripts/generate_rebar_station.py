@@ -13,7 +13,7 @@ from __future__ import annotations
 import argparse
 import math
 from pathlib import Path
-from rebar_experiment_geometry import SLOT_X, rack_boxes, saddle_boxes
+from rebar_experiment_geometry import SLOT_X, RACK_REBAR_Z, rack_boxes, saddle_boxes
 from generate_rebar_visual import generate as generate_visual, visual_reference
 
 REBAR_DENSITY_KG_M3 = 7850.0
@@ -23,7 +23,8 @@ def _vec(values):
     return ", ".join(f"{value:g}" for value in values)
 
 
-def _cube(name, position, size, color, indent=8, material=None, rpy=(0, 0, 0)):
+def _cube(name, position, size, color, indent=8, material=None, rpy=(0, 0, 0),
+          collision_enabled=True):
     pad = " " * indent
     schemas = ["PhysicsCollisionAPI"]
     body = []
@@ -44,7 +45,7 @@ def _cube(name, position, size, color, indent=8, material=None, rpy=(0, 0, 0)):
         f"{pad}{{",
         f"{pad}    double size = 1",
         f"{pad}    color3f[] primvars:displayColor = [({_vec(color)})]",
-        f"{pad}    bool physics:collisionEnabled = 1",
+        f"{pad}    bool physics:collisionEnabled = {int(collision_enabled)}",
     ]
     lines.extend(body)
     lines.extend(
@@ -60,6 +61,15 @@ def _cube(name, position, size, color, indent=8, material=None, rpy=(0, 0, 0)):
         ]
     )
     return "\n".join(lines)
+
+
+def rigid_contact_settings(indent):
+    """Increase contact solver iterations without changing drag or offsets."""
+    pad = " " * indent
+    return "\n".join(pad + line for line in (
+        "int physxRigidBody:solverPositionIterationCount = 32",
+        "int physxRigidBody:solverVelocityIterationCount = 8",
+    ))
 
 
 def generate(
@@ -179,6 +189,7 @@ def generate(
             '                "PhysicsRigidBodyAPI",',
             '                "PhysicsMassAPI",',
             '                "PhysicsCollisionAPI",',
+            '                "PhysxRigidBodyAPI",',
             '                "MaterialBindingAPI",',
             "            ]",
             "        )",
@@ -189,6 +200,7 @@ def generate(
             f"            color3f[] primvars:displayColor = [({_vec(rust)})]",
             f"            rel material:binding:physics = </World/RebarStation/RebarMaterial>",
             f"            float physics:mass = {mass:.4g}",
+            rigid_contact_settings(indent=12),
             f"            double3 xformOp:translate = (0, 0, {rebar_z:g})",
             '            uniform token[] xformOpOrder = ["xformOp:translate"]',
             visual_reference('X', radius, length),
@@ -208,7 +220,9 @@ def generate_rack():
     ]
     for name, position, size, rpy in rack_boxes():
         lines.append(_cube(name, position, size, (0.2, 0.5, 0.65),
-                           indent=16, rpy=rpy))
+                           indent=16, rpy=rpy,
+                           collision_enabled=not (
+                               'Saddle' in name and 4 <= int(name.rsplit('_', 1)[1]) <= 11)))
     lines.extend(['            }', '        }', '    }', '}', ''])
     return '\n'.join(lines)
 
@@ -223,13 +237,15 @@ def generate_prefilled():
         lines.extend([
             f'    def Cylinder "LoadedRebar{slot}" (',
             '        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",',
-            '                              "PhysicsCollisionAPI", "MaterialBindingAPI"]',
+            '                              "PhysicsCollisionAPI", "MaterialBindingAPI",',
+            '                              "PhysxRigidBodyAPI"]',
             '    ) {', '        uniform token axis = "Y"',
             '        double radius = 0.012', '        double height = 0.6',
             f'        float physics:mass = {mass:.4g}',
+            rigid_contact_settings(indent=8),
             '        color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]',
             '        rel material:binding:physics = </World/RebarStation/RebarMaterial>',
-            f'        double3 xformOp:translate = ({SLOT_X[slot-1]}, 0, 0.670)',
+            f'        double3 xformOp:translate = ({SLOT_X[slot-1]}, 0, {RACK_REBAR_Z})',
             '        uniform token[] xformOpOrder = ["xformOp:translate"]',
             visual_reference('Y', indent=8, parent_path=f'/World/LoadedRebar{slot}'), '    }',
         ])

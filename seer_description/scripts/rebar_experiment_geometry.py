@@ -3,7 +3,10 @@ import math
 
 SLOT_X = (0.2927, 0.1969, 0.1138, 0.0118)
 RACK_Y = 0.0
-RACK_REBAR_Z = 0.670
+RACK_REBAR_Z = 0.715
+# Preserve the calibrated release target; leave only 5 mm of free fall.
+RACK_RELEASE_TCP_Z = 0.720
+RACK_PEDESTAL_BOTTOM_Z = 0.602
 
 
 def saddle_boxes(axis, center, width=0.08, radius=0.017, thickness=0.006,
@@ -33,9 +36,27 @@ def saddle_boxes(axis, center, width=0.08, radius=0.017, thickness=0.006,
 def rack_boxes():
     for slot, x in enumerate(SLOT_X, 1):
         for support, y in enumerate((-0.19, 0.19), 1):
-            yield f"Slot{slot}Support{support}", (x, y, 0.627), (
-                0.060, 0.080, 0.050), (0.0, 0.0, 0.0)
+            pedestal_top = RACK_REBAR_Z - .018
+            yield f"Slot{slot}Support{support}", (
+                x, y, (RACK_PEDESTAL_BOTTOM_Z + pedestal_top) / 2), (
+                0.060, 0.080, pedestal_top - RACK_PEDESTAL_BOTTOM_Z), (0.0, 0.0, 0.0)
             for segment, (position, size, rpy) in enumerate(
-                saddle_boxes("Y", (x, y, 0.675)), 1
+                saddle_boxes("Y", (x, y, RACK_REBAR_Z + .005)), 1
             ):
                 yield f"Slot{slot}Saddle{support}_{segment}", position, size, rpy
+            for face, position, size, rpy in v_seat_boxes(x, y):
+                yield f"Slot{slot}VSeat{support}_{face}", position, size, rpy
+
+
+def v_seat_boxes(x, y, angle_degrees=30, width=.08, thickness=.006):
+    """Two tangent planes at +/-30 degrees hold the 24 mm smooth cylinder.
+
+    Keep the bar centre at the shared calibrated rack height. The outer curved walls
+    remain; the middle arc boxes are visual only in the Isaac rack layer.
+    """
+    radial = .012 + thickness/2
+    for index, sign in enumerate((-1, 1), 1):
+        angle = math.radians(angle_degrees) * sign
+        yield index, (x + radial*math.sin(angle), y,
+                      RACK_REBAR_Z-radial*math.cos(angle)), (
+                          .028, width, thickness), (0., -angle, 0.)

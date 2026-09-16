@@ -93,3 +93,7 @@ ROS_DOMAIN_ID=136 /usr/bin/python3 src/AuboAMR300_ROS2/seer_description/test/tes
 当前验证覆盖中心通道低速导航与机械臂短距离运动，不涵盖整仓自动探索、动态人群、长期运行、真实雷达标定、抓取保持力。机械臂测试使用 MoveIt 当前规划场景的碰撞检测，尚未把仓库 USD 的全部障碍物自动导入 MoveIt；不能据此认定机械臂已能绕开任意仓库物体。
 
 参考：[SLAM Toolbox](https://github.com/SteveMacenski/slam_toolbox)、[Nav2 TwistStamped 迁移说明](https://discourse.openrobotics.org/t/notice-nav2-migrated-to-twiststamped-to-replace-twist-for-cmd-vel-topics/40944)。
+
+### 2026-09-16：带四根钢筋时的静置观测
+
+钢筋托座已加高并增加 V 形承托面，落座收敛后四根相对底盘的位移跨度均小于 0.004 mm；同一段 30 秒墙钟（10.3 秒仿真）中，世界坐标仍变化约 2.7 mm、0.448°。这是带载场景的底盘整体漂移，与上方旧空载回归数值不能直接混用。释放初期还会有短暂滚动；详细分段测量和报告见[钢筋实验](README_REBAR_GRASP.md#托座抬高与防滚修正2026-09-16)。本次未修改导航或底盘控制。

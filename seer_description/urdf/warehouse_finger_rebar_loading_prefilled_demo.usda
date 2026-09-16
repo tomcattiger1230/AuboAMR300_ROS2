@@ -7,15 +7,18 @@
 over "World" {
     def Cylinder "LoadedRebar2" (
         prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",
-                              "PhysicsCollisionAPI", "MaterialBindingAPI"]
+                              "PhysicsCollisionAPI", "MaterialBindingAPI",
+                              "PhysxRigidBodyAPI"]
     ) {
         uniform token axis = "Y"
         double radius = 0.012
         double height = 0.6
         float physics:mass = 2.131
+        int physxRigidBody:solverPositionIterationCount = 32
+        int physxRigidBody:solverVelocityIterationCount = 8
         color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]
         rel material:binding:physics = </World/RebarStation/RebarMaterial>
-        double3 xformOp:translate = (0.1969, 0, 0.670)
+        double3 xformOp:translate = (0.1969, 0, 0.715)
         uniform token[] xformOpOrder = ["xformOp:translate"]
         rel material:binding = </World/LoadedRebar2/SteelVisual/ColliderInvisible>
         def Xform "SteelVisual" (prepend references = @./rebar_visual.usda@) {
@@ -27,15 +30,18 @@ over "World" {
     }
     def Cylinder "LoadedRebar3" (
         prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",
-                              "PhysicsCollisionAPI", "MaterialBindingAPI"]
+                              "PhysicsCollisionAPI", "MaterialBindingAPI",
+                              "PhysxRigidBodyAPI"]
     ) {
         uniform token axis = "Y"
         double radius = 0.012
         double height = 0.6
         float physics:mass = 2.131
+        int physxRigidBody:solverPositionIterationCount = 32
+        int physxRigidBody:solverVelocityIterationCount = 8
         color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]
         rel material:binding:physics = </World/RebarStation/RebarMaterial>
-        double3 xformOp:translate = (0.1138, 0, 0.670)
+        double3 xformOp:translate = (0.1138, 0, 0.715)
         uniform token[] xformOpOrder = ["xformOp:translate"]
         rel material:binding = </World/LoadedRebar3/SteelVisual/ColliderInvisible>
         def Xform "SteelVisual" (prepend references = @./rebar_visual.usda@) {
@@ -47,15 +53,18 @@ over "World" {
     }
     def Cylinder "LoadedRebar4" (
         prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",
-                              "PhysicsCollisionAPI", "MaterialBindingAPI"]
+                              "PhysicsCollisionAPI", "MaterialBindingAPI",
+                              "PhysxRigidBodyAPI"]
     ) {
         uniform token axis = "Y"
         double radius = 0.012
         double height = 0.6
         float physics:mass = 2.131
+        int physxRigidBody:solverPositionIterationCount = 32
+        int physxRigidBody:solverVelocityIterationCount = 8
         color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]
         rel material:binding:physics = </World/RebarStation/RebarMaterial>
-        double3 xformOp:translate = (0.0118, 0, 0.670)
+        double3 xformOp:translate = (0.0118, 0, 0.715)
         uniform token[] xformOpOrder = ["xformOp:translate"]
         rel material:binding = </World/LoadedRebar4/SteelVisual/ColliderInvisible>
         def Xform "SteelVisual" (prepend references = @./rebar_visual.usda@) {

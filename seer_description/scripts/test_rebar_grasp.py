@@ -41,7 +41,7 @@ from moveit_msgs.action import ExecuteTrajectory
 from moveit_msgs.msg import (AttachedCollisionObject, CollisionObject, Constraints,
                              JointConstraint, PlanningScene, PlanningSceneComponents, RobotState)
 from shape_msgs.msg import SolidPrimitive
-from rebar_experiment_geometry import SLOT_X, RACK_REBAR_Z
+from rebar_experiment_geometry import SLOT_X, RACK_REBAR_Z, RACK_RELEASE_TCP_Z
 from moveit_msgs.srv import (ApplyPlanningScene, GetCartesianPath, GetMotionPlan,
                              GetPositionFK, GetPositionIK, GetPlanningScene)
 from sensor_msgs.msg import JointState
@@ -848,7 +848,7 @@ class RebarGraspTest(Node):
         return quat_rotate(quat_conjugate(self._base_quat),
                            quat_rotate(self._rebar_quat, (1.0, 0.0, 0.0)))
 
-    def payload_scene(self, attach):
+    def payload_scene(self, attach, radial_margin=.008):
         scene = PlanningScene(is_diff=True)
         scene.robot_state.is_diff = True
         attached = AttachedCollisionObject(link_name="gripper_motor_link")
@@ -858,7 +858,7 @@ class RebarGraspTest(Node):
             attached.object.header.frame_id = "gripper_motor_link"
             attached.object.operation = CollisionObject.ADD
             cylinder = SolidPrimitive(type=SolidPrimitive.CYLINDER,
-                                      dimensions=[self.args.length+.020, self.args.diameter/2+.008])
+                                      dimensions=[self.args.length+.020, self.args.diameter/2+radial_margin])
             pose = Pose()
             pose.position.y, pose.position.z = self.args.tcp_y, self.args.tcp_z
             # Steel follows motor Y; SolidPrimitive cylinders are along Z.
@@ -931,10 +931,11 @@ class RebarGraspTest(Node):
                         actual=list(actual), target=list(tcp))
             if not retained:
                 raise RuntimeError("steel did not follow the staged carrying path")
-        # Release slightly above the saddle; the cylinder falls into its
-        # concave seat without a payload/rack collision during approach.
-        # The finger tips also stay above bars in neighbouring occupied slots.
-        release_tcp = (slot_x, 0., RACK_REBAR_Z+.050)
+        # Use a 2 mm radial margin for the final placement approach: the
+        # transit envelope (8 mm) would intersect the seat at 5 mm clearance.
+        # Keep collision checks against the rack, robot and neighbouring bars.
+        self.payload_scene(True, radial_margin=.002)
+        release_tcp = (slot_x, 0., RACK_RELEASE_TCP_Z)
         self.cartesian_motion("descend_to_onboard_slot",
                               [wrist_pose_for(release_tcp, rotated).pose])
         before = self.rebar_in_base()

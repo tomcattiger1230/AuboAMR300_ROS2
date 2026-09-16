@@ -492,6 +492,7 @@ def Xform "World"
                 "PhysicsRigidBodyAPI",
                 "PhysicsMassAPI",
                 "PhysicsCollisionAPI",
+                "PhysxRigidBodyAPI",
                 "MaterialBindingAPI",
             ]
         )
@@ -502,6 +503,8 @@ def Xform "World"
             color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]
             rel material:binding:physics = </World/RebarStation/RebarMaterial>
             float physics:mass = 2.131
+            int physxRigidBody:solverPositionIterationCount = 32
+            int physxRigidBody:solverVelocityIterationCount = 8
             double3 xformOp:translate = (0, 0, 0.522)
             uniform token[] xformOpOrder = ["xformOp:translate"]
             rel material:binding = </World/RebarStation/Rebar/SteelVisual/ColliderInvisible>

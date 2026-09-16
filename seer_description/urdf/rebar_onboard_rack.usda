@@ -14,9 +14,9 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.2927, -0.19, 0.627)
+                    double3 xformOp:translate = (0.2927, -0.19, 0.6495)
                     float3 xformOp:rotateXYZ = (0, 0, 0)
-                    double3 xformOp:scale = (0.06, 0.08, 0.05)
+                    double3 xformOp:scale = (0.06, 0.08, 0.095)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot1Saddle1_1" (
@@ -26,7 +26,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.274574, -0.19, 0.666548)
+                    double3 xformOp:translate = (0.274574, -0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, 65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -38,7 +38,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.276317, -0.19, 0.663528)
+                    double3 xformOp:translate = (0.276317, -0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, 55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -50,7 +50,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.278558, -0.19, 0.660858)
+                    double3 xformOp:translate = (0.278558, -0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, 45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -61,8 +61,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.281228, -0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.281228, -0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, 35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -73,8 +73,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.284248, -0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.284248, -0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, 25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -85,8 +85,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.287524, -0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.287524, -0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, 15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -97,8 +97,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.290957, -0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.290957, -0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, 5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -109,8 +109,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.294443, -0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.294443, -0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, -5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -121,8 +121,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.297876, -0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.297876, -0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, -15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -133,8 +133,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.301152, -0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.301152, -0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, -25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -145,8 +145,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.304172, -0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.304172, -0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, -35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -158,7 +158,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.306842, -0.19, 0.660858)
+                    double3 xformOp:translate = (0.306842, -0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, -45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -170,7 +170,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.309083, -0.19, 0.663528)
+                    double3 xformOp:translate = (0.309083, -0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, -55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -182,9 +182,33 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.310826, -0.19, 0.666548)
+                    double3 xformOp:translate = (0.310826, -0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, -65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot1VSeat1_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.2852, -0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, 30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot1VSeat1_2" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.3002, -0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, -30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot1Support2" (
@@ -194,9 +218,9 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.2927, 0.19, 0.627)
+                    double3 xformOp:translate = (0.2927, 0.19, 0.6495)
                     float3 xformOp:rotateXYZ = (0, 0, 0)
-                    double3 xformOp:scale = (0.06, 0.08, 0.05)
+                    double3 xformOp:scale = (0.06, 0.08, 0.095)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot1Saddle2_1" (
@@ -206,7 +230,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.274574, 0.19, 0.666548)
+                    double3 xformOp:translate = (0.274574, 0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, 65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -218,7 +242,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.276317, 0.19, 0.663528)
+                    double3 xformOp:translate = (0.276317, 0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, 55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -230,7 +254,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.278558, 0.19, 0.660858)
+                    double3 xformOp:translate = (0.278558, 0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, 45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -241,8 +265,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.281228, 0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.281228, 0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, 35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -253,8 +277,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.284248, 0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.284248, 0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, 25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -265,8 +289,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.287524, 0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.287524, 0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, 15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -277,8 +301,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.290957, 0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.290957, 0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, 5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -289,8 +313,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.294443, 0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.294443, 0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, -5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -301,8 +325,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.297876, 0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.297876, 0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, -15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -313,8 +337,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.301152, 0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.301152, 0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, -25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -325,8 +349,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.304172, 0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.304172, 0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, -35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -338,7 +362,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.306842, 0.19, 0.660858)
+                    double3 xformOp:translate = (0.306842, 0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, -45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -350,7 +374,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.309083, 0.19, 0.663528)
+                    double3 xformOp:translate = (0.309083, 0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, -55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -362,9 +386,33 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.310826, 0.19, 0.666548)
+                    double3 xformOp:translate = (0.310826, 0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, -65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot1VSeat2_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.2852, 0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, 30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot1VSeat2_2" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.3002, 0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, -30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot2Support1" (
@@ -374,9 +422,9 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.1969, -0.19, 0.627)
+                    double3 xformOp:translate = (0.1969, -0.19, 0.6495)
                     float3 xformOp:rotateXYZ = (0, 0, 0)
-                    double3 xformOp:scale = (0.06, 0.08, 0.05)
+                    double3 xformOp:scale = (0.06, 0.08, 0.095)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot2Saddle1_1" (
@@ -386,7 +434,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.178774, -0.19, 0.666548)
+                    double3 xformOp:translate = (0.178774, -0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, 65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -398,7 +446,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.180517, -0.19, 0.663528)
+                    double3 xformOp:translate = (0.180517, -0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, 55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -410,7 +458,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.182758, -0.19, 0.660858)
+                    double3 xformOp:translate = (0.182758, -0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, 45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -421,8 +469,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.185428, -0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.185428, -0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, 35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -433,8 +481,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.188448, -0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.188448, -0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, 25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -445,8 +493,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.191724, -0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.191724, -0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, 15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -457,8 +505,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.195157, -0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.195157, -0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, 5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -469,8 +517,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.198643, -0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.198643, -0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, -5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -481,8 +529,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.202076, -0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.202076, -0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, -15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -493,8 +541,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.205352, -0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.205352, -0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, -25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -505,8 +553,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.208372, -0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.208372, -0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, -35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -518,7 +566,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.211042, -0.19, 0.660858)
+                    double3 xformOp:translate = (0.211042, -0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, -45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -530,7 +578,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.213283, -0.19, 0.663528)
+                    double3 xformOp:translate = (0.213283, -0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, -55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -542,9 +590,33 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.215026, -0.19, 0.666548)
+                    double3 xformOp:translate = (0.215026, -0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, -65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot2VSeat1_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.1894, -0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, 30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot2VSeat1_2" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.2044, -0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, -30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot2Support2" (
@@ -554,9 +626,9 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.1969, 0.19, 0.627)
+                    double3 xformOp:translate = (0.1969, 0.19, 0.6495)
                     float3 xformOp:rotateXYZ = (0, 0, 0)
-                    double3 xformOp:scale = (0.06, 0.08, 0.05)
+                    double3 xformOp:scale = (0.06, 0.08, 0.095)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot2Saddle2_1" (
@@ -566,7 +638,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.178774, 0.19, 0.666548)
+                    double3 xformOp:translate = (0.178774, 0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, 65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -578,7 +650,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.180517, 0.19, 0.663528)
+                    double3 xformOp:translate = (0.180517, 0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, 55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -590,7 +662,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.182758, 0.19, 0.660858)
+                    double3 xformOp:translate = (0.182758, 0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, 45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -601,8 +673,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.185428, 0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.185428, 0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, 35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -613,8 +685,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.188448, 0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.188448, 0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, 25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -625,8 +697,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.191724, 0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.191724, 0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, 15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -637,8 +709,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.195157, 0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.195157, 0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, 5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -649,8 +721,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.198643, 0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.198643, 0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, -5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -661,8 +733,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.202076, 0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.202076, 0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, -15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -673,8 +745,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.205352, 0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.205352, 0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, -25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -685,8 +757,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.208372, 0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.208372, 0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, -35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -698,7 +770,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.211042, 0.19, 0.660858)
+                    double3 xformOp:translate = (0.211042, 0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, -45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -710,7 +782,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.213283, 0.19, 0.663528)
+                    double3 xformOp:translate = (0.213283, 0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, -55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -722,9 +794,33 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.215026, 0.19, 0.666548)
+                    double3 xformOp:translate = (0.215026, 0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, -65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot2VSeat2_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.1894, 0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, 30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot2VSeat2_2" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.2044, 0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, -30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot3Support1" (
@@ -734,9 +830,9 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.1138, -0.19, 0.627)
+                    double3 xformOp:translate = (0.1138, -0.19, 0.6495)
                     float3 xformOp:rotateXYZ = (0, 0, 0)
-                    double3 xformOp:scale = (0.06, 0.08, 0.05)
+                    double3 xformOp:scale = (0.06, 0.08, 0.095)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot3Saddle1_1" (
@@ -746,7 +842,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0956738, -0.19, 0.666548)
+                    double3 xformOp:translate = (0.0956738, -0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, 65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -758,7 +854,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.097417, -0.19, 0.663528)
+                    double3 xformOp:translate = (0.097417, -0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, 55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -770,7 +866,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0996579, -0.19, 0.660858)
+                    double3 xformOp:translate = (0.0996579, -0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, 45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -781,8 +877,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.102328, -0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.102328, -0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, 35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -793,8 +889,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.105348, -0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.105348, -0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, 25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -805,8 +901,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.108624, -0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.108624, -0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, 15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -817,8 +913,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.112057, -0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.112057, -0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, 5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -829,8 +925,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.115543, -0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.115543, -0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, -5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -841,8 +937,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.118976, -0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.118976, -0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, -15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -853,8 +949,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.122252, -0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.122252, -0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, -25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -865,8 +961,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.125272, -0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.125272, -0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, -35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -878,7 +974,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.127942, -0.19, 0.660858)
+                    double3 xformOp:translate = (0.127942, -0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, -45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -890,7 +986,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.130183, -0.19, 0.663528)
+                    double3 xformOp:translate = (0.130183, -0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, -55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -902,9 +998,33 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.131926, -0.19, 0.666548)
+                    double3 xformOp:translate = (0.131926, -0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, -65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot3VSeat1_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.1063, -0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, 30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot3VSeat1_2" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.1213, -0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, -30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot3Support2" (
@@ -914,9 +1034,9 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.1138, 0.19, 0.627)
+                    double3 xformOp:translate = (0.1138, 0.19, 0.6495)
                     float3 xformOp:rotateXYZ = (0, 0, 0)
-                    double3 xformOp:scale = (0.06, 0.08, 0.05)
+                    double3 xformOp:scale = (0.06, 0.08, 0.095)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot3Saddle2_1" (
@@ -926,7 +1046,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0956738, 0.19, 0.666548)
+                    double3 xformOp:translate = (0.0956738, 0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, 65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -938,7 +1058,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.097417, 0.19, 0.663528)
+                    double3 xformOp:translate = (0.097417, 0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, 55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -950,7 +1070,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0996579, 0.19, 0.660858)
+                    double3 xformOp:translate = (0.0996579, 0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, 45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -961,8 +1081,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.102328, 0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.102328, 0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, 35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -973,8 +1093,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.105348, 0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.105348, 0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, 25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -985,8 +1105,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.108624, 0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.108624, 0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, 15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -997,8 +1117,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.112057, 0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.112057, 0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, 5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1009,8 +1129,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.115543, 0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.115543, 0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, -5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1021,8 +1141,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.118976, 0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.118976, 0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, -15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1033,8 +1153,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.122252, 0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.122252, 0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, -25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1045,8 +1165,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.125272, 0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.125272, 0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, -35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1058,7 +1178,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.127942, 0.19, 0.660858)
+                    double3 xformOp:translate = (0.127942, 0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, -45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1070,7 +1190,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.130183, 0.19, 0.663528)
+                    double3 xformOp:translate = (0.130183, 0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, -55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1082,9 +1202,33 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.131926, 0.19, 0.666548)
+                    double3 xformOp:translate = (0.131926, 0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, -65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot3VSeat2_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.1063, 0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, 30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot3VSeat2_2" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.1213, 0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, -30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot4Support1" (
@@ -1094,9 +1238,9 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0118, -0.19, 0.627)
+                    double3 xformOp:translate = (0.0118, -0.19, 0.6495)
                     float3 xformOp:rotateXYZ = (0, 0, 0)
-                    double3 xformOp:scale = (0.06, 0.08, 0.05)
+                    double3 xformOp:scale = (0.06, 0.08, 0.095)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot4Saddle1_1" (
@@ -1106,7 +1250,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (-0.00632616, -0.19, 0.666548)
+                    double3 xformOp:translate = (-0.00632616, -0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, 65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1118,7 +1262,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (-0.00458304, -0.19, 0.663528)
+                    double3 xformOp:translate = (-0.00458304, -0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, 55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1130,7 +1274,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (-0.00234214, -0.19, 0.660858)
+                    double3 xformOp:translate = (-0.00234214, -0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, 45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1141,8 +1285,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.000328471, -0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.000328471, -0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, 35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1153,8 +1297,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.00334763, -0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.00334763, -0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, 25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1165,8 +1309,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.00662362, -0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.00662362, -0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, 15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1177,8 +1321,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0100569, -0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0100569, -0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, 5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1189,8 +1333,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0135431, -0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0135431, -0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, -5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1201,8 +1345,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0169764, -0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0169764, -0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, -15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1213,8 +1357,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0202524, -0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0202524, -0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, -25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1225,8 +1369,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0232715, -0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0232715, -0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, -35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1238,7 +1382,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0259421, -0.19, 0.660858)
+                    double3 xformOp:translate = (0.0259421, -0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, -45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1250,7 +1394,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.028183, -0.19, 0.663528)
+                    double3 xformOp:translate = (0.028183, -0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, -55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1262,9 +1406,33 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0299262, -0.19, 0.666548)
+                    double3 xformOp:translate = (0.0299262, -0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, -65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot4VSeat1_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.0043, -0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, 30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot4VSeat1_2" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.0193, -0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, -30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot4Support2" (
@@ -1274,9 +1442,9 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0118, 0.19, 0.627)
+                    double3 xformOp:translate = (0.0118, 0.19, 0.6495)
                     float3 xformOp:rotateXYZ = (0, 0, 0)
-                    double3 xformOp:scale = (0.06, 0.08, 0.05)
+                    double3 xformOp:scale = (0.06, 0.08, 0.095)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
                 def Cube "Slot4Saddle2_1" (
@@ -1286,7 +1454,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (-0.00632616, 0.19, 0.666548)
+                    double3 xformOp:translate = (-0.00632616, 0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, 65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1298,7 +1466,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (-0.00458304, 0.19, 0.663528)
+                    double3 xformOp:translate = (-0.00458304, 0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, 55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1310,7 +1478,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (-0.00234214, 0.19, 0.660858)
+                    double3 xformOp:translate = (-0.00234214, 0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, 45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1321,8 +1489,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.000328471, 0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.000328471, 0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, 35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1333,8 +1501,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.00334763, 0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.00334763, 0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, 25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1345,8 +1513,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.00662362, 0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.00662362, 0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, 15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1357,8 +1525,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0100569, 0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0100569, 0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, 5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1369,8 +1537,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0135431, 0.19, 0.655076)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0135431, 0.19, 0.700076)
                     float3 xformOp:rotateXYZ = (0, -5, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1381,8 +1549,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0169764, 0.19, 0.655681)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0169764, 0.19, 0.700681)
                     float3 xformOp:rotateXYZ = (0, -15, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1393,8 +1561,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0202524, 0.19, 0.656874)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0202524, 0.19, 0.701874)
                     float3 xformOp:rotateXYZ = (0, -25, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1405,8 +1573,8 @@ over "World" {
                 {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
-                    bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0232715, 0.19, 0.658617)
+                    bool physics:collisionEnabled = 0
+                    double3 xformOp:translate = (0.0232715, 0.19, 0.703617)
                     float3 xformOp:rotateXYZ = (0, -35, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1418,7 +1586,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0259421, 0.19, 0.660858)
+                    double3 xformOp:translate = (0.0259421, 0.19, 0.705858)
                     float3 xformOp:rotateXYZ = (0, -45, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1430,7 +1598,7 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.028183, 0.19, 0.663528)
+                    double3 xformOp:translate = (0.028183, 0.19, 0.708528)
                     float3 xformOp:rotateXYZ = (0, -55, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
@@ -1442,9 +1610,33 @@ over "World" {
                     double size = 1
                     color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
                     bool physics:collisionEnabled = 1
-                    double3 xformOp:translate = (0.0299262, 0.19, 0.666548)
+                    double3 xformOp:translate = (0.0299262, 0.19, 0.711548)
                     float3 xformOp:rotateXYZ = (0, -65, 0)
                     double3 xformOp:scale = (0.00360453, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot4VSeat2_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.0043, 0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, 30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+                def Cube "Slot4VSeat2_2" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.2, 0.5, 0.65)]
+                    bool physics:collisionEnabled = 1
+                    double3 xformOp:translate = (0.0193, 0.19, 0.70201)
+                    float3 xformOp:rotateXYZ = (0, -30, 0)
+                    double3 xformOp:scale = (0.028, 0.08, 0.006)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
                 }
             }

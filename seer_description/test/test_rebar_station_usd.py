@@ -7,6 +7,10 @@ Run with a Python environment that provides USD, e.g.:
 
 from pathlib import Path
 import unittest
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+from rebar_experiment_geometry import (RACK_REBAR_Z, RACK_RELEASE_TCP_Z,
+                                       RACK_PEDESTAL_BOTTOM_Z, rack_boxes)
 
 simulation_app = None
 try:
@@ -90,7 +94,14 @@ class RebarStationTest(unittest.TestCase):
         loading = Usd.Stage.Open(str(assets / "warehouse_finger_rebar_loading_demo.usda"))
         rack = loading.GetPrimAtPath("/World/seer_aubo_composite/base_link/RebarRack")
         self.assertTrue(rack.GetParent().HasAPI(UsdPhysics.RigidBodyAPI))
-        self.assertEqual(len(rack.GetChildren()), 120)
+        self.assertEqual(len(rack.GetChildren()), 136)
+        active = [p for p in rack.GetChildren()
+                  if UsdPhysics.CollisionAPI(p).GetCollisionEnabledAttr().Get()]
+        self.assertEqual(len(active), 72)
+        self.assertEqual(len([p for p in active if 'VSeat' in p.GetName()]), 16)
+        for p in rack.GetChildren():
+            if 'Saddle' in p.GetName() and 4 <= int(p.GetName().rsplit('_', 1)[1]) <= 11:
+                self.assertFalse(UsdPhysics.CollisionAPI(p).GetCollisionEnabledAttr().Get())
         self.assertTrue(all(p.HasAPI(UsdPhysics.CollisionAPI) and
                             not p.HasAPI(UsdPhysics.RigidBodyAPI) for p in rack.GetChildren()))
 
@@ -104,6 +115,26 @@ class RebarStationTest(unittest.TestCase):
             self.assertAlmostEqual(UsdGeom.Cylinder(bar).GetHeightAttr().Get(), .6)
             self.assertAlmostEqual(UsdPhysics.MassAPI(bar).GetMassAttr().Get(), 2.13, delta=.05)
         self.assertFalse(stage.GetPrimAtPath("/World/LoadedRebar1").IsValid())
+
+    def test_raised_seats_match_planner_and_preserve_release_target(self):
+        assets = Path(__file__).resolve().parents[1] / "urdf"
+        stage = Usd.Stage.Open(str(assets / "warehouse_finger_rebar_loading_prefilled_demo.usda"))
+        rack = stage.GetPrimAtPath("/World/seer_aubo_composite/base_link/RebarRack")
+        for name, position, size, rpy in rack_boxes():
+            prim = rack.GetChild(name)
+            actual = prim.GetAttribute("xformOp:translate").Get()
+            for coordinate, expected in zip(actual, position):
+                self.assertAlmostEqual(coordinate, expected, places=6)
+            if "Support" in name:
+                actual_size = prim.GetAttribute("xformOp:scale").Get()
+                self.assertAlmostEqual(actual[2] - actual_size[2]/2,
+                                       RACK_PEDESTAL_BOTTOM_Z, places=6)
+                self.assertAlmostEqual(actual_size[2], .095, places=6)
+        self.assertAlmostEqual(RACK_RELEASE_TCP_Z, .720)
+        self.assertAlmostEqual(RACK_RELEASE_TCP_Z - RACK_REBAR_Z, .005)
+        for slot in (2, 3, 4):
+            bar = stage.GetPrimAtPath(f"/World/LoadedRebar{slot}")
+            self.assertAlmostEqual(bar.GetAttribute("xformOp:translate").Get()[2], RACK_REBAR_Z)
 
     def test_rebar_material_is_high_friction(self):
         material = self.stage.GetPrimAtPath(f"{STATION}/RebarMaterial")
