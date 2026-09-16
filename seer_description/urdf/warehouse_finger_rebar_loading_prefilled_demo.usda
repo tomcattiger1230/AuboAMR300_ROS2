@@ -17,6 +17,13 @@ over "World" {
         rel material:binding:physics = </World/RebarStation/RebarMaterial>
         double3 xformOp:translate = (0.1969, 0, 0.670)
         uniform token[] xformOpOrder = ["xformOp:translate"]
+        rel material:binding = </World/LoadedRebar2/SteelVisual/ColliderInvisible>
+        def Xform "SteelVisual" (prepend references = @./rebar_visual.usda@) {
+            uniform token purpose = "default"
+            float3 xformOp:rotateXYZ = (-90, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ", "xformOp:scale"]
+        }
     }
     def Cylinder "LoadedRebar3" (
         prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",
@@ -30,6 +37,13 @@ over "World" {
         rel material:binding:physics = </World/RebarStation/RebarMaterial>
         double3 xformOp:translate = (0.1138, 0, 0.670)
         uniform token[] xformOpOrder = ["xformOp:translate"]
+        rel material:binding = </World/LoadedRebar3/SteelVisual/ColliderInvisible>
+        def Xform "SteelVisual" (prepend references = @./rebar_visual.usda@) {
+            uniform token purpose = "default"
+            float3 xformOp:rotateXYZ = (-90, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ", "xformOp:scale"]
+        }
     }
     def Cylinder "LoadedRebar4" (
         prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",
@@ -43,5 +57,12 @@ over "World" {
         rel material:binding:physics = </World/RebarStation/RebarMaterial>
         double3 xformOp:translate = (0.0118, 0, 0.670)
         uniform token[] xformOpOrder = ["xformOp:translate"]
+        rel material:binding = </World/LoadedRebar4/SteelVisual/ColliderInvisible>
+        def Xform "SteelVisual" (prepend references = @./rebar_visual.usda@) {
+            uniform token purpose = "default"
+            float3 xformOp:rotateXYZ = (-90, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ", "xformOp:scale"]
+        }
     }
 }

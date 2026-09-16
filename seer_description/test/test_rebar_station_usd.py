@@ -10,13 +10,13 @@ import unittest
 
 simulation_app = None
 try:
-    from pxr import Sdf, Usd, UsdGeom, UsdPhysics
+    from pxr import Sdf, Usd, UsdGeom, UsdPhysics, UsdShade
 except ModuleNotFoundError:
     # Isaac Sim 6 exposes USD modules after SimulationApp initialization.
     from isaacsim import SimulationApp
 
     simulation_app = SimulationApp({"headless": True})
-    from pxr import Sdf, Usd, UsdGeom, UsdPhysics
+    from pxr import Sdf, Usd, UsdGeom, UsdPhysics, UsdShade
 
 STATION = "/World/RebarStation"
 
@@ -117,6 +117,43 @@ class RebarStationTest(unittest.TestCase):
         rebar = self.stage.GetPrimAtPath(f"{STATION}/Rebar")
         targets = rebar.GetRelationship("material:binding:physics").GetForwardedTargets()
         self.assertEqual(targets, [Sdf.Path(f"{STATION}/RebarMaterial")])
+
+    def test_ribbed_visuals_have_resolved_pbr_and_no_extra_physics(self):
+        assets = Path(__file__).resolve().parents[1] / "urdf"
+        stage = Usd.Stage.Open(str(assets / "warehouse_finger_rebar_loading_prefilled_demo.usda"))
+        for path in (f"{STATION}/Rebar", *(f"/World/LoadedRebar{i}" for i in (2, 3, 4))):
+            bar = stage.GetPrimAtPath(path)
+            self.assertEqual(UsdGeom.Imageable(bar).ComputePurpose(), "default")
+            invisible, _ = UsdShade.MaterialBindingAPI(bar).ComputeBoundMaterial()
+            self.assertEqual(invisible.ComputeSurfaceSource()[0].GetInput("opacity").Get(), 0)
+            visual = stage.GetPrimAtPath(path + "/SteelVisual")
+            mesh = UsdGeom.Mesh(stage.GetPrimAtPath(path + "/SteelVisual/Surface"))
+            self.assertEqual(mesh.ComputePurpose(), "default")
+            self.assertTrue(all(not p.HasAPI(UsdPhysics.CollisionAPI) and
+                                not p.HasAPI(UsdPhysics.RigidBodyAPI)
+                                for p in Usd.PrimRange(visual)))
+            points = mesh.GetPointsAttr().Get()
+            self.assertEqual(len(mesh.GetExtentAttr().Get()), 2)
+            self.assertEqual(len(points), len(mesh.GetNormalsAttr().Get()))
+            self.assertEqual(len(points), len(UsdGeom.PrimvarsAPI(mesh).GetPrimvar("st").Get()))
+            self.assertEqual(sum(mesh.GetFaceVertexCountsAttr().Get()),
+                             len(mesh.GetFaceVertexIndicesAttr().Get()))
+            self.assertLess(max(mesh.GetFaceVertexIndicesAttr().Get()), len(points))
+            # Visual ribs fit inside the unchanged nominal collision envelope.
+            radii = [(p[0]**2+p[1]**2)**.5 for p in points]
+            self.assertLessEqual(max(radii), .012002)
+            self.assertGreater(max(radii)-min(radii), .0006)
+            self.assertAlmostEqual(max(p[2] for p in points)-min(p[2] for p in points), .6)
+            bound, _ = UsdShade.MaterialBindingAPI(mesh).ComputeBoundMaterial()
+            self.assertTrue(bound)
+            surface = bound.ComputeSurfaceSource()[0]
+            self.assertEqual(surface.GetIdAttr().Get(), "UsdPreviewSurface")
+            for name in ("BaseColor", "Roughness", "Metallic"):
+                shader = UsdShade.Shader(stage.GetPrimAtPath(str(bound.GetPath()) + "/" + name))
+                asset = shader.GetInput("file").Get()
+                self.assertTrue(Path(asset.resolvedPath).is_file(), str(asset))
+                self.assertEqual(shader.GetInput("sourceColorSpace").Get(),
+                                 "sRGB" if name == "BaseColor" else "raw")
 
     def test_wrapper_scene_composes_all_three_layers(self):
         root_layer = self.scene.GetRootLayer()

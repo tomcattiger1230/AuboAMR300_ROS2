@@ -33,6 +33,7 @@ install(PROGRAMS
   scripts/start_warehouse_stick_rebar_mono_demo.sh
   scripts/start_warehouse_finger_rebar_mono_demo.sh
   scripts/generate_rebar_station.py
+  scripts/generate_rebar_visual.py
   scripts/test_rebar_grasp.py
   scripts/rebar_loading_scene.py
   scripts/start_warehouse_finger_rebar_loading_demo.sh

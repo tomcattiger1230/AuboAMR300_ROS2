@@ -15,7 +15,7 @@
   内半径 16 mm、开口弧度 140°，用 14 段独立碰撞盒保留凹槽，限制横向滚动，
   被夹起时可竖直脱出
 - **钢筋**：动态刚体圆柱，24 mm 直径 × 0.6 m 长，密度保持 7850 kg/m³，
-  质量约 2.13 kg，锈色，高摩擦表面（0.8）
+  质量约 2.13 kg，灰色钢材与局部锈斑，高摩擦表面（0.8）
 
 演示场景使用独立 wrapper 层叠；钢筋工位层更新为弧形托座，既有机器人资产保持不变：
 
@@ -28,6 +28,51 @@
 
 > stick 夹爪两指为上下板式结构，全闭仍有约 50 mm 间隙，只适合 50–130 mm
 > 厚的物体；钢筋测试必须使用 finger 变体。
+
+## 钢筋材质与筋纹（2026-09-16）
+
+参照灰色带肋钢筋照片，所有实验钢筋共用独立外观资产
+`urdf/rebar_visual.usda`：两侧斜向横肋、两条纵肋和两个平切端面，
+并绑定 USD Preview Surface 金属材质。三张 1024 × 256 PNG 分别控制
+灰钢/锈斑颜色、粗糙度和金属度；氧化区域较粗糙、金属反射较弱。
+纹理位于 `urdf/textures/rebar_*.png`，沿圆周无缝衔接，不依赖外网下载。
+
+工位钢筋和 2/3/4 槽的预置钢筋都引用这一资产。只隐藏圆柱的渲染外观
+（单独绑定透明渲染材质 `ColliderInvisible`），带纹理网格绑定不透明 `Steel` 材质，未添加碰撞体。
+不使用父圆柱 `purpose = guide` 来隐藏：本环境的 Isaac 6.0.1-rc7 / RTX 会连同其下的外观一并隐藏。
+筋纹包络保持在原 24 mm × 0.6 m 圆柱以内；物理碰撞仍是光滑圆柱，
+密度 7850 kg/m³、约 2.13 kg 质量及摩擦系数 0.8 不变，
+本版本不模拟横肋对接触力的细节影响。
+
+```bash
+# 重新生成外观、PNG 和实验场景，使用 Python 标准库即可：
+python3 src/AuboAMR300_ROS2/seer_description/scripts/generate_rebar_station.py
+# 只修改/重新生成共享外观：
+python3 src/AuboAMR300_ROS2/seer_description/scripts/generate_rebar_visual.py
+# 在提供 pxr 的 Python 中验证渲染绑定、纹理路径、尺寸与物理属性：
+~/isaacsim/.venv/bin/python src/AuboAMR300_ROS2/seer_description/test/test_rebar_station_usd.py
+# 单独渲染材质近景，不启动机器人、MoveIt 或任何运动：
+~/isaacsim/python.sh src/AuboAMR300_ROS2/seer_description/test/render_rebar_material_preview.py --output /tmp/rebar_material.jpg
+```
+
+可在 `generate_rebar_visual.py` 调整灰色/锈色、锈斑分布、粗糙度和横肋节距；
+生成后重新启动 Isaac 场景。共享资产以 Z 为长轴，场景引用分别旋转至工位的 X 轴
+和车载的 Y 轴；改变工位长度/半径时仅缩放该外观。
+腕部 MV-CH100-60UM 输出仍为 `mono8`：对准钢筋时可看到筋纹和锈斑的明暗差异，
+不会出现 Isaac 彩色视窗中的棕色锈斑。本次撤回姿态的黑白截图可见车载钢筋的筋纹，
+视野仍随末端位姿改变；此次没有更改相机安装位置。
+RViz 的规划碰撞钢筋保持简化圆柱。
+
+更新材质后，8 项 USD 检查通过；三槽已占用时装入第四根的 26 项实测全部通过，
+新钢筋撤回后三秒内位移约 0.153 mm。RTX 单独渲染检查共享材质及透明圆柱/可见筋纹网格的组合：
+
+![Isaac RTX 钢筋材质近景（彩色诊断渲染，非黑白相机输出）](test/results/rebar_material_preview_20260916.jpg)
+
+报告：
+`test/results/rebar_material_grasp_20260916.json`。黑白视频验证报告与同名 JPG：
+`test/results/rebar_material_camera_20260916.json`（1024 × 615、mono8、十秒收到 23 帧）。
+
+![腕部黑白相机中的钢筋筋纹](test/results/rebar_material_camera_20260916.jpg)
 
 ## 启动
 

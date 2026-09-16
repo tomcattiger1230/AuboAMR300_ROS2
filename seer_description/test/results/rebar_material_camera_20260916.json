@@ -1,0 +1,27 @@
+{
+  "width": 1024,
+  "height": 615,
+  "encoding": "mono8",
+  "frame": "camera_optical_frame",
+  "k": [
+    869.5652274380861,
+    0.0,
+    512.0,
+    0.0,
+    869.5652274380861,
+    307.5,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "d": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "frames_in_10_wall_seconds": 23,
+  "depth_publishers": 0,
+  "pixel_stddev": 47.76218325561484
+}

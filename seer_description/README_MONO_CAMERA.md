@@ -123,3 +123,10 @@ ros2 run seer_description camera_video.py --ros-args \
 macOS 打开[实时视频](http://192.168.3.133:8080/)或[单帧图像](http://192.168.3.133:8080/snapshot.jpg)。窗口相机朝向随末端运动，画面并不始终对准钢筋。可用 `test_mono_camera.py --output /tmp/rebar_camera.json` 保存标定/帧统计及同名 JPG，验证图像不是空白或过期帧。GUI 三维相机外观与网页视频是两个独立显示入口。网页标题会标明“黑白图像”；这是 UM 型号输出的单通道灰度图，Isaac 主视窗的彩色显示不是相机输出。
 
 钢筋装载后的[相机验证报告](test/results/rebar_loading_camera_20260916.json)记录 10 秒内 38 帧有效图像、零深度话题发布者；[末端黑白截图](test/results/rebar_loading_camera_20260916.jpg)已保存。彩色场景转为灰度后，颜色仅保留亮度信息；相机视角也与 Isaac 主视窗不同。
+
+### 钢筋外观
+
+2026-09-16 钢筋增加灰色钢材、锈斑 PBR 纹理与斜向筋纹。
+Isaac 彩色视窗与 UM 黑白视频共用同一渲染材质，视频中呈现灰度明暗；
+模型、纹理位置及生成方式见 [钢筋实验说明](README_REBAR_GRASP.md#钢筋材质与筋纹2026-09-16)。
+此次更新没有改变相机安装位置、12 mm 镜头参数或图像编码。

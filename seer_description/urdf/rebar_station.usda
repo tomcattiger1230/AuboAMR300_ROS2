@@ -504,6 +504,13 @@ def Xform "World"
             float physics:mass = 2.131
             double3 xformOp:translate = (0, 0, 0.522)
             uniform token[] xformOpOrder = ["xformOp:translate"]
+            rel material:binding = </World/RebarStation/Rebar/SteelVisual/ColliderInvisible>
+            def Xform "SteelVisual" (prepend references = @./rebar_visual.usda@) {
+                uniform token purpose = "default"
+                float3 xformOp:rotateXYZ = (0, 90, 0)
+                double3 xformOp:scale = (1, 1, 1)
+                uniform token[] xformOpOrder = ["xformOp:rotateXYZ", "xformOp:scale"]
+            }
         }
 
     }

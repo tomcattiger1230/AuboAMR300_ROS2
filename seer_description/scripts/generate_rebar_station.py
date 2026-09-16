@@ -14,6 +14,7 @@ import argparse
 import math
 from pathlib import Path
 from rebar_experiment_geometry import SLOT_X, rack_boxes, saddle_boxes
+from generate_rebar_visual import generate as generate_visual, visual_reference
 
 REBAR_DENSITY_KG_M3 = 7850.0
 
@@ -190,6 +191,7 @@ def generate(
             f"            float physics:mass = {mass:.4g}",
             f"            double3 xformOp:translate = (0, 0, {rebar_z:g})",
             '            uniform token[] xformOpOrder = ["xformOp:translate"]',
+            visual_reference('X', radius, length),
             "        }",
         ]
     )
@@ -228,7 +230,8 @@ def generate_prefilled():
             '        color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]',
             '        rel material:binding:physics = </World/RebarStation/RebarMaterial>',
             f'        double3 xformOp:translate = ({SLOT_X[slot-1]}, 0, 0.670)',
-            '        uniform token[] xformOpOrder = ["xformOp:translate"]', '    }',
+            '        uniform token[] xformOpOrder = ["xformOp:translate"]',
+            visual_reference('Y', indent=8, parent_path=f'/World/LoadedRebar{slot}'), '    }',
         ])
     return '\n'.join(lines + ['}', ''])
 
@@ -266,6 +269,7 @@ def main():
         args.table_height,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
+    generate_visual(args.output.parent)
     args.output.write_text(content, encoding="utf-8")
     rack_output = args.output.with_name("rebar_onboard_rack.usda")
     rack_output.write_text(generate_rack(), encoding="utf-8")
