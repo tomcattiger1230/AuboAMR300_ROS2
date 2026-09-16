@@ -30,6 +30,10 @@ install(PROGRAMS
   scripts/test_mono_camera.py
   scripts/start_warehouse_stick_mono_demo.sh
   scripts/start_warehouse_finger_mono_demo.sh
+  scripts/start_warehouse_stick_rebar_mono_demo.sh
+  scripts/start_warehouse_finger_rebar_mono_demo.sh
+  scripts/generate_rebar_station.py
+  scripts/test_rebar_grasp.py
   scripts/cmd_vel_watchdog.py
   scripts/test_isaac_navigation.py
   scripts/test_isaac_arm.py
@@ -52,6 +56,7 @@ install(FILES
   ISAAC_NAVIGATION_CAMERA.md
   README_MONO_CAMERA.md
   README_FINGER_GRIPPER.md
+  README_REBAR_GRASP.md
   DESTINATION share/${PROJECT_NAME}
 )
 install(DIRECTORY test/results DESTINATION share/${PROJECT_NAME}/test)

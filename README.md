@@ -12,6 +12,7 @@ SEER AMB-300 底盘、AUBO i16H 机械臂、末端夹爪和工业相机的 ROS 2
 | 双雷达、SLAM、导航和视频 | [导航与相机](seer_description/ISAAC_NAVIGATION_CAMERA.md) |
 | 黑白相机参数、URDF/SDF/USD、视频入口 | [MV-CH100-60UM + 12 mm](seer_description/README_MONO_CAMERA.md) |
 | 新 finger + motor_adapter 夹爪模型与启动 | [新夹爪版本](seer_description/README_FINGER_GRIPPER.md) |
+| 钢筋抓取/释放测试场景与自动化测试 | [钢筋抓取测试](seer_description/README_REBAR_GRASP.md) |
 | GUI 模型资源来源与 i16H 限位 | [模型资源 README](aubo_student_description/README.md) |
 | 学生关键位置与碰撞验证 | [关键位置验证](aubo_control_gui/KEY_POSITION_VALIDATION.md) |
 
@@ -32,6 +33,15 @@ cd ~/Develop/github/AuboAMR300_ROS2
 
 窗口右上方“相机特写”定位并放大末端相机，拖动空白处旋转、滚轮缩放；“整体视图”恢复机械臂全景。
 修改代码后须关闭旧 GUI 并重新启动；源码启动优先读取当前仓库的模型与 QML。
+
+## 2026-09-16 更新
+
+- 新增钢筋抓取/释放测试（[文档](seer_description/README_REBAR_GRASP.md)）：臂展内钢筋工位
+  （24 mm × 1 m 动态刚体钢筋 + 低摩擦支撑块）、finger 夹爪演示场景与自动化测试脚本，
+  在 Lyrical + Isaac Sim 上全流程验证通过。
+- 实测 finger 夹爪指面开口约 0.0464 m；stick 板式夹爪闭合间隙约 50 mm，仅适合厚物，
+  钢筋测试须用 finger 变体。
+- `start_isaac_ros2_stack.sh` 的 Isaac 就绪等待从 120 s 放宽到 300 s，避免冷启动误杀。
 
 ## 2026-09-11 更新
 

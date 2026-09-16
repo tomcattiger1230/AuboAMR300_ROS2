@@ -1,0 +1,11 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    subLayers = [
+        @./seer_aubo_stick_mono.usda@,
+        @./warehouse_stick_demo.usda@,
+        @./rebar_station.usda@
+    ]
+    upAxis = "Z"
+)

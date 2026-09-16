@@ -278,7 +278,7 @@ ISAAC_PID=$!
 
 printf 'Waiting for Isaac simulation startup'
 ready=false
-for _ in $(seq 1 120); do
+for _ in $(seq 1 300); do
   if ! kill -0 "$ISAAC_PID" 2>/dev/null; then
     printf '\nIsaac Sim exited before the ROS 2 bridge became ready.\n' >&2
     wait "$ISAAC_PID" || true
