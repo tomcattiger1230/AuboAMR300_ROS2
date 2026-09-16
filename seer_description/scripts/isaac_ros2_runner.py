@@ -97,6 +97,7 @@ from pxr import Gf, Sdf, UsdGeom, UsdPhysics
 
 GRAPH_PATH = "/ROS2ControlGraph"
 SENSOR_GRAPH_PATH = "/ROS2CameraGraph"
+REBAR_GRAPH_PATH = "/ROS2RebarPoseGraph"
 stop_requested = False
 runtime_usd_dir = None
 sensor_runtimes = []
@@ -694,6 +695,62 @@ def create_ros_graph(stage):
     )
 
 
+def create_rebar_pose_graph(stage):
+    """Publish the dynamic rebar world pose for grasp verification."""
+    rebar_path = "/World/RebarStation/Rebar"
+    if not stage.GetPrimAtPath(rebar_path).IsValid():
+        return
+    if stage.GetPrimAtPath(REBAR_GRAPH_PATH).IsValid():
+        stage.RemovePrim(REBAR_GRAPH_PATH)
+
+    og.Controller.edit(
+        {"graph_path": REBAR_GRAPH_PATH, "evaluator_name": "execution"},
+        {
+            og.Controller.Keys.CREATE_NODES: [
+                ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
+                ("ReadSimTime", "isaacsim.core.nodes.IsaacReadSimulationTime"),
+                ("ReadRebarPose", "isaacsim.core.nodes.IsaacReadWorldPose"),
+                ("Context", "isaacsim.ros2.bridge.ROS2Context"),
+                (
+                    "PublishRebarTransform",
+                    "isaacsim.ros2.bridge.ROS2PublishRawTransformTree",
+                ),
+            ],
+            og.Controller.Keys.CONNECT: [
+                (
+                    "OnPlaybackTick.outputs:tick",
+                    "PublishRebarTransform.inputs:execIn",
+                ),
+                (
+                    "ReadSimTime.outputs:simulationTime",
+                    "PublishRebarTransform.inputs:timeStamp",
+                ),
+                (
+                    "ReadRebarPose.outputs:translation",
+                    "PublishRebarTransform.inputs:translation",
+                ),
+                (
+                    "ReadRebarPose.outputs:orientation",
+                    "PublishRebarTransform.inputs:rotation",
+                ),
+                (
+                    "Context.outputs:context",
+                    "PublishRebarTransform.inputs:context",
+                ),
+            ],
+            og.Controller.Keys.SET_VALUES: [
+                (
+                    "ReadRebarPose.inputs:prim",
+                    [usdrt.Sdf.Path(rebar_path)],
+                ),
+                ("PublishRebarTransform.inputs:parentFrameId", "world"),
+                ("PublishRebarTransform.inputs:childFrameId", "rebar"),
+            ],
+        },
+    )
+    print("Isaac ROS 2 rebar pose: world -> rebar on /tf", flush=True)
+
+
 def main():
     global stop_requested
 
@@ -721,6 +778,7 @@ def main():
     validate_robot(stage)
     configure_stick_robot_drives(stage)
     create_ros_graph(stage)
+    create_rebar_pose_graph(stage)
     lidar_specs = create_lidar_sensors(stage)
     create_camera_graph(stage)
     simulation_app.update()

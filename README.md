@@ -37,8 +37,9 @@ cd ~/Develop/github/AuboAMR300_ROS2
 ## 2026-09-16 更新
 
 - 新增钢筋抓取/释放测试（[文档](seer_description/README_REBAR_GRASP.md)）：臂展内钢筋工位
-  （24 mm × 1 m 动态刚体钢筋 + 低摩擦支撑块）、finger 夹爪演示场景与自动化测试脚本，
-  在 Lyrical + Isaac Sim 上全流程验证通过。
+  （24 mm × 0.6 m、约 2.13 kg 的动态刚体钢筋 + 低摩擦支撑块）、finger 夹爪演示场景
+  与自动化测试脚本；通过 `world -> rebar` 实际位姿验证夹持、提起、搬运和释放，
+  已在 Lyrical + Isaac Sim 上完成 13 项全流程检查。
 - 实测 finger 夹爪指面开口约 0.0464 m；stick 板式夹爪闭合间隙约 50 mm，仅适合厚物，
   钢筋测试须用 finger 变体。
 - `start_isaac_ros2_stack.sh` 的 Isaac 就绪等待从 120 s 放宽到 300 s，避免冷启动误杀。

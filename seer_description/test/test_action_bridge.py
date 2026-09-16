@@ -42,9 +42,11 @@ class BridgeFeedbackTest(unittest.TestCase):
             self.assertTrue(done.wait(5.0), "ROS request timed out")
             return future.result()
 
-        def goal(positions):
+        def goal(positions, names=None):
             request = FollowJointTrajectory.Goal()
-            request.trajectory.joint_names = ["gripper1_joint", "gripper2_joint"]
+            request.trajectory.joint_names = names or [
+                "gripper1_joint", "gripper2_joint"
+            ]
             point = JointTrajectoryPoint()
             point.positions = positions
             point.time_from_start.nanosec = 100000000
@@ -71,6 +73,27 @@ class BridgeFeedbackTest(unittest.TestCase):
             self.assertTrue(handle.accepted)
             arrived = wait(handle.get_result_async())
             self.assertEqual(arrived.result.error_code, FollowJointTrajectory.Result.SUCCESSFUL)
+
+            # A stalled gripper preload may remain active while the arm moves.
+            state.name = ["gripper1_joint", "shoulder_joint"]
+            state.position = [0.0, 0.1]
+            preload = wait(
+                client.send_goal_async(goal([0.04], ["gripper1_joint"]))
+            )
+            self.assertTrue(preload.accepted)
+            overlap = wait(
+                client.send_goal_async(goal([0.02], ["gripper1_joint"]))
+            )
+            self.assertFalse(overlap.accepted)
+            arm = wait(client.send_goal_async(goal([0.1], ["shoulder_joint"])))
+            self.assertTrue(arm.accepted)
+            arm_result = wait(arm.get_result_async())
+            self.assertEqual(
+                arm_result.result.error_code,
+                FollowJointTrajectory.Result.SUCCESSFUL,
+            )
+            wait(preload.cancel_goal_async())
+            wait(preload.get_result_async())
         finally:
             if timer is not None:
                 client_node.destroy_timer(timer)

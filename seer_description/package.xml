@@ -26,6 +26,7 @@
   <exec_depend>nav2_rviz_plugins</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_msgs</exec_depend>
   <exec_depend>moveit_msgs</exec_depend>
   <exec_depend>builtin_interfaces</exec_depend>
   <exec_depend>control_msgs</exec_depend>

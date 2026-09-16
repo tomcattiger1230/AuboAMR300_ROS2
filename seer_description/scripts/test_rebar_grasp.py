@@ -34,11 +34,13 @@ from rclpy.signals import SignalHandlerOptions
 from action_msgs.msg import GoalStatus
 from builtin_interfaces.msg import Duration
 from control_msgs.action import FollowJointTrajectory
+from control_msgs.msg import JointTolerance
 from geometry_msgs.msg import Pose, PoseStamped
 from moveit_msgs.action import ExecuteTrajectory
 from moveit_msgs.msg import Constraints, JointConstraint, RobotState
 from moveit_msgs.srv import GetCartesianPath, GetMotionPlan, GetPositionFK, GetPositionIK
 from sensor_msgs.msg import JointState
+from tf2_msgs.msg import TFMessage
 from trajectory_msgs.msg import JointTrajectoryPoint
 
 ARM_JOINTS = (
@@ -143,6 +145,8 @@ class RebarGraspTest(Node):
         self._report = []
         self._passed = True
         self._positions = {}
+        self._rebar_position = None
+        self._rebar_pose_time = -math.inf
 
         self.create_subscription(
             JointState,
@@ -150,6 +154,7 @@ class RebarGraspTest(Node):
             self._on_joint_state,
             qos_profile_sensor_data,
         )
+        self.create_subscription(TFMessage, "/tf", self._on_tf, 10)
         self._plan_client = self.create_client(GetMotionPlan, "/plan_kinematic_path")
         self._fk_client = self.create_client(GetPositionFK, "/compute_fk")
         self._ik_client = self.create_client(GetPositionIK, "/compute_ik")
@@ -167,6 +172,14 @@ class RebarGraspTest(Node):
 
     def _on_joint_state(self, message):
         self._positions.update(zip(message.name, message.position))
+
+    def _on_tf(self, message):
+        for transform in message.transforms:
+            if transform.child_frame_id.lstrip("/") != "rebar":
+                continue
+            translation = transform.transform.translation
+            self._rebar_position = (translation.x, translation.y, translation.z)
+            self._rebar_pose_time = time.monotonic()
 
     def spin(self, seconds):
         end = time.monotonic() + seconds
@@ -204,6 +217,12 @@ class RebarGraspTest(Node):
 
     def current_arm(self):
         return {joint: self._positions[joint] for joint in ARM_JOINTS}
+
+    def rebar_position(self):
+        if (self._rebar_position is None
+                or time.monotonic() - self._rebar_pose_time > 1.0):
+            raise RuntimeError("fresh world -> rebar transform unavailable")
+        return self._rebar_position
 
     # ---------- MoveIt helpers (test_isaac_arm.py pattern) ----------
 
@@ -315,6 +334,12 @@ class RebarGraspTest(Node):
                 sec=whole, nanosec=int((duration * t - whole) * 1e9)
             )
             goal.trajectory.points.append(point)
+        # Contact is the expected endpoint when closing on an object. An
+        # unbounded action tolerance lets the bridge finish while preserving
+        # the final drive target, so the fingers keep applying preload.
+        goal.goal_tolerance = [
+            JointTolerance(name=joint, position=-1.0) for joint in GRIPPER_JOINTS
+        ]
         return goal
 
     def send_gripper(self, position, duration=1.5):
@@ -329,14 +354,26 @@ class RebarGraspTest(Node):
     def finger_positions(self):
         return [self._positions.get(joint) for joint in GRIPPER_JOINTS]
 
-    def wait_finger_settle(self, window=0.6, motion=0.0005, timeout=8.0):
+    def wait_finger_settle(
+        self, start, window=0.6, motion=0.0005, min_travel=0.003, timeout=8.0
+    ):
         """Wait until both fingers stop moving; returns the stalled positions."""
         deadline = time.monotonic() + timeout
         reference = self.finger_positions()
         reference_time = time.monotonic()
+        motion_started = False
         while time.monotonic() < deadline:
             self.spin(0.1)
             current = self.finger_positions()
+            if not motion_started:
+                motion_started = all(
+                    now is not None and initial is not None
+                    and abs(now - initial) >= min_travel
+                    for now, initial in zip(current, start)
+                )
+                reference = current
+                reference_time = time.monotonic()
+                continue
             moved = max(abs(now - then) for now, then in zip(current, reference))
             if moved < motion:
                 if time.monotonic() - reference_time >= window:
@@ -370,6 +407,14 @@ class RebarGraspTest(Node):
         if not self._gripper_client.wait_for_server(timeout_sec=10):
             raise RuntimeError(f"action unavailable: {args.action_name}")
         self.spin(3.0)
+
+        observed_rebar = self.rebar_position()
+        self.record(
+            "rebar_pose_feedback",
+            math.dist(observed_rebar, (args.rebar_x, args.rebar_y, args.rebar_z))
+            < 0.03,
+            position=list(observed_rebar),
+        )
 
         rebar_center = (args.rebar_x, args.rebar_y, args.rebar_z)
         rebar_half_gap = (args.open_gap - args.diameter) / 2.0
@@ -554,18 +599,18 @@ class RebarGraspTest(Node):
         # 6. Close on the rebar; fingers must stall at contact before the
         # full travel. The exact stall value depends on pad contact geometry,
         # so contact + later payload retention is the two-stage criterion.
+        close_start = self.finger_positions()
         close_handle = self.send_gripper(args.close_position, 2.0)
-        stalled = self.wait_finger_settle(timeout=10.0)
-        try:
-            cancel_future = close_handle.cancel_goal_async()
-            end = time.monotonic() + 5
-            while not cancel_future.done() and time.monotonic() < end:
-                rclpy.spin_once(self, timeout_sec=0.05)
-        except Exception:  # noqa: BLE001 - cancel is best effort
-            pass
+        stalled = self.wait_finger_settle(close_start, timeout=10.0)
+        preload_result = self.wait_gripper_result(close_handle, timeout=2.0)
         valid_stall = all(
-            value is not None and value <= args.close_position - 0.003
-            for value in stalled
+            value is not None
+            and initial is not None
+            and value - initial >= 0.003
+            and value <= args.close_position - 0.003
+            for value, initial in zip(stalled, close_start)
+        ) and preload_result is not None and (
+            preload_result.status == GoalStatus.STATUS_SUCCEEDED
         )
         inferred_gap = None
         if all(value is not None for value in stalled):
@@ -575,11 +620,17 @@ class RebarGraspTest(Node):
             valid_stall,
             fingers_stalled=stalled,
             inferred_gap_m=inferred_gap,
+            preload_target=args.close_position,
+            preload_status=(preload_result.status if preload_result else None),
         )
         if not valid_stall:
             self.write_report()
             raise RuntimeError("fingers did not stall on the rebar")
         grasp_stall = stalled
+        grasp_rebar = self.rebar_position()
+
+        # The completed gripper goal leaves the full-close drive target active,
+        # so the fingers continue applying preload throughout transport.
 
         # 7. Lift straight up.
         lift_tcp = (
@@ -596,6 +647,19 @@ class RebarGraspTest(Node):
         self.record("lift", entry["execution_code"] == 1, **entry)
         if entry["execution_code"] != 1:
             raise RuntimeError("lift execution failed")
+
+        lifted_rebar = self.rebar_position()
+        lifted_distance = lifted_rebar[2] - grasp_rebar[2]
+        lifted = lifted_distance >= args.lift_height * 0.6
+        self.record(
+            "rebar_lifted",
+            lifted,
+            before=list(grasp_rebar),
+            after=list(lifted_rebar),
+            vertical_distance=lifted_distance,
+        )
+        if not lifted:
+            raise RuntimeError("arm lifted but the rebar did not follow")
 
         # 8. Payload retention: fingers still stalled after the lift settles.
         # With the contact-based close criterion this is the authoritative
@@ -635,16 +699,47 @@ class RebarGraspTest(Node):
         if entry["execution_code"] != 1:
             raise RuntimeError("transfer execution failed")
 
-        # 10. Open and release; fingers must return fully open.
+        transferred_rebar = self.rebar_position()
+        transfer_distance = math.dist(lifted_rebar[:2], transferred_rebar[:2])
+        expected_transfer = math.hypot(args.release_dx, args.release_dy)
+        transferred = transfer_distance >= expected_transfer * 0.6
+        self.record(
+            "rebar_transferred",
+            transferred,
+            before=list(lifted_rebar),
+            after=list(transferred_rebar),
+            horizontal_distance=transfer_distance,
+        )
+        if not transferred:
+            raise RuntimeError("gripper moved but the rebar did not follow")
+
+        # 10. Replace the preload target with open and release.
+        release_position = self.rebar_position()
         handle = self.send_gripper(0.0, 1.5)
         wrapped = self.wait_gripper_result(handle)
+        open_deadline = time.monotonic() + 3.0
         released = self.finger_positions()
+        while (
+            time.monotonic() < open_deadline
+            and not all(
+                value is not None and abs(value) < 0.0015 for value in released
+            )
+        ):
+            self.spin(0.1)
+            released = self.finger_positions()
+        self.spin(0.75)
+        dropped_position = self.rebar_position()
+        drop_distance = release_position[2] - dropped_position[2]
         self.record(
             "release_open",
             wrapped is not None
             and wrapped.status == GoalStatus.STATUS_SUCCEEDED
-            and all(value is not None and abs(value) < 0.0015 for value in released),
+            and all(value is not None and abs(value) < 0.0015 for value in released)
+            and drop_distance > 0.03,
             fingers_released=released,
+            rebar_before=list(release_position),
+            rebar_after=list(dropped_position),
+            rebar_drop_distance=drop_distance,
         )
 
         self.write_report()
@@ -685,7 +780,7 @@ def main():
     parser.add_argument("--approach-height", type=float, default=0.15)
     parser.add_argument("--lift-height", type=float, default=0.18)
     parser.add_argument("--release-dx", type=float, default=0.0)
-    parser.add_argument("--release-dy", type=float, default=0.28)
+    parser.add_argument("--release-dy", type=float, default=0.18)
     parser.add_argument("--tcp-y", type=float, default=0.0, help="TCP Y in the motor frame")
     parser.add_argument("--tcp-z", type=float, default=0.16, help="TCP Z in the motor frame")
     parser.add_argument("--plan-only", action="store_true")

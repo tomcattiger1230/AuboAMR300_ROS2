@@ -1,0 +1,151 @@
+[
+  {
+    "test": "rebar_pose_feedback",
+    "pass": true,
+    "position": [
+      -1.1499999761581416,
+      -5.0086708114349676e-08,
+      0.5220000147819519
+    ]
+  },
+  {
+    "test": "open_gripper",
+    "pass": true,
+    "fingers_opened": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "test": "tcp_calibration",
+    "pass": true,
+    "seed": {
+      "shoulder_joint": 0.0,
+      "upperArm_joint": -0.7,
+      "foreArm_joint": 1.2,
+      "wrist1_joint": 0.0,
+      "wrist2_joint": 1.5,
+      "wrist3_joint": 0.0
+    },
+    "seed_wrist_to_rebar": 0.4202,
+    "tcp_in_wrist": [
+      0.0,
+      0.0,
+      0.16
+    ]
+  },
+  {
+    "test": "pregrasp_ik",
+    "pass": true,
+    "max_joint_delta": 2.9136,
+    "joints": {
+      "shoulder_joint": 0.2266,
+      "upperArm_joint": -0.8704,
+      "foreArm_joint": 1.0793,
+      "wrist1_joint": 0.3789,
+      "wrist2_joint": 1.5708,
+      "wrist3_joint": -2.915
+    }
+  },
+  {
+    "test": "approach_pregrasp",
+    "pass": true,
+    "planning_code": 1,
+    "points": 57,
+    "execution_code": 1
+  },
+  {
+    "test": "descend_to_grasp",
+    "pass": true,
+    "fraction": 1.0,
+    "code": 1,
+    "points": 20,
+    "execution_code": 1
+  },
+  {
+    "test": "grasp_close_on_rebar",
+    "pass": true,
+    "fingers_stalled": [
+      0.0157,
+      0.0183
+    ],
+    "inferred_gap_m": 0.0124,
+    "preload_target": 0.0285,
+    "preload_status": 4
+  },
+  {
+    "test": "lift",
+    "pass": true,
+    "fraction": 1.0,
+    "code": 1,
+    "execution_code": 1
+  },
+  {
+    "test": "rebar_lifted",
+    "pass": true,
+    "before": [
+      -1.14999759197226,
+      -0.003438269719481468,
+      0.5219966173171997
+    ],
+    "after": [
+      -1.1504045724926981,
+      -0.006042607128620148,
+      0.7006001472473145
+    ],
+    "vertical_distance": 0.17860352993011475
+  },
+  {
+    "test": "payload_retained_after_lift",
+    "pass": true,
+    "fingers": [
+      0.0152,
+      0.0188
+    ],
+    "grasp_stall": [
+      0.0157,
+      0.0183
+    ]
+  },
+  {
+    "test": "transfer_to_release",
+    "pass": true,
+    "fraction": 1.0,
+    "code": 1,
+    "execution_code": 1
+  },
+  {
+    "test": "rebar_transferred",
+    "pass": true,
+    "before": [
+      -1.1504045724926981,
+      -0.006042607128620148,
+      0.7006001472473145
+    ],
+    "after": [
+      -1.1523407698608934,
+      0.1706266850233078,
+      0.7003820538520813
+    ],
+    "horizontal_distance": 0.17667990165752265
+  },
+  {
+    "test": "release_open",
+    "pass": true,
+    "fingers_released": [
+      0.0007,
+      0.001
+    ],
+    "rebar_before": [
+      -1.1523407698608934,
+      0.1706266850233078,
+      0.7003820538520813
+    ],
+    "rebar_after": [
+      -1.1535410881973802,
+      0.16868828237056732,
+      0.4619942009449005
+    ],
+    "rebar_drop_distance": 0.2383878529071808
+  }
+]

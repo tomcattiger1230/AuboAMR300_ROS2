@@ -8,7 +8,15 @@ Run with a Python environment that provides USD, e.g.:
 from pathlib import Path
 import unittest
 
-from pxr import Sdf, Usd, UsdGeom, UsdPhysics
+simulation_app = None
+try:
+    from pxr import Sdf, Usd, UsdGeom, UsdPhysics
+except ModuleNotFoundError:
+    # Isaac Sim 6 exposes USD modules after SimulationApp initialization.
+    from isaacsim import SimulationApp
+
+    simulation_app = SimulationApp({"headless": True})
+    from pxr import Sdf, Usd, UsdGeom, UsdPhysics
 
 STATION = "/World/RebarStation"
 
@@ -38,18 +46,21 @@ class RebarStationTest(unittest.TestCase):
         cylinder = UsdGeom.Cylinder(rebar)
         self.assertEqual(cylinder.GetAxisAttr().Get(), "X")
         self.assertAlmostEqual(cylinder.GetRadiusAttr().Get(), 0.012)
-        self.assertAlmostEqual(cylinder.GetHeightAttr().Get(), 1.0)
+        self.assertAlmostEqual(cylinder.GetHeightAttr().Get(), 0.6)
 
-        # Steel cylinder: pi * r^2 * h * 7850 ~= 3.55 kg.
+        # Steel cylinder: pi * r^2 * h * 7850 ~= 2.13 kg.
         mass = UsdPhysics.MassAPI(rebar).GetMassAttr().Get()
-        self.assertAlmostEqual(mass, 3.55, delta=0.05)
+        self.assertAlmostEqual(mass, 2.13, delta=0.05)
 
     def test_rebar_rests_above_the_support_blocks(self):
         cache = UsdGeom.XformCache()
         rebar_z = cache.GetLocalToWorldTransform(
             self.stage.GetPrimAtPath(f"{STATION}/Rebar")
         ).ExtractTranslation()[2]
-        for name in ("SupportBlock_1", "SupportBlock_2"):
+        for name, expected_x in (
+            ("SupportBlock_1", -1.15 - 0.18),
+            ("SupportBlock_2", -1.15 + 0.18),
+        ):
             block = self.stage.GetPrimAtPath(f"{STATION}/{name}")
             self.assertTrue(block.IsValid())
             # Blocks are static: collision without a rigid body.
@@ -59,6 +70,9 @@ class RebarStationTest(unittest.TestCase):
             block_top = block_z + 0.03  # half of the 0.06 m block height
             self.assertGreater(rebar_z, block_top)
             self.assertLess(rebar_z - block_top, 0.05)
+
+            block_x = cache.GetLocalToWorldTransform(block).ExtractTranslation()[0]
+            self.assertAlmostEqual(block_x, expected_x)
 
     def test_rebar_material_is_high_friction(self):
         material = self.stage.GetPrimAtPath(f"{STATION}/RebarMaterial")
@@ -85,4 +99,7 @@ class RebarStationTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    result = unittest.main(exit=False).result
+    if simulation_app is not None:
+        simulation_app.close()
+    raise SystemExit(0 if result.wasSuccessful() else 1)

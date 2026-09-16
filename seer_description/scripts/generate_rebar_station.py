@@ -68,9 +68,9 @@ def generate(
     # Steel bar mass from the cylinder volume; keeps grip-force math honest.
     mass = REBAR_DENSITY_KG_M3 * 3.141592653589793 * radius**2 * length
 
-    # Support blocks at +/- 0.3 m along the bar; the bar rests in the middle.
+    # Keep the supports well inside the ends for every configured bar length.
     block_size = (0.1, 0.12, 0.06)
-    block_offset_x = 0.3
+    block_offset_x = length * 0.3
     block_top_z = table_height + block_size[2]
     rebar_z = block_top_z + radius
 
@@ -205,7 +205,7 @@ def main():
         "--radius", type=float, default=0.012, help="Rebar radius in metres"
     )
     parser.add_argument(
-        "--length", type=float, default=1.0, help="Rebar length in metres"
+        "--length", type=float, default=0.6, help="Rebar length in metres"
     )
     parser.add_argument(
         "--table-height", type=float, default=0.45, help="Table top height in metres"

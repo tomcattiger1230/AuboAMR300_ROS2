@@ -26,13 +26,14 @@ class TrajectoryBridge(Node):
         self.declare_parameter("command_topic", "/isaac_joint_commands")
         self.declare_parameter("state_topic", "/joint_states")
         self.declare_parameter("settle_timeout", 10.0)
+        self.declare_parameter("arm_goal_tolerance", 0.05)
+        self.declare_parameter("gripper_goal_tolerance", 0.001)
         action_name = self.get_parameter("action_name").value
         command_topic = self.get_parameter("command_topic").value
 
         self._command_lock = threading.Lock()
-        self._cancel_pending = False
         self._goal_lock = threading.Lock()
-        self._goal_active = False
+        self._active_joints = set()
         callback_group = ReentrantCallbackGroup()
         self._state_lock = threading.Lock()
         self._joint_state = {}
@@ -80,18 +81,29 @@ class TrajectoryBridge(Node):
                 return GoalResponse.REJECT
             previous_time = point_time
         with self._goal_lock:
-            if self._goal_active:
-                self.get_logger().warning("Rejected a goal while another is active")
+            overlap = self._active_joints.intersection(names)
+            if overlap:
+                self.get_logger().warning(
+                    "Rejected a goal while these joints are active: "
+                    + ", ".join(sorted(overlap))
+                )
                 return GoalResponse.REJECT
-            self._goal_active = True
-            self._cancel_pending = False
+            self._active_joints.update(names)
         return GoalResponse.ACCEPT
 
     def cancel_callback(self, goal_handle):
         # Serialize cancellation with publishing: no target can follow this hold.
+        names = goal_handle.request.trajectory.joint_names
+        target = goal_handle.request.trajectory.points[-1].positions
+        actual = self._actual_positions(names)
+        if actual is not None:
+            errors = ", ".join(
+                f"{name}={desired - observed:+.4f}"
+                for name, desired, observed in zip(names, target, actual)
+            )
+            self.get_logger().info(f"Cancel requested; target errors: {errors}")
         with self._command_lock:
-            self._cancel_pending = True
-            self._hold_position(goal_handle.request.trajectory.joint_names)
+            self._hold_position(names)
         return CancelResponse.ACCEPT
 
     def _hold_position(self, names):
@@ -134,8 +146,12 @@ class TrajectoryBridge(Node):
         return actual
 
     def _wait_for_target(self, goal_handle, names, point):
-        tolerances = {name: (0.001 if name.startswith("gripper") else 0.01)
-                      for name in names}
+        arm_tolerance = self.get_parameter("arm_goal_tolerance").value
+        gripper_tolerance = self.get_parameter("gripper_goal_tolerance").value
+        tolerances = {
+            name: (gripper_tolerance if name.startswith("gripper") else arm_tolerance)
+            for name in names
+        }
         for tolerance in goal_handle.request.goal_tolerance:
             if tolerance.name in tolerances and tolerance.position != 0.0:
                 tolerances[tolerance.name] = (
@@ -152,6 +168,13 @@ class TrajectoryBridge(Node):
             ):
                 return True
             sleep(0.02)
+        actual = self._actual_positions(names)
+        if actual is not None:
+            errors = ", ".join(
+                f"{name}={target - observed:+.4f}"
+                for name, target, observed in zip(names, point.positions, actual)
+            )
+            self.get_logger().warning(f"Goal tolerance timeout; errors: {errors}")
         return False
 
     @staticmethod
@@ -207,7 +230,7 @@ class TrajectoryBridge(Node):
                 command.velocity = list(point.velocities)
                 command.effort = list(point.effort)
                 with self._command_lock:
-                    if not self._cancel_pending:
+                    if not goal_handle.is_cancel_requested:
                         self.publisher_.publish(command)
 
                 self._feedback(goal_handle, trajectory.joint_names, point)
@@ -234,7 +257,9 @@ class TrajectoryBridge(Node):
             )
         finally:
             with self._goal_lock:
-                self._goal_active = False
+                self._active_joints.difference_update(
+                    goal_handle.request.trajectory.joint_names
+                )
 
 
 def main(args=None):

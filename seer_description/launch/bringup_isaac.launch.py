@@ -82,6 +82,7 @@ def generate_launch_description():
             {
                 "action_name": action_name,
                 "command_topic": command_topic,
+                "settle_timeout": 30.0,
                 "use_sim_time": use_sim_time,
             }
         ],

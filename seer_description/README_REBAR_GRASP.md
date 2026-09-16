@@ -3,7 +3,7 @@
 在 Isaac Sim 仓库场景中加入钢筋工位，用 finger 双指夹爪完成
 **接近 → 下探 → 夹取 → 提起 → 搬运 → 释放** 的全流程自动化测试。
 2026-09-16 在 Ubuntu 26.04 / ROS 2 Lyrical / Isaac Sim 6.x 上全流程验证通过
-（10 项检查全部 pass，报告见 `test/results/`）。
+（13 项检查全部 pass，报告见 `test/results/rebar_grasp_20260916.json`）。
 
 ## 场景组成
 
@@ -11,10 +11,10 @@
 
 - 工位位于机械臂臂展内（默认 x = -1.15 m，机械臂底座朝 -X 方向）
 - 工位台（0.9 × 0.5 × 0.45 m，静态碰撞体）
-- 两个**低摩擦**（friction 0.05）支撑块：钢筋放置其上，被夹起时可顺滑脱出；
-  高摩擦块会导致 1 m 钢筋两端卡死、提起失败
-- **钢筋**：动态刚体圆柱，24 mm 直径 × 1 m 长（与 object_detection 检测管线
-  的标称试样一致），钢密度计算质量约 3.55 kg，锈色，高摩擦表面（0.8）
+- 两个**低摩擦**（friction 0.05）支撑块：随钢筋长度放在中心两侧 30% 处，
+  被夹起时可顺滑脱出
+- **钢筋**：动态刚体圆柱，24 mm 直径 × 0.6 m 长，密度保持 7850 kg/m³，
+  质量约 2.13 kg，锈色，高摩擦表面（0.8）
 
 两个演示场景（wrapper 层叠，未改动任何既有 USD）：
 
@@ -60,9 +60,11 @@ ros2 run seer_description test_rebar_grasp.py --plan-only
 | TCP 标定 | FK 计算夹爪 TCP 相对 wrist3 偏移（finger 版为 (0, 0, 0.16)） |
 | 预抓取 IK | 多种子 KDL IK + 角度解绕回 + 前向分支代价惩罚 |
 | 接近 / 下探 / 提起 / 搬运 | OMPL 关节规划 + 笛卡尔直线路径，经 `/execute_trajectory` 执行 |
-| 夹取判定 | 手指在到达指令行程前**停滞**（接触钢筋） |
-| 保持判定 | 提起后手指位置不变（负载仍在） |
-| 释放判定 | 手指完全回到 0 |
+| 夹取判定 | 两指先移动至少 3 mm，再在到达指令行程前**停滞**；最终闭合目标继续提供预紧力 |
+| 提起判定 | `world -> rebar` 的实际 Z 位移至少达到指令值的 60% |
+| 保持判定 | 提起后两指仍保持接触位置 |
+| 搬运判定 | 钢筋实际 XY 位移至少达到指令值的 60% |
+| 释放判定 | 两指回到 0 ± 1.5 mm，且钢筋实际下降超过 3 cm |
 
 常用参数：`--rebar-x/-y/-z`（钢筋位置）、`--diameter`、`--close-position`、
 `--approach-height`、`--lift-height`、`--release-dy`、`--tcp-y/--tcp-z`。
@@ -70,6 +72,9 @@ ros2 run seer_description test_rebar_grasp.py --plan-only
 规划走 move_group 服务（OMPL + 笛卡尔路径），执行经
 `/aubo_arm_controller/follow_joint_trajectory`（action_bridge）与
 `/execute_trajectory`，与 RViz 的 Plan & Execute 同一条链路，不依赖 MoveItPy。
+Isaac runner 额外发布动态 `world -> rebar` TF，测试不会再以“夹指停住”代替
+钢筋实际运动。action bridge 允许关节集合互不重叠的轨迹并行；夹爪接触目标完成后
+保留最终闭合驱动目标，机械臂运动期间仍有夹持预紧力。
 
 ## 静态校验
 
@@ -78,12 +83,13 @@ ros2 run seer_description test_rebar_grasp.py --plan-only
 ```
 
 校验钢筋的刚体/质量/碰撞 API、支撑块静态与低摩擦材质、wrapper 层叠完整性。
+Isaac Sim 6 环境会先初始化无头 `SimulationApp`，远程冷启动约需 90 s。
 
 ## 重新生成场景
 
 ```bash
 ros2 run seer_description generate_rebar_station.py \
-  [--station-x -1.15] [--radius 0.012] [--length 1.0] [--table-height 0.45]
+  [--station-x -1.15] [--radius 0.012] [--length 0.6] [--table-height 0.45]
 ```
 
 ## 已知事实（实测）
@@ -91,5 +97,9 @@ ros2 run seer_description generate_rebar_station.py \
 - finger 夹爪指面开口实测 ≈ 0.0464 m（非碰撞盒推算值）；夹 24 mm 钢筋时
   手指停在约 0.015 / 0.019 m，呈 V 形边缘夹持、两侧不完全对称，属正常现象。
 - 抓取姿态：wrist Z 竖直向下，wrist X（闭合轴）水平横切钢筋（默认 `--wrist-x-axis y`）。
+- 默认搬运沿 Y 方向 0.18 m，使释放后的钢筋落回工作台；可用 `--release-dy` 调整。
 - 释放后钢筋会掉落滚动，**重复测试前需重启仿真**以复位钢筋位置。
 - `start_isaac_ros2_stack.sh` 的就绪等待为 300 s：Isaac 冷启动可达 135 s 以上。
+
+本次远程实测：钢筋抬升 0.1786 m、水平搬运 0.1767 m、释放下降 0.2384 m；
+夹指释放后位置为 0.7 / 1.0 mm。完整数值保存在上述 JSON 报告中。
