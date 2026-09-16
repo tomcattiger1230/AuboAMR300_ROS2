@@ -109,3 +109,17 @@ Ubuntu 当前运行的相机相对 `wrist3_Link` 为 `(0, 0.1, 0)` m、绕 Z 旋
 GUI 订阅远端 `/robot_description`（transient-local），同步夹爪、相机几何和腕部固定关节链。
 工具栏显示“模型：远端 robot_description”后，右侧工具外观以运行中的机器人描述为准；收到描述前使用本地 stick 模型。
 按用户确认，相机 URDF/Xacro、SDF、USD 及 USD 生成脚本均保持 `wrist3_Link` 安装，与当前运行模型一致。
+
+## 钢筋装载实验中的图像（2026-09-16）
+
+[钢筋装载场景](README_REBAR_GRASP.md)沿用当前已确认的相机安装位置。预览发布 `/camera/image_raw`（1024×615，`mono8`）与 `/camera/camera_info`；获取动态图像不需要移动相机模型。视频服务必须订阅这个黑白话题：
+
+```bash
+export ROS_DOMAIN_ID=133
+ros2 run seer_description camera_video.py --ros-args \
+  -p host:=0.0.0.0 -p image_topic:=/camera/image_raw
+```
+
+macOS 打开[实时视频](http://192.168.3.133:8080/)或[单帧图像](http://192.168.3.133:8080/snapshot.jpg)。窗口相机朝向随末端运动，画面并不始终对准钢筋。可用 `test_mono_camera.py --output /tmp/rebar_camera.json` 保存标定/帧统计及同名 JPG，验证图像不是空白或过期帧。GUI 三维相机外观与网页视频是两个独立显示入口。网页标题会标明“黑白图像”；这是 UM 型号输出的单通道灰度图，Isaac 主视窗的彩色显示不是相机输出。
+
+钢筋装载后的[相机验证报告](test/results/rebar_loading_camera_20260916.json)记录 10 秒内 38 帧有效图像、零深度话题发布者；[末端黑白截图](test/results/rebar_loading_camera_20260916.jpg)已保存。彩色场景转为灰度后，颜色仅保留亮度信息；相机视角也与 Isaac 主视窗不同。

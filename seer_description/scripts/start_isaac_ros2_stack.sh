@@ -17,6 +17,8 @@ COMMAND_TOPIC="/isaac_joint_commands"
 STATE_TOPIC="/joint_states"
 CAMERA_PROFILE="gemini"
 CAMERA_RESOLUTION="preview"
+REBAR_LOADING=false
+REBAR_OCCUPIED_SLOTS="none"
 
 usage() {
   printf '%s\n' \
@@ -37,6 +39,8 @@ usage() {
     "  --renderer NAME       RaytracedLighting or RealTimePathTracing" \
     "  --camera-profile NAME gemini or mv-ch100-60um" \
     "  --camera-resolution MODE preview or full" \
+    "  --occupied-slots CSV   Chassis slots already containing bars (e.g. 2,3,4)" \
+    "  --rebar-loading        Load station and onboard rack into MoveIt" \
     "  --help                 Show this help"
 }
 
@@ -47,6 +51,13 @@ while (($#)); do
       ;;
     --no-rviz)
       START_RVIZ=false
+      ;;
+    --occupied-slots)
+      REBAR_OCCUPIED_SLOTS="${2:?--occupied-slots requires a CSV list}"
+      shift
+      ;;
+    --rebar-loading)
+      REBAR_LOADING=true
       ;;
     --usd)
       USD_PATH="${2:?--usd requires a path}"
@@ -304,4 +315,6 @@ ros2 launch seer_description bringup_isaac.launch.py \
   robot_xacro:="$ROBOT_XACRO" \
   moveit_package:="$MOVEIT_PACKAGE" \
   camera_profile:="$CAMERA_PROFILE" \
+  rebar_loading:="$REBAR_LOADING" \
+  occupied_slots:="$REBAR_OCCUPIED_SLOTS" \
   action_name:="$ACTION_NAME"

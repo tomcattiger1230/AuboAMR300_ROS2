@@ -1,0 +1,47 @@
+#usda 1.0
+(
+    metersPerUnit = 1
+    upAxis = "Z"
+    subLayers = [@./warehouse_finger_rebar_loading_demo.usda@]
+)
+over "World" {
+    def Cylinder "LoadedRebar2" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",
+                              "PhysicsCollisionAPI", "MaterialBindingAPI"]
+    ) {
+        uniform token axis = "Y"
+        double radius = 0.012
+        double height = 0.6
+        float physics:mass = 2.131
+        color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]
+        rel material:binding:physics = </World/RebarStation/RebarMaterial>
+        double3 xformOp:translate = (0.1969, 0, 0.670)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "LoadedRebar3" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",
+                              "PhysicsCollisionAPI", "MaterialBindingAPI"]
+    ) {
+        uniform token axis = "Y"
+        double radius = 0.012
+        double height = 0.6
+        float physics:mass = 2.131
+        color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]
+        rel material:binding:physics = </World/RebarStation/RebarMaterial>
+        double3 xformOp:translate = (0.1138, 0, 0.670)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "LoadedRebar4" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",
+                              "PhysicsCollisionAPI", "MaterialBindingAPI"]
+    ) {
+        uniform token axis = "Y"
+        double radius = 0.012
+        double height = 0.6
+        float physics:mass = 2.131
+        color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]
+        rel material:binding:physics = </World/RebarStation/RebarMaterial>
+        double3 xformOp:translate = (0.0118, 0, 0.670)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+}

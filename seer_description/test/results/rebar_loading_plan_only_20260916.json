@@ -1,0 +1,61 @@
+[
+  {
+    "test": "rebar_pose_feedback",
+    "pass": true,
+    "position": [
+      -1.1499998569488468,
+      1.0058745829155669e-05,
+      0.5219853520393372
+    ]
+  },
+  {
+    "test": "gripper_open_assumed_for_planning",
+    "pass": true,
+    "target": 0.0,
+    "executed": false
+  },
+  {
+    "test": "tcp_calibration",
+    "pass": true,
+    "seed": {
+      "shoulder_joint": 0.0,
+      "upperArm_joint": -0.7,
+      "foreArm_joint": 1.2,
+      "wrist1_joint": 0.0,
+      "wrist2_joint": 1.5,
+      "wrist3_joint": 0.0
+    },
+    "seed_wrist_to_rebar": 0.4202,
+    "tcp_in_wrist": [
+      0.0,
+      0.0,
+      0.16
+    ]
+  },
+  {
+    "test": "pregrasp_ik",
+    "pass": true,
+    "max_joint_delta": 2.9136,
+    "joints": {
+      "shoulder_joint": 0.2266,
+      "upperArm_joint": -1.795,
+      "foreArm_joint": -1.0793,
+      "wrist1_joint": -0.8551,
+      "wrist2_joint": 1.5708,
+      "wrist3_joint": -2.915
+    }
+  },
+  {
+    "test": "approach_pregrasp",
+    "pass": true,
+    "planning_code": 1,
+    "points": 57
+  },
+  {
+    "test": "descend_to_grasp",
+    "pass": true,
+    "fraction": 1.0,
+    "code": 1,
+    "points": 20
+  }
+]

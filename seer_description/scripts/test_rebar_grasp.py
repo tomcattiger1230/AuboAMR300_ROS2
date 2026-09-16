@@ -12,9 +12,10 @@ report entry; the process exit code reflects the overall result.
 
 Finger stall detection: the close goal commands the full travel, but a
 grasped 24 mm bar stops both fingers near (0.0464 - diameter) / 2 ~= 0.011 m.
-We watch /joint_states for the stall instead of waiting for the action
-result, because the action bridge fails a goal whose fingers never reach the
-commanded target.
+We watch /joint_states for contact stall and disable the gripper endpoint
+tolerance so the action completes while preserving the final preload target.
+With --onboard-slot, the bar stays horizontal on a staged path around the
+chassis, turns 90 degrees, and is released into a curved seat.
 """
 
 import argparse
@@ -37,10 +38,15 @@ from control_msgs.action import FollowJointTrajectory
 from control_msgs.msg import JointTolerance
 from geometry_msgs.msg import Pose, PoseStamped
 from moveit_msgs.action import ExecuteTrajectory
-from moveit_msgs.msg import Constraints, JointConstraint, RobotState
-from moveit_msgs.srv import GetCartesianPath, GetMotionPlan, GetPositionFK, GetPositionIK
+from moveit_msgs.msg import (AttachedCollisionObject, CollisionObject, Constraints,
+                             JointConstraint, PlanningScene, PlanningSceneComponents, RobotState)
+from shape_msgs.msg import SolidPrimitive
+from rebar_experiment_geometry import SLOT_X, RACK_REBAR_Z
+from moveit_msgs.srv import (ApplyPlanningScene, GetCartesianPath, GetMotionPlan,
+                             GetPositionFK, GetPositionIK, GetPlanningScene)
 from sensor_msgs.msg import JointState
 from tf2_msgs.msg import TFMessage
+from tf2_ros import Buffer, TransformListener, TransformException
 from trajectory_msgs.msg import JointTrajectoryPoint
 
 ARM_JOINTS = (
@@ -146,6 +152,14 @@ class RebarGraspTest(Node):
         self._passed = True
         self._positions = {}
         self._rebar_position = None
+        self._rebar_quat = None
+        self._base_position = None
+        self._base_quat = None
+        self._base_pose_time = -math.inf
+        self._loaded_bars = {}
+        self._payload_monitor = False
+        self._tf_buffer = Buffer()
+        self._tf_listener = TransformListener(self._tf_buffer, self)
         self._rebar_pose_time = -math.inf
 
         self.create_subscription(
@@ -155,6 +169,8 @@ class RebarGraspTest(Node):
             qos_profile_sensor_data,
         )
         self.create_subscription(TFMessage, "/tf", self._on_tf, 10)
+        self._scene_query = self.create_client(GetPlanningScene, "/get_planning_scene")
+        self._scene_client = self.create_client(ApplyPlanningScene, "/apply_planning_scene")
         self._plan_client = self.create_client(GetMotionPlan, "/plan_kinematic_path")
         self._fk_client = self.create_client(GetPositionFK, "/compute_fk")
         self._ik_client = self.create_client(GetPositionIK, "/compute_ik")
@@ -175,11 +191,19 @@ class RebarGraspTest(Node):
 
     def _on_tf(self, message):
         for transform in message.transforms:
-            if transform.child_frame_id.lstrip("/") != "rebar":
-                continue
+            child = transform.child_frame_id.lstrip("/")
             translation = transform.transform.translation
-            self._rebar_position = (translation.x, translation.y, translation.z)
-            self._rebar_pose_time = time.monotonic()
+            rotation = transform.transform.rotation
+            position = (translation.x, translation.y, translation.z)
+            quat = (rotation.x, rotation.y, rotation.z, rotation.w)
+            if child == "rebar":
+                self._rebar_position, self._rebar_quat = position, quat
+                self._rebar_pose_time = time.monotonic()
+            elif child.startswith("loaded_rebar_"):
+                self._loaded_bars[int(child.rsplit("_",1)[-1])] = (position, time.monotonic())
+            elif child == "base_footprint":
+                self._base_position, self._base_quat = position, quat
+                self._base_pose_time = time.monotonic()
 
     def spin(self, seconds):
         end = time.monotonic() + seconds
@@ -245,7 +269,7 @@ class RebarGraspTest(Node):
         plan.allowed_planning_time = 5.0
         plan.max_velocity_scaling_factor = scaling
         plan.max_acceleration_scaling_factor = scaling
-        plan.start_state = self.robot_state(start)
+        plan.start_state = self.planning_state(start)
         constraints = Constraints()
         constraints.joint_constraints = [
             JointConstraint(
@@ -265,7 +289,7 @@ class RebarGraspTest(Node):
         request.header.frame_id = "base_footprint"
         request.group_name = "arm"
         request.link_name = "wrist3_Link"
-        request.start_state = self.robot_state(start)
+        request.start_state = self.planning_state(start)
         request.waypoints = waypoints
         request.max_step = 0.005
         request.avoid_collisions = True
@@ -287,8 +311,36 @@ class RebarGraspTest(Node):
             raise RuntimeError("execution rejected")
         result_future = handle.get_result_async()
         end = time.monotonic() + timeout
+        last_check = 0.
+        lost_since = None
         while not result_future.done() and time.monotonic() < end:
             rclpy.spin_once(self, timeout_sec=0.05)
+            now = time.monotonic()
+            if self._payload_monitor and now-last_check > .25:
+                last_check = now
+                try:
+                    transform = self._tf_buffer.lookup_transform(
+                        "base_footprint", "gripper_motor_link", rclpy.time.Time()).transform
+                    q = transform.rotation
+                    offset = quat_rotate((q.x, q.y, q.z, q.w),
+                                         (0., self.args.tcp_y, self.args.tcp_z))
+                    t = transform.translation
+                    expected = tuple(a+b for a,b in zip((t.x,t.y,t.z), offset))
+                    error = math.dist(expected, self.rebar_in_base())
+                except (TransformException, RuntimeError):
+                    error, expected = None, None
+                invalid = error is None or error > .040
+                lost_since = (lost_since or now) if invalid else None
+                allowed = 1.0 if error is None else .35
+                if lost_since is not None and now-lost_since > allowed:
+                    cancel = handle.cancel_goal_async()
+                    cancel_end = time.monotonic()+3.
+                    while not cancel.done() and time.monotonic() < cancel_end:
+                        rclpy.spin_once(self, timeout_sec=.05)
+                    self.record("payload_lost_during_motion", False,
+                                tcp_error_m=error, actual=self._rebar_position,
+                                expected=expected)
+                    raise RuntimeError("payload or feedback lost during transport; arm stopped")
         wrapped = result_future.result()
         if wrapped is None:
             raise RuntimeError("execution timed out")
@@ -408,7 +460,28 @@ class RebarGraspTest(Node):
             raise RuntimeError(f"action unavailable: {args.action_name}")
         self.spin(3.0)
 
+        if args.onboard_slot is not None:
+            if not self._scene_query.wait_for_service(timeout_sec=15):
+                raise RuntimeError("planning scene query unavailable")
+            request = GetPlanningScene.Request()
+            request.components.components = (PlanningSceneComponents.ROBOT_STATE_ATTACHED_OBJECTS
+                                             | PlanningSceneComponents.WORLD_OBJECT_NAMES)
+            scene = self.call(self._scene_query, request).scene
+            attached_ids = {obj.object.id for obj in scene.robot_state.attached_collision_objects}
+            world_ids = {obj.id for obj in scene.world.collision_objects}
+            required = {"onboard_rebar_rack"} | {f"onboard_rebar_slot_{v}" for v in args.occupied_slots}
+            ready = required <= attached_ids and "rebar_source_station" in world_ids
+            self.record("loading_collision_scene_ready", ready,
+                        attached=sorted(attached_ids), world=sorted(world_ids))
+            if not ready:
+                raise RuntimeError("loading collision geometry missing; no motion performed")
         observed_rebar = self.rebar_position()
+        if args.onboard_slot is not None:
+            self.spin(10.)
+            drift = math.dist(observed_rebar, self.rebar_position())
+            self.record("source_rebar_stable", drift < .004, duration_s=10., drift_m=drift)
+            if drift >= .004:
+                raise RuntimeError("steel rolled away from its source saddle")
         self.record(
             "rebar_pose_feedback",
             math.dist(observed_rebar, (args.rebar_x, args.rebar_y, args.rebar_z))
@@ -420,16 +493,19 @@ class RebarGraspTest(Node):
         rebar_half_gap = (args.open_gap - args.diameter) / 2.0
 
         # 1. Open the gripper.
-        handle = self.send_gripper(0.0, 1.2)
-        wrapped = self.wait_gripper_result(handle)
-        opened = self.finger_positions()
-        self.record(
-            "open_gripper",
-            wrapped is not None
-            and wrapped.status == GoalStatus.STATUS_SUCCEEDED
-            and all(value is not None and abs(value) < 0.0015 for value in opened),
-            fingers_opened=opened,
-        )
+        if args.plan_only:
+            self.record("gripper_open_assumed_for_planning", True, target=0., executed=False)
+        else:
+            handle = self.send_gripper(0.0, 1.2)
+            wrapped = self.wait_gripper_result(handle)
+            opened = self.finger_positions()
+            self.record(
+                "open_gripper",
+                wrapped is not None
+                and wrapped.status == GoalStatus.STATUS_SUCCEEDED
+                and all(value is not None and abs(value) < 0.0015 for value in opened),
+                fingers_opened=opened,
+            )
 
         # 2. Pick the seed pose whose FK lands closest to the rebar; its FK
         # also yields the constant TCP offset in the wrist frame.
@@ -499,15 +575,15 @@ class RebarGraspTest(Node):
         }[args.wrist_x_axis]
         grasp_quat = quat_from_basis(closing_axis, (0.0, 0.0, -1.0))
 
-        def wrist_pose_for(tcp_world_target):
-            rotated = quat_rotate(grasp_quat, tcp_in_wrist)
+        def wrist_pose_for(tcp_world_target, orientation=grasp_quat):
+            rotated = quat_rotate(orientation, tcp_in_wrist)
             position = tuple(t - r for t, r in zip(tcp_world_target, rotated))
             pose = Pose()
             pose.position.x, pose.position.y, pose.position.z = position
-            pose.orientation.x = grasp_quat[0]
-            pose.orientation.y = grasp_quat[1]
-            pose.orientation.z = grasp_quat[2]
-            pose.orientation.w = grasp_quat[3]
+            pose.orientation.x = orientation[0]
+            pose.orientation.y = orientation[1]
+            pose.orientation.z = orientation[2]
+            pose.orientation.w = orientation[3]
             stamped = PoseStamped()
             stamped.header.frame_id = "base_footprint"
             stamped.pose = pose
@@ -552,6 +628,10 @@ class RebarGraspTest(Node):
             if not all(joint in solution for joint in ARM_JOINTS):
                 continue
             solution = {j: unwind(solution[j], current[j]) for j in ARM_JOINTS}
+            if args.onboard_slot is not None and solution["foreArm_joint"] < 0:
+                # The negative-elbow solution reaches the pickup but cannot
+                # complete the verified horizontal route around the chassis.
+                continue
             cost = max(abs(solution[j] - current[j]) for j in ARM_JOINTS)
             # Prefer the arm reaching forward over mirrored branches.
             cost += 2.0 * abs(solution["shoulder_joint"])
@@ -681,6 +761,11 @@ class RebarGraspTest(Node):
             self.write_report()
             raise RuntimeError("fingers did not retain the payload after lift")
 
+        if args.onboard_slot is not None:
+            self.load_onboard(wrist_pose_for, lift_tcp)
+            self.write_report()
+            return self._passed
+
         # 9. Transfer sideways to the release point.
         release_tcp = (
             rebar_center[0] + args.release_dx,
@@ -745,6 +830,152 @@ class RebarGraspTest(Node):
         self.write_report()
         return self._passed
 
+    def planning_state(self, values):
+        # Keep the measured contact travel while planning with the payload.
+        state = dict(values)
+        if self.args.onboard_slot is not None and not self.args.plan_only:
+            state.update({j: self._positions.get(j, 0.0) for j in GRIPPER_JOINTS})
+        return self.robot_state(state, gripper_open=self.args.onboard_slot is None or self.args.plan_only)
+
+    def rebar_in_base(self):
+        if (self._base_position is None
+                or time.monotonic()-self._base_pose_time > 1.):
+            raise RuntimeError("fresh odom -> base_footprint feedback unavailable")
+        relative = tuple(a-b for a,b in zip(self.rebar_position(), self._base_position))
+        return quat_rotate(quat_conjugate(self._base_quat), relative)
+
+    def rebar_axis_in_base(self):
+        return quat_rotate(quat_conjugate(self._base_quat),
+                           quat_rotate(self._rebar_quat, (1.0, 0.0, 0.0)))
+
+    def payload_scene(self, attach):
+        scene = PlanningScene(is_diff=True)
+        scene.robot_state.is_diff = True
+        attached = AttachedCollisionObject(link_name="gripper_motor_link")
+        attached.object.id = "carried_rebar"
+        if attach:
+            attached.touch_links = ["gripper_motor_link", "gripper1_link", "gripper2_link"]
+            attached.object.header.frame_id = "gripper_motor_link"
+            attached.object.operation = CollisionObject.ADD
+            cylinder = SolidPrimitive(type=SolidPrimitive.CYLINDER,
+                                      dimensions=[self.args.length+.020, self.args.diameter/2+.008])
+            pose = Pose()
+            pose.position.y, pose.position.z = self.args.tcp_y, self.args.tcp_z
+            # Steel follows motor Y; SolidPrimitive cylinders are along Z.
+            pose.orientation.x = math.sqrt(.5)
+            pose.orientation.w = math.sqrt(.5)
+            attached.object.primitives = [cylinder]
+            attached.object.primitive_poses = [pose]
+        else:
+            attached.object.operation = CollisionObject.REMOVE
+            obj = CollisionObject(id=f"onboard_rebar_slot_{self.args.onboard_slot}")
+            obj.header.frame_id = "base_footprint"
+            obj.operation = CollisionObject.ADD
+            obj.primitives = [SolidPrimitive(type=SolidPrimitive.CYLINDER,
+                              dimensions=[self.args.length, self.args.diameter/2])]
+            pose = Pose()
+            pose.position.x, pose.position.y, pose.position.z = self.rebar_in_base()
+            # Measured axis in base; construct a Z-axis cylinder orientation.
+            axis = self.rebar_axis_in_base()
+            quat = quat_from_basis((axis[1], -axis[0], 0.), axis)
+            pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w = quat
+            obj.primitive_poses = [pose]
+            placed = AttachedCollisionObject(link_name="base_link", touch_links=["base_link"])
+            placed.object = obj
+            scene.robot_state.attached_collision_objects = [placed]
+        scene.robot_state.attached_collision_objects.append(attached)
+        if not self._scene_client.wait_for_service(timeout_sec=10):
+            raise RuntimeError("ApplyPlanningScene unavailable")
+        result = self.call(self._scene_client, ApplyPlanningScene.Request(scene=scene))
+        if not result.success:
+            raise RuntimeError("payload planning scene update rejected")
+        self._payload_monitor = attach
+
+    def cartesian_motion(self, label, poses):
+        response = self.cartesian(self.current_arm(), poses)
+        if response.fraction < .99:
+            self.record(label, False, fraction=response.fraction,
+                        planning_code=response.error_code.val)
+            raise RuntimeError(f"{label}: incomplete Cartesian path")
+        self.run_motion(label, response, "solution")
+
+    def load_onboard(self, wrist_pose_for, lift_tcp):
+        slot_x = SLOT_X[self.args.onboard_slot-1]
+        self.payload_scene(True)
+        clearance = self.args.clearance_height
+        high_source = (lift_tcp[0], lift_tcp[1], clearance)
+        self.cartesian_motion("raise_for_loading",
+                              [wrist_pose_for(high_source).pose])
+        # Rotate the clamped specimen 90 degrees while clear of the supports.
+        rotated = quat_from_basis((1., 0., 0.), (0., 0., -1.))
+        # Explicit angular interpolation from closing Y to closing X.
+        poses = [wrist_pose_for(high_source, quat_from_basis(
+                 (math.sin(math.pi/2*i/12), math.cos(math.pi/2*i/12), 0.),
+                 (0., 0., -1.))).pose for i in range(1,13)]
+        self.cartesian_motion("rotate_rebar_90deg", poses)
+        axis = self.rebar_axis_in_base()
+        self.record("rebar_rotated", abs(axis[1]) > .95, axis_in_base=list(axis))
+        if abs(axis[1]) <= .95:
+            raise RuntimeError("steel did not rotate with the gripper")
+        high_rack = (slot_x, 0., clearance)
+        # Fixed wrist-down Cartesian stages keep the steel horizontal. The
+        # previous unconstrained joint plan let the payload sweep into the arm.
+        # Approach around the chassis side, with steel ends clear of the mast.
+        stages = [(-.90, -.45, clearance), (slot_x, -.45, clearance), high_rack]
+        for index, tcp in enumerate(stages, 1):
+            self.cartesian_motion(f"carry_via_side_{index}",
+                                  [wrist_pose_for(tcp, rotated).pose])
+            actual = self.rebar_in_base()
+            retained = math.dist(actual, tcp) < .025
+            self.record(f"payload_retained_at_stage_{index}", retained,
+                        actual=list(actual), target=list(tcp))
+            if not retained:
+                raise RuntimeError("steel did not follow the staged carrying path")
+        # Release slightly above the saddle; the cylinder falls into its
+        # concave seat without a payload/rack collision during approach.
+        # The finger tips also stay above bars in neighbouring occupied slots.
+        release_tcp = (slot_x, 0., RACK_REBAR_Z+.050)
+        self.cartesian_motion("descend_to_onboard_slot",
+                              [wrist_pose_for(release_tcp, rotated).pose])
+        before = self.rebar_in_base()
+        self._payload_monitor = False
+        handle = self.send_gripper(0., 1.5)
+        wrapped = self.wait_gripper_result(handle)
+        self.spin(2.)
+        after = self.rebar_in_base()
+        axis = self.rebar_axis_in_base()
+        opened = self.finger_positions()
+        placed = (wrapped is not None and wrapped.status == GoalStatus.STATUS_SUCCEEDED
+                  and all(abs(q) < .0015 for q in opened)
+                  and abs(after[0]-slot_x) < .020 and abs(after[1]) < .025
+                  and abs(after[2]-RACK_REBAR_Z) < .015 and abs(axis[1]) > .95)
+        self.record("placed_in_onboard_slot", placed, slot=self.args.onboard_slot,
+                    before=list(before), after=list(after), axis_in_base=list(axis),
+                    fingers=opened)
+        if not placed:
+            raise RuntimeError("released steel did not settle in the selected saddle")
+        self.payload_scene(False)
+        self.cartesian_motion("retract_from_onboard_slot",
+                              [wrist_pose_for(high_rack, rotated).pose])
+        reference = self.rebar_in_base()
+        self.spin(3.)
+        drift = math.dist(reference, self.rebar_in_base())
+        if self.args.occupied_slots:
+            positions = {}
+            for slot in self.args.occupied_slots:
+                if slot not in self._loaded_bars:
+                    raise RuntimeError(f"loaded bar {slot} TF unavailable")
+                world, updated = self._loaded_bars[slot]
+                if time.monotonic()-updated > 1.:
+                    raise RuntimeError(f"loaded bar {slot} feedback stale")
+                relative = tuple(a-b for a,b in zip(world, self._base_position))
+                positions[slot] = quat_rotate(quat_conjugate(self._base_quat), relative)
+            stable = all(math.dist(pos, (SLOT_X[slot-1], 0., RACK_REBAR_Z)) < .015
+                         for slot,pos in positions.items())
+            self.record("neighbour_bars_remain_seated", stable, positions=positions)
+        self.record("onboard_rebar_stable", drift < .004,
+                    drift_m=drift, position=list(self.rebar_in_base()))
+
     def write_report(self):
         Path(self.args.output).write_text(
             json.dumps(self._report, indent=2, ensure_ascii=False), encoding="utf-8"
@@ -783,9 +1014,19 @@ def main():
     parser.add_argument("--release-dy", type=float, default=0.18)
     parser.add_argument("--tcp-y", type=float, default=0.0, help="TCP Y in the motor frame")
     parser.add_argument("--tcp-z", type=float, default=0.16, help="TCP Z in the motor frame")
+    parser.add_argument("--occupied-slots", default="", help="Verify existing bars, CSV e.g. 2,3,4")
+    parser.add_argument("--onboard-slot", type=int, choices=range(1, 5),
+                        help="Rotate 90 degrees and place into this chassis rack slot")
+    parser.add_argument("--clearance-height", type=float, default=.90)
+    parser.add_argument("--length", type=float, default=.6)
     parser.add_argument("--plan-only", action="store_true")
     parser.add_argument("--output", default="rebar_grasp_result.json")
     args = parser.parse_args()
+    args.occupied_slots = [int(v) for v in args.occupied_slots.split(",") if v.strip()]
+    if any(v not in range(1,5) or v == args.onboard_slot for v in args.occupied_slots):
+        parser.error("occupied slots must be 1–4 and exclude the destination")
+    if args.onboard_slot is not None and args.wrist_x_axis != "y":
+        parser.error("onboard loading requires --wrist-x-axis y")
 
     rclpy.init(signal_handler_options=SignalHandlerOptions.NO)
     node = RebarGraspTest(args)

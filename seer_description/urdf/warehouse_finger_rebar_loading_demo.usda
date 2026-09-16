@@ -1,0 +1,10 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+    subLayers = [
+        @./rebar_onboard_rack.usda@,
+        @./warehouse_finger_rebar_mono_demo.usda@
+    ]
+)

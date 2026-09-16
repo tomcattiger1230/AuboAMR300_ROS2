@@ -5,13 +5,15 @@ The station sits inside the arm's reach in front of the robot (the arm mount
 is rotated 180 degrees about Z, so the arm workspace opens toward -X in the
 robot frame). It provides a low table, two support blocks that keep the bar
 from rolling, and one dynamic rebar cylinder modelled after the nominal
-specimen used by the object_detection pipeline (24 mm diameter, 1 m length).
+specimen (24 mm diameter, 0.6 m length). Concave saddles prevent rolling.
 """
 
 from __future__ import annotations
 
 import argparse
+import math
 from pathlib import Path
+from rebar_experiment_geometry import SLOT_X, rack_boxes, saddle_boxes
 
 REBAR_DENSITY_KG_M3 = 7850.0
 
@@ -20,7 +22,7 @@ def _vec(values):
     return ", ".join(f"{value:g}" for value in values)
 
 
-def _cube(name, position, size, color, indent=8, material=None):
+def _cube(name, position, size, color, indent=8, material=None, rpy=(0, 0, 0)):
     pad = " " * indent
     schemas = ["PhysicsCollisionAPI"]
     body = []
@@ -47,10 +49,11 @@ def _cube(name, position, size, color, indent=8, material=None):
     lines.extend(
         [
             f"{pad}    double3 xformOp:translate = ({_vec(position)})",
+            f"{pad}    float3 xformOp:rotateXYZ = ({_vec(tuple(math.degrees(v) for v in rpy))})",
             f"{pad}    double3 xformOp:scale = ({_vec(size)})",
             (
                 f"{pad}    uniform token[] xformOpOrder = "
-                '["xformOp:translate", "xformOp:scale"]'
+                '["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]'
             ),
             f"{pad}}}",
         ]
@@ -69,10 +72,9 @@ def generate(
     mass = REBAR_DENSITY_KG_M3 * 3.141592653589793 * radius**2 * length
 
     # Keep the supports well inside the ends for every configured bar length.
-    block_size = (0.1, 0.12, 0.06)
+    block_size = (0.1, 0.06, 0.054)
     block_offset_x = length * 0.3
-    block_top_z = table_height + block_size[2]
-    rebar_z = block_top_z + radius
+    rebar_z = table_height + 0.06 + radius
 
     rust = (0.45, 0.3, 0.2)
     steel_blue = (0.18, 0.24, 0.32)
@@ -144,7 +146,8 @@ def generate(
             )
         )
 
-    # Two low-friction support blocks keep the bar from rolling off the table.
+    # Short pedestals with concave arc segments; the gripper reaches the free
+    # central span, and the bar lifts vertically out of the open saddles.
     for block_index, bx in enumerate((-block_offset_x, block_offset_x), 1):
         lines.append(
             _cube(
@@ -156,6 +159,14 @@ def generate(
                 material="SupportMaterial",
             )
         )
+        for segment, (position, size, rpy) in enumerate(
+            saddle_boxes("X", (bx, 0, table_height + 0.076),
+                         width=0.1, radius=0.016), 1
+        ):
+            lines.append(_cube(
+                f"SourceSaddle{block_index}_{segment}", position, size,
+                block_yellow, material="SupportMaterial", rpy=rpy,
+            ))
 
     # The rebar itself: the only dynamic rigid body in the station. Axis X
     # keeps it perpendicular to the gripper fingers, which close along Y.
@@ -185,6 +196,41 @@ def generate(
 
     lines.extend(["", "    }", "}", ""])
     return "\n".join(lines), rebar_z
+
+
+def generate_rack():
+    lines = [
+        '#usda 1.0', '(\n    metersPerUnit = 1\n    upAxis = "Z"\n)',
+        'over "World" {', '    over "seer_aubo_composite" {',
+        '        over "base_link" {', '            def Xform "RebarRack" {',
+    ]
+    for name, position, size, rpy in rack_boxes():
+        lines.append(_cube(name, position, size, (0.2, 0.5, 0.65),
+                           indent=16, rpy=rpy))
+    lines.extend(['            }', '        }', '    }', '}', ''])
+    return '\n'.join(lines)
+
+
+def generate_prefilled():
+    """Three independent dynamic bars for checking neighbouring occupied slots."""
+    lines = ['#usda 1.0', '(', '    metersPerUnit = 1', '    upAxis = "Z"',
+             '    subLayers = [@./warehouse_finger_rebar_loading_demo.usda@]', ')',
+             'over "World" {']
+    mass = REBAR_DENSITY_KG_M3 * math.pi * .012**2 * .6
+    for slot in (2, 3, 4):
+        lines.extend([
+            f'    def Cylinder "LoadedRebar{slot}" (',
+            '        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI",',
+            '                              "PhysicsCollisionAPI", "MaterialBindingAPI"]',
+            '    ) {', '        uniform token axis = "Y"',
+            '        double radius = 0.012', '        double height = 0.6',
+            f'        float physics:mass = {mass:.4g}',
+            '        color3f[] primvars:displayColor = [(0.45, 0.3, 0.2)]',
+            '        rel material:binding:physics = </World/RebarStation/RebarMaterial>',
+            f'        double3 xformOp:translate = ({SLOT_X[slot-1]}, 0, 0.670)',
+            '        uniform token[] xformOpOrder = ["xformOp:translate"]', '    }',
+        ])
+    return '\n'.join(lines + ['}', ''])
 
 
 def main():
@@ -221,6 +267,10 @@ def main():
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(content, encoding="utf-8")
+    rack_output = args.output.with_name("rebar_onboard_rack.usda")
+    rack_output.write_text(generate_rack(), encoding="utf-8")
+    args.output.with_name("warehouse_finger_rebar_loading_prefilled_demo.usda").write_text(
+        generate_prefilled(), encoding="utf-8")
     rebar_world_z = args.table_height + 0.06 + args.radius
     print(f"Generated rebar station: {args.output}")
     print(

@@ -58,3 +58,9 @@ gz sdf -k "$MODEL_DIR/composite_robot_finger_mono.sdf"
 ```
 
 2026-09-11 已在 Ubuntu 26 / ROS Lyrical 的隔离工作树中构建 `seer_description` 与新 MoveIt 包，`check_urdf` 和 `gz sdf -k` 通过。MoveIt 在 `init_pose` 下验证 `q=0` 和 `q=0.0285` 均为 `valid=true`；旧闭合量 `q=0.04` 会检测到两夹指约 22.4 mm 穿透并返回 `valid=false`。USD/模型测试 11 项及 9 个子测试通过，macOS GUI 测试 35 项通过（另 1 项跳过）。此次检查不执行机器人运动。
+
+## 2026-09-16 仿真实测
+
+修正后的 finger 模型四个原存储位均通过张开/闭合碰撞检查、规划与 Isaac 执行，腕部位置误差 1.28–1.83 mm，[报告见此](../aubo_control_gui/KEY_POSITION_VALIDATION.md)。该检查保持原始学生关节角不变。
+
+钢筋场景已增加弧形防滚托座及车载四料槽；带载转向 90° 后保持水平从车体侧面搬运，落入料槽并撤回。使用 `start_warehouse_finger_rebar_loading_demo.sh` 启动，[流程、实测结果和末端图像入口](README_REBAR_GRASP.md)。装载目标与原空夹爪存储位是两项独立验证。

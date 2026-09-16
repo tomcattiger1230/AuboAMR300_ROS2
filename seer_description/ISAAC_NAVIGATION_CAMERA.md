@@ -2,6 +2,8 @@
 
 本流程用于 `warehouse_stick_demo.usda` 仿真。2026-09-10 实测环境为 Ubuntu 26.04.1、ROS 2 Lyrical、Isaac Sim 6.0.1-rc.7、RTX 4090。Isaac 子进程使用自带 Jazzy 桥接；SLAM、Nav2、MoveIt 使用主机 Lyrical。不要把主机 Python 3.14 的 ROS 库注入 Isaac Python 3.12。
 
+钢筋抓取与车载转向装载使用独立 finger 场景，见[钢筋实验](README_REBAR_GRASP.md)；末端黑白视频需订阅 `/camera/image_raw`，见[相机说明](README_MONO_CAMERA.md)。
+
 ## 启动顺序
 
 各终端先进入自己的工作区并加载实际安装的 ROS 发行版。下面是本次远程主机示例：

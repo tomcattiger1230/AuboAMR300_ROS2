@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Serve the wrist RGB camera as a bounded-memory MJPEG stream."""
+"""Serve the wrist camera as a bounded-memory MJPEG stream."""
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -19,6 +19,7 @@ class CameraVideo(Node):
                            ('image_topic', '/camera/color/image_raw')]:
             self.declare_parameter(key, value)
         self.frame = None
+        self.encoding = ""
         self.updated = 0.0
         self.lock = threading.Lock()
         self.bridge = CvBridge()
@@ -32,7 +33,13 @@ class CameraVideo(Node):
 
             def do_GET(self):
                 if self.path == '/':
-                    body = b'<!doctype html><meta charset="utf-8"><title>Wrist camera</title><h1>Wrist camera</h1><img src="/stream.mjpg" style="max-width:100%;height:auto"><p>Live simulation feed</p>'
+                    with owner.lock:
+                        encoding = owner.encoding
+                    kind = ("等待图像" if not encoding else
+                            "黑白图像" if encoding.startswith("mono") else "彩色图像")
+                    body = (f'<!doctype html><meta charset="utf-8"><title>Wrist camera</title>'
+                            f'<h1>腕部相机 · {kind}</h1><img src="/stream.mjpg" '
+                            'style="max-width:100%;height:auto"><p>实时仿真图像</p>').encode("utf-8")
                     self.send_response(200)
                     self.send_header('Content-Type', 'text/html; charset=utf-8')
                     self.end_headers()
@@ -85,6 +92,7 @@ class CameraVideo(Node):
             if ok:
                 with self.lock:
                     self.frame, self.updated = jpeg.tobytes(), time.monotonic()
+                    self.encoding = msg.encoding
         except (ValueError, cv2.error) as exc:
             self.get_logger().error(str(exc))
 

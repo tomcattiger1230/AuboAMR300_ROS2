@@ -1,4 +1,29 @@
-# 学生关键运动位置验证（Isaac，2026-09-10）
+# 学生关键运动位置验证（Isaac）
+
+## 2026-09-16：修正 finger 末端后的四个原存储位
+
+使用 `composite_robot_finger_mono.urdf.xacro`、i16H 参数和修正后的 finger 电机/夹指装配复测。四组学生原始关节角保持不变，张开与闭合（每指 28.5 mm）均通过 MoveIt 碰撞检查，四个目标均规划并在 Isaac 执行成功，最后返回测试前位置。
+
+| 位置 | 张开 / 闭合碰撞检查 | 规划 / 执行 | 腕部位置误差 |
+|---|---|---|---|
+| 存储位 1 | 通过 / 通过 | 通过 / 通过 | 1.77 mm |
+| 存储位 2 | 通过 / 通过 | 通过 / 通过 | 1.72 mm |
+| 存储位 3 | 通过 / 通过 | 通过 / 通过 | 1.83 mm |
+| 存储位 4 | 通过 / 通过 | 通过 / 通过 | 1.28 mm |
+
+最大关节误差 0.00630 rad。结果适用于本次 finger 模型及当时的 MoveIt 场景；该检查在加入车载料槽之前完成，验证的是空夹爪原存储位。带钢筋和料槽的装载路径另见[钢筋装载实验](../seer_description/README_REBAR_GRASP.md)。旧长夹爪的碰撞结论保留在下方历史记录，不能直接套用到当前 finger 模型。
+
+```bash
+export ROS_DOMAIN_ID=133
+PYTHONPATH=src/AuboAMR300_ROS2/aubo_control_gui:$PYTHONPATH /usr/bin/python3 \
+  src/AuboAMR300_ROS2/aubo_control_gui/test/validate_key_positions.py \
+  --storage-only --gripper-closed-position 0.0285 --execute \
+  --output /tmp/finger_storage_validation.json
+```
+
+[本次完整实测记录](test/results/student_key_positions_finger_20260916.json)
+
+## 2026-09-10：旧长夹爪模型历史记录
 
 核对了四个存储位、一个放置位和四个过渡点。原始数据保存在 [student_key_positions.json](config/student_key_positions.json)，未改写用户提供的学生代码或现场坐标。
 
@@ -22,9 +47,9 @@
 这说明问题不是角度单位、四元数顺序或基座坐标混用。
 仿真机械臂相对车体安装位置为 `(-0.3, 0, 0.6) m`，绕 Z 轴旋转 π，不能把学生坐标直接解释为车体坐标。
 
-## 四个存储位为何被拒绝
+## 历史模型四个存储位为何被拒绝
 
-在当前模型中，四个位置均检测到 `gripper1_link ↔ base_link` 和 `gripper2_link ↔ base_link` 碰撞；夹爪张开、闭合两种状态都不通过。
+在当时的长夹爪模型中，四个位置均检测到 `gripper1_link ↔ base_link` 和 `gripper2_link ↔ base_link` 碰撞；夹爪张开、闭合两种状态都不通过。
 底盘碰撞体是中心 `(0,0,0.35) m`、尺寸 `1.00 × 0.70 × 0.50 m` 的盒体。当前长夹爪的碰撞几何在这些腕部姿态下进入该盒体。
 这是当前仿真模型的碰撞结论，不代表原学生台架或真实夹爪必然碰撞；后续需要核对工具尺寸、底盘碰撞近似和工作位布局。
 本次没有关闭碰撞检查、缩小碰撞体，也没有擅自抬高原始目标。四个存储位不应直接作为已通过的位置启用。

@@ -34,6 +34,8 @@ install(PROGRAMS
   scripts/start_warehouse_finger_rebar_mono_demo.sh
   scripts/generate_rebar_station.py
   scripts/test_rebar_grasp.py
+  scripts/rebar_loading_scene.py
+  scripts/start_warehouse_finger_rebar_loading_demo.sh
   scripts/cmd_vel_watchdog.py
   scripts/test_isaac_navigation.py
   scripts/test_isaac_arm.py
@@ -50,6 +52,8 @@ install(PROGRAMS
   scripts/amr_gripper_cmd.py
   DESTINATION lib/${PROJECT_NAME}
 )
+
+install(FILES scripts/rebar_experiment_geometry.py DESTINATION lib/${PROJECT_NAME})
 
 install(FILES
   README_ISAAC_ROS2.md

@@ -44,8 +44,9 @@ def Xform "World"
             color3f[] primvars:displayColor = [(0.18, 0.24, 0.32)]
             bool physics:collisionEnabled = 1
             double3 xformOp:translate = (0, 0, 0.43)
+            float3 xformOp:rotateXYZ = (0, 0, 0)
             double3 xformOp:scale = (0.9, 0.5, 0.04)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
         }
         def Cube "TableLeg_1" (
             prepend apiSchemas = ["PhysicsCollisionAPI"]
@@ -55,8 +56,9 @@ def Xform "World"
             color3f[] primvars:displayColor = [(0.18, 0.24, 0.32)]
             bool physics:collisionEnabled = 1
             double3 xformOp:translate = (-0.36, -0.18, 0.205)
+            float3 xformOp:rotateXYZ = (0, 0, 0)
             double3 xformOp:scale = (0.06, 0.06, 0.41)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
         }
         def Cube "TableLeg_2" (
             prepend apiSchemas = ["PhysicsCollisionAPI"]
@@ -66,8 +68,9 @@ def Xform "World"
             color3f[] primvars:displayColor = [(0.18, 0.24, 0.32)]
             bool physics:collisionEnabled = 1
             double3 xformOp:translate = (0.36, -0.18, 0.205)
+            float3 xformOp:rotateXYZ = (0, 0, 0)
             double3 xformOp:scale = (0.06, 0.06, 0.41)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
         }
         def Cube "TableLeg_3" (
             prepend apiSchemas = ["PhysicsCollisionAPI"]
@@ -77,8 +80,9 @@ def Xform "World"
             color3f[] primvars:displayColor = [(0.18, 0.24, 0.32)]
             bool physics:collisionEnabled = 1
             double3 xformOp:translate = (-0.36, 0.18, 0.205)
+            float3 xformOp:rotateXYZ = (0, 0, 0)
             double3 xformOp:scale = (0.06, 0.06, 0.41)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
         }
         def Cube "TableLeg_4" (
             prepend apiSchemas = ["PhysicsCollisionAPI"]
@@ -88,8 +92,9 @@ def Xform "World"
             color3f[] primvars:displayColor = [(0.18, 0.24, 0.32)]
             bool physics:collisionEnabled = 1
             double3 xformOp:translate = (0.36, 0.18, 0.205)
+            float3 xformOp:rotateXYZ = (0, 0, 0)
             double3 xformOp:scale = (0.06, 0.06, 0.41)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
         }
         def Cube "SupportBlock_1" (
             prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
@@ -99,9 +104,192 @@ def Xform "World"
             color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
             bool physics:collisionEnabled = 1
             rel material:binding:physics = </World/RebarStation/SupportMaterial>
-            double3 xformOp:translate = (-0.18, 0, 0.48)
-            double3 xformOp:scale = (0.1, 0.12, 0.06)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            double3 xformOp:translate = (-0.18, 0, 0.477)
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (0.1, 0.06, 0.054)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_1" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, -0.0172198, 0.51797)
+            float3 xformOp:rotateXYZ = (-65, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_2" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, -0.0155639, 0.515102)
+            float3 xformOp:rotateXYZ = (-55, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_3" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, -0.013435, 0.512565)
+            float3 xformOp:rotateXYZ = (-45, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_4" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, -0.010898, 0.510436)
+            float3 xformOp:rotateXYZ = (-35, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_5" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, -0.00802975, 0.50878)
+            float3 xformOp:rotateXYZ = (-25, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_6" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, -0.00491756, 0.507647)
+            float3 xformOp:rotateXYZ = (-15, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_7" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, -0.00165596, 0.507072)
+            float3 xformOp:rotateXYZ = (-5, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_8" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, 0.00165596, 0.507072)
+            float3 xformOp:rotateXYZ = (5, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_9" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, 0.00491756, 0.507647)
+            float3 xformOp:rotateXYZ = (15, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_10" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, 0.00802975, 0.50878)
+            float3 xformOp:rotateXYZ = (25, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_11" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, 0.010898, 0.510436)
+            float3 xformOp:rotateXYZ = (35, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_12" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, 0.013435, 0.512565)
+            float3 xformOp:rotateXYZ = (45, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_13" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, 0.0155639, 0.515102)
+            float3 xformOp:rotateXYZ = (55, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle1_14" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (-0.18, 0.0172198, 0.51797)
+            float3 xformOp:rotateXYZ = (65, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
         }
         def Cube "SupportBlock_2" (
             prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
@@ -111,9 +299,192 @@ def Xform "World"
             color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
             bool physics:collisionEnabled = 1
             rel material:binding:physics = </World/RebarStation/SupportMaterial>
-            double3 xformOp:translate = (0.18, 0, 0.48)
-            double3 xformOp:scale = (0.1, 0.12, 0.06)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            double3 xformOp:translate = (0.18, 0, 0.477)
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (0.1, 0.06, 0.054)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_1" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, -0.0172198, 0.51797)
+            float3 xformOp:rotateXYZ = (-65, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_2" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, -0.0155639, 0.515102)
+            float3 xformOp:rotateXYZ = (-55, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_3" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, -0.013435, 0.512565)
+            float3 xformOp:rotateXYZ = (-45, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_4" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, -0.010898, 0.510436)
+            float3 xformOp:rotateXYZ = (-35, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_5" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, -0.00802975, 0.50878)
+            float3 xformOp:rotateXYZ = (-25, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_6" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, -0.00491756, 0.507647)
+            float3 xformOp:rotateXYZ = (-15, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_7" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, -0.00165596, 0.507072)
+            float3 xformOp:rotateXYZ = (-5, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_8" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, 0.00165596, 0.507072)
+            float3 xformOp:rotateXYZ = (5, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_9" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, 0.00491756, 0.507647)
+            float3 xformOp:rotateXYZ = (15, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_10" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, 0.00802975, 0.50878)
+            float3 xformOp:rotateXYZ = (25, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_11" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, 0.010898, 0.510436)
+            float3 xformOp:rotateXYZ = (35, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_12" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, 0.013435, 0.512565)
+            float3 xformOp:rotateXYZ = (45, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_13" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, 0.0155639, 0.515102)
+            float3 xformOp:rotateXYZ = (55, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+        def Cube "SourceSaddle2_14" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            double size = 1
+            color3f[] primvars:displayColor = [(0.85, 0.65, 0.1)]
+            bool physics:collisionEnabled = 1
+            rel material:binding:physics = </World/RebarStation/SupportMaterial>
+            double3 xformOp:translate = (0.18, 0.0172198, 0.51797)
+            float3 xformOp:rotateXYZ = (65, 0, 0)
+            double3 xformOp:scale = (0.1, 0.00342431, 0.006)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
         }
 
         def Cylinder "Rebar" (

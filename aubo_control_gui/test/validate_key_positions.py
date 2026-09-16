@@ -33,6 +33,8 @@ def main():
     parser.add_argument('--targets',default=str(Path(__file__).parents[1]/'config/student_key_positions.json'))
     parser.add_argument('--output',required=True)
     parser.add_argument('--execute',action='store_true')
+    parser.add_argument('--storage-only',action='store_true')
+    parser.add_argument('--gripper-closed-position',type=float,default=.04)
     args=parser.parse_args()
     data=json.loads(Path(args.targets).read_text())
     rclpy.init();node=rclpy.create_node('student_key_position_validation')
@@ -116,6 +118,8 @@ def main():
         for angles in data['joint_targets'].values():
             v=dict(initial);v.update(zip(ARM,map(math.radians,angles)));seeds.append(v)
         entries=[(n,p,False) for n,p in data['pose_targets'].items()]+[(n,p,True) for n,p in data['transit_poses'].items()]
+        if args.storage_only:
+            entries=[entry for entry in entries if entry[0].startswith('存储位')]
         for name,pose,transit in entries:
             entry={'name':name,'transit':transit,'source_pose':pose};report['targets'].append(entry)
             if not transit:
@@ -130,7 +134,7 @@ def main():
                     entry['outcome']='ik_failed';save();print(name,entry['outcome'],flush=True);continue
             entry['target_joint_radians']={n:target[n] for n in ARM}
             entry['gripper_states']={}
-            for label,value in [('open',0.),('closed',.04)]:
+            for label,value in [('open',0.),('closed',args.gripper_closed_position)]:
                 test=dict(target);test.update({n:value for n in GRIPPER});entry['gripper_states'][label]=validity(test)
             valid=validity(target);entry['current_gripper_validity']=valid
             planned=plan(target);entry['planning_code']=planned.error_code.val

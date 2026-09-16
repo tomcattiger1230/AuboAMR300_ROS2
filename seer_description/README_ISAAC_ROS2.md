@@ -3,7 +3,20 @@
 This package can launch `seer_aubo.usd`, connect its articulation to ROS 2,
 and use MoveIt 2 trajectories to control the six AUBO joints.
 
-## Current tested configuration (2026-09-10)
+## Rebar loading experiment (2026-09-16)
+
+The corrected finger variant now supports a concave pickup station and four chassis-mounted saddles. The bar stays horizontal, turns 90 degrees, follows a staged Cartesian route around the chassis, and is released onto the robot. A live payload-position check cancels execution if the bar is lost. The four original student storage states have also passed collision checks, planning and Isaac execution with the corrected finger tool.
+
+```bash
+ros2 run seer_description start_warehouse_finger_rebar_loading_demo.sh --gui --domain-id 133
+# Another sourced terminal:
+export ROS_DOMAIN_ID=133
+ros2 run seer_description test_rebar_grasp.py --onboard-slot 1 --output /tmp/loading.json
+```
+
+See [rebar experiment, results and camera acquisition](README_REBAR_GRASP.md). This launch includes the source station and chassis rack in MoveIt; the full warehouse collision scene is still incomplete.
+
+## Previous tested configuration (2026-09-10)
 
 The current workflow uses Ubuntu 26.04 / ROS Lyrical with Isaac's isolated internal Jazzy bridge,
 i16H joint limits, a stick gripper, and an MV-CH100-60UM monochrome camera with a 12 mm C-mount lens.

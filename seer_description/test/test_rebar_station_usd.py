@@ -67,12 +67,43 @@ class RebarStationTest(unittest.TestCase):
             self.assertTrue(block.HasAPI(UsdPhysics.CollisionAPI))
             self.assertFalse(block.HasAPI(UsdPhysics.RigidBodyAPI))
             block_z = cache.GetLocalToWorldTransform(block).ExtractTranslation()[2]
-            block_top = block_z + 0.03  # half of the 0.06 m block height
+            block_top = block_z + 0.027  # half of the pedestal height
             self.assertGreater(rebar_z, block_top)
             self.assertLess(rebar_z - block_top, 0.05)
 
             block_x = cache.GetLocalToWorldTransform(block).ExtractTranslation()[0]
             self.assertAlmostEqual(block_x, expected_x)
+
+    def test_concave_supports_and_chassis_attachment(self):
+        # Arc segments preserve the hollow seat, rather than filling it with
+        # one convex collider; paired high sides constrain lateral rolling.
+        for support in (1, 2):
+            segments = [self.stage.GetPrimAtPath(f"{STATION}/SourceSaddle{support}_{i}")
+                        for i in range(1, 15)]
+            self.assertTrue(all(p.HasAPI(UsdPhysics.CollisionAPI) for p in segments))
+            cache = UsdGeom.XformCache()
+            centers = [cache.GetLocalToWorldTransform(p).ExtractTranslation() for p in segments]
+            self.assertLess(centers[0][1], 0)
+            self.assertGreater(centers[-1][1], 0)
+            self.assertGreater(centers[0][2], centers[6][2] + .010)
+        assets = Path(__file__).resolve().parents[1] / "urdf"
+        loading = Usd.Stage.Open(str(assets / "warehouse_finger_rebar_loading_demo.usda"))
+        rack = loading.GetPrimAtPath("/World/seer_aubo_composite/base_link/RebarRack")
+        self.assertTrue(rack.GetParent().HasAPI(UsdPhysics.RigidBodyAPI))
+        self.assertEqual(len(rack.GetChildren()), 120)
+        self.assertTrue(all(p.HasAPI(UsdPhysics.CollisionAPI) and
+                            not p.HasAPI(UsdPhysics.RigidBodyAPI) for p in rack.GetChildren()))
+
+    def test_prefilled_rack_contains_three_independent_dynamic_bars(self):
+        assets = Path(__file__).resolve().parents[1] / "urdf"
+        stage = Usd.Stage.Open(str(assets / "warehouse_finger_rebar_loading_prefilled_demo.usda"))
+        for slot in (2, 3, 4):
+            bar = stage.GetPrimAtPath(f"/World/LoadedRebar{slot}")
+            self.assertTrue(bar.HasAPI(UsdPhysics.RigidBodyAPI))
+            self.assertEqual(UsdGeom.Cylinder(bar).GetAxisAttr().Get(), "Y")
+            self.assertAlmostEqual(UsdGeom.Cylinder(bar).GetHeightAttr().Get(), .6)
+            self.assertAlmostEqual(UsdPhysics.MassAPI(bar).GetMassAttr().Get(), 2.13, delta=.05)
+        self.assertFalse(stage.GetPrimAtPath("/World/LoadedRebar1").IsValid())
 
     def test_rebar_material_is_high_friction(self):
         material = self.stage.GetPrimAtPath(f"{STATION}/RebarMaterial")

@@ -1,0 +1,177 @@
+[
+  {
+    "test": "source_rebar_stable",
+    "pass": true,
+    "duration_s": 10.0,
+    "drift_m": 0.0
+  },
+  {
+    "test": "rebar_pose_feedback",
+    "pass": true,
+    "position": [
+      -1.1499998569488468,
+      1.0058745829155669e-05,
+      0.5219853520393372
+    ]
+  },
+  {
+    "test": "open_gripper",
+    "pass": true,
+    "fingers_opened": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "test": "tcp_calibration",
+    "pass": true,
+    "seed": {
+      "shoulder_joint": 0.0,
+      "upperArm_joint": -0.7,
+      "foreArm_joint": 1.2,
+      "wrist1_joint": 0.0,
+      "wrist2_joint": 1.5,
+      "wrist3_joint": 0.0
+    },
+    "seed_wrist_to_rebar": 0.4202,
+    "tcp_in_wrist": [
+      0.0,
+      0.0,
+      0.16
+    ]
+  },
+  {
+    "test": "pregrasp_ik",
+    "pass": true,
+    "max_joint_delta": 2.9136,
+    "joints": {
+      "shoulder_joint": 0.2266,
+      "upperArm_joint": -0.8704,
+      "foreArm_joint": 1.0793,
+      "wrist1_joint": 0.3789,
+      "wrist2_joint": 1.5708,
+      "wrist3_joint": -2.915
+    }
+  },
+  {
+    "test": "approach_pregrasp",
+    "pass": true,
+    "planning_code": 1,
+    "points": 57,
+    "execution_code": 1
+  },
+  {
+    "test": "descend_to_grasp",
+    "pass": true,
+    "fraction": 1.0,
+    "code": 1,
+    "points": 20,
+    "execution_code": 1
+  },
+  {
+    "test": "grasp_close_on_rebar",
+    "pass": true,
+    "fingers_stalled": [
+      0.0155,
+      0.0185
+    ],
+    "inferred_gap_m": 0.0124,
+    "preload_target": 0.0285,
+    "preload_status": 4
+  },
+  {
+    "test": "lift",
+    "pass": true,
+    "fraction": 1.0,
+    "code": 1,
+    "execution_code": 1
+  },
+  {
+    "test": "rebar_lifted",
+    "pass": true,
+    "before": [
+      -1.1499215364441624,
+      -0.0002557740663178265,
+      0.5220034718513489
+    ],
+    "after": [
+      -1.150370359426597,
+      -0.0025733881630003452,
+      0.7010246515274048
+    ],
+    "vertical_distance": 0.1790211796760559
+  },
+  {
+    "test": "payload_retained_after_lift",
+    "pass": true,
+    "fingers": [
+      0.0152,
+      0.0188
+    ],
+    "grasp_stall": [
+      0.0155,
+      0.0185
+    ]
+  },
+  {
+    "test": "raise_for_loading",
+    "pass": true,
+    "planning_code": 1,
+    "points": 28,
+    "execution_code": 1
+  },
+  {
+    "test": "rotate_rebar_90deg",
+    "pass": true,
+    "planning_code": 1,
+    "points": 47,
+    "execution_code": 1
+  },
+  {
+    "test": "rebar_rotated",
+    "pass": true,
+    "axis_in_base": [
+      -0.0001775236807612819,
+      -0.9999948412355045,
+      -0.0032071775318187803
+    ]
+  },
+  {
+    "test": "transfer_to_onboard_rack",
+    "pass": true,
+    "planning_code": 1,
+    "points": 120,
+    "execution_code": 1
+  },
+  {
+    "test": "descend_to_onboard_slot",
+    "pass": true,
+    "planning_code": 1,
+    "points": 27,
+    "execution_code": 1
+  },
+  {
+    "test": "placed_in_onboard_slot",
+    "pass": false,
+    "slot": 1,
+    "before": [
+      0.003579064120704163,
+      0.7839312130346606,
+      0.011999776762822007
+    ],
+    "after": [
+      0.004547981009493741,
+      0.7839284229640977,
+      0.011999549063229548
+    ],
+    "axis_in_base": [
+      -0.08915475806308888,
+      -0.996017785541037,
+      8.006291500970218e-07
+    ],
+    "fingers": [
+      0.0,
+      0.0
+    ]
+  }
+]

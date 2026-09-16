@@ -695,16 +695,15 @@ def create_ros_graph(stage):
     )
 
 
-def create_rebar_pose_graph(stage):
+def create_single_rebar_pose_graph(stage, rebar_path, frame, graph_path):
     """Publish the dynamic rebar world pose for grasp verification."""
-    rebar_path = "/World/RebarStation/Rebar"
     if not stage.GetPrimAtPath(rebar_path).IsValid():
         return
-    if stage.GetPrimAtPath(REBAR_GRAPH_PATH).IsValid():
-        stage.RemovePrim(REBAR_GRAPH_PATH)
+    if stage.GetPrimAtPath(graph_path).IsValid():
+        stage.RemovePrim(graph_path)
 
     og.Controller.edit(
-        {"graph_path": REBAR_GRAPH_PATH, "evaluator_name": "execution"},
+        {"graph_path": graph_path, "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
                 ("OnPlaybackTick", "omni.graph.action.OnPlaybackTick"),
@@ -744,11 +743,18 @@ def create_rebar_pose_graph(stage):
                     [usdrt.Sdf.Path(rebar_path)],
                 ),
                 ("PublishRebarTransform.inputs:parentFrameId", "world"),
-                ("PublishRebarTransform.inputs:childFrameId", "rebar"),
+                ("PublishRebarTransform.inputs:childFrameId", frame),
             ],
         },
     )
-    print("Isaac ROS 2 rebar pose: world -> rebar on /tf", flush=True)
+    print(f"Isaac ROS 2 rebar pose: world -> {frame} on /tf", flush=True)
+
+
+def create_rebar_pose_graph(stage):
+    create_single_rebar_pose_graph(stage, "/World/RebarStation/Rebar", "rebar", REBAR_GRAPH_PATH)
+    for slot in range(1, 5):
+        create_single_rebar_pose_graph(stage, f"/World/LoadedRebar{slot}",
+                                      f"loaded_rebar_{slot}", f"{REBAR_GRAPH_PATH}{slot}")
 
 
 def main():
