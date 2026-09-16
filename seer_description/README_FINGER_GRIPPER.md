@@ -64,3 +64,7 @@ gz sdf -k "$MODEL_DIR/composite_robot_finger_mono.sdf"
 修正后的 finger 模型四个原存储位均通过张开/闭合碰撞检查、规划与 Isaac 执行，腕部位置误差 1.28–1.83 mm，[报告见此](../aubo_control_gui/KEY_POSITION_VALIDATION.md)。该检查保持原始学生关节角不变。
 
 钢筋场景已增加弧形防滚托座及车载四料槽；带载转向 90° 后保持水平从车体侧面搬运，落入料槽并撤回。使用 `start_warehouse_finger_rebar_loading_demo.sh` 启动，[流程、实测结果和末端图像入口](README_REBAR_GRASP.md)。装载目标与原空夹爪存储位是两项独立验证。
+
+## 2026-09-16：旧夹爪模型归档重命名
+
+原 `adapter.STL`、`gripper_cube.STL`、`gripper_stick.STL`、`motor.STL` 分别独立改名为 `*_legacy.stl`，以兼容 macOS 文件系统；它们与已有小写 STL 的内容各自保留。当前 stick 使用的小写模型及本 finger 版本的 `finger_centered.stl`、`motor_new.stl` 均保持原值。模型名对照与递归拉取方法见[Git 文档](../docs/GIT_CHECKOUT.md)。

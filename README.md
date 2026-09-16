@@ -7,6 +7,7 @@ SEER AMB-300 底盘、AUBO i16H 机械臂、末端夹爪和工业相机的 ROS 2
 
 | 内容 | 文档 |
 |---|---|
+| Git 克隆、子模块、跨平台重名与更新 | [Git 获取与更新](docs/GIT_CHECKOUT.md) |
 | Mac GUI 安装、启动、拖动末端、规划/执行与排障 | [GUI README](aubo_control_gui/README.md) |
 | Isaac 与 ROS 2 启动及发行版兼容性 | [Isaac ROS 2](seer_description/README_ISAAC_ROS2.md) |
 | 双雷达、SLAM、导航和视频 | [导航与相机](seer_description/ISAAC_NAVIGATION_CAMERA.md) |
@@ -15,6 +16,16 @@ SEER AMB-300 底盘、AUBO i16H 机械臂、末端夹爪和工业相机的 ROS 2
 | 钢筋抓取/释放测试场景与自动化测试 | [钢筋抓取测试](seer_description/README_REBAR_GRASP.md) |
 | GUI 模型资源来源与 i16H 限位 | [模型资源 README](aubo_student_description/README.md) |
 | 学生关键位置与碰撞验证 | [关键位置验证](aubo_control_gui/KEY_POSITION_VALIDATION.md) |
+
+## 获取项目
+
+```bash
+git clone --recurse-submodules https://github.com/tomcattiger1230/AuboAMR300_ROS2.git
+cd AuboAMR300_ROS2
+python3 scripts/check_git_portability.py
+```
+
+已有副本更新及 Lyrical 子模块修复见[Git 获取与更新](docs/GIT_CHECKOUT.md)。
 
 ## Mac GUI 快速启动
 
@@ -35,6 +46,8 @@ cd ~/Develop/github/AuboAMR300_ROS2
 修改代码后须关闭旧 GUI 并重新启动；源码启动优先读取当前仓库的模型与 QML。
 
 ## 2026-09-16 更新
+
+- [Git 跨电脑拉取修复](docs/GIT_CHECKOUT.md)：发布两层 Lyrical 子模块适配到维护 Fork，修复 `not our ref`；四个大写 STL 独立改名为 `*_legacy.stl`，原小写活动模型及两套内容均保留。新增文件名兼容检查。
 
 - [实体料架底座](seer_description/README_REBAR_GRASP.md#接触车体的实体安装底梁2026-09-16)：增加两条 364.9 × 100 × 20 mm 的安装底梁，连接八个托座立柱并与车体实际顶面接合，消除约 3.35 mm 的悬空间隙；Isaac 与 MoveIt 同步。
 
