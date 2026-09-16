@@ -47,7 +47,7 @@ cd ~/Develop/github/AuboAMR300_ROS2
 
 ## 2026-09-16 更新
 
-- [Git 跨电脑拉取修复](docs/GIT_CHECKOUT.md)：发布两层 Lyrical 子模块适配到维护 Fork，修复 `not our ref`；四个大写 STL 独立改名为 `*_legacy.stl`，原小写活动模型及两套内容均保留。新增文件名兼容检查。
+- [Git 跨电脑拉取修复](docs/GIT_CHECKOUT.md)：发布两层 Lyrical 子模块适配到维护 Fork，修复 `not our ref`；四个大写 STL 独立改名为 `*_legacy.stl`，原小写活动模型及两套内容均保留。新增文件名兼容检查；Ubuntu 递归克隆/pull、Mac 副本升级及 GitHub 全新递归克隆/pull 均通过，两套模型哈希保持一致。[验收报告](docs/GIT_CHECKOUT_VALIDATION_20260916.json)。
 
 - [实体料架底座](seer_description/README_REBAR_GRASP.md#接触车体的实体安装底梁2026-09-16)：增加两条 364.9 × 100 × 20 mm 的安装底梁，连接八个托座立柱并与车体实际顶面接合，消除约 3.35 mm 的悬空间隙；Isaac 与 MoveIt 同步。
 

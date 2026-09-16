@@ -1,0 +1,548 @@
+{
+  "date": "2026-09-16",
+  "scope": "Git checkout, recursive submodule availability, filename case portability and exact preservation of both mesh variants; no ROS build or robot-motion test",
+  "pass": true,
+  "checked_code_revision": "1f80eb3cabfabed7f2b391051857b99a3d28e961",
+  "driver_revision": "d848ddc0c039882cc253d6ae741b3c21863ec459",
+  "description_revision": "ba077a042393d2a130f191d03f8b64b08d351f24",
+  "negative_case_audit": {
+    "base_revision": "6352a2a72ebe12cfd14cf288efef5aa5f202a53e",
+    "detected_collision_groups": 4,
+    "exit_code": 1
+  },
+  "checks": {
+    "ubuntu_prepublication": {
+      "pass": true,
+      "platform": "Ubuntu 26.04",
+      "parent_source": "local clean repair worktree; both submodule sources are public GitHub forks",
+      "root": "1f80eb3cabfabed7f2b391051857b99a3d28e961",
+      "driver": "d848ddc0c039882cc253d6ae741b3c21863ec459",
+      "description": "ba077a042393d2a130f191d03f8b64b08d351f24",
+      "seconds": 132.19,
+      "filename_audit": {
+        ".": {
+          "tracked_paths": 539,
+          "collisions": []
+        },
+        "aubo_ros2_driver": {
+          "tracked_paths": 82,
+          "collisions": []
+        },
+        "aubo_ros2_driver/aubo_description": {
+          "tracked_paths": 2310,
+          "collisions": []
+        }
+      },
+      "mesh_hashes": {
+        "seer_description/meshes/adapter.STL": {
+          "renamed_to": "seer_description/meshes/adapter_legacy.stl",
+          "preserved_blob": "065b8e22dfcdf58e97812b7fd48a35e16b78efd9",
+          "active_path": "seer_description/meshes/adapter.stl",
+          "active_blob": "3f77fa3b44edf3b06ddac758c4135ca8d630429f"
+        },
+        "seer_description/meshes/gripper_cube.STL": {
+          "renamed_to": "seer_description/meshes/gripper_cube_legacy.stl",
+          "preserved_blob": "89208611d8494ff38c3ccafe4ac37eb434734c5a",
+          "active_path": "seer_description/meshes/gripper_cube.stl",
+          "active_blob": "febfbcaebf6a0b47bb0204a4b12cb6b4eecfcb44"
+        },
+        "seer_description/meshes/gripper_stick.STL": {
+          "renamed_to": "seer_description/meshes/gripper_stick_legacy.stl",
+          "preserved_blob": "1b51a6617932499665a8a7e8421bed2d1dbf1723",
+          "active_path": "seer_description/meshes/gripper_stick.stl",
+          "active_blob": "d35d4ea85ed9eb0ff3c3f3dfb5286fe40a11d8d7"
+        },
+        "seer_description/meshes/motor.STL": {
+          "renamed_to": "seer_description/meshes/motor_legacy.stl",
+          "preserved_blob": "c6fcf6e7b75c70c72ec1d8fa95992c891a467772",
+          "active_path": "seer_description/meshes/motor.stl",
+          "active_blob": "11d8ad8a2f0ff2e2c08976551b8e0d2b097da386"
+        }
+      },
+      "steps": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--shared",
+            "--recurse-submodules",
+            "/tmp/aubo-portability-ryxo61wi/root",
+            "/tmp/aubo-portability-ryxo61wi/linux-test"
+          ],
+          "exit_code": 0,
+          "output": "Cloning into '/tmp/aubo-portability-ryxo61wi/linux-test'...\ndone.\nSubmodule 'aubo_ros2_driver' (https://github.com/tomcattiger1230/aubo_ros2_driver.git) registered for path 'aubo_ros2_driver'\nCloning into '/tmp/aubo-portability-ryxo61wi/linux-test/aubo_ros2_driver'...\nSubmodule path 'aubo_ros2_driver': checked out 'd848ddc0c039882cc253d6ae741b3c21863ec459'\nSubmodule 'aubo_description' (https://github.com/tomcattiger1230/aubo_description.git) registered for path 'aubo_ros2_driver/aubo_description'\nCloning into '/tmp/aubo-portability-ryxo61wi/linux-test/aubo_ros2_driver/aubo_description'...\nSubmodule path 'aubo_ros2_driver/aubo_description': checked out 'ba077a042393d2a130f191d03f8b64b08d351f24'\n"
+        },
+        {
+          "command": [
+            "git",
+            "pull",
+            "--ff-only",
+            "--recurse-submodules"
+          ],
+          "exit_code": 0,
+          "output": "Fetching submodule aubo_ros2_driver\nFetching submodule aubo_ros2_driver/aubo_description\nAlready up to date.\n"
+        },
+        {
+          "command": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "exit_code": 0,
+          "output": "1f80eb3cabfabed7f2b391051857b99a3d28e961\n"
+        },
+        {
+          "command": [
+            "git",
+            "submodule",
+            "status",
+            "--recursive"
+          ],
+          "exit_code": 0,
+          "output": " d848ddc0c039882cc253d6ae741b3c21863ec459 aubo_ros2_driver (heads/lyrical)\n ba077a042393d2a130f191d03f8b64b08d351f24 aubo_ros2_driver/aubo_description (heads/lyrical)\n"
+        },
+        {
+          "command": [
+            "git",
+            "status",
+            "--porcelain=v1"
+          ],
+          "exit_code": 0,
+          "output": ""
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/check_git_portability.py"
+          ],
+          "exit_code": 0,
+          "output": "{\n  \"tracked_paths\": 539,\n  \"case_collisions\": [],\n  \"pass\": true\n}\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/adapter_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "065b8e22dfcdf58e97812b7fd48a35e16b78efd9\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/adapter.stl"
+          ],
+          "exit_code": 0,
+          "output": "3f77fa3b44edf3b06ddac758c4135ca8d630429f\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_cube_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "89208611d8494ff38c3ccafe4ac37eb434734c5a\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_cube.stl"
+          ],
+          "exit_code": 0,
+          "output": "febfbcaebf6a0b47bb0204a4b12cb6b4eecfcb44\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_stick_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "1b51a6617932499665a8a7e8421bed2d1dbf1723\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_stick.stl"
+          ],
+          "exit_code": 0,
+          "output": "d35d4ea85ed9eb0ff3c3f3dfb5286fe40a11d8d7\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/motor_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "c6fcf6e7b75c70c72ec1d8fa95992c891a467772\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/motor.stl"
+          ],
+          "exit_code": 0,
+          "output": "11d8ad8a2f0ff2e2c08976551b8e0d2b097da386\n"
+        }
+      ]
+    },
+    "macos_existing_checkout_upgrade": {
+      "pass": true,
+      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "parent_source": "existing macOS temporary clone upgraded using repair bundle; both submodules fetched from public GitHub forks",
+      "root": "1f80eb3cabfabed7f2b391051857b99a3d28e961",
+      "driver": "d848ddc0c039882cc253d6ae741b3c21863ec459",
+      "description": "ba077a042393d2a130f191d03f8b64b08d351f24",
+      "filename_audit": {
+        ".": {
+          "tracked_paths": 539,
+          "collisions": []
+        },
+        "aubo_ros2_driver": {
+          "tracked_paths": 82,
+          "collisions": []
+        },
+        "aubo_ros2_driver/aubo_description": {
+          "tracked_paths": 2310,
+          "collisions": []
+        }
+      },
+      "mesh_hashes": {
+        "seer_description/meshes/adapter.STL": {
+          "renamed_to": "seer_description/meshes/adapter_legacy.stl",
+          "preserved_blob": "065b8e22dfcdf58e97812b7fd48a35e16b78efd9",
+          "active_path": "seer_description/meshes/adapter.stl",
+          "active_blob": "3f77fa3b44edf3b06ddac758c4135ca8d630429f"
+        },
+        "seer_description/meshes/gripper_cube.STL": {
+          "renamed_to": "seer_description/meshes/gripper_cube_legacy.stl",
+          "preserved_blob": "89208611d8494ff38c3ccafe4ac37eb434734c5a",
+          "active_path": "seer_description/meshes/gripper_cube.stl",
+          "active_blob": "febfbcaebf6a0b47bb0204a4b12cb6b4eecfcb44"
+        },
+        "seer_description/meshes/gripper_stick.STL": {
+          "renamed_to": "seer_description/meshes/gripper_stick_legacy.stl",
+          "preserved_blob": "1b51a6617932499665a8a7e8421bed2d1dbf1723",
+          "active_path": "seer_description/meshes/gripper_stick.stl",
+          "active_blob": "d35d4ea85ed9eb0ff3c3f3dfb5286fe40a11d8d7"
+        },
+        "seer_description/meshes/motor.STL": {
+          "renamed_to": "seer_description/meshes/motor_legacy.stl",
+          "preserved_blob": "c6fcf6e7b75c70c72ec1d8fa95992c891a467772",
+          "active_path": "seer_description/meshes/motor.stl",
+          "active_blob": "11d8ad8a2f0ff2e2c08976551b8e0d2b097da386"
+        }
+      },
+      "working_tree_clean": true,
+      "steps": [
+        {
+          "command": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "exit_code": 0,
+          "output": "1f80eb3cabfabed7f2b391051857b99a3d28e961\n"
+        },
+        {
+          "command": [
+            "git",
+            "status",
+            "--porcelain=v1"
+          ],
+          "exit_code": 0,
+          "output": ""
+        },
+        {
+          "command": [
+            "git",
+            "submodule",
+            "status",
+            "--recursive"
+          ],
+          "exit_code": 0,
+          "output": " d848ddc0c039882cc253d6ae741b3c21863ec459 aubo_ros2_driver (remotes/origin/lyrical)\n ba077a042393d2a130f191d03f8b64b08d351f24 aubo_ros2_driver/aubo_description (heads/lyrical)\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/adapter_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "065b8e22dfcdf58e97812b7fd48a35e16b78efd9\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/adapter.stl"
+          ],
+          "exit_code": 0,
+          "output": "3f77fa3b44edf3b06ddac758c4135ca8d630429f\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_cube_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "89208611d8494ff38c3ccafe4ac37eb434734c5a\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_cube.stl"
+          ],
+          "exit_code": 0,
+          "output": "febfbcaebf6a0b47bb0204a4b12cb6b4eecfcb44\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_stick_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "1b51a6617932499665a8a7e8421bed2d1dbf1723\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_stick.stl"
+          ],
+          "exit_code": 0,
+          "output": "d35d4ea85ed9eb0ff3c3f3dfb5286fe40a11d8d7\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/motor_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "c6fcf6e7b75c70c72ec1d8fa95992c891a467772\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/motor.stl"
+          ],
+          "exit_code": 0,
+          "output": "11d8ad8a2f0ff2e2c08976551b8e0d2b097da386\n"
+        }
+      ]
+    },
+    "macos_fresh_github_clone": {
+      "pass": true,
+      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "parent_source": "anonymous HTTPS fresh clone from GitHub, root depth 1 and full recursive submodules",
+      "clone_command": "GIT_TERMINAL_PROMPT=0 git -c credential.helper= clone --depth 1 --recurse-submodules https://github.com/tomcattiger1230/AuboAMR300_ROS2.git",
+      "root": "1f80eb3cabfabed7f2b391051857b99a3d28e961",
+      "driver": "d848ddc0c039882cc253d6ae741b3c21863ec459",
+      "description": "ba077a042393d2a130f191d03f8b64b08d351f24",
+      "filename_audit": {
+        ".": {
+          "tracked_paths": 539,
+          "collisions": []
+        },
+        "aubo_ros2_driver": {
+          "tracked_paths": 82,
+          "collisions": []
+        },
+        "aubo_ros2_driver/aubo_description": {
+          "tracked_paths": 2310,
+          "collisions": []
+        }
+      },
+      "mesh_hashes": {
+        "seer_description/meshes/adapter.STL": {
+          "renamed_to": "seer_description/meshes/adapter_legacy.stl",
+          "preserved_blob": "065b8e22dfcdf58e97812b7fd48a35e16b78efd9",
+          "active_path": "seer_description/meshes/adapter.stl",
+          "active_blob": "3f77fa3b44edf3b06ddac758c4135ca8d630429f"
+        },
+        "seer_description/meshes/gripper_cube.STL": {
+          "renamed_to": "seer_description/meshes/gripper_cube_legacy.stl",
+          "preserved_blob": "89208611d8494ff38c3ccafe4ac37eb434734c5a",
+          "active_path": "seer_description/meshes/gripper_cube.stl",
+          "active_blob": "febfbcaebf6a0b47bb0204a4b12cb6b4eecfcb44"
+        },
+        "seer_description/meshes/gripper_stick.STL": {
+          "renamed_to": "seer_description/meshes/gripper_stick_legacy.stl",
+          "preserved_blob": "1b51a6617932499665a8a7e8421bed2d1dbf1723",
+          "active_path": "seer_description/meshes/gripper_stick.stl",
+          "active_blob": "d35d4ea85ed9eb0ff3c3f3dfb5286fe40a11d8d7"
+        },
+        "seer_description/meshes/motor.STL": {
+          "renamed_to": "seer_description/meshes/motor_legacy.stl",
+          "preserved_blob": "c6fcf6e7b75c70c72ec1d8fa95992c891a467772",
+          "active_path": "seer_description/meshes/motor.stl",
+          "active_blob": "11d8ad8a2f0ff2e2c08976551b8e0d2b097da386"
+        }
+      },
+      "working_tree_clean": true,
+      "clone_output": "Cloning into '/tmp/aubo-github-fixed-verified.eno0kS/AuboAMR300_ROS2'...\nSubmodule 'aubo_ros2_driver' (https://github.com/tomcattiger1230/aubo_ros2_driver.git) registered for path 'aubo_ros2_driver'\nCloning into '/private/tmp/aubo-github-fixed-verified.eno0kS/AuboAMR300_ROS2/aubo_ros2_driver'...\nSubmodule path 'aubo_ros2_driver': checked out 'd848ddc0c039882cc253d6ae741b3c21863ec459'\nSubmodule 'aubo_description' (https://github.com/tomcattiger1230/aubo_description.git) registered for path 'aubo_ros2_driver/aubo_description'\nCloning into '/private/tmp/aubo-github-fixed-verified.eno0kS/AuboAMR300_ROS2/aubo_ros2_driver/aubo_description'...\nSubmodule path 'aubo_ros2_driver/aubo_description': checked out 'ba077a042393d2a130f191d03f8b64b08d351f24'\n",
+      "steps": [
+        {
+          "command": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "exit_code": 0,
+          "output": "1f80eb3cabfabed7f2b391051857b99a3d28e961\n"
+        },
+        {
+          "command": [
+            "git",
+            "remote",
+            "get-url",
+            "origin"
+          ],
+          "exit_code": 0,
+          "output": "https://github.com/tomcattiger1230/AuboAMR300_ROS2.git\n"
+        },
+        {
+          "command": [
+            "git",
+            "-c",
+            "credential.helper=",
+            "pull",
+            "--ff-only",
+            "--recurse-submodules"
+          ],
+          "exit_code": 0,
+          "output": "Fetching submodule aubo_ros2_driver\nFetching submodule aubo_ros2_driver/aubo_description\nAlready up to date.\n"
+        },
+        {
+          "command": [
+            "git",
+            "status",
+            "--porcelain=v1"
+          ],
+          "exit_code": 0,
+          "output": ""
+        },
+        {
+          "command": [
+            "git",
+            "submodule",
+            "status",
+            "--recursive"
+          ],
+          "exit_code": 0,
+          "output": " d848ddc0c039882cc253d6ae741b3c21863ec459 aubo_ros2_driver (heads/lyrical)\n ba077a042393d2a130f191d03f8b64b08d351f24 aubo_ros2_driver/aubo_description (heads/lyrical)\n"
+        },
+        {
+          "command": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "exit_code": 0,
+          "output": "d848ddc0c039882cc253d6ae741b3c21863ec459\n"
+        },
+        {
+          "command": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "exit_code": 0,
+          "output": "ba077a042393d2a130f191d03f8b64b08d351f24\n"
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/check_git_portability.py"
+          ],
+          "exit_code": 0,
+          "output": "{\n  \"tracked_paths\": 539,\n  \"case_collisions\": [],\n  \"pass\": true\n}\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/adapter_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "065b8e22dfcdf58e97812b7fd48a35e16b78efd9\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/adapter.stl"
+          ],
+          "exit_code": 0,
+          "output": "3f77fa3b44edf3b06ddac758c4135ca8d630429f\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_cube_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "89208611d8494ff38c3ccafe4ac37eb434734c5a\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_cube.stl"
+          ],
+          "exit_code": 0,
+          "output": "febfbcaebf6a0b47bb0204a4b12cb6b4eecfcb44\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_stick_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "1b51a6617932499665a8a7e8421bed2d1dbf1723\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/gripper_stick.stl"
+          ],
+          "exit_code": 0,
+          "output": "d35d4ea85ed9eb0ff3c3f3dfb5286fe40a11d8d7\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/motor_legacy.stl"
+          ],
+          "exit_code": 0,
+          "output": "c6fcf6e7b75c70c72ec1d8fa95992c891a467772\n"
+        },
+        {
+          "command": [
+            "git",
+            "hash-object",
+            "seer_description/meshes/motor.stl"
+          ],
+          "exit_code": 0,
+          "output": "11d8ad8a2f0ff2e2c08976551b8e0d2b097da386\n"
+        }
+      ]
+    }
+  }
+}

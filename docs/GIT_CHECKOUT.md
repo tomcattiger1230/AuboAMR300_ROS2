@@ -17,7 +17,7 @@ Git 和 Python 3 足以完成这些检查，不要求 ROS、Isaac 或 Git LFS。
 先保存本地开发修改，再执行：
 
 ```bash
-git -c submodule.recurse=false pull --ff-only
+git -c fetch.recurseSubmodules=false -c submodule.recurse=false pull --ff-only
 git submodule sync --recursive
 git submodule update --init --recursive
 python3 scripts/check_git_portability.py
@@ -64,3 +64,17 @@ finger 变体仍使用 `finger_centered.stl` 和 `motor_new.stl`。
 
 `python3 scripts/check_git_portability.py` 检查已跟踪路径，发现仅大小写不同的重名时退出码为 1。
 递归克隆成功、子模块状态没有 `+`/`-`、新工作区 `git status --short` 为空，才算完成 Git 验收。
+
+## 修复验收记录（2026-09-16）
+
+[完整 Git 验收报告](GIT_CHECKOUT_VALIDATION_20260916.json)记录代码修复提交 `1f80eb3`：
+
+- Ubuntu 全新副本递归克隆成功，模型和驱动子模块从公开 Fork 获取，递归 pull 成功。
+- macOS 原临时副本升级成功；八份模型哈希一致，补全子模块后工作区干净。
+- macOS 直接从 GitHub 通过匿名 HTTPS 全新递归克隆成功，随后递归 pull 成功，无大小写碰撞警告。
+- 主仓库、驱动、模型三个仓库均没有仅大小写不同的重名路径；新副本工作区干净。
+- 旧版本兼容检查准确检出四组重名并返回 1，修复版本检查返回 0。
+
+代码修复保持 Lyrical 适配，驱动锁定 `d848ddc`、模型锁定 `ba077a0`。
+远端原有驱动修改及生成的未跟踪文件均保留；它们不属于本次发布修复。
+本次验收限于 Git 获取、文件名兼容和模型内容一致性，未执行驱动编译或实机测试。
