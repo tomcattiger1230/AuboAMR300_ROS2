@@ -7,6 +7,10 @@ RACK_REBAR_Z = 0.715
 # Preserve the calibrated release target; leave only 5 mm of free fall.
 RACK_RELEASE_TCP_Z = 0.720
 RACK_PEDESTAL_BOTTOM_Z = 0.602
+# robot_body visual upper surface in base_link, measured in the composed USD.
+RACK_DECK_Z = 0.59865
+RACK_BASE_EMBED = 0.001
+RACK_BASE_THICKNESS = 0.020
 
 
 def saddle_boxes(axis, center, width=0.08, radius=0.017, thickness=0.006,
@@ -34,6 +38,16 @@ def saddle_boxes(axis, center, width=0.08, radius=0.017, thickness=0.006,
 
 
 def rack_boxes():
+    # Two solid mounting rails bridge the visual deck to all eight pedestals.
+    # A 1 mm overlap avoids a visible seam at the mesh surface.
+    beam_x_min = min(SLOT_X) - .042
+    beam_x_max = max(SLOT_X) + .042
+    beam_bottom = RACK_DECK_Z - RACK_BASE_EMBED
+    for support, y in enumerate((-.19, .19), 1):
+        yield f"MountingBeam{support}", (
+            (beam_x_min + beam_x_max) / 2, y,
+            beam_bottom + RACK_BASE_THICKNESS / 2), (
+            beam_x_max - beam_x_min, .100, RACK_BASE_THICKNESS), (0., 0., 0.)
     for slot, x in enumerate(SLOT_X, 1):
         for support, y in enumerate((-0.19, 0.19), 1):
             pedestal_top = RACK_REBAR_Z - .018

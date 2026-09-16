@@ -219,7 +219,8 @@ def generate_rack():
         '        over "base_link" {', '            def Xform "RebarRack" {',
     ]
     for name, position, size, rpy in rack_boxes():
-        lines.append(_cube(name, position, size, (0.2, 0.5, 0.65),
+        color = (.16, .22, .28) if name.startswith("MountingBeam") else (.2, .5, .65)
+        lines.append(_cube(name, position, size, color,
                            indent=16, rpy=rpy,
                            collision_enabled=not (
                                'Saddle' in name and 4 <= int(name.rsplit('_', 1)[1]) <= 11)))

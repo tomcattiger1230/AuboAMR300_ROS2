@@ -14,7 +14,7 @@ export ROS_DOMAIN_ID=133
 ros2 run seer_description test_rebar_grasp.py --onboard-slot 1 --output /tmp/loading.json
 ```
 
-The rack has been raised by 45 mm: seated bar Z=0.715 m, release TCP Z=0.720 m. V-shaped contact faces retain the curved side walls. Use `measure_rebar_settling.py` after retraction to distinguish motion inside the seats from chassis drift; earlier four-slot reports used Z=0.670 m. Loading slot 1 with slots 2/3/4 occupied passed 26 checks. After the placement transient settled, all four bars had less than 0.004 mm chassis-relative position span over 30 wall-clock seconds (10.3 simulation seconds). Whole-chassis drift remains separately documented.
+The rack has been raised by 45 mm: seated bar Z=0.715 m, release TCP Z=0.720 m. V-shaped contact faces retain the curved side walls. Two solid 364.9 × 100 × 20 mm mounting rails now connect the eight pedestals to the actual chassis visual deck (Z≈0.59865 m), eliminating the previous 3.35 mm gap; they are also included in MoveIt. Use `measure_rebar_settling.py` after retraction to distinguish motion inside the seats from chassis drift; earlier four-slot reports used Z=0.670 m. Loading slot 1 with slots 2/3/4 occupied passed 26 checks. After the placement transient settled, all four bars had less than 0.004 mm chassis-relative position span over 30 wall-clock seconds (10.3 simulation seconds). Whole-chassis drift remains separately documented.
 
 See [rebar experiment, results and camera acquisition](README_REBAR_GRASP.md). This launch includes the source station and chassis rack in MoveIt; the full warehouse collision scene is still incomplete.
 

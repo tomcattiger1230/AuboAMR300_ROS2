@@ -10,7 +10,7 @@ import unittest
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from rebar_experiment_geometry import (RACK_REBAR_Z, RACK_RELEASE_TCP_Z,
-                                       RACK_PEDESTAL_BOTTOM_Z, rack_boxes)
+                                       RACK_PEDESTAL_BOTTOM_Z, RACK_DECK_Z, rack_boxes)
 
 simulation_app = None
 try:
@@ -94,10 +94,10 @@ class RebarStationTest(unittest.TestCase):
         loading = Usd.Stage.Open(str(assets / "warehouse_finger_rebar_loading_demo.usda"))
         rack = loading.GetPrimAtPath("/World/seer_aubo_composite/base_link/RebarRack")
         self.assertTrue(rack.GetParent().HasAPI(UsdPhysics.RigidBodyAPI))
-        self.assertEqual(len(rack.GetChildren()), 136)
+        self.assertEqual(len(rack.GetChildren()), 138)
         active = [p for p in rack.GetChildren()
                   if UsdPhysics.CollisionAPI(p).GetCollisionEnabledAttr().Get()]
-        self.assertEqual(len(active), 72)
+        self.assertEqual(len(active), 74)
         self.assertEqual(len([p for p in active if 'VSeat' in p.GetName()]), 16)
         for p in rack.GetChildren():
             if 'Saddle' in p.GetName() and 4 <= int(p.GetName().rsplit('_', 1)[1]) <= 11:
@@ -135,6 +135,39 @@ class RebarStationTest(unittest.TestCase):
         for slot in (2, 3, 4):
             bar = stage.GetPrimAtPath(f"/World/LoadedRebar{slot}")
             self.assertAlmostEqual(bar.GetAttribute("xformOp:translate").Get()[2], RACK_REBAR_Z)
+
+    def test_solid_mounting_beams_touch_visual_chassis_and_all_pedestals(self):
+        assets = Path(__file__).resolve().parents[1] / "urdf"
+        stage = Usd.Stage.Open(str(assets / "warehouse_finger_rebar_loading_demo.usda"))
+        base = stage.GetPrimAtPath("/World/seer_aubo_composite/base_link")
+        rack = base.GetChild("RebarRack")
+        cache = UsdGeom.XformCache()
+        inverse = cache.GetLocalToWorldTransform(base).GetInverse()
+        deck_top = float("-inf")
+        for prim in Usd.PrimRange(base.GetChild("visuals"), Usd.TraverseInstanceProxies()):
+            if prim.IsA(UsdGeom.Mesh):
+                matrix = cache.GetLocalToWorldTransform(prim) * inverse
+                # This body has a flat upper deck under both mounting rails.
+                points = UsdGeom.Mesh(prim).GetPointsAttr().Get()
+                deck_top = max(deck_top, max(matrix.Transform(p)[2] for p in points))
+        self.assertAlmostEqual(deck_top, RACK_DECK_Z, places=5)
+        for support in (1, 2):
+            beam = rack.GetChild(f"MountingBeam{support}")
+            center = beam.GetAttribute("xformOp:translate").Get()
+            size = beam.GetAttribute("xformOp:scale").Get()
+            bottom, top = center[2] - size[2]/2, center[2] + size[2]/2
+            self.assertLess(bottom, deck_top)
+            self.assertLess(deck_top - bottom, .002)
+            self.assertGreater(top, RACK_PEDESTAL_BOTTOM_Z)
+            self.assertTrue(UsdPhysics.CollisionAPI(beam).GetCollisionEnabledAttr().Get())
+            self.assertFalse(beam.HasAPI(UsdPhysics.RigidBodyAPI))
+            for slot in range(1, 5):
+                pedestal = rack.GetChild(f"Slot{slot}Support{support}")
+                p = pedestal.GetAttribute("xformOp:translate").Get()
+                s = pedestal.GetAttribute("xformOp:scale").Get()
+                for i in (0, 1):
+                    self.assertGreaterEqual(center[i]+size[i]/2, p[i]+s[i]/2)
+                    self.assertLessEqual(center[i]-size[i]/2, p[i]-s[i]/2)
 
     def test_rebar_material_is_high_friction(self):
         material = self.stage.GetPrimAtPath(f"{STATION}/RebarMaterial")
