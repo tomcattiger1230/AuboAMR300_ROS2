@@ -24,6 +24,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time")
     start_rviz = LaunchConfiguration("start_rviz")
     rebar_loading = LaunchConfiguration("rebar_loading")
+    rebar_tester = LaunchConfiguration("rebar_tester")
     action_name = LaunchConfiguration("action_name")
     command_topic = LaunchConfiguration("command_topic")
     robot_xacro = LaunchConfiguration("robot_xacro")
@@ -94,6 +95,7 @@ def generate_launch_description():
         [
             DeclareLaunchArgument("use_sim_time", default_value="true"),
             DeclareLaunchArgument("rebar_loading", default_value="false"),
+            DeclareLaunchArgument("rebar_tester", default_value="false"),
             DeclareLaunchArgument("occupied_slots", default_value="none"),
             Node(package="tf2_ros", executable="static_transform_publisher",
                  arguments=["--frame-id", "world", "--child-frame-id", "odom"],
@@ -102,6 +104,8 @@ def generate_launch_description():
                  condition=IfCondition(rebar_loading), output="screen",
                  parameters=[{"occupied_slots": ParameterValue(LaunchConfiguration("occupied_slots"),
                                                                  value_type=str)}]),
+            Node(package="seer_description", executable="rebar_tester_bridge.py",
+                 condition=IfCondition(rebar_tester), output="screen"),
             DeclareLaunchArgument("camera_profile", default_value="gemini"),
             DeclareLaunchArgument("start_rviz", default_value="true"),
             DeclareLaunchArgument(

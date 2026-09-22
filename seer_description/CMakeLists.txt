@@ -30,6 +30,9 @@ install(PROGRAMS
   scripts/test_mono_camera.py
   scripts/start_warehouse_stick_mono_demo.sh
   scripts/start_warehouse_finger_mono_demo.sh
+  scripts/start_warehouse_finger_etm6m_demo.sh
+  scripts/start_warehouse_finger_etm6m_rebar_tester_demo.sh
+  scripts/start_warehouse_finger_rebar_lab_demo.sh
   scripts/start_warehouse_stick_rebar_mono_demo.sh
   scripts/start_warehouse_finger_rebar_mono_demo.sh
   scripts/generate_rebar_station.py
@@ -37,6 +40,7 @@ install(PROGRAMS
   scripts/test_rebar_grasp.py
   scripts/measure_rebar_settling.py
   scripts/rebar_loading_scene.py
+  scripts/rebar_tester_bridge.py
   scripts/start_warehouse_finger_rebar_loading_demo.sh
   scripts/cmd_vel_watchdog.py
   scripts/test_isaac_navigation.py
@@ -46,6 +50,9 @@ install(PROGRAMS
   scripts/circle_move.py
   scripts/action_bridge.py
   scripts/generate_warehouse_scene.py
+  scripts/generate_etm6m_scene.py
+  scripts/generate_rebar_test_machine_scene.py
+  scripts/generate_rebar_lab_scene.py
   scripts/isaac_ros2_runner.py
   scripts/mobile_manipulator_control.py
   scripts/start_isaac_ros2_stack.sh
@@ -55,7 +62,7 @@ install(PROGRAMS
   DESTINATION lib/${PROJECT_NAME}
 )
 
-install(FILES scripts/rebar_experiment_geometry.py DESTINATION lib/${PROJECT_NAME})
+install(FILES scripts/rebar_experiment_geometry.py scripts/rebar_tester_control.py DESTINATION lib/${PROJECT_NAME})
 
 install(FILES
   README_ISAAC_ROS2.md
@@ -63,6 +70,9 @@ install(FILES
   README_MONO_CAMERA.md
   README_FINGER_GRIPPER.md
   README_REBAR_GRASP.md
+  README_ETM6M.md
+  README_REBAR_TEST_MACHINE.md
+  README_REBAR_LAB.md
   DESTINATION share/${PROJECT_NAME}
 )
 install(DIRECTORY test/results DESTINATION share/${PROJECT_NAME}/test)

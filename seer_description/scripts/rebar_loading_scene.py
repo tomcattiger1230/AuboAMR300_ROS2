@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Load the station and chassis-mounted rack colliders into MoveIt."""
 import math
+import time
 import rclpy
 from geometry_msgs.msg import Pose
 from moveit_msgs.msg import AttachedCollisionObject, CollisionObject, PlanningScene
@@ -64,10 +65,17 @@ def main():
             boxes.append(((x, 0, .477), (.1, .06, .054), (0, 0, 0)))
             boxes.extend(saddle_boxes("X", (x, 0, .526), width=.1, radius=.016))
         scene.world.collision_objects = [box_object("rebar_source_station", "world", boxes)]
-        future = client.call_async(ApplyPlanningScene.Request(scene=scene))
-        rclpy.spin_until_future_complete(node, future, timeout_sec=30)
-        if not future.done() or not future.result().success:
-            raise RuntimeError("MoveIt rejected loading scene")
+        # MoveIt can advertise the service before the world TF frame arrives.
+        # The diff uses stable object IDs, so retrying a rejected request is safe.
+        for attempt in range(1, 11):
+            future = client.call_async(ApplyPlanningScene.Request(scene=scene))
+            rclpy.spin_until_future_complete(node, future, timeout_sec=5)
+            if future.done() and future.result() and future.result().success:
+                break
+            if attempt == 10:
+                raise RuntimeError("MoveIt rejected loading scene after 10 attempts")
+            node.get_logger().warning(f"Planning scene not ready; retrying ({attempt}/10)")
+            time.sleep(1)
         node.get_logger().info("Rebar station and four chassis-mounted saddles loaded")
     finally:
         node.destroy_node()

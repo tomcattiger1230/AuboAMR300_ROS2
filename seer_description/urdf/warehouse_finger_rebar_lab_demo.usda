@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+    subLayers = [
+        @./warehouse_finger_rebar_loading_demo.usda@,
+        @./etm6m_lab_1.usda@,
+        @./etm6m_lab_2.usda@,
+        @./rebar_test_machine_lab.usda@
+    ]
+)
+
+over "World"
+{
+    over "Cone" (active = false) {}
+    over "WarehouseDemo"
+    {
+        over "Rack_03" (active = false) {}
+        over "Rack_04" (active = false) {}
+    }
+}

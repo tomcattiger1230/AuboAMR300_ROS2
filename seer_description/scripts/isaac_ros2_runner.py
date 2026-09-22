@@ -7,6 +7,7 @@ import shutil
 import signal
 import sys
 import tempfile
+import time
 
 
 def parse_args():
@@ -801,6 +802,25 @@ def main():
     app_utils.play()
     simulation_app.update()
 
+    rebar_tester = None
+    if stage.GetPrimAtPath("/World/RebarTestMachine/UpperCarriage").IsValid():
+        from rebar_tester_control import IsaacRebarTesterController
+
+        rebar_tester = IsaacRebarTesterController(stage)
+
+    if not ARGS.headless and stage.GetPrimAtPath("/World/RebarTestMachine"):
+        try:
+            from isaacsim.core.rendering_manager import ViewportManager
+
+            if stage.GetPrimAtPath("/World/ETM6M_2"):
+                eye, target = [0.0, -4.2, 4.0], [4.2, 2.4, 1.1]
+            else:
+                eye, target = [1.9, -1.1, 2.6], [4.1, 2.1, 1.1]
+            ViewportManager.set_camera_view(ViewportManager.get_camera(), eye=eye, target=target)
+            simulation_app.update()
+        except Exception as exc:
+            print(f"Could not set rebar test machine overview: {exc}", flush=True)
+
     print(
         "Isaac ROS 2 control is ready:\n"
         f"  USD: {USD_PATH}\n"
@@ -819,8 +839,13 @@ def main():
         with open(ARGS.ready_file, "w", encoding="utf-8") as ready_file:
             ready_file.write("ready\n")
 
+    last_frame_time = time.monotonic()
     while simulation_app.is_running() and not stop_requested:
         simulation_app.update()
+        if rebar_tester is not None:
+            now = time.monotonic()
+            rebar_tester.update(now - last_frame_time, now)
+            last_frame_time = now
 
     app_utils.stop()
 

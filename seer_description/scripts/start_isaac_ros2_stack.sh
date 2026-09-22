@@ -18,6 +18,7 @@ STATE_TOPIC="/joint_states"
 CAMERA_PROFILE="gemini"
 CAMERA_RESOLUTION="preview"
 REBAR_LOADING=false
+REBAR_TESTER=false
 REBAR_OCCUPIED_SLOTS="none"
 
 usage() {
@@ -41,6 +42,7 @@ usage() {
     "  --camera-resolution MODE preview or full" \
     "  --occupied-slots CSV   Chassis slots already containing bars (e.g. 2,3,4)" \
     "  --rebar-loading        Load station and onboard rack into MoveIt" \
+    "  --rebar-tester         Enable independent tester carriage/jaw ROS topics" \
     "  --help                 Show this help"
 }
 
@@ -58,6 +60,9 @@ while (($#)); do
       ;;
     --rebar-loading)
       REBAR_LOADING=true
+      ;;
+    --rebar-tester)
+      REBAR_TESTER=true
       ;;
     --usd)
       USD_PATH="${2:?--usd requires a path}"
@@ -284,7 +289,7 @@ trap 'exit 130' INT TERM
 
 printf 'Starting Isaac Sim with %s\n' "$USD_PATH"
 printf 'Host ROS: %s; Isaac ROS mode: %s; renderer: %s\n' "$ROS_DISTRO" "$ROS_BRIDGE_MODE" "$RENDERER"
-setsid "${ISAAC_ENV[@]}" "$ISAAC_SIM_PATH/python.sh" "$RUNNER" "${RUNNER_ARGS[@]}" &
+setsid "${ISAAC_ENV[@]}" "$ISAAC_SIM_PATH/python.sh" "$RUNNER" "${RUNNER_ARGS[@]}" 9>&- &
 ISAAC_PID=$!
 
 printf 'Waiting for Isaac simulation startup'
@@ -316,5 +321,6 @@ ros2 launch seer_description bringup_isaac.launch.py \
   moveit_package:="$MOVEIT_PACKAGE" \
   camera_profile:="$CAMERA_PROFILE" \
   rebar_loading:="$REBAR_LOADING" \
+  rebar_tester:="$REBAR_TESTER" \
   occupied_slots:="$REBAR_OCCUPIED_SLOTS" \
-  action_name:="$ACTION_NAME"
+  action_name:="$ACTION_NAME" 9>&-
