@@ -59,6 +59,9 @@ install(PROGRAMS
   scripts/start_warehouse_demo.sh
   scripts/start_warehouse_stick_demo.sh
   scripts/amr_gripper_cmd.py
+  scripts/rebar_tester_geometry.py
+  scripts/rebar_tester_gui.py
+  scripts/test_rebar_tester_load.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -73,6 +76,7 @@ install(FILES
   README_ETM6M.md
   README_REBAR_TEST_MACHINE.md
   README_REBAR_LAB.md
+  README_REBAR_TESTER_LOAD.md
   DESTINATION share/${PROJECT_NAME}
 )
 install(DIRECTORY test/results DESTINATION share/${PROJECT_NAME}/test)
