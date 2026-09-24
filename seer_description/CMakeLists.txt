@@ -61,6 +61,7 @@ install(PROGRAMS
   scripts/amr_gripper_cmd.py
   scripts/rebar_tester_geometry.py
   scripts/rebar_tester_gui.py
+  scripts/rebar_tester_gui_qt.py
   scripts/test_rebar_tester_load.py
   DESTINATION lib/${PROJECT_NAME}
 )
