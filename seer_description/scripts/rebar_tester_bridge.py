@@ -2,6 +2,7 @@
 """Expose independent rebar tester carriage and jaw targets over ROS 2."""
 
 import rclpy
+from rclpy.duration import Duration
 from rclpy.node import Node
 from std_msgs.msg import Float64
 
@@ -14,6 +15,8 @@ class RebarTesterBridge(Node):
         self.command_path, self.state_path = paths()
         self.targets = DEFAULTS.copy()
         self.last_state_mtime = None
+        self.last_state = None
+        self.last_state_publish = self.get_clock().now() - Duration(seconds=10)
         self.state_publishers = {}
         for key in DEFAULTS:
             group, axis = key.split("_", 1)
@@ -39,17 +42,27 @@ class RebarTesterBridge(Node):
         return on_message
 
     def publish_state(self):
+        # Publish on every state-file change, and additionally repeat the
+        # last known state once per second: the Isaac side only rewrites
+        # the file when a mechanism actually moves, so without the
+        # heartbeat an idle tester looks disconnected to listeners.
         try:
             mtime = self.state_path.stat().st_mtime_ns
-            if mtime == self.last_state_mtime:
+            now = self.get_clock().now()
+            if mtime != self.last_state_mtime:
+                self.last_state_mtime = mtime
+                self.last_state = read_values(self.state_path)
+                self.last_state_publish = now
+            elif (self.last_state is not None
+                  and (now - self.last_state_publish).nanoseconds < 1_000_000_000):
                 return
-            self.last_state_mtime = mtime
-            state = read_values(self.state_path)
+            else:
+                self.last_state_publish = now
         except (FileNotFoundError, OSError, ValueError, KeyError) as exc:
             if not isinstance(exc, FileNotFoundError):
                 self.get_logger().warning(f"Cannot read rebar tester state: {exc}")
             return
-        for key, value in state.items():
+        for key, value in self.last_state.items():
             self.state_publishers[key].publish(Float64(data=value))
 
 

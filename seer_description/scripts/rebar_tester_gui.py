@@ -40,12 +40,14 @@ def channel_topics(key):
 class TesterGuiNode(Node):
     def __init__(self):
         super().__init__("rebar_tester_gui")
-        self.publishers = {}
+        # Named with a leading underscore: rclpy Node reserves the
+        # read-only `publishers` property.
+        self._cmd_publishers = {}
         self.latest_state = {}
         self.state_stamps = {}
         for _, key, *_ in CHANNELS:
             cmd_topic, state_topic = channel_topics(key)
-            self.publishers[key] = self.create_publisher(Float64, cmd_topic, 10)
+            self._cmd_publishers[key] = self.create_publisher(Float64, cmd_topic, 10)
             self.create_subscription(
                 Float64,
                 state_topic,
@@ -65,7 +67,7 @@ class TesterGuiNode(Node):
         rclpy.spin_once(self, timeout_sec=0.0)
 
     def send(self, key, value):
-        self.publishers[key].publish(Float64(data=value))
+        self._cmd_publishers[key].publish(Float64(data=value))
 
     def state(self, key):
         stamp = self.state_stamps.get(key)
@@ -165,7 +167,11 @@ class TesterGui:
 
     def slider_moved(self, key):
         def on_move(value):
-            row = self.rows[key]
+            # Slider.set() fires this during construction, before the row
+            # dictionary entry exists; just ignore those early callbacks.
+            row = self.rows.get(key)
+            if row is None:
+                return
             quantized = round(float(value) / row["resolution"]) * row["resolution"]
             if row["entry"].focus_get() != row["entry"]:
                 row["entry"].delete(0, tk.END)

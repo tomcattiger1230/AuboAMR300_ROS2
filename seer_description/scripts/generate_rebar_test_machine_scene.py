@@ -47,8 +47,6 @@ over "World"
         cylinder("RightScrew", (-0.015, -0.51, 1.52), 0.026, 1.36, dark, False),
         cube("TopBeam", (0.03, 0, 2.25), (0.72, 1.28, 0.18), white),
         cube("TopCap", (0.03, 0, 2.36), (0.76, 0.64, 0.08), white),
-        # The specimen is only a visual reference, not a deformable tensile model.
-        cylinder("SampleRebar", (-0.08, 0, 1.365), 0.012, 0.43, silver, False),
         # Separate floor-standing console, matching the reference photograph.
         cube("ConsoleCabinet", (-0.04, -1.15, 0.49), (0.72, 0.76, 0.98), (0.42, 0.45, 0.47)),
         cube("ConsoleTop", (-0.04, -1.15, 1.015), (0.78, 0.80, 0.07), dark),
