@@ -30,7 +30,7 @@ ros2 launch seer_description isaac_mapping.launch.py \
   video_host:=0.0.0.0 start_rviz:=true
 ```
 
-视频节点默认仅监听本机。上面显式绑定局域网后，浏览器访问 `http://192.168.3.133:8080/`。`/stream.mjpg` 是实时 MJPEG，`/snapshot.jpg` 是当前 JPEG。断流超过 3 秒不继续展示旧帧；新请求返回 HTTP 503。服务没有认证，仅用于受信任的仿真局域网。ROS 图仍限制在本机，不需要让浏览器加入 DDS 网络。
+视频节点默认仅监听本机。上面显式绑定局域网后，浏览器访问 `http://192.168.0.103:8080/`。`/stream.mjpg` 是实时 MJPEG，`/snapshot.jpg` 是当前 JPEG。断流超过 3 秒不继续展示旧帧；新请求返回 HTTP 503。服务没有认证，仅用于受信任的仿真局域网。ROS 图仍限制在本机，不需要让浏览器加入 DDS 网络。
 
 3. 在仓库空旷原点转一圈，补充扫描后启动导航：
 

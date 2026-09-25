@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--peer', default='192.168.3.133', type=ipaddress.ip_address)
+parser.add_argument('--peer', default='192.168.0.103', type=ipaddress.ip_address)
 parser.add_argument('--domain-id', default=133, type=int)
 parser.add_argument('--execute', action='store_true', help='Allow explicit execution (the default); planning never executes')
 parser.add_argument('--check-gui', action='store_true', help='Open GUI and verify displayed feedback for 30 seconds without executing')

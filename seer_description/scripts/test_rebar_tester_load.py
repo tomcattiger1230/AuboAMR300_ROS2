@@ -38,7 +38,7 @@ from rclpy.parameter import Parameter
 from rclpy.qos import qos_profile_sensor_data
 from rclpy.signals import SignalHandlerOptions
 from shape_msgs.msg import SolidPrimitive
-from std_msgs.msg import Float64
+from std_msgs.msg import Bool, Float64
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -108,6 +108,8 @@ class TesterLoadTest(RebarGraspTest):
         super().__init__(args)
         self._tester_state = {}
         self._tester_state_time = {}
+        self._tester_gripped = False
+        self._tester_gripped_time = 0.0
         self._tester_publishers = {}
         self._cmd_vel = self.create_publisher(Twist, "/cmd_vel", 10)
         for key in TESTER_CHANNELS:
@@ -125,6 +127,9 @@ class TesterLoadTest(RebarGraspTest):
         self._scene_apply = self.create_client(
             ApplyPlanningScene, "/apply_planning_scene"
         )
+        self.create_subscription(
+            Bool, "/rebar_tester/rebar_gripped", self._on_rebar_gripped, 10
+        )
 
     # ---------- tester bridge ----------
 
@@ -136,6 +141,21 @@ class TesterLoadTest(RebarGraspTest):
 
     def _tester_publisher(self, key):
         return self._tester_publishers[key]
+
+    def _on_rebar_gripped(self, message):
+        self._tester_gripped = bool(message.data)
+        self._tester_gripped_time = time.monotonic()
+
+    def wait_for_tester_grip(self, timeout=10.0):
+        end = time.monotonic() + timeout
+        while time.monotonic() < end:
+            self.spin(0.1)
+            if (self._tester_gripped
+                    and time.monotonic() - self._tester_gripped_time < 1.5):
+                self.record("tester_rebar_gripped", True)
+                return
+        self.record("tester_rebar_gripped", False)
+        raise RuntimeError("tester has not confirmed that it holds the rebar")
 
     def send_tester(self, key, value):
         self._tester_publisher(key).publish(Float64(data=value))
@@ -172,10 +192,12 @@ class TesterLoadTest(RebarGraspTest):
         import threading
 
         stop = threading.Event()
-        spin_thread = threading.Thread(
-            target=lambda: [self.spin(0.1) for _ in iter(lambda: not stop.is_set(), True)],
-            daemon=True,
-        )
+
+        def spin_until_confirmed():
+            while not stop.is_set() and rclpy.ok():
+                self.spin(0.1)
+
+        spin_thread = threading.Thread(target=spin_until_confirmed, daemon=True)
         spin_thread.start()
         try:
             input(prompt)
@@ -247,19 +269,25 @@ class TesterLoadTest(RebarGraspTest):
             raise RuntimeError("payload detach rejected")
         self._payload_monitor = False
 
-    def cartesian_motion_min(self, label, poses, min_fraction=0.93):
+    def cartesian_motion_min(self, label, poses, min_fraction=0.93,
+                             allow_joint_fallback=False):
         """Cartesian move tolerating an incomplete path (the next stage's
         endpoint corrects the residual); used for long approach translates."""
         response = self.cartesian(self.current_arm(), poses)
         if response.fraction < min_fraction:
-            self.record(label, False, fraction=response.fraction,
-                        planning_code=response.error_code.val)
+            self.record(label + "_cartesian", allow_joint_fallback,
+                        fraction=response.fraction,
+                        planning_code=response.error_code.val,
+                        fallback="joint" if allow_joint_fallback else None)
+            if allow_joint_fallback:
+                return False
             raise RuntimeError(f"{label}: incomplete Cartesian path")
         self.record(label, True, fraction=round(response.fraction, 4),
                     planning_code=response.error_code.val)
         if self.args.plan_only:
-            return
+            return True
         self.run_motion(label + "_exec", response, "solution")
+        return True
 
     def joint_fallback(self, label, target_pose_stamped):
         """Reach an exact pose via joint-space planning when the Cartesian
@@ -657,9 +685,9 @@ class TesterLoadTest(RebarGraspTest):
         )
         for label, tcp in (("insert_midway", mid_base), ("insert_to_gripline", grip_base)):
             pose = wrist_pose_for(tcp, insert_quat).pose
-            try:
-                self.cartesian_motion_min(label, [pose], min_fraction=0.97)
-            except RuntimeError:
+            if not self.cartesian_motion_min(
+                label, [pose], min_fraction=0.97, allow_joint_fallback=True
+            ):
                 # The Cartesian solver stalls on an IK branch switch here;
                 # reach the same pose through joint-space planning instead.
                 self.joint_fallback(label, wrist_pose_for(tcp, insert_quat))
@@ -689,6 +717,8 @@ class TesterLoadTest(RebarGraspTest):
                 "tester_jaws_clamped_manual", clamped,
                 lower_z=lower, upper_z=upper, openings=openings,
             )
+            if not clamped:
+                raise RuntimeError("tester jaws are not at the requested clamp position")
         else:
             self.command_tester("lower_z", LOWER_JAW_GRIP_Z)
             self.command_tester("upper_z", UPPER_JAW_GRIP_Z)
@@ -706,17 +736,23 @@ class TesterLoadTest(RebarGraspTest):
                 openings=(upper_open, lower_open),
             )
         # --- 8. release and verify the bar stays on the grip line ---------
+        self.wait_for_tester_grip()
         self.detach_payload()
         handle = self.send_gripper(0.0, 1.5)
         wrapped = self.wait_gripper_result(handle)
         opened = self.finger_positions()
-        self.record(
-            "robot_fingers_released",
+        released = (
             wrapped is not None
             and wrapped.status == GoalStatus.STATUS_SUCCEEDED
-            and all(value is not None and abs(value) < 0.0015 for value in opened),
+            and all(value is not None and abs(value) < 0.0015 for value in opened)
+        )
+        self.record(
+            "robot_fingers_released",
+            released,
             fingers=opened,
         )
+        if not released:
+            raise RuntimeError("robot fingers did not open after tester clamping")
         self.spin(2.0)
         held = self.rebar_position()
         stayed = (
@@ -745,6 +781,23 @@ class TesterLoadTest(RebarGraspTest):
         park = dict(zip(ARM_JOINTS, (0.0, -0.35, 0.6, 0.0, 0.35, 0.0)))
         plan = self.joint_plan(self.current_arm(), park)
         self.run_motion("arm_parked", plan)
+
+        self.spin(1.0)
+        final_bar = self.rebar_position()
+        final_held = (
+            abs(final_bar[0] - GRIP_LINE_XY[0]) < 0.03
+            and abs(final_bar[1] - GRIP_LINE_XY[1]) < 0.05
+            and abs(final_bar[2] - BAR_CENTER_Z) < 0.08
+            and self._tester_gripped
+            and time.monotonic() - self._tester_gripped_time < 1.5
+        )
+        self.record(
+            "rebar_stable_after_arm_retract", final_held,
+            position=[round(v, 3) for v in final_bar],
+            tester_gripped=self._tester_gripped,
+        )
+        if not final_held:
+            raise RuntimeError("rebar was lost after the arm retracted")
 
         self.write_report()
         return self._passed
@@ -1061,8 +1114,9 @@ def main():
     node = TesterLoadTest(args)
     try:
         passed = node.run()
-    except Exception:  # noqa: BLE001 - report any failure, then exit
+    except Exception as exc:  # noqa: BLE001 - report any failure, then exit
         node.get_logger().error(traceback.format_exc())
+        node.record("workflow_error", False, error=str(exc))
         node.write_report()
         passed = False
     node.destroy_node()

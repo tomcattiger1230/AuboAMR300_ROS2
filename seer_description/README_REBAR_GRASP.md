@@ -202,7 +202,7 @@ ros2 run seer_description camera_video.py --ros-args \
   -p host:=0.0.0.0 -p image_topic:=/camera/image_raw
 ```
 
-macOS 浏览器打开 [实时视频](http://192.168.3.133:8080/)，或[单张图像](http://192.168.3.133:8080/snapshot.jpg)。服务在图像过期时返回 503，避免把旧帧显示为实时图像。图像跟随机械臂姿态变化；更多参数见[相机文档](README_MONO_CAMERA.md)。
+macOS 浏览器打开 [实时视频](http://192.168.0.103:8080/)，或[单张图像](http://192.168.0.103:8080/snapshot.jpg)。服务在图像过期时返回 503，避免把旧帧显示为实时图像。图像跟随机械臂姿态变化；更多参数见[相机文档](README_MONO_CAMERA.md)。
 
 ### 调试记录：搬运时钢筋碰臂掉落
 

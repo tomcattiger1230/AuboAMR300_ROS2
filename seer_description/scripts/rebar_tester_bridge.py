@@ -4,9 +4,9 @@
 import rclpy
 from rclpy.duration import Duration
 from rclpy.node import Node
-from std_msgs.msg import Float64
+from std_msgs.msg import Bool, Float64
 
-from rebar_tester_control import DEFAULTS, atomic_write, clamp, paths, read_values
+from rebar_tester_control import DEFAULTS, atomic_write, clamp, paths, read_state
 
 
 class RebarTesterBridge(Node):
@@ -18,6 +18,9 @@ class RebarTesterBridge(Node):
         self.last_state = None
         self.last_state_publish = self.get_clock().now() - Duration(seconds=10)
         self.state_publishers = {}
+        self.gripped_publisher = self.create_publisher(
+            Bool, "/rebar_tester/rebar_gripped", 10
+        )
         for key in DEFAULTS:
             group, axis = key.split("_", 1)
             topic = f"/rebar_tester/{group}/{axis}"
@@ -51,7 +54,7 @@ class RebarTesterBridge(Node):
             now = self.get_clock().now()
             if mtime != self.last_state_mtime:
                 self.last_state_mtime = mtime
-                self.last_state = read_values(self.state_path)
+                self.last_state = read_state(self.state_path)
                 self.last_state_publish = now
             elif (self.last_state is not None
                   and (now - self.last_state_publish).nanoseconds < 1_000_000_000):
@@ -62,8 +65,12 @@ class RebarTesterBridge(Node):
             if not isinstance(exc, FileNotFoundError):
                 self.get_logger().warning(f"Cannot read rebar tester state: {exc}")
             return
-        for key, value in self.last_state.items():
+        for key in DEFAULTS:
+            value = self.last_state[key]
             self.state_publishers[key].publish(Float64(data=value))
+        self.gripped_publisher.publish(
+            Bool(data=self.last_state["rebar_gripped"])
+        )
 
 
 def main():

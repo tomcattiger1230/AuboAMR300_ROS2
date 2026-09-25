@@ -45,4 +45,6 @@ ros2 topic echo --once /rebar_tester/lower/opening_state
 
 四路指令可按任意顺序单独发送；未指定的机构保持自己的上次目标。上下横梁中心始终保持至少 0.28 m 距离；超出行程的指令会被钳制到边界。实现位置：`scripts/rebar_tester_bridge.py` 接收 ROS 2 指令，`scripts/rebar_tester_control.py` 在 Isaac 中限速更新模型，并发布实际状态。
 
-照片没有比例尺或机械图纸，尺寸和行程是仿真估计值。机架和控制台有静态碰撞体；移动横梁与抱爪为运动可视化模型，尚未模拟夹持力、钢筋拉伸/断裂、力传感或试验数据，也尚未同步到 MoveIt 规划场景。后续机械臂自动放置钢筋的计划见 [钢筋实验室场景](README_REBAR_LAB.md#下一步机械臂抓取并放置钢筋)。获得实物尺寸或 CAD 后，可保留 `/World/RebarTestMachine` 路径替换外观模型。
+在联合场景中，两组抱爪闭合且钢筋已对准夹持线、竖直放置时，Isaac 将钢筋刚体保持在当前位置，并在 `/rebar_tester/rebar_gripped`（`std_msgs/msg/Bool`）发布 `true`。自动装填脚本收到该反馈后才松开机械臂夹爪；张开任一组抱爪会解除保持。该行为用于装填流程验证，不代表真实夹持力。
+
+照片没有比例尺或机械图纸，尺寸和行程是仿真估计值。机架和控制台有静态碰撞体；移动横梁与抱爪为运动可视化模型，尚未模拟夹持力、钢筋拉伸/断裂、力传感或试验数据。自动装填脚本会临时向 MoveIt 加入机架与控制台碰撞体；详情见 [钢筋实验室场景](README_REBAR_LAB.md#机械臂抓取并放置钢筋)。获得实物尺寸或 CAD 后，可保留 `/World/RebarTestMachine` 路径替换外观模型。

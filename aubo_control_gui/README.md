@@ -149,22 +149,22 @@ cd ~/Develop/github/AuboAMR300_ROS2
 切换仿真机或 DDS domain：
 
 ```bash
-./scripts/start_macos_gui.command --peer 192.168.3.133 --domain-id 133
+./scripts/start_macos_gui.command --peer 192.168.0.103 --domain-id 133
 ```
 
 启动器设置 `RMW_IMPLEMENTATION=rmw_fastrtps_cpp`、`ROS_DOMAIN_ID=133`、
-`ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST` 和 `ROS_STATIC_PEERS=192.168.3.133`。
+`ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST` 和 `ROS_STATIC_PEERS=192.168.0.103`。
 启动器使用仓库内 `config/fastdds_macos.xml`（UDPv4、自动端口），覆盖进程继承的 DDS profile 和 discovery server 设置。
 这避免已有全局 profile 仅绑定 127.0.0.1 或固定端口而导致跨机失败；不会修改全局配置文件。
 静态 peer 为指定主机建立发现连接，不代表仅能访问该主机，也不是访问控制机制。
 远端 ROS 节点必须使用相同 domain、兼容的 DDS，发现范围不能为 OFF，且网络允许 DDS UDP 双向通信。
-如果需要在远端显式添加 Mac（当前地址 `192.168.3.131`），在启动相关 ROS 进程前设置：
+如果需要在远端显式添加 Mac，先查询 Mac 当前 IP（例如 `ipconfig getifaddr en0`），再在启动相关 ROS 进程前设置：
 
 ```bash
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 export ROS_DOMAIN_ID=133
 export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
-export ROS_STATIC_PEERS=192.168.3.131
+export ROS_STATIC_PEERS=192.168.0.241  # 替换为上一步查到的 Mac IP
 ```
 
 环境变量只影响之后启动的进程。Mac IP 变化时同步调整配置。

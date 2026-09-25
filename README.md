@@ -32,7 +32,7 @@ python3 scripts/check_git_portability.py
 
 ## 钢筋实验室仿真
 
-联合场景包含原 finger 复合机器人与钢筋取料工位，以及两台抗渗仪和一台可独立控制上下横梁、上下抱爪的钢筋拉伸测试机。模型文件、世界坐标和启动方法见[钢筋实验室场景](seer_description/README_REBAR_LAB.md)；四路 ROS 2 指令、行程和状态反馈见[钢筋测试机说明](seer_description/README_REBAR_TEST_MACHINE.md)。下一阶段计划让机械臂抓取钢筋并放置到拉伸测试机，目前该自动放置流程尚未实现。
+联合场景包含原 finger 复合机器人与钢筋取料工位，以及两台抗渗仪和一台可独立控制上下横梁、上下抱爪的钢筋拉伸测试机。模型文件、世界坐标和启动方法见[钢筋实验室场景](seer_description/README_REBAR_LAB.md)；四路 ROS 2 指令、行程和状态反馈见[钢筋测试机说明](seer_description/README_REBAR_TEST_MACHINE.md)。[自动装填脚本](seer_description/README_REBAR_TESTER_LOAD.md)已完成抓取至双抱爪闭合的仿真验证，松爪和撤回仍待联机验证。
 
 ## Mac GUI 快速启动
 
@@ -44,7 +44,7 @@ cd ~/Develop/github/AuboAMR300_ROS2
 ./scripts/start_macos_gui.command --execute
 ```
 
-默认仿真机 `192.168.3.133`、ROS domain `133`、`rmw_fastrtps_cpp`。
+默认仿真机 `192.168.0.103`、ROS domain `133`、`rmw_fastrtps_cpp`。
 检查成功应包含 `fresh: true`、`moveit: true`、`fk: true`、`plan_error_code: 1`。
 `--check` 只规划、不执行；`--check-gui` 验证窗口反馈和远端相机安装描述后自动关闭。
 `--execute` 允许单独点击执行，不会在启动时自动运动。
@@ -64,7 +64,7 @@ cd ~/Develop/github/AuboAMR300_ROS2
 
 - [车载钢筋装载](seer_description/README_REBAR_GRASP.md)：工位改为弧形防滚托座，机器人增加四个弧形料槽；抓取后将钢筋旋转 90°，保持水平，从车体侧面搬运、下探、释放和撤回。保留钢筋实际 TF 跟随检查，并增加掉落时取消执行。四个空槽独立装载各 24 项实测通过，撤回后三秒内位移均小于 0.3 mm；三槽已占用时放入第四根的 26 项检查也全部通过。
 - 修正后的 finger 末端四个学生原存储位，张开/闭合碰撞检查、规划和 Isaac 执行均通过；腕部位置误差 1.28–1.83 mm，原始坐标保持不变。[实测报告](aubo_control_gui/KEY_POSITION_VALIDATION.md)。
-- 末端黑白相机可通过[网页视频](http://192.168.3.133:8080/)和[单张图像](http://192.168.3.133:8080/snapshot.jpg)查看；启动命令见[相机文档](seer_description/README_MONO_CAMERA.md)。
+- 末端黑白相机可通过[网页视频](http://192.168.0.103:8080/)和[单张图像](http://192.168.0.103:8080/snapshot.jpg)查看；启动命令见[相机文档](seer_description/README_MONO_CAMERA.md)。
 - 新增钢筋抓取/释放测试（[文档](seer_description/README_REBAR_GRASP.md)）：臂展内钢筋工位
   （24 mm × 0.6 m、约 2.13 kg 的动态刚体钢筋 + 低摩擦支撑块）、finger 夹爪演示场景
   与自动化测试脚本；通过 `world -> rebar` 实际位姿验证夹持、提起、搬运和释放，
