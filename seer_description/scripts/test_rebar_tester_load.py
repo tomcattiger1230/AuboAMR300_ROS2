@@ -571,6 +571,12 @@ class TesterLoadTest(RebarGraspTest):
                     {j: unwind(candidate[j], current[j]) for j in ARM_JOINTS}
                 ]
             for variant in variants:
+                if (label == "insert_preposition"
+                        and (variant["shoulder_joint"] > -2.0
+                             or variant["wrist2_joint"] < 1.0)):
+                    # The +3.37 rad shoulder equivalent drove the loaded
+                    # arm away from the jaws and then stalled in PhysX.
+                    continue
                 cost = max(abs(variant[j] - current[j]) for j in ARM_JOINTS)
                 if (label == "insert_preposition" or
                         all(max(abs(variant[j] - other[j]) for j in ARM_JOINTS) > 0.02
@@ -628,8 +634,16 @@ class TesterLoadTest(RebarGraspTest):
                 stamp.sec, stamp.nanosec = divmod(nanoseconds, 1_000_000_000)
                 point.velocities = [value / 4 for value in point.velocities]
                 point.accelerations = [value / 16 for value in point.accelerations]
+        joint_path = plan.trajectory.joint_trajectory
+        target_joints = {
+            name: round(position, 3)
+            for name, position in zip(
+                joint_path.joint_names, joint_path.points[-1].positions
+            )
+        }
         self.record(label + "_joint_branch", True, attempt=attempt,
-                    candidates=len(candidates), trial=trial, points=points)
+                    candidates=len(candidates), trial=trial, points=points,
+                    target=target_joints)
         self.run_motion(label + "_joint", plan)
 
     @staticmethod
