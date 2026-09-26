@@ -560,7 +560,6 @@ class TesterLoadTest(RebarGraspTest):
             ):
                 plan = self.joint_plan(
                     planning_start, self.bounded_arm_for_planning(solution),
-                    scaling=0.05 if label == "insert_preposition" else 0.2,
                 )
                 if plan.error_code.val != 1:
                     continue
@@ -586,6 +585,15 @@ class TesterLoadTest(RebarGraspTest):
             )
         else:
             points, _, trial, attempt, plan = valid_plans[0]
+        if label == "insert_preposition":
+            # OMPL finds this route at its normal speed scaling, then the
+            # physical arm needs more time under load to track it accurately.
+            for point in plan.trajectory.joint_trajectory.points:
+                stamp = point.time_from_start
+                nanoseconds = (stamp.sec * 1_000_000_000 + stamp.nanosec) * 4
+                stamp.sec, stamp.nanosec = divmod(nanoseconds, 1_000_000_000)
+                point.velocities = [value / 4 for value in point.velocities]
+                point.accelerations = [value / 16 for value in point.accelerations]
         self.record(label + "_joint_branch", True, attempt=attempt,
                     candidates=len(candidates), trial=trial, points=points)
         self.run_motion(label + "_joint", plan)
