@@ -374,6 +374,21 @@ class TesterLoadTest(RebarGraspTest):
             raise RuntimeError("payload detach rejected")
         self._payload_monitor = False
 
+    def clear_released_payload_from_scene(self):
+        """Remove the former attached object after the tester takes the bar."""
+        from moveit_msgs.msg import PlanningScene
+
+        scene = PlanningScene(is_diff=True)
+        obj = CollisionObject()
+        obj.id = "carried_rebar"
+        obj.operation = CollisionObject.REMOVE
+        scene.world.collision_objects = [obj]
+        result = self.call(
+            self._scene_apply, ApplyPlanningScene.Request(scene=scene)
+        )
+        if not result.success:
+            raise RuntimeError("released payload scene cleanup rejected")
+
     def cartesian_motion_min(self, label, poses, min_fraction=0.93,
                              allow_joint_fallback=False):
         """Cartesian move tolerating an incomplete path (the next stage's
@@ -1006,6 +1021,7 @@ class TesterLoadTest(RebarGraspTest):
         self._base_hold_target = None
         self.stop_base()
         self.spin(1.0)
+        self.clear_released_payload_from_scene()
         for label, tcp in (
             ("retract_preposition", preinsert_base),
             ("retract_to_staging", VERTICALIZE_TCP_BASE),
