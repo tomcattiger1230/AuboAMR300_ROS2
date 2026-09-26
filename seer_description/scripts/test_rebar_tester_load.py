@@ -736,7 +736,7 @@ class TesterLoadTest(RebarGraspTest):
         fixed deadline alone.
         """
         deadline = time.monotonic() + 1500.0
-        last_progress_position = None
+        best_error = float("inf")
         stalled_since = None
         period = 1.0 / BASE_PUBLISH_HZ
         command = Twist()
@@ -768,23 +768,17 @@ class TesterLoadTest(RebarGraspTest):
                         f"base_{label}: drive timeout at "
                         f"({x:.2f}, {y:.2f}, {yaw:.2f})"
                     )
-                # Fail fast if nothing moves for a long stretch (stuck);
-                # slow-but-moving is fine at low real-time factor.
-                if last_progress_position is None:
-                    last_progress_position = (x, y, yaw)
+                # Oscillation also counts as a stall: require progress toward
+                # the target rather than mere change in wheel odometry.
+                error_score = distance + 0.3 * abs(yaw_error)
+                if error_score < best_error - 0.02:
+                    best_error = error_score
                     stalled_since = time.monotonic()
-                elif (
-                    math.hypot(
-                        x - last_progress_position[0], y - last_progress_position[1]
-                    )
-                    > 0.05
-                    or abs(yaw - last_progress_position[2]) > 0.05
-                ):
-                    last_progress_position = (x, y, yaw)
+                elif stalled_since is None:
                     stalled_since = time.monotonic()
                 elif time.monotonic() - stalled_since > 90.0:
                     raise RuntimeError(
-                        f"base_{label}: no progress for 90 s at "
+                        f"base_{label}: no target progress for 90 s at "
                         f"({x:.2f}, {y:.2f}, {yaw:.2f})"
                     )
                 if distance >= BASE_TOLERANCE_XY:
