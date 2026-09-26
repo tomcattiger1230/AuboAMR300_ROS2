@@ -52,6 +52,43 @@ ros2 run seer_description test_rebar_tester_load.py --manual-jaws
 ros2 run seer_description test_rebar_tester_load.py --resume-retract --output /tmp/retract.json
 ```
 
+### 分阶段任务节点
+
+阶段脚本统一放在 `scripts/rebar_tester_mission/`，ROS 安装后可用
+`ros2 run seer_description` 启动。实验室场景和 MoveIt 服务须先启动，
+并设置相同的 `ROS_DOMAIN_ID`。钢筋仍在起点取料工位；**先规划路线与
+机械臂可达性，再抓取，之后导航到测试机前，最后插入并交接**。
+
+```bash
+export ROS_DOMAIN_ID=133
+
+# 一键按阶段运行，任一步失败即停止；各阶段报告见 /tmp/rebar_tester_mission_reports/
+ros2 run seer_description run_all.sh
+
+# 或逐个运行，便于观察、调试和人工确认
+ros2 run seer_description 01_plan.py     --output /tmp/rebar_plan.json
+ros2 run seer_description 02_pick.py     --output /tmp/rebar_pick.json
+ros2 run seer_description 03_navigate.py --output /tmp/rebar_navigate.json
+ros2 run seer_description 04_insert.py   --output /tmp/rebar_insert.json
+ros2 run seer_description 05_handoff.py  --output /tmp/rebar_handoff.json
+ros2 run seer_description 06_retreat.py  --output /tmp/rebar_retreat.json
+```
+
+| 脚本 | 节点工作与完成条件 |
+|---|---|
+| `01_plan.py` | 确认钢筋在取料工位、底盘在起点；核对取筋及测试机插入位 IK；保存途经点 `(0,0) → (4.5,0) → (4.5,2.6) → (6,2.6) → (6,3.05)` 和停靠朝向 −90°。只执行规划，不驾驶或抓取。 |
+| `02_pick.py` | 预置测试机双爪，机械臂取筋并把钢筋抬到车体运输姿态；检查指尖、钢筋和临时抓取关节。 |
+| `03_navigate.py` | 确认仍持有钢筋；按规划途经点闭环驾驶，在测试机前 `(6.0,3.05)` 停靠，每段核对钢筋未滑脱。 |
+| `04_insert.py` | 确认底盘停靠，钢筋竖直化并送到夹持线；实测位置和轴向合格才结束。 |
+| `05_handoff.py` | 再次确认对位；闭合测试机上下爪，收到持筋反馈后机器人松爪。 |
+| `06_retreat.py` | 确认测试机仍持筋；底盘后退、机械臂收回并验证钢筋保持稳定。 |
+
+阶段检查点默认是 `/tmp/rebar_tester_mission.json`，可在所有命令中使用相同的
+`--state-file 路径` 更改。每个阶段只接受前一阶段成功的检查点，并重新读取
+机器人和测试机的实际状态；仿真重启后应从 `01_plan.py` 开始。规划阶段使用
+已在当前实验室验证的固定绕行途经点，导航执行的是 `/cmd_vel` 与里程计闭环控制，
+并未接入 Nav2 动态路径规划。原 `test_rebar_tester_load.py` 仍可一次连续运行。
+
 流程与判定：
 
 | 阶段 | 判定 |

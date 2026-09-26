@@ -149,6 +149,62 @@ class TesterLoadTest(RebarGraspTest):
             Bool, "/rebar_tester/base_locked", self._on_base_locked, 10
         )
 
+    def save_stage(self, stage, grasp=None):
+        """Persist only calibration and completed phase, never assumed robot state."""
+        if self.args.stage == "all":
+            return
+        path = Path(self.args.state_file)
+        state = {} if stage == "plan" else self.load_stage(required=False)
+        state["completed"] = stage
+        state["route_xy"] = [list(point) for point in BASE_DRIVE_WAYPOINTS_XY]
+        state["target_yaw"] = BASE_TARGET_YAW
+        if grasp is not None:
+            state["grasp_quat"] = list(grasp["grasp_quat"])
+            state["tcp_in_wrist"] = list(grasp["tcp_in_wrist"])
+            state["lift_tcp"] = list(grasp["lift_tcp"])
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_suffix(path.suffix + ".tmp")
+        temporary.write_text(json.dumps(state, indent=2), encoding="utf-8")
+        temporary.replace(path)
+
+    def load_stage(self, required=True):
+        path = Path(self.args.state_file)
+        if not path.exists():
+            if required:
+                raise RuntimeError(f"mission state missing: {path}; run 01_plan.py first")
+            return {}
+        return json.loads(path.read_text(encoding="utf-8"))
+
+    def require_previous_stage(self, expected):
+        state = self.load_stage()
+        if state.get("completed") != expected:
+            raise RuntimeError(
+                f"stage {self.args.stage} requires completed {expected}; "
+                f"state contains {state.get('completed')!r}"
+            )
+        if state.get("route_xy") != [list(point) for point in BASE_DRIVE_WAYPOINTS_XY]:
+            raise RuntimeError("planned route differs from current geometry; rerun 01_plan.py")
+        return state
+
+    @staticmethod
+    def wrist_pose_factory(grasp):
+        grasp_quat = tuple(grasp["grasp_quat"])
+        tcp_in_wrist = tuple(grasp["tcp_in_wrist"])
+
+        def wrist_pose_for(tcp, orientation=grasp_quat):
+            offset = quat_rotate(orientation, tcp_in_wrist)
+            position = tuple(a - b for a, b in zip(tcp, offset))
+            pose = Pose()
+            pose.position.x, pose.position.y, pose.position.z = position
+            pose.orientation.x, pose.orientation.y = orientation[0], orientation[1]
+            pose.orientation.z, pose.orientation.w = orientation[2], orientation[3]
+            stamped = PoseStamped()
+            stamped.header.frame_id = "base_footprint"
+            stamped.pose = pose
+            return stamped
+
+        return wrist_pose_for
+
     # ---------- tester bridge ----------
 
     def _tester_state_callback(self, key):
@@ -773,6 +829,16 @@ class TesterLoadTest(RebarGraspTest):
 
             return self.retract_arm(wrist_pose_for, preinsert_base, insert_quat)
 
+        stage = args.stage
+        if stage == "plan":
+            args.plan_only = True
+        predecessors = {
+            "pick": "plan", "navigate": "pick", "insert": "navigate",
+            "handoff": "insert", "retreat": "handoff",
+        }
+        if stage in predecessors:
+            self.require_previous_stage(predecessors[stage])
+
         # --- 1. tester bridge alive + pre-position for insertion ---------
         for key in TESTER_CHANNELS:
             if self.tester_state(key) is None:
@@ -784,7 +850,7 @@ class TesterLoadTest(RebarGraspTest):
                 "tester state topics unavailable; start the lab demo with "
                 "--rebar-tester and matching ROS_DOMAIN_ID"
             )
-        if not args.plan_only and not args.skip_preposition:
+        if stage in ("all", "pick") and not args.plan_only and not args.skip_preposition:
             self.command_tester("upper_z", 1.88)
             self.command_tester("lower_z", 1.05)
             self.command_tester("upper_opening", JAW_INSERT_OPENING)
@@ -799,266 +865,361 @@ class TesterLoadTest(RebarGraspTest):
         # --- 2. machine frame into the MoveIt planning scene -------------
         self.add_tester_to_scene()
 
-        # --- 3. grasp the rebar at the source station --------------------
-        grasp = self.grasp_at_station()
-        if args.plan_only:
-            self.check_insertion_reachability(grasp)
-            self.write_report()
-            return self._passed
+        if stage in ("all", "plan", "pick"):
+            # --- 3. grasp the rebar at the source station --------------------
+            grasp = self.grasp_at_station()
+            if args.plan_only:
+                self.check_insertion_reachability(grasp)
+                if stage == "plan":
+                    x, y, _ = self.base_pose()
+                    at_source = math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[0]) < 0.10
+                    self.record("base_at_source_waypoint", at_source,
+                                position=[round(x, 3), round(y, 3)])
+                    if not at_source:
+                        raise RuntimeError("base must start near the source waypoint")
+                    self.record("tester_route_planned", True,
+                                waypoints=[list(point) for point in BASE_DRIVE_WAYPOINTS_XY],
+                                target_yaw=BASE_TARGET_YAW)
+                    self.save_stage("plan")
+                self.write_report()
+                return self._passed
 
-        # Physical finger contact and the initial lift have already been
-        # verified. Add a temporary simulated joint for transport and rotation.
-        self.wait_for_robot_attachment()
+            # Physical finger contact and the initial lift have already been
+            # verified. Add a temporary simulated joint for transport and rotation.
 
-        # --- 4. carry pose: high and retracted ---------------------------
-        # Raising straight above the station exceeds the arm envelope
-        # (wrist radius ~1.04 m there); leave sideways at lift height
-        # first, follow the verified low route around the chassis, then
-        # climb to transport height once retracted close to the body.
-        wrist_pose_for, grasp_quat = grasp["wrist_pose_for"], grasp["grasp_quat"]
-        self.payload_scene(True)
-        lift_tcp = grasp["lift_tcp"]
-        # Raise straight to the proven 0.90 m clearance above the saddle,
-        # then one direct diagonal to the body side (the horizontal bar
-        # sweeps above the deck/rack at 0.90 m with clear headroom; the
-        # two-leg route around the chassis is IK-borderline in the
-        # closing-Y orientation).
-        carry_stages = [
-            (lift_tcp[0], lift_tcp[1], 0.90),
-            (CARRY_TCP_BASE[0], CARRY_TCP_BASE[1], 0.90),
-            CARRY_TCP_BASE,
-        ]
-        for index, tcp in enumerate(carry_stages, 1):
-            self.cartesian_motion(
-                f"carry_stage_{index}", [wrist_pose_for(tcp, grasp_quat).pose]
-            )
-            self.check_payload_while_parked(tcp, tolerance=0.05)
-
-        # --- 5. drive to the machine --------------------------------------
-        # Intermediate legs steer toward the next waypoint; the turning
-        # waypoint (6.0, 2.6) and the parking spot both command the final
-        # south-facing yaw, so the sweep-heavy 180 deg turn happens well
-        # clear of the cabinet and the last 0.4 m is a short reverse.
-        waypoints = BASE_DRIVE_WAYPOINTS_XY
-        for index in range(1, len(waypoints)):
-            target = waypoints[index]
-            if index >= len(waypoints) - 2:
-                yaw_target = BASE_TARGET_YAW
-            else:
-                following = waypoints[index + 1]
-                yaw_target = math.atan2(
-                    following[1] - target[1], following[0] - target[0]
-                )
-            label = (
-                "turn_south" if index == len(waypoints) - 2
-                else f"leg_{index}" if index < len(waypoints) - 1
-                else "park_at_tester"
-            )
-            self.drive_to(target, yaw_target, label)
-            self.check_payload_while_parked(CARRY_TCP_BASE)
-
-        # --- 6. reorient the bar to vertical, then insert -----------------
-        x, y, yaw = self.base_pose()
-        self.record(
-            "base_parked_at_tester",
-            True,
-            position=(round(x, 3), round(y, 3)),
-            yaw_deg=round(math.degrees(yaw), 1),
-        )
-        self._base_hold_target = (BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW)
-        # Insertion orientation: wrist Z points north (+Y world) toward the
-        # machine, wrist X stays world X, so motor Y (the bar) is vertical.
-        insert_quat = quat_from_basis((-1.0, 0.0, 0.0), (0.0, 1.0, 0.0))
-
-        # Reorient: first translate to the staging point keeping the bar
-        # horizontal, then rotate upright in place (the sweep plane stays
-        # clear of the shoulder at this distance).
-        self.cartesian_motion(
-            "move_to_verticalize_staging",
-            [wrist_pose_for(VERTICALIZE_TCP_BASE, grasp_quat).pose],
-        )
-        reorient_poses = []
-        for index in range(1, 25):
-            fraction = index / 24.0
-            orientation = quat_slerp(grasp_quat, insert_quat, fraction)
-            reorient_poses.append(
-                wrist_pose_for(VERTICALIZE_TCP_BASE, orientation).pose
-            )
-        self.cartesian_slow("reorient_to_vertical", reorient_poses)
-        axis = self.rebar_axis_in_base()
-        vertical = abs(axis[2]) > 0.95
-        self.record("rebar_vertical", vertical, axis_in_base=list(axis))
-        if not vertical:
-            raise RuntimeError("bar did not end up vertical after reorientation")
-
-        # Sample the current pose after reorientation: wheel feedback keeps
-        # the base parked without overconstraining the physical arm.
-        self.spin(0.2)
-        self.record("base_after_verticalization", True,
-                    base_pose=[round(v, 3) for v in self.base_pose()])
-        base_position, base_quat = self._base_position, self._base_quat
-
-        def world_to_base(world_xyz):
-            relative = tuple(
-                a - b for a, b in zip(world_xyz, base_position)
-            )
-            return quat_rotate(quat_conjugate(base_quat), relative)
-
-        grip_base = world_to_base(
-            (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - INSERT_Y_INSET, BAR_HOLD_Z)
-        )
-        preinsert_base = world_to_base(
-            (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
-        )
-
-        # This diagonal transition's Cartesian solver stops near its end at
-        # the 1.50 m bar height. Follow its verified collision-free prefix;
-        # the next short insertion target closes the remaining distance.
-        self.cartesian_motion_min(
-            "insert_preposition", [wrist_pose_for(preinsert_base, insert_quat).pose],
-            min_fraction=0.80,
-        )
-        # Two short pushes instead of one long one: the KDL chain solves
-        # more reliably over short segments near the workspace edge.
-        mid_base = world_to_base(
-            (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.15, BAR_HOLD_Z)
-        )
-        for label, tcp in (("insert_midway", mid_base), ("insert_to_gripline", grip_base)):
-            pose = wrist_pose_for(tcp, insert_quat).pose
-            if label == "insert_to_gripline":
-                # The last ~2 cm can exceed the IK envelope. The jaw window
-                # accepts this collision-free prefix, and the measured bar
-                # alignment gate below decides whether clamping is safe.
-                self.cartesian_motion_min(label, [pose], min_fraction=0.80)
-                continue
-            if not self.cartesian_motion_min(
-                label, [pose], min_fraction=0.97, allow_joint_fallback=True
-            ):
-                # The Cartesian solver stalls on an IK branch switch here;
-                # reach the same pose through joint-space planning instead.
-                self.joint_fallback(label, wrist_pose_for(tcp, insert_quat))
-
-        self.wait_for_base_to_settle()
-        for attempt in range(1, 4):
-            self.spin(0.2)
-            measured = self.rebar_position()
-            if (abs(measured[0] - GRIP_LINE_XY[0]) < 0.035
-                    and abs(measured[1] - GRIP_LINE_XY[1]) < 0.055
-                    and abs(measured[2] - BAR_CENTER_Z) < 0.08):
-                break
-            # The base can move under arm reaction loads even while the
-            # wheel controller holds position. Recompute the insertion TCP
-            # from the current odometry instead of reusing its parked pose.
-            current_base_position, current_base_quat = (
-                self._base_position, self._base_quat
-            )
-            target_world = (
-                GRIP_LINE_XY[0], GRIP_LINE_XY[1] - INSERT_Y_INSET, BAR_HOLD_Z
-            )
-            relative = tuple(a - b for a, b in zip(target_world, current_base_position))
-            corrected_tcp = quat_rotate(
-                quat_conjugate(current_base_quat), relative
-            )
-            self.cartesian_motion_min(
-                f"align_rebar_{attempt}",
-                [wrist_pose_for(corrected_tcp, insert_quat).pose],
-                min_fraction=0.50,
-            )
-        inserted = self.rebar_position()
-        axis = self.rebar_axis_in_base()
-        aligned = (
-            abs(inserted[0] - GRIP_LINE_XY[0]) < 0.035
-            and abs(inserted[1] - GRIP_LINE_XY[1]) < 0.055
-            and abs(inserted[2] - BAR_CENTER_Z) < 0.08
-            and abs(axis[2]) > 0.95
-        )
-        self.record(
-            "rebar_aligned_in_jaws", aligned,
-            position=[round(value, 3) for value in inserted],
-            axis_in_base=[round(value, 3) for value in axis],
-            base_pose=[round(value, 3) for value in self.base_pose()],
-        )
-        if not aligned:
-            raise RuntimeError("rebar is outside the tester jaw grip window")
-
-        # --- 7. clamp with the tester jaws --------------------------------
-        if args.manual_jaws:
-            self.get_logger().warning(
-                "manual jaw mode: use rebar_tester_gui.py to close the jaws "
-                "(lower_z 1.12, upper_z 1.87, openings 0.024), then press Enter"
-            )
-            self.wait_for_enter("闭合抱爪后按回车继续…")
-            lower = self.tester_state("lower_z", max_age=5.0)
-            upper = self.tester_state("upper_z", max_age=5.0)
-            openings = (
-                self.tester_state("upper_opening", max_age=5.0),
-                self.tester_state("lower_opening", max_age=5.0),
-            )
-            clamped = (
-                lower is not None and abs(lower - LOWER_JAW_GRIP_Z) < 0.02
-                and upper is not None and abs(upper - UPPER_JAW_GRIP_Z) < 0.02
-                and all(
-                    value is not None and abs(value - JAW_CLOSE_OPENING) < 0.01
-                    for value in openings
-                )
-            )
-            self.record(
-                "tester_jaws_clamped_manual", clamped,
-                lower_z=lower, upper_z=upper, openings=openings,
-            )
-            if not clamped:
-                raise RuntimeError("tester jaws are not at the requested clamp position")
         else:
-            self.command_tester("lower_z", LOWER_JAW_GRIP_Z)
-            self.command_tester("upper_z", UPPER_JAW_GRIP_Z)
-            lower_open = self.command_tester(
-                "lower_opening", JAW_CLOSE_OPENING, tolerance=0.004
+            grasp = self.load_stage()
+            grasp["wrist_pose_for"] = self.wrist_pose_factory(grasp)
+            wrist_pose_for = grasp["wrist_pose_for"]
+            grasp_quat = tuple(grasp["grasp_quat"])
+            self.spin(0.3)
+
+        if stage in ("all", "pick"):
+            # Check the physical grasp joint before transporting the bar.
+            self.wait_for_robot_attachment()
+            # --- 4. carry pose: high and retracted ---------------------------
+            # Raising straight above the station exceeds the arm envelope
+            # (wrist radius ~1.04 m there); leave sideways at lift height
+            # first, follow the verified low route around the chassis, then
+            # climb to transport height once retracted close to the body.
+            wrist_pose_for, grasp_quat = grasp["wrist_pose_for"], grasp["grasp_quat"]
+            self.payload_scene(True)
+            lift_tcp = grasp["lift_tcp"]
+            # Raise straight to the proven 0.90 m clearance above the saddle,
+            # then one direct diagonal to the body side (the horizontal bar
+            # sweeps above the deck/rack at 0.90 m with clear headroom; the
+            # two-leg route around the chassis is IK-borderline in the
+            # closing-Y orientation).
+            carry_stages = [
+                (lift_tcp[0], lift_tcp[1], 0.90),
+                (CARRY_TCP_BASE[0], CARRY_TCP_BASE[1], 0.90),
+                CARRY_TCP_BASE,
+            ]
+            for index, tcp in enumerate(carry_stages, 1):
+                self.cartesian_motion(
+                    f"carry_stage_{index}", [wrist_pose_for(tcp, grasp_quat).pose]
+                )
+                self.check_payload_while_parked(tcp, tolerance=0.05)
+
+            if stage == "pick":
+                self.save_stage("pick", grasp)
+                self.write_report()
+                return self._passed
+
+        if stage in ("all", "navigate"):
+            if stage == "navigate":
+                self.wait_for_robot_attachment()
+                self.check_payload_while_parked(CARRY_TCP_BASE)
+            # --- 5. drive to the machine --------------------------------------
+            # Intermediate legs steer toward the next waypoint; the turning
+            # waypoint (6.0, 2.6) and the parking spot both command the final
+            # south-facing yaw, so the sweep-heavy 180 deg turn happens well
+            # clear of the cabinet and the last 0.4 m is a short reverse.
+            waypoints = BASE_DRIVE_WAYPOINTS_XY
+            for index in range(1, len(waypoints)):
+                target = waypoints[index]
+                if index >= len(waypoints) - 2:
+                    yaw_target = BASE_TARGET_YAW
+                else:
+                    following = waypoints[index + 1]
+                    yaw_target = math.atan2(
+                        following[1] - target[1], following[0] - target[0]
+                    )
+                label = (
+                    "turn_south" if index == len(waypoints) - 2
+                    else f"leg_{index}" if index < len(waypoints) - 1
+                    else "park_at_tester"
+                )
+                self.drive_to(target, yaw_target, label)
+                self.check_payload_while_parked(CARRY_TCP_BASE)
+
+            if stage == "navigate":
+                self.save_stage("navigate")
+                self.write_report()
+                return self._passed
+
+        if stage in ("all", "insert"):
+            if stage == "insert":
+                x, y, yaw = self.base_pose()
+                parked = (math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1]) < 0.04
+                          and abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
+                                             math.cos(yaw - BASE_TARGET_YAW))) < 0.04)
+                self.record("base_parked_before_insert", parked,
+                            position=[x, y], yaw=yaw)
+                if not parked:
+                    raise RuntimeError("base is not at the planned tester waypoint")
+                self.wait_for_robot_attachment()
+                self.payload_scene(True)
+            # --- 6. reorient the bar to vertical, then insert -----------------
+            x, y, yaw = self.base_pose()
+            self.record(
+                "base_parked_at_tester",
+                True,
+                position=(round(x, 3), round(y, 3)),
+                yaw_deg=round(math.degrees(yaw), 1),
             )
-            upper_open = self.command_tester(
-                "upper_opening", JAW_CLOSE_OPENING, tolerance=0.004
+            self._base_hold_target = (BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW)
+            # Insertion orientation: wrist Z points north (+Y world) toward the
+            # machine, wrist X stays world X, so motor Y (the bar) is vertical.
+            insert_quat = quat_from_basis((-1.0, 0.0, 0.0), (0.0, 1.0, 0.0))
+
+            # Reorient: first translate to the staging point keeping the bar
+            # horizontal, then rotate upright in place (the sweep plane stays
+            # clear of the shoulder at this distance).
+            self.cartesian_motion(
+                "move_to_verticalize_staging",
+                [wrist_pose_for(VERTICALIZE_TCP_BASE, grasp_quat).pose],
+            )
+            reorient_poses = []
+            for index in range(1, 25):
+                fraction = index / 24.0
+                orientation = quat_slerp(grasp_quat, insert_quat, fraction)
+                reorient_poses.append(
+                    wrist_pose_for(VERTICALIZE_TCP_BASE, orientation).pose
+                )
+            self.cartesian_slow("reorient_to_vertical", reorient_poses)
+            axis = self.rebar_axis_in_base()
+            vertical = abs(axis[2]) > 0.95
+            self.record("rebar_vertical", vertical, axis_in_base=list(axis))
+            if not vertical:
+                raise RuntimeError("bar did not end up vertical after reorientation")
+
+            # Sample the current pose after reorientation: wheel feedback keeps
+            # the base parked without overconstraining the physical arm.
+            self.spin(0.2)
+            self.record("base_after_verticalization", True,
+                        base_pose=[round(v, 3) for v in self.base_pose()])
+            base_position, base_quat = self._base_position, self._base_quat
+
+            def world_to_base(world_xyz):
+                relative = tuple(
+                    a - b for a, b in zip(world_xyz, base_position)
+                )
+                return quat_rotate(quat_conjugate(base_quat), relative)
+
+            grip_base = world_to_base(
+                (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - INSERT_Y_INSET, BAR_HOLD_Z)
+            )
+            preinsert_base = world_to_base(
+                (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
+            )
+
+            # This diagonal transition's Cartesian solver stops near its end at
+            # the 1.50 m bar height. Follow its verified collision-free prefix;
+            # the next short insertion target closes the remaining distance.
+            self.cartesian_motion_min(
+                "insert_preposition", [wrist_pose_for(preinsert_base, insert_quat).pose],
+                min_fraction=0.80,
+            )
+            # Two short pushes instead of one long one: the KDL chain solves
+            # more reliably over short segments near the workspace edge.
+            mid_base = world_to_base(
+                (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.15, BAR_HOLD_Z)
+            )
+            for label, tcp in (("insert_midway", mid_base), ("insert_to_gripline", grip_base)):
+                pose = wrist_pose_for(tcp, insert_quat).pose
+                if label == "insert_to_gripline":
+                    # The last ~2 cm can exceed the IK envelope. The jaw window
+                    # accepts this collision-free prefix, and the measured bar
+                    # alignment gate below decides whether clamping is safe.
+                    self.cartesian_motion_min(label, [pose], min_fraction=0.80)
+                    continue
+                if not self.cartesian_motion_min(
+                    label, [pose], min_fraction=0.97, allow_joint_fallback=True
+                ):
+                    # The Cartesian solver stalls on an IK branch switch here;
+                    # reach the same pose through joint-space planning instead.
+                    self.joint_fallback(label, wrist_pose_for(tcp, insert_quat))
+
+            self.wait_for_base_to_settle()
+            for attempt in range(1, 4):
+                self.spin(0.2)
+                measured = self.rebar_position()
+                if (abs(measured[0] - GRIP_LINE_XY[0]) < 0.035
+                        and abs(measured[1] - GRIP_LINE_XY[1]) < 0.055
+                        and abs(measured[2] - BAR_CENTER_Z) < 0.08):
+                    break
+                # The base can move under arm reaction loads even while the
+                # wheel controller holds position. Recompute the insertion TCP
+                # from the current odometry instead of reusing its parked pose.
+                current_base_position, current_base_quat = (
+                    self._base_position, self._base_quat
+                )
+                target_world = (
+                    GRIP_LINE_XY[0], GRIP_LINE_XY[1] - INSERT_Y_INSET, BAR_HOLD_Z
+                )
+                relative = tuple(a - b for a, b in zip(target_world, current_base_position))
+                corrected_tcp = quat_rotate(
+                    quat_conjugate(current_base_quat), relative
+                )
+                self.cartesian_motion_min(
+                    f"align_rebar_{attempt}",
+                    [wrist_pose_for(corrected_tcp, insert_quat).pose],
+                    min_fraction=0.50,
+                )
+            inserted = self.rebar_position()
+            axis = self.rebar_axis_in_base()
+            aligned = (
+                abs(inserted[0] - GRIP_LINE_XY[0]) < 0.035
+                and abs(inserted[1] - GRIP_LINE_XY[1]) < 0.055
+                and abs(inserted[2] - BAR_CENTER_Z) < 0.08
+                and abs(axis[2]) > 0.95
             )
             self.record(
-                "tester_jaws_clamped",
-                True,
-                lower_z=self.tester_state("lower_z"),
-                upper_z=self.tester_state("upper_z"),
-                openings=(upper_open, lower_open),
+                "rebar_aligned_in_jaws", aligned,
+                position=[round(value, 3) for value in inserted],
+                axis_in_base=[round(value, 3) for value in axis],
+                base_pose=[round(value, 3) for value in self.base_pose()],
             )
-        # --- 8. release and verify the bar stays on the grip line ---------
-        self.wait_for_tester_grip()
-        self.detach_payload()
-        handle = self.send_gripper(0.0, 1.5)
-        wrapped = self.wait_gripper_result(handle)
-        self.spin(0.5)
-        opened = self.finger_positions()
-        released = (
-            wrapped is not None
-            and wrapped.status == GoalStatus.STATUS_SUCCEEDED
-            and all(value is not None and abs(value) < 0.003 for value in opened)
-        )
-        self.record(
-            "robot_fingers_released",
-            released,
-            fingers=opened,
-        )
-        if not released:
-            raise RuntimeError("robot fingers did not open after tester clamping")
-        self.spin(2.0)
-        held = self.rebar_position()
-        stayed = (
-            abs(held[0] - GRIP_LINE_XY[0]) < 0.03
-            and abs(held[1] - GRIP_LINE_XY[1]) < 0.05
-            and abs(held[2] - BAR_CENTER_Z) < 0.08
-        )
-        self.record(
-            "rebar_held_by_tester",
-            stayed,
-            position=[round(v, 3) for v in held],
-            expected=[GRIP_LINE_XY[0], GRIP_LINE_XY[1], BAR_CENTER_Z],
-        )
-        if not stayed:
-            self.write_report()
-            raise RuntimeError("rebar was not retained by the tester jaws")
+            if not aligned:
+                raise RuntimeError("rebar is outside the tester jaw grip window")
+
+            if stage == "insert":
+                self.save_stage("insert")
+                self.write_report()
+                return self._passed
+
+        if stage in ("all", "handoff"):
+            if stage == "handoff":
+                self._base_hold_target = (BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW)
+                measured = self.rebar_position()
+                axis = self.rebar_axis_in_base()
+                aligned = (abs(measured[0] - GRIP_LINE_XY[0]) < 0.035
+                           and abs(measured[1] - GRIP_LINE_XY[1]) < 0.055
+                           and abs(measured[2] - BAR_CENTER_Z) < 0.08
+                           and abs(axis[2]) > 0.95)
+                self.record("rebar_aligned_before_handoff", aligned,
+                            position=list(measured), axis=list(axis))
+                if not aligned:
+                    raise RuntimeError("rebar is outside the tester jaw grip window")
+                self.wait_for_robot_attachment()
+                self.payload_scene(True)
+            # --- 7. clamp with the tester jaws --------------------------------
+            if args.manual_jaws:
+                self.get_logger().warning(
+                    "manual jaw mode: use rebar_tester_gui.py to close the jaws "
+                    "(lower_z 1.12, upper_z 1.87, openings 0.024), then press Enter"
+                )
+                self.wait_for_enter("闭合抱爪后按回车继续…")
+                lower = self.tester_state("lower_z", max_age=5.0)
+                upper = self.tester_state("upper_z", max_age=5.0)
+                openings = (
+                    self.tester_state("upper_opening", max_age=5.0),
+                    self.tester_state("lower_opening", max_age=5.0),
+                )
+                clamped = (
+                    lower is not None and abs(lower - LOWER_JAW_GRIP_Z) < 0.02
+                    and upper is not None and abs(upper - UPPER_JAW_GRIP_Z) < 0.02
+                    and all(
+                        value is not None and abs(value - JAW_CLOSE_OPENING) < 0.01
+                        for value in openings
+                    )
+                )
+                self.record(
+                    "tester_jaws_clamped_manual", clamped,
+                    lower_z=lower, upper_z=upper, openings=openings,
+                )
+                if not clamped:
+                    raise RuntimeError("tester jaws are not at the requested clamp position")
+            else:
+                self.command_tester("lower_z", LOWER_JAW_GRIP_Z)
+                self.command_tester("upper_z", UPPER_JAW_GRIP_Z)
+                lower_open = self.command_tester(
+                    "lower_opening", JAW_CLOSE_OPENING, tolerance=0.004
+                )
+                upper_open = self.command_tester(
+                    "upper_opening", JAW_CLOSE_OPENING, tolerance=0.004
+                )
+                self.record(
+                    "tester_jaws_clamped",
+                    True,
+                    lower_z=self.tester_state("lower_z"),
+                    upper_z=self.tester_state("upper_z"),
+                    openings=(upper_open, lower_open),
+                )
+            # --- 8. release and verify the bar stays on the grip line ---------
+            self.wait_for_tester_grip()
+            self.detach_payload()
+            handle = self.send_gripper(0.0, 1.5)
+            wrapped = self.wait_gripper_result(handle)
+            self.spin(0.5)
+            opened = self.finger_positions()
+            released = (
+                wrapped is not None
+                and wrapped.status == GoalStatus.STATUS_SUCCEEDED
+                and all(value is not None and abs(value) < 0.003 for value in opened)
+            )
+            self.record(
+                "robot_fingers_released",
+                released,
+                fingers=opened,
+            )
+            if not released:
+                raise RuntimeError("robot fingers did not open after tester clamping")
+            self.spin(2.0)
+            held = self.rebar_position()
+            stayed = (
+                abs(held[0] - GRIP_LINE_XY[0]) < 0.03
+                and abs(held[1] - GRIP_LINE_XY[1]) < 0.05
+                and abs(held[2] - BAR_CENTER_Z) < 0.08
+            )
+            self.record(
+                "rebar_held_by_tester",
+                stayed,
+                position=[round(v, 3) for v in held],
+                expected=[GRIP_LINE_XY[0], GRIP_LINE_XY[1], BAR_CENTER_Z],
+            )
+            if not stayed:
+                self.write_report()
+                raise RuntimeError("rebar was not retained by the tester jaws")
+
+            if stage == "handoff":
+                self.save_stage("handoff")
+                self.write_report()
+                return self._passed
+
+        if stage == "retreat":
+            self.spin(0.3)
+            held = self.rebar_position()
+            ready = (self._tester_gripped
+                     and abs(held[0] - GRIP_LINE_XY[0]) < 0.03
+                     and abs(held[1] - GRIP_LINE_XY[1]) < 0.05
+                     and abs(held[2] - BAR_CENTER_Z) < 0.08)
+            self.record("retreat_ready", ready, position=list(held))
+            if not ready:
+                raise RuntimeError("tester does not hold an aligned rebar")
+            base_position, base_quat = self._base_position, self._base_quat
+            target_world = (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
+            preinsert_base = quat_rotate(
+                quat_conjugate(base_quat),
+                tuple(a - b for a, b in zip(target_world, base_position)),
+            )
+            insert_quat = quat_from_basis((-1.0, 0.0, 0.0), (0.0, 1.0, 0.0))
+            wrist_pose_for = grasp["wrist_pose_for"]
+            result = self.retract_arm(wrist_pose_for, preinsert_base, insert_quat)
+            if result:
+                self.save_stage("retreat")
+            return result
 
         # --- 9. retract the arm --------------------------------------------
         return self.retract_arm(wrist_pose_for, preinsert_base, insert_quat)
@@ -1280,6 +1441,7 @@ class TesterLoadTest(RebarGraspTest):
             return {
                 "wrist_pose_for": wrist_pose_for,
                 "grasp_quat": grasp_quat,
+                "tcp_in_wrist": tcp_in_wrist,
                 "lift_tcp": None,
             }
         entry["execution_code"] = self.execute(descend.solution)
@@ -1337,6 +1499,7 @@ class TesterLoadTest(RebarGraspTest):
         return {
             "wrist_pose_for": wrist_pose_for,
             "grasp_quat": grasp_quat,
+            "tcp_in_wrist": tcp_in_wrist,
             "lift_tcp": lift_tcp,
         }
 
@@ -1432,6 +1595,11 @@ def build_parser():
     parser.add_argument("--skip-preposition", action="store_true",
                         help="assume the tester is already pre-positioned")
     parser.add_argument("--plan-only", action="store_true")
+    parser.add_argument("--stage", choices=("all", "plan", "pick", "navigate",
+                                             "insert", "handoff", "retreat"),
+                        default="all", help="run one restartable mission phase")
+    parser.add_argument("--state-file", default="/tmp/rebar_tester_mission.json",
+                        help="shared JSON phase checkpoint for staged execution")
     parser.add_argument("--resume-retract", action="store_true",
                         help="continue arm retraction after a verified tester handoff")
     parser.add_argument("--output", default="rebar_tester_load_result.json")

@@ -63,10 +63,18 @@ install(PROGRAMS
   scripts/rebar_tester_gui.py
   scripts/rebar_tester_gui_qt.py
   scripts/test_rebar_tester_load.py
+  scripts/rebar_tester_mission/01_plan.py
+  scripts/rebar_tester_mission/02_pick.py
+  scripts/rebar_tester_mission/03_navigate.py
+  scripts/rebar_tester_mission/04_insert.py
+  scripts/rebar_tester_mission/05_handoff.py
+  scripts/rebar_tester_mission/06_retreat.py
+  scripts/rebar_tester_mission/run_all.sh
   DESTINATION lib/${PROJECT_NAME}
 )
 
-install(FILES scripts/rebar_experiment_geometry.py scripts/rebar_tester_control.py DESTINATION lib/${PROJECT_NAME})
+install(FILES scripts/rebar_experiment_geometry.py scripts/rebar_tester_control.py
+  scripts/rebar_tester_mission/stage_entry.py DESTINATION lib/${PROJECT_NAME})
 
 install(FILES
   README_ISAAC_ROS2.md
