@@ -390,10 +390,26 @@ class TesterLoadTest(RebarGraspTest):
             raise RuntimeError("released payload scene cleanup rejected")
 
     def cartesian_motion_min(self, label, poses, min_fraction=0.93,
-                             allow_joint_fallback=False):
+                             allow_joint_fallback=False, speed_scale=None):
         """Cartesian move tolerating an incomplete path (the next stage's
         endpoint corrects the residual); used for long approach translates."""
-        response = self.cartesian(self.current_arm(), poses)
+        if speed_scale is None:
+            response = self.cartesian(self.current_arm(), poses)
+        else:
+            from moveit_msgs.srv import GetCartesianPath
+
+            request = GetCartesianPath.Request()
+            request.header.frame_id = "base_footprint"
+            request.group_name = "arm"
+            request.link_name = "wrist3_Link"
+            request.start_state = self.robot_state(self.current_arm())
+            request.waypoints = poses
+            request.max_step = 0.005
+            request.avoid_collisions = True
+            if hasattr(request, "max_velocity_scaling_factor"):
+                request.max_velocity_scaling_factor = speed_scale
+                request.max_acceleration_scaling_factor = speed_scale
+            response = self.call(self._cartesian_client, request)
         if response.fraction < min_fraction:
             self.record(label + "_cartesian", allow_joint_fallback,
                         fraction=response.fraction,
@@ -1029,7 +1045,7 @@ class TesterLoadTest(RebarGraspTest):
             pose = wrist_pose_for(tcp, insert_quat)
             if not self.cartesian_motion_min(
                 label, [pose.pose], min_fraction=0.95,
-                allow_joint_fallback=True,
+                allow_joint_fallback=True, speed_scale=0.04,
             ):
                 self.joint_fallback(label, pose)
         park = dict(zip(ARM_JOINTS, (0.0, -0.35, 0.6, 0.0, 0.35, 0.0)))
