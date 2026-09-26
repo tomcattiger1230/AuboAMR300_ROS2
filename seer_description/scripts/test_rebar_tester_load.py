@@ -539,8 +539,9 @@ class TesterLoadTest(RebarGraspTest):
                 continue
             candidate = {j: unwind(candidate[j], current[j]) for j in ARM_JOINTS}
             cost = max(abs(candidate[j] - current[j]) for j in ARM_JOINTS)
-            if all(max(abs(candidate[j] - other[j]) for j in ARM_JOINTS) > 0.02
-                   for _, other in candidates):
+            if (label == "insert_preposition" or
+                    all(max(abs(candidate[j] - other[j]) for j in ARM_JOINTS) > 0.02
+                        for _, other in candidates)):
                 candidates.append((cost, candidate))
         if not candidates:
             self.record(label + "_ik", False)
