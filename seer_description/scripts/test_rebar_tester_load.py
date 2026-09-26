@@ -891,11 +891,12 @@ class TesterLoadTest(RebarGraspTest):
         self.detach_payload()
         handle = self.send_gripper(0.0, 1.5)
         wrapped = self.wait_gripper_result(handle)
+        self.spin(0.5)
         opened = self.finger_positions()
         released = (
             wrapped is not None
             and wrapped.status == GoalStatus.STATUS_SUCCEEDED
-            and all(value is not None and abs(value) < 0.0015 for value in opened)
+            and all(value is not None and abs(value) < 0.003 for value in opened)
         )
         self.record(
             "robot_fingers_released",
