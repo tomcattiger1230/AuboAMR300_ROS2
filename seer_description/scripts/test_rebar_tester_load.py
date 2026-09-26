@@ -1062,9 +1062,21 @@ class TesterLoadTest(RebarGraspTest):
             ):
                 self.joint_fallback(label, pose)
         park = dict(zip(ARM_JOINTS, (0.0, -0.35, 0.6, 0.0, 0.35, 0.0)))
-        plan = self.joint_plan(
-            self.bounded_arm_for_planning(self.current_arm()), park
-        )
+        plan = None
+        for attempt in range(1, 6):
+            candidate = self.joint_plan(
+                self.bounded_arm_for_planning(self.current_arm()), park
+            )
+            if candidate.error_code.val == 1:
+                plan = candidate
+                self.record("arm_park_plan", True, attempt=attempt)
+                break
+            self.get_logger().warning(
+                f"arm park plan attempt {attempt}/5 rejected: {candidate.error_code.val}"
+            )
+        if plan is None:
+            self.record("arm_park_plan", False, attempts=5)
+            raise RuntimeError("arm park has no collision-valid path")
         self.run_motion("arm_parked", plan)
 
         self.spin(1.0)
