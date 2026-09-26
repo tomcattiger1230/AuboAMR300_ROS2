@@ -676,7 +676,7 @@ class TesterLoadTest(RebarGraspTest):
 
         if args.resume_retract:
             self.add_tester_to_scene()
-            self._base_hold_target = (BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW)
+            self.stop_base()
             held = self.rebar_position()
             ready = (self._tester_gripped
                      and abs(held[0] - GRIP_LINE_XY[0]) < 0.03
@@ -1001,6 +1001,11 @@ class TesterLoadTest(RebarGraspTest):
         return self.retract_arm(wrist_pose_for, preinsert_base, insert_quat)
 
     def retract_arm(self, wrist_pose_for, preinsert_base, insert_quat):
+        # Once the tester owns the bar, wheel correction is unnecessary and
+        # can perturb the physical arm between planning and execution.
+        self._base_hold_target = None
+        self.stop_base()
+        self.spin(1.0)
         for label, tcp in (
             ("retract_preposition", preinsert_base),
             ("retract_to_staging", VERTICALIZE_TCP_BASE),
