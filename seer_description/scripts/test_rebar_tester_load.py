@@ -661,6 +661,42 @@ class TesterLoadTest(RebarGraspTest):
             raise RuntimeError(f"action unavailable: {args.action_name}")
         self.spin(2.0)
 
+        if args.resume_retract:
+            self.add_tester_to_scene()
+            self._base_hold_target = (BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW)
+            held = self.rebar_position()
+            ready = (self._tester_gripped
+                     and abs(held[0] - GRIP_LINE_XY[0]) < 0.03
+                     and abs(held[1] - GRIP_LINE_XY[1]) < 0.05
+                     and abs(held[2] - BAR_CENTER_Z) < 0.08)
+            self.record("resume_retract_ready", ready,
+                        position=[round(v, 3) for v in held])
+            if not ready:
+                raise RuntimeError("tester does not hold an aligned rebar")
+            base_position, base_quat = self._base_position, self._base_quat
+            target_world = (
+                GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z
+            )
+            preinsert_base = quat_rotate(
+                quat_conjugate(base_quat),
+                tuple(a - b for a, b in zip(target_world, base_position)),
+            )
+            insert_quat = quat_from_basis((-1.0, 0.0, 0.0), (0.0, 1.0, 0.0))
+
+            def wrist_pose_for(tcp, orientation):
+                offset = quat_rotate(orientation, (0.0, 0.0, args.tcp_z))
+                position = tuple(a - b for a, b in zip(tcp, offset))
+                pose = Pose()
+                pose.position.x, pose.position.y, pose.position.z = position
+                pose.orientation.x, pose.orientation.y = orientation[0], orientation[1]
+                pose.orientation.z, pose.orientation.w = orientation[2], orientation[3]
+                stamped = PoseStamped()
+                stamped.header.frame_id = "base_footprint"
+                stamped.pose = pose
+                return stamped
+
+            return self.retract_arm(wrist_pose_for, preinsert_base, insert_quat)
+
         # --- 1. tester bridge alive + pre-position for insertion ---------
         for key in TESTER_CHANNELS:
             if self.tester_state(key) is None:
@@ -949,13 +985,19 @@ class TesterLoadTest(RebarGraspTest):
             raise RuntimeError("rebar was not retained by the tester jaws")
 
         # --- 9. retract the arm --------------------------------------------
-        self.cartesian_motion(
-            "retract_preposition", [wrist_pose_for(preinsert_base, insert_quat).pose]
-        )
-        self.cartesian_motion(
-            "retract_to_staging",
-            [wrist_pose_for(VERTICALIZE_TCP_BASE, insert_quat).pose],
-        )
+        return self.retract_arm(wrist_pose_for, preinsert_base, insert_quat)
+
+    def retract_arm(self, wrist_pose_for, preinsert_base, insert_quat):
+        for label, tcp in (
+            ("retract_preposition", preinsert_base),
+            ("retract_to_staging", VERTICALIZE_TCP_BASE),
+        ):
+            pose = wrist_pose_for(tcp, insert_quat)
+            if not self.cartesian_motion_min(
+                label, [pose.pose], min_fraction=0.95,
+                allow_joint_fallback=True,
+            ):
+                self.joint_fallback(label, pose)
         park = dict(zip(ARM_JOINTS, (0.0, -0.35, 0.6, 0.0, 0.35, 0.0)))
         plan = self.joint_plan(self.current_arm(), park)
         self.run_motion("arm_parked", plan)
@@ -1288,6 +1330,8 @@ def build_parser():
     parser.add_argument("--skip-preposition", action="store_true",
                         help="assume the tester is already pre-positioned")
     parser.add_argument("--plan-only", action="store_true")
+    parser.add_argument("--resume-retract", action="store_true",
+                        help="continue arm retraction after a verified tester handoff")
     parser.add_argument("--output", default="rebar_tester_load_result.json")
     return parser
 
