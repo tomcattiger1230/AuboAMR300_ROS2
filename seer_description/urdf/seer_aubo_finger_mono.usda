@@ -12,6 +12,22 @@ over "World"
 {
     over "seer_aubo_composite"
     {
+        over "PhysicsMaterials"
+        {
+            # Rubber-faced finger pads retain the 2.1 kg bar while it is
+            # rotated upright; the steel bar and low-friction source saddles
+            # keep their own material settings.
+            def Material "FingerPadMaterial" (
+                prepend apiSchemas = ["PhysicsMaterialAPI", "PhysxMaterialAPI"]
+            )
+            {
+                float physics:dynamicFriction = 2
+                float physics:staticFriction = 2
+                float physics:restitution = 0
+                token physxMaterial:frictionCombineMode = "max"
+            }
+        }
+
         over "gripper_adapter_link" (
             prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
             references = None
@@ -79,10 +95,11 @@ over "World"
             }
 
             def Cube "collision" (
-                prepend apiSchemas = ["PhysicsCollisionAPI"]
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
             )
             {
                 bool physics:collisionEnabled = 1
+                rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/FingerPadMaterial>
                 uniform token purpose = "guide"
                 double size = 1
                 float3 xformOp:scale = (0.049, 0.15, 0.047786)
@@ -113,10 +130,11 @@ over "World"
             }
 
             def Cube "collision" (
-                prepend apiSchemas = ["PhysicsCollisionAPI"]
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
             )
             {
                 bool physics:collisionEnabled = 1
+                rel material:binding:physics = </World/seer_aubo_composite/PhysicsMaterials/FingerPadMaterial>
                 uniform token purpose = "guide"
                 double size = 1
                 float3 xformOp:scale = (0.049, 0.15, 0.047786)
@@ -154,7 +172,7 @@ over "World"
             )
             {
                 float drive:linear:physics:damping = 500
-                float drive:linear:physics:maxForce = 50
+                float drive:linear:physics:maxForce = 100
                 float drive:linear:physics:stiffness = 5000
                 float drive:linear:physics:targetPosition = 0
                 uniform token drive:linear:physics:type = "force"
@@ -175,7 +193,7 @@ over "World"
             )
             {
                 float drive:linear:physics:damping = 500
-                float drive:linear:physics:maxForce = 50
+                float drive:linear:physics:maxForce = 100
                 float drive:linear:physics:stiffness = 5000
                 float drive:linear:physics:targetPosition = 0
                 uniform token drive:linear:physics:type = "force"
