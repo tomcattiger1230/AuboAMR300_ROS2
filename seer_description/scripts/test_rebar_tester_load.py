@@ -729,12 +729,13 @@ class TesterLoadTest(RebarGraspTest):
         if not vertical:
             raise RuntimeError("bar did not end up vertical after reorientation")
 
-        preinsert_pose = wrist_pose_for(preinsert_base, insert_quat)
-        if not self.cartesian_motion_min(
-            "insert_preposition", [preinsert_pose.pose],
-            allow_joint_fallback=True,
-        ):
-            self.joint_fallback("insert_preposition", preinsert_pose)
+        # This diagonal transition's Cartesian solver stops near its end at
+        # the 1.50 m bar height. Follow its verified collision-free prefix;
+        # the next short insertion target closes the remaining distance.
+        self.cartesian_motion_min(
+            "insert_preposition", [wrist_pose_for(preinsert_base, insert_quat).pose],
+            min_fraction=0.80,
+        )
         # Two short pushes instead of one long one: the KDL chain solves
         # more reliably over short segments near the workspace edge.
         mid_base = world_to_base(
