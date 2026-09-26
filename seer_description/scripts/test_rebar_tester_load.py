@@ -1052,6 +1052,15 @@ class TesterLoadTest(RebarGraspTest):
                     raise RuntimeError("base is not at the planned tester waypoint")
                 self.wait_for_robot_attachment()
                 self.payload_scene(True)
+                # Keep the parking brake only across process boundaries.
+                # A world-fixed base joint overconstrains the loaded shoulder
+                # during the long insertion move; use wheel feedback while
+                # the arm is active, as in the continuous workflow.
+                self._base_hold_target = (
+                    BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW
+                )
+                if self._base_locked:
+                    self.release_base_lock()
             # --- 6. reorient the bar to vertical, then insert -----------------
             x, y, yaw = self.base_pose()
             self.record(
@@ -1190,6 +1199,8 @@ class TesterLoadTest(RebarGraspTest):
                 raise RuntimeError("rebar is outside the tester jaw grip window")
 
             if stage == "insert":
+                self._base_hold_target = None
+                self.wait_for_base_lock()
                 self.save_stage("insert")
                 self.write_report()
                 return self._passed
