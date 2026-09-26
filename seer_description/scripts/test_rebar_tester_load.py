@@ -1006,21 +1006,27 @@ class TesterLoadTest(RebarGraspTest):
             # machine, wrist X stays world X, so motor Y (the bar) is vertical.
             insert_quat = quat_from_basis((-1.0, 0.0, 0.0), (0.0, 1.0, 0.0))
 
-            # Reorient: first translate to the staging point keeping the bar
-            # horizontal, then rotate upright in place (the sweep plane stays
-            # clear of the shoulder at this distance).
-            self.cartesian_motion(
-                "move_to_verticalize_staging",
-                [wrist_pose_for(VERTICALIZE_TCP_BASE, grasp_quat).pose],
-            )
-            reorient_poses = []
-            for index in range(1, 25):
-                fraction = index / 24.0
-                orientation = quat_slerp(grasp_quat, insert_quat, fraction)
-                reorient_poses.append(
-                    wrist_pose_for(VERTICALIZE_TCP_BASE, orientation).pose
+            # A failed later insertion step may leave the attached bar
+            # upright at this waypoint. Resume from its measured orientation.
+            already_vertical = (stage == "insert"
+                                and abs(self.rebar_axis_in_base()[2]) > 0.95)
+            if not already_vertical:
+                # Reorient at a point clear of the machine and chassis.
+                self.cartesian_motion(
+                    "move_to_verticalize_staging",
+                    [wrist_pose_for(VERTICALIZE_TCP_BASE, grasp_quat).pose],
                 )
-            self.cartesian_slow("reorient_to_vertical", reorient_poses)
+                reorient_poses = []
+                for index in range(1, 25):
+                    fraction = index / 24.0
+                    orientation = quat_slerp(grasp_quat, insert_quat, fraction)
+                    reorient_poses.append(
+                        wrist_pose_for(VERTICALIZE_TCP_BASE, orientation).pose
+                    )
+                self.cartesian_slow("reorient_to_vertical", reorient_poses)
+            else:
+                self.record("resume_vertical_bar", True,
+                            axis_in_base=list(self.rebar_axis_in_base()))
             axis = self.rebar_axis_in_base()
             vertical = abs(axis[2]) > 0.95
             self.record("rebar_vertical", vertical, axis_in_base=list(axis))
@@ -1050,10 +1056,13 @@ class TesterLoadTest(RebarGraspTest):
             # This diagonal transition's Cartesian solver stops near its end at
             # the 1.50 m bar height. Follow its verified collision-free prefix;
             # the next short insertion target closes the remaining distance.
-            self.cartesian_motion_min(
+            if not self.cartesian_motion_min(
                 "insert_preposition", [wrist_pose_for(preinsert_base, insert_quat).pose],
-                min_fraction=0.80,
-            )
+                min_fraction=0.80, allow_joint_fallback=True,
+            ):
+                self.joint_fallback(
+                    "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
+                )
             # Two short pushes instead of one long one: the KDL chain solves
             # more reliably over short segments near the workspace edge.
             mid_base = world_to_base(
