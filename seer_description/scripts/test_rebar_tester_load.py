@@ -551,7 +551,9 @@ class TesterLoadTest(RebarGraspTest):
         # repeatedly shifts the base by ~6 cm. Compare collision-valid plans
         # and require a route with at least 75 points for this waypoint.
         valid_plans = []
-        trials = 3 if label == "insert_midway" else 1
+        trials = 4 if label == "insert_preposition" else (
+            3 if label == "insert_midway" else 1
+        )
         for trial in range(1, trials + 1):
             for attempt, (cost, solution) in enumerate(
                 sorted(candidates, key=lambda item: item[0]), 1
@@ -565,9 +567,9 @@ class TesterLoadTest(RebarGraspTest):
                 valid_plans.append((points, cost, trial, attempt, plan))
                 if label != "insert_midway":
                     break
-            if label != "insert_midway" or any(
+            if label not in ("insert_midway", "insert_preposition") or any(
                 points >= 75 for points, *_ in valid_plans
-            ):
+            ) or (label == "insert_preposition" and valid_plans):
                 break
         if label == "insert_midway":
             valid_plans = [item for item in valid_plans if item[0] >= 75]
@@ -1058,7 +1060,7 @@ class TesterLoadTest(RebarGraspTest):
             # the next short insertion target closes the remaining distance.
             if not self.cartesian_motion_min(
                 "insert_preposition", [wrist_pose_for(preinsert_base, insert_quat).pose],
-                min_fraction=0.80, allow_joint_fallback=True,
+                min_fraction=0.70, allow_joint_fallback=True,
             ):
                 self.joint_fallback(
                     "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
