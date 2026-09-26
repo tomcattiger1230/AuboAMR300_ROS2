@@ -104,6 +104,9 @@ class IsaacRebarTesterController:
         self.UsdPhysics = UsdPhysics
         self.stage = stage
         self.command_path, self.state_path = paths()
+        # A previous run can leave robot_attach=true. The bridge starts only
+        # after Isaac is ready, so discard stale commands before physics runs.
+        self.command_path.unlink(missing_ok=True)
         self.targets = DEFAULTS.copy()
         self.actual = DEFAULTS.copy()
         self.prims = {}

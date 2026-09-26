@@ -840,11 +840,14 @@ class TesterLoadTest(RebarGraspTest):
         rebar_center = (args.rebar_x, args.rebar_y, args.rebar_z)
 
         observed = self.rebar_position()
+        on_station = math.dist(observed, rebar_center) < 0.03
         self.record(
             "rebar_pose_feedback",
-            math.dist(observed, rebar_center) < 0.03,
+            on_station,
             position=list(observed),
         )
+        if not on_station:
+            raise RuntimeError("rebar is not at the source station pickup pose")
 
         handle = self.send_gripper(0.0, 1.2)
         wrapped = self.wait_gripper_result(handle)
