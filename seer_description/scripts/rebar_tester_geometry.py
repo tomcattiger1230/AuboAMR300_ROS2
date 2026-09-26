@@ -90,11 +90,12 @@ CARRY_CLEARANCE_Z = 1.20
 # Verticalisation staging point: offset outside the arm plane (the links
 # live around y = +/-0.19 in base frame; the bar sweeping upright at
 # y = 0.35 keeps ~9 cm lateral clearance) and far enough forward that the
-# 0.6 m bar sweep stays clear of the shoulder. z 1.10 keeps the wrist-down
-# arrival radius at sqrt(0.65^2+0.50^2) ~ 0.82 m (0.90 m is the measured
-# edge of the envelope) while the hanging bar bottom (0.79 m) still clears
-# the deck rack (0.73 m); after rotating upright the wrist drops to ~0.62 m.
-VERTICALIZE_TCP_BASE = (-0.85, 0.35, 1.10)
+# 0.6 m bar sweep stays clear of the shoulder. The former (-0.85, 0.35,
+# 1.10) staging point grazed the tester collision model when the staged
+# process re-planned rotation. At (-0.65, 0.35, 1.20), the complete 24-step
+# rotation is collision-free from the measured parked pose; the hanging bar
+# bottom remains above the 0.73 m deck rack.
+VERTICALIZE_TCP_BASE = (-0.65, 0.35, 1.20)
 
 
 def machine_boxes():
