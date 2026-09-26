@@ -1132,6 +1132,19 @@ class TesterLoadTest(RebarGraspTest):
                     min_fraction=0.98, speed_scale=0.04,
                 )
                 self.check_payload_while_parked(transition_tcp, tolerance=0.06)
+            if stage == "insert" and not self._base_locked:
+                self.wait_for_base_to_settle()
+                x, y, yaw = self.base_pose()
+                parked = (
+                    math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1]) < 0.04
+                    and abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
+                                       math.cos(yaw - BASE_TARGET_YAW))) < 0.04
+                )
+                self.record("base_parked_before_joint_insert", parked,
+                            position=[round(x, 3), round(y, 3)], yaw=round(yaw, 3))
+                if not parked:
+                    raise RuntimeError("base moved outside insertion parking tolerance")
+                self.wait_for_base_lock()
             self.joint_fallback(
                 "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
             )
