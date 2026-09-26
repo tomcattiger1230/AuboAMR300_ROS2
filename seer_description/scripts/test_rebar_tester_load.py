@@ -235,6 +235,35 @@ class TesterLoadTest(RebarGraspTest):
             command.angular.z = max(-0.5, min(0.5, 2.0 * yaw_error))
         self._cmd_vel.publish(command)
 
+    def wait_for_base_to_settle(self, timeout=30.0):
+        """Allow the wheels to recover the parked pose after arm motion."""
+        end = time.monotonic() + timeout
+        last_report = 0.0
+        while time.monotonic() < end:
+            self.spin(0.05)
+            x, y, yaw = self.base_pose()
+            distance = math.hypot(
+                x - BASE_DRIVE_WAYPOINTS_XY[-1][0],
+                y - BASE_DRIVE_WAYPOINTS_XY[-1][1],
+            )
+            yaw_error = math.atan2(
+                math.sin(BASE_TARGET_YAW - yaw),
+                math.cos(BASE_TARGET_YAW - yaw),
+            )
+            if distance < 0.025 and abs(yaw_error) < 0.03:
+                self.record("base_settled_for_clamping", True,
+                            base_pose=[round(x, 3), round(y, 3), round(yaw, 3)])
+                return
+            now = time.monotonic()
+            if now - last_report > 2.0:
+                last_report = now
+                self.get_logger().info(
+                    f"settling base: {distance:.3f} m, {math.degrees(yaw_error):.1f} deg"
+                )
+        self.record("base_settled_for_clamping", False,
+                    base_pose=[round(v, 3) for v in self.base_pose()])
+        raise RuntimeError("base did not settle at the tester parking pose")
+
     def tester_state(self, key, max_age=1.0):
         stamp = self._tester_state_time.get(key)
         if stamp is None or time.monotonic() - stamp > max_age:
@@ -784,7 +813,7 @@ class TesterLoadTest(RebarGraspTest):
                 # reach the same pose through joint-space planning instead.
                 self.joint_fallback(label, wrist_pose_for(tcp, insert_quat))
 
-        self.spin(0.2)
+        self.wait_for_base_to_settle()
         inserted = self.rebar_position()
         axis = self.rebar_axis_in_base()
         aligned = (
