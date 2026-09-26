@@ -122,6 +122,8 @@ class TesterLoadTest(RebarGraspTest):
         )
         self._tester_publishers = {}
         self._cmd_vel = self.create_publisher(Twist, "/cmd_vel", 10)
+        self._base_hold_target = None
+        self.create_timer(0.05, self.hold_parked_base)
         for key in TESTER_CHANNELS:
             group, axis = key.split("_", 1)
             topic = f"/rebar_tester/{group}/{axis}"
@@ -212,6 +214,26 @@ class TesterLoadTest(RebarGraspTest):
 
     def send_tester(self, key, value):
         self._tester_publisher(key).publish(Float64(data=value))
+
+    def hold_parked_base(self):
+        """Actively counter arm reaction torques using the wheel controller."""
+        if self._base_hold_target is None:
+            return
+        if time.monotonic() - self._base_pose_time > 0.5:
+            return
+        (target_x, target_y), target_yaw = self._base_hold_target
+        x, y, yaw = self.base_pose()
+        dx, dy = target_x - x, target_y - y
+        forward = math.cos(yaw) * dx + math.sin(yaw) * dy
+        yaw_error = math.atan2(
+            math.sin(target_yaw - yaw), math.cos(target_yaw - yaw)
+        )
+        command = Twist()
+        if abs(forward) > 0.005:
+            command.linear.x = max(-0.3, min(0.3, 1.5 * forward))
+        if abs(yaw_error) > 0.005:
+            command.angular.z = max(-0.5, min(0.5, 2.0 * yaw_error))
+        self._cmd_vel.publish(command)
 
     def tester_state(self, key, max_age=1.0):
         stamp = self._tester_state_time.get(key)
@@ -689,6 +711,7 @@ class TesterLoadTest(RebarGraspTest):
             position=(round(x, 3), round(y, 3)),
             yaw_deg=round(math.degrees(yaw), 1),
         )
+        self._base_hold_target = (BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW)
         # Insertion orientation: wrist Z points north (+Y world) toward the
         # machine, wrist X stays world X, so motor Y (the bar) is vertical.
         insert_quat = quat_from_basis((-1.0, 0.0, 0.0), (0.0, 1.0, 0.0))
@@ -714,12 +737,11 @@ class TesterLoadTest(RebarGraspTest):
         if not vertical:
             raise RuntimeError("bar did not end up vertical after reorientation")
 
-        # Let the slow reorientation finish before engaging the parking brake:
-        # constraining the base during this wide sweep can stall the physical
-        # arm. Freeze the actual resulting pose, then derive all world targets
-        # from its fresh transform instead of the earlier odometry sample.
-        self.wait_for_base_lock()
+        # Sample the current pose after reorientation: wheel feedback keeps
+        # the base parked without overconstraining the physical arm.
         self.spin(0.2)
+        self.record("base_after_verticalization", True,
+                    base_pose=[round(v, 3) for v in self.base_pose()])
         base_position, base_quat = self._base_position, self._base_quat
 
         def world_to_base(world_xyz):
@@ -887,7 +909,7 @@ class TesterLoadTest(RebarGraspTest):
         if not final_held:
             raise RuntimeError("rebar was lost after the arm retracted")
 
-        self._base_lock_publisher.publish(Bool(data=False))
+        self._base_hold_target = None
         self.stop_base()
 
         self.write_report()
