@@ -1045,6 +1045,18 @@ class TesterLoadTest(RebarGraspTest):
         self.stop_base()
         self.spin(1.0)
         self.clear_released_payload_from_scene()
+        # The open fingers can still brush the stationary bar and jaws at
+        # the insertion pose. Move the chassis straight south along its known
+        # clear approach corridor before asking the arm to fold.
+        self.drive_to((BASE_DRIVE_WAYPOINTS_XY[-1][0], 2.75),
+                      BASE_TARGET_YAW, "clear_tester")
+        self.spin(0.2)
+        base_position, base_quat = self._base_position, self._base_quat
+        target_world = (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
+        preinsert_base = quat_rotate(
+            quat_conjugate(base_quat),
+            tuple(a - b for a, b in zip(target_world, base_position)),
+        )
         for label, tcp in (
             ("retract_preposition", preinsert_base),
             ("retract_to_staging", VERTICALIZE_TCP_BASE),
