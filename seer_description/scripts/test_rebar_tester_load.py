@@ -559,7 +559,8 @@ class TesterLoadTest(RebarGraspTest):
                 sorted(candidates, key=lambda item: item[0]), 1
             ):
                 plan = self.joint_plan(
-                    planning_start, self.bounded_arm_for_planning(solution)
+                    planning_start, self.bounded_arm_for_planning(solution),
+                    scaling=0.05 if label == "insert_preposition" else 0.2,
                 )
                 if plan.error_code.val != 1:
                     continue
@@ -1060,7 +1061,7 @@ class TesterLoadTest(RebarGraspTest):
             # the next short insertion target closes the remaining distance.
             if not self.cartesian_motion_min(
                 "insert_preposition", [wrist_pose_for(preinsert_base, insert_quat).pose],
-                min_fraction=0.70, allow_joint_fallback=True,
+                min_fraction=0.70, allow_joint_fallback=True, speed_scale=0.04,
             ):
                 self.joint_fallback(
                     "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
