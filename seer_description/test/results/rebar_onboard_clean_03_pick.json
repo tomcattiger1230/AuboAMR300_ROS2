@@ -1,0 +1,150 @@
+[
+  {
+    "test": "base_parked_before_onboard_pickup",
+    "pass": true,
+    "position": [
+      6.0,
+      3.033
+    ],
+    "yaw": -1.585,
+    "brake_locked": true
+  },
+  {
+    "test": "rebar_seated_for_pickup",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0023,
+      0.715
+    ],
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ]
+  },
+  {
+    "test": "gripper_open_before_pickup",
+    "pass": true,
+    "fingers": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "move_over_onboard_rebar",
+    "pass": true,
+    "planning_code": 1,
+    "points": 12,
+    "execution_code": 1
+  },
+  {
+    "test": "descend_to_onboard_rebar",
+    "pass": true,
+    "planning_code": 1,
+    "points": 25,
+    "execution_code": 1
+  },
+  {
+    "test": "grasp_onboard_rebar",
+    "pass": true,
+    "fingers": [
+      0.0167,
+      0.0172
+    ],
+    "action_status": 4
+  },
+  {
+    "test": "seated_rebar_removed_from_planning_scene",
+    "pass": true,
+    "slot": 1
+  },
+  {
+    "test": "clear_onboard_saddle",
+    "pass": true,
+    "fraction": 1.0,
+    "planning_code": 1,
+    "collision_checked": false
+  },
+  {
+    "test": "clear_onboard_saddle_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 14,
+    "execution_code": 1
+  },
+  {
+    "test": "rebar_clear_of_onboard_saddle",
+    "pass": true,
+    "position": [
+      0.2909,
+      -0.0024,
+      0.7545
+    ]
+  },
+  {
+    "test": "lift_from_onboard_slot",
+    "pass": true,
+    "planning_code": 1,
+    "points": 24,
+    "execution_code": 1
+  },
+  {
+    "test": "rebar_lifted_from_onboard_slot",
+    "pass": true,
+    "before": [
+      0.2927,
+      -0.0023,
+      0.715
+    ],
+    "after": [
+      0.2912,
+      -0.0023,
+      0.8942
+    ]
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "raise_above_onboard_rack",
+    "pass": true,
+    "planning_code": 1,
+    "points": 26,
+    "execution_code": 1
+  },
+  {
+    "test": "payload_retained_while_driving",
+    "pass": true,
+    "actual": [
+      0.292,
+      -0.002,
+      1.044
+    ],
+    "expected": [
+      0.29270064068185486,
+      -0.002274977893934216,
+      1.05
+    ],
+    "offset_m": 0.006
+  },
+  {
+    "test": "onboard_pickup_checkpoint",
+    "pass": true,
+    "path": "/tmp/rebar_onboard_clean_state.json"
+  }
+]

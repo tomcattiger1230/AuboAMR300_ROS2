@@ -539,7 +539,13 @@ class TesterLoadTest(RebarGraspTest):
             )
 
         candidates = []
-        for seed in SEED_CONFIGS + [tuple(current[j] for j in ARM_JOINTS)]:
+        seeds = SEED_CONFIGS + [tuple(current[j] for j in ARM_JOINTS)]
+        if label == "onboard_preposition":
+            # Near-identical parking poses can make KDL return a different
+            # branch for every generic seed. This branch reaches the same
+            # collision-checked preposition with the elbow below the bar.
+            seeds.append((-2.8, 1.0, 1.1, 0.1, 2.8, 0.0))
+        for seed in seeds:
             request = GetPositionIK.Request()
             request.ik_request.group_name = "arm"
             request.ik_request.ik_link_name = "wrist3_Link"

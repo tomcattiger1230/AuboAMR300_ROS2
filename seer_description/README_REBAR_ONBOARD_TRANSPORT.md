@@ -55,6 +55,10 @@ ros2 run seer_description 04_insert.py \
 转向和经过碰撞检查的预插入关节路径；最终仍须通过钢筋位置、轴向检查。
 两段使用同一个 `--state-file`；仿真重启后应从第 1 步重新开始。
 
+**当前限制：**从新场景连续执行四段时，最后的
+`onboard_preposition` 逆解可能失败并安全停止。复现状态、返回分支和
+待解决事项见 [逆解问题记录](REBAR_ONBOARD_PREPOSITION_IK_ISSUE.md)。
+
 原 [自动装填流程](README_REBAR_TESTER_LOAD.md)中的 `02_pick.py`、
 `03_navigate.py` 采用**机械臂持续夹持**钢筋的运输方式，不是这里的车载
 料槽流程。第 3 步复用其 `04_insert.py`，通过检查点选择车载取筋专用路径。

@@ -1,0 +1,163 @@
+[
+  {
+    "test": "base_at_source",
+    "pass": true,
+    "position": [
+      -0.011,
+      -0.0
+    ]
+  },
+  {
+    "test": "gripper_released_after_loading",
+    "pass": true,
+    "fingers": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "test": "rebar_seated_before_drive",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2928,
+      -0.0021,
+      0.7151
+    ],
+    "axis": [
+      -0.0011,
+      -1.0,
+      -0.0002
+    ],
+    "error_m": 0.0021
+  },
+  {
+    "test": "base_leg_1",
+    "pass": true,
+    "position": [
+      4.481,
+      0.001
+    ],
+    "yaw": 1.553,
+    "distance_error": 0.0188
+  },
+  {
+    "test": "rebar_seated_after_leg_1",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0021,
+      0.715
+    ],
+    "axis": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "error_m": 0.0021
+  },
+  {
+    "test": "base_leg_2",
+    "pass": true,
+    "position": [
+      4.496,
+      2.583
+    ],
+    "yaw": 0.02,
+    "distance_error": 0.017
+  },
+  {
+    "test": "rebar_seated_after_leg_2",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0022,
+      0.715
+    ],
+    "axis": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "error_m": 0.0022
+  },
+  {
+    "test": "base_turn_south",
+    "pass": true,
+    "position": [
+      5.982,
+      2.604
+    ],
+    "yaw": -1.551,
+    "distance_error": 0.0179
+  },
+  {
+    "test": "rebar_seated_after_turn_south",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0022,
+      0.715
+    ],
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "error_m": 0.0022
+  },
+  {
+    "test": "base_park_at_tester",
+    "pass": true,
+    "position": [
+      6.0,
+      3.033
+    ],
+    "yaw": -1.588,
+    "distance_error": 0.0169
+  },
+  {
+    "test": "rebar_seated_after_park_at_tester",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0023,
+      0.715
+    ],
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "error_m": 0.0023
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      6.0,
+      3.033,
+      -1.585
+    ]
+  },
+  {
+    "test": "rebar_seated_at_tester",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0023,
+      0.715
+    ],
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "error_m": 0.0023
+  }
+]

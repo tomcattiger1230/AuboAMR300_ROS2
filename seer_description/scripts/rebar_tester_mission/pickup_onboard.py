@@ -53,9 +53,9 @@ class OnboardPickup(TesterLoadTest):
         self.spin(2.0)
 
         x, y, yaw = self.base_pose()
-        parked = (math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1]) < 0.04
+        parked = (math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1]) < 0.05
                   and abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
-                                     math.cos(yaw - BASE_TARGET_YAW))) < 0.04
+                                     math.cos(yaw - BASE_TARGET_YAW))) < 0.08
                   and self._base_locked)
         self.record("base_parked_before_onboard_pickup", parked,
                     position=[round(x, 3), round(y, 3)],

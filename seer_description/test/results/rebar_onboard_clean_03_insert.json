@@ -1,0 +1,160 @@
+[
+  {
+    "test": "tester_bridge_alive",
+    "pass": true,
+    "missing": []
+  },
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "base_parked_before_insert",
+    "pass": true,
+    "position": [
+      5.999696696696901,
+      3.03318643019948
+    ],
+    "yaw": -1.5846528849303696
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "base_parking_brake_released",
+    "pass": true
+  },
+  {
+    "test": "base_parked_at_tester",
+    "pass": true,
+    "position": [
+      6.0,
+      3.034
+    ],
+    "yaw_deg": -90.8
+  },
+  {
+    "test": "move_to_verticalize_staging",
+    "pass": true,
+    "planning_code": 1,
+    "points": 61,
+    "execution_code": 1
+  },
+  {
+    "test": "reorient_to_vertical",
+    "pass": true,
+    "fraction": 1.0
+  },
+  {
+    "test": "reorient_to_vertical_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 252,
+    "execution_code": 1
+  },
+  {
+    "test": "rebar_vertical",
+    "pass": true,
+    "axis_in_base": [
+      -0.0013680798775554746,
+      0.0023218287371218537,
+      0.9999963687277892
+    ]
+  },
+  {
+    "test": "base_after_verticalization",
+    "pass": true,
+    "base_pose": [
+      6.0,
+      3.05,
+      -1.566
+    ]
+  },
+  {
+    "test": "onboard_roll_for_insert",
+    "pass": true,
+    "fraction": 1.0
+  },
+  {
+    "test": "onboard_roll_for_insert_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 90,
+    "execution_code": 1
+  },
+  {
+    "test": "onboard_side_transition",
+    "pass": true,
+    "fraction": 1.0,
+    "planning_code": 1
+  },
+  {
+    "test": "onboard_side_transition_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 65,
+    "execution_code": 1
+  },
+  {
+    "test": "payload_retained_while_driving",
+    "pass": true,
+    "actual": [
+      -0.547,
+      0.299,
+      1.399
+    ],
+    "expected": [
+      -0.55,
+      0.3,
+      1.4
+    ],
+    "offset_m": 0.003
+  },
+  {
+    "test": "base_settled_for_clamping",
+    "pass": true,
+    "base_pose": [
+      6.0,
+      3.053,
+      -1.566
+    ]
+  },
+  {
+    "test": "base_safe_before_joint_insert",
+    "pass": true,
+    "position": [
+      6.0,
+      3.053
+    ],
+    "yaw": -1.566,
+    "distance_error": 0.003,
+    "yaw_error": 0.005
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      6.0,
+      3.053,
+      -1.566
+    ]
+  },
+  {
+    "test": "onboard_preposition_ik",
+    "pass": false
+  },
+  {
+    "test": "workflow_error",
+    "pass": false,
+    "error": "onboard_preposition: no IK solution for the joint fallback"
+  }
+]
