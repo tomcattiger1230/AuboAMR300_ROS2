@@ -82,7 +82,7 @@ ros2 run seer_description test_rebar_tester_load.py --resume-retract --output /t
 新一轮仿真启动时自动丢弃旧的附着命令，防止上次中断的 `true` 误附着未抓取的钢筋。
 若起始钢筋偏离取料位超过 3 cm，流程立即停止。
 
-## 当前验证状态（2026-09-26，无头模式）
+## 当前验证状态（2026-09-26）
 
 `--plan-only` 可达性检查全部通过（carry / staging_arrival / verticalize /
 preinsert / insert 五点多种子 IK）。
@@ -90,6 +90,9 @@ preinsert / insert 五点多种子 IK）。
 完整流程已在 Ubuntu Isaac Sim 6.0.1 上从初始场景**一次执行通过**。
 `/tmp/rebar_full_103_run21.json` 共 53 项检查、失败 0 项，进程退出码 0；
 最终钢筋中心 `(6.012, 3.898, 1.500)` m，测试机保持信号为真。
+图形窗口模式也已完整通过：`/tmp/rebar_full_103_gui.json` 共 53 项检查、
+失败 0 项；钢筋最终位于 `(6.008, 3.898, 1.500)` m，Ubuntu 桌面保留
+Isaac Sim 窗口供查看。
 
 | 已验证段 | 结果 |
 |---|---|
