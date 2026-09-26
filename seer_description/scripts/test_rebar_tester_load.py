@@ -31,8 +31,8 @@ from pathlib import Path
 
 import rclpy
 from geometry_msgs.msg import Pose, PoseStamped, Twist
-from moveit_msgs.msg import CollisionObject
-from moveit_msgs.srv import ApplyPlanningScene, GetPositionIK
+from moveit_msgs.msg import CollisionObject, PlanningSceneComponents
+from moveit_msgs.srv import ApplyPlanningScene, GetPlanningScene, GetPositionIK
 from rclpy.action import ActionClient
 from rclpy.parameter import Parameter
 from rclpy.qos import qos_profile_sensor_data
@@ -378,6 +378,13 @@ class TesterLoadTest(RebarGraspTest):
         """Remove the former attached object after the tester takes the bar."""
         from moveit_msgs.msg import PlanningScene
 
+        request = GetPlanningScene.Request()
+        request.components.components = PlanningSceneComponents.WORLD_OBJECT_NAMES
+        present = {
+            obj.id for obj in self.call(self._scene_query, request).scene.world.collision_objects
+        }
+        if "carried_rebar" not in present:
+            return
         scene = PlanningScene(is_diff=True)
         obj = CollisionObject()
         obj.id = "carried_rebar"
