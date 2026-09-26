@@ -1138,25 +1138,24 @@ class TesterLoadTest(RebarGraspTest):
                 distance = math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1])
                 yaw_error = abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
                                            math.cos(yaw - BASE_TARGET_YAW)))
-                if distance >= 0.04 or yaw_error >= 0.04:
-                    if distance > 0.08 or yaw_error > 0.12:
-                        raise RuntimeError("base moved too far for a safe repark")
-                    self.drive_to(BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW,
-                                  "repark_before_joint_insert")
-                    self.check_payload_while_parked(
-                        (-0.55, 0.30, 1.40), tolerance=0.06
-                    )
-                    x, y, yaw = self.base_pose()
-                parked = (
-                    math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1]) < 0.04
-                    and abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
-                                       math.cos(yaw - BASE_TARGET_YAW))) < 0.04
-                )
-                self.record("base_parked_before_joint_insert", parked,
-                            position=[round(x, 3), round(y, 3)], yaw=round(yaw, 3))
-                if not parked:
-                    raise RuntimeError("base moved outside insertion parking tolerance")
+                safe_offset = distance < 0.08 and yaw_error < 0.12
+                self.record("base_safe_before_joint_insert", safe_offset,
+                            position=[round(x, 3), round(y, 3)],
+                            yaw=round(yaw, 3), distance_error=round(distance, 3),
+                            yaw_error=round(yaw_error, 3))
+                if not safe_offset:
+                    raise RuntimeError("base moved outside safe insertion offset")
                 self.wait_for_base_lock()
+            # The short transition can shift an unlocked chassis slightly.
+            # Recompute all world targets from its measured, newly locked pose.
+            self.spin(0.2)
+            base_position, base_quat = self._base_position, self._base_quat
+            preinsert_base = world_to_base(
+                (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
+            )
+            grip_base = world_to_base(
+                (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - INSERT_Y_INSET, BAR_HOLD_Z)
+            )
             self.joint_fallback(
                 "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
             )
