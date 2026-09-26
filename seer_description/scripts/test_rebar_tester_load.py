@@ -7,7 +7,7 @@ Full workflow against the lab scene (warehouse_finger_rebar_lab_demo.usda):
   2. Add the tester frame to the MoveIt planning scene (world boxes).
   3. Grasp the 0.6 m rebar at the source station (same logic as
      test_rebar_grasp.py, re-used through class inheritance).
-  4. Carry the bar high and retracted, drive the base to (6.0, 2.9) yaw -90
+  4. Carry the bar high and retracted, drive the base to (6.0, 3.05) yaw -90
      with odometry-closed-loop cmd_vel.
   5. Reorient the bar to vertical, insert it horizontally onto the grip line
      (world 6.00, 3.92, bar centre z 1.50).
@@ -1098,16 +1098,12 @@ class TesterLoadTest(RebarGraspTest):
                 (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
             )
 
-            # This diagonal transition's Cartesian solver stops near its end at
-            # the 1.50 m bar height. Follow its verified collision-free prefix;
-            # the next short insertion target closes the remaining distance.
-            if not self.cartesian_motion_min(
-                "insert_preposition", [wrist_pose_for(preinsert_base, insert_quat).pose],
-                min_fraction=0.70, allow_joint_fallback=True, speed_scale=0.04,
-            ):
-                self.joint_fallback(
-                    "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
-                )
+            # The long diagonal Cartesian prefix can be model-valid yet
+            # physically stall the loaded shoulder near the cabinet. Use the
+            # collision-checked, retimed joint route for this transition.
+            self.joint_fallback(
+                "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
+            )
             # Two short pushes instead of one long one: the KDL chain solves
             # more reliably over short segments near the workspace edge.
             mid_base = world_to_base(
