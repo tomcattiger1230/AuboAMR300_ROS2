@@ -42,12 +42,10 @@ BAR_DIAMETER = 0.024
 BAR_CENTER_Z = 1.50
 BAR_BOTTOM_Z = BAR_CENTER_Z - BAR_LENGTH / 2      # 1.20
 BAR_TOP_Z = BAR_CENTER_Z + BAR_LENGTH / 2         # 1.80
-# The robot grips 0.15 m below the bar centre: dropping the wrist to
-# z 1.35 brings the insertion pose inside the arm's reachable envelope
-# (holding at the centre is borderline-unreachable with wrist Z horizontal).
-# Fingers at 1.35 stay clear of the lower jaw tips (<= 1.2125) and the
-# lower plate top (1.185).
-BAR_HOLD_Z = BAR_CENTER_Z - 0.15                  # 1.35
+# The physical pickup grips the bar at its centre. The temporary grasp joint
+# preserves that offset, so the TCP and bar centre must have the same height.
+# An IK probe confirms this is reachable from the 3.05 m parking position.
+BAR_HOLD_Z = BAR_CENTER_Z                         # 1.50
 APPROACH_FROM_SOUTH_Y = GRIP_LINE_XY[1] - 0.16    # wrist plane while inserting
 # The exact grip-line point is IK-inreachable from the parking spot (probe:
 # 20/21 corridor points solve, only y-offset 0 fails); 2 cm south stays
@@ -66,17 +64,17 @@ JAW_INSERT_OPENING = JAW_OPENING_MAX
 # Final pose: facing south (yaw -90 deg) so the arm (mounted toward robot
 # -X, i.e. world +Y) reaches the grip line. The chassis box is 1.00 x 0.70,
 # so the rear edge stays 0.09 m clear of the cabinet front (y = 3.59).
-# Parking at y 3.0 keeps the insertion wrist at ~0.75 m from the shoulder,
-# inside the verified-reachable envelope (y 2.9 was borderline-unreachable).
+# Parking at y 3.05 makes the 1.50 m insertion centre reachable while
+# leaving 4 cm between the rear chassis edge and the cabinet front.
 BASE_TARGET_XY = (6.0, 3.05)
 BASE_TARGET_YAW = -1.5707963267948966      # -90 deg
 # Route avoiding the work-table legs (x 5.99..6.11 at y +/-0.42, which
 # block a straight (0,0)->(6,0) run) and the bollards at (5.4, +/-1).
 # The final turn to face south happens at y 2.6 (corner-sweep radius 0.61 m
-# stays clear of the cabinet front at y 3.59); the last 0.4 m is a short
+# stays clear of the cabinet front at y 3.59); the last 0.45 m is a short
 # reverse so the chassis never sweeps near the cabinet corner.
 BASE_DRIVE_WAYPOINTS_XY = (
-    (0.0, 0.0), (4.5, 0.0), (4.5, 2.6), (6.0, 2.6), (6.0, 3.0),
+    (0.0, 0.0), (4.5, 0.0), (4.5, 2.6), (6.0, 2.6), BASE_TARGET_XY,
 )
 BASE_TOLERANCE_XY = 0.02
 BASE_TOLERANCE_YAW = 0.02

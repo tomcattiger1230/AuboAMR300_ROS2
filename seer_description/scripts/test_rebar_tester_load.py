@@ -117,6 +117,8 @@ class TesterLoadTest(RebarGraspTest):
         )
         self._tester_publishers = {}
         self._cmd_vel = self.create_publisher(Twist, "/cmd_vel", 10)
+        self._base_hold_target = None
+        self.create_timer(0.05, self.hold_parked_base)
         for key in TESTER_CHANNELS:
             group, axis = key.split("_", 1)
             topic = f"/rebar_tester/{group}/{axis}"
@@ -186,6 +188,26 @@ class TesterLoadTest(RebarGraspTest):
 
     def send_tester(self, key, value):
         self._tester_publisher(key).publish(Float64(data=value))
+
+    def hold_parked_base(self):
+        """Counter slow wheel drift while the arm reaches into the tester."""
+        if self._base_hold_target is None:
+            return
+        if time.monotonic() - self._base_pose_time > 0.5:
+            return
+        (target_x, target_y), target_yaw = self._base_hold_target
+        x, y, yaw = self.base_pose()
+        dx, dy = target_x - x, target_y - y
+        forward = math.cos(yaw) * dx + math.sin(yaw) * dy
+        yaw_error = math.atan2(
+            math.sin(target_yaw - yaw), math.cos(target_yaw - yaw)
+        )
+        command = Twist()
+        if abs(forward) > 0.005:
+            command.linear.x = max(-0.08, min(0.08, 1.0 * forward))
+        if abs(yaw_error) > 0.005:
+            command.angular.z = max(-0.08, min(0.08, 0.6 * yaw_error))
+        self._cmd_vel.publish(command)
 
     def tester_state(self, key, max_age=1.0):
         stamp = self._tester_state_time.get(key)
@@ -663,6 +685,7 @@ class TesterLoadTest(RebarGraspTest):
             position=(round(x, 3), round(y, 3)),
             yaw_deg=round(math.degrees(yaw), 1),
         )
+        self._base_hold_target = (BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW)
         base_position, base_quat = self._base_position, self._base_quat
 
         def world_to_base(world_xyz):
@@ -829,6 +852,9 @@ class TesterLoadTest(RebarGraspTest):
         )
         if not final_held:
             raise RuntimeError("rebar was lost after the arm retracted")
+
+        self._base_hold_target = None
+        self.stop_base()
 
         self.write_report()
         return self._passed
