@@ -97,6 +97,11 @@ CARRY_CLEARANCE_Z = 1.20
 # bottom remains above the 0.73 m deck rack.
 VERTICALIZE_TCP_BASE = (-0.65, 0.35, 1.20)
 
+# The bar taken from the chassis rack starts lengthwise along base Y rather
+# than along base X. Its rotation needs extra lateral clearance from the
+# tester frame. Collision-checked Isaac/MoveIt probe: full 24-step rotation.
+ONBOARD_VERTICALIZE_TCP_BASE = (-0.35, 0.55, 1.20)
+
 
 def machine_boxes():
     """Yield (name, center_xyz, size_xyz) world-frame boxes for MoveIt.

@@ -1,0 +1,62 @@
+[
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "roll_vertical_rebar_for_approach",
+    "pass": true,
+    "fraction": 1.0
+  },
+  {
+    "test": "roll_vertical_rebar_for_approach_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 90,
+    "execution_code": 1
+  },
+  {
+    "test": "sideways_insert_transition",
+    "pass": true,
+    "fraction": 1.0,
+    "planning_code": 1
+  },
+  {
+    "test": "sideways_insert_transition_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 65,
+    "execution_code": 1
+  },
+  {
+    "test": "bar_after_sideways_transition",
+    "pass": true,
+    "bar": [
+      -0.5474065564168642,
+      0.299202021424689,
+      1.3983535042264323
+    ],
+    "axis": [
+      -0.0010743966643408979,
+      -0.00023706461983350282,
+      0.9999993947359035
+    ],
+    "base": [
+      5.999296153484011,
+      3.0548505728081228,
+      -1.5666279054400922
+    ]
+  }
+]

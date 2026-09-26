@@ -1,0 +1,187 @@
+[
+  {
+    "test": "tester_bridge_alive",
+    "pass": true,
+    "missing": []
+  },
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "base_parked_before_insert",
+    "pass": true,
+    "position": [
+      5.999120677409792,
+      3.059015745385027
+    ],
+    "yaw": -1.5638976543881962
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "base_parking_brake_released",
+    "pass": true
+  },
+  {
+    "test": "base_parked_at_tester",
+    "pass": true,
+    "position": [
+      5.999,
+      3.059
+    ],
+    "yaw_deg": -89.6
+  },
+  {
+    "test": "resume_vertical_bar",
+    "pass": true,
+    "axis_in_base": [
+      -0.0012536277395970288,
+      -0.0002115715717295151,
+      0.9999991918271535
+    ]
+  },
+  {
+    "test": "rebar_vertical",
+    "pass": true,
+    "axis_in_base": [
+      -0.0012536277395970288,
+      -0.0002115715717295151,
+      0.9999991918271535
+    ]
+  },
+  {
+    "test": "base_after_verticalization",
+    "pass": true,
+    "base_pose": [
+      5.999,
+      3.057,
+      -1.565
+    ]
+  },
+  {
+    "test": "base_settled_for_clamping",
+    "pass": true,
+    "base_pose": [
+      5.999,
+      3.057,
+      -1.565
+    ]
+  },
+  {
+    "test": "base_safe_before_joint_insert",
+    "pass": true,
+    "position": [
+      5.999,
+      3.057
+    ],
+    "yaw": -1.565,
+    "distance_error": 0.007,
+    "yaw_error": 0.005
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      5.999,
+      3.056,
+      -1.567
+    ]
+  },
+  {
+    "test": "onboard_preposition_joint_branch",
+    "pass": true,
+    "attempt": 2,
+    "candidates": 5,
+    "trial": 1,
+    "points": 105,
+    "target": {
+      "shoulder_joint": 3.379,
+      "upperArm_joint": -0.05,
+      "foreArm_joint": -1.234,
+      "wrist1_joint": -1.183,
+      "wrist2_joint": -3.379,
+      "wrist3_joint": 0.0
+    }
+  },
+  {
+    "test": "onboard_preposition_joint",
+    "pass": true,
+    "planning_code": 1,
+    "points": 105,
+    "execution_code": 1
+  },
+  {
+    "test": "insert_midway",
+    "pass": true,
+    "fraction": 1.0,
+    "planning_code": 1
+  },
+  {
+    "test": "insert_midway_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 23,
+    "execution_code": 1
+  },
+  {
+    "test": "insert_to_gripline",
+    "pass": true,
+    "fraction": 1.0,
+    "planning_code": 1
+  },
+  {
+    "test": "insert_to_gripline_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 31,
+    "execution_code": 1
+  },
+  {
+    "test": "base_settled_for_clamping",
+    "pass": true,
+    "base_pose": [
+      5.999,
+      3.056,
+      -1.567
+    ]
+  },
+  {
+    "test": "rebar_aligned_in_jaws",
+    "pass": true,
+    "position": [
+      6.004,
+      3.901,
+      1.498
+    ],
+    "axis_in_base": [
+      -0.003,
+      -0.0,
+      1.0
+    ],
+    "base_pose": [
+      5.999,
+      3.056,
+      -1.567
+    ]
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      5.999,
+      3.056,
+      -1.567
+    ]
+  }
+]

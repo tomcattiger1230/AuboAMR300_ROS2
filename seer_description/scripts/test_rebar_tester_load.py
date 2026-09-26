@@ -69,6 +69,7 @@ from rebar_tester_geometry import (  # noqa: E402
     JAW_CLOSE_OPENING,
     JAW_INSERT_OPENING,
     LOWER_JAW_GRIP_Z,
+    ONBOARD_VERTICALIZE_TCP_BASE,
     UPPER_JAW_GRIP_Z,
     VERTICALIZE_TCP_BASE,
     machine_boxes,
@@ -560,7 +561,7 @@ class TesterLoadTest(RebarGraspTest):
             if not all(j in candidate for j in ARM_JOINTS):
                 continue
             variants = [{j: candidate[j] for j in ARM_JOINTS}]
-            if label == "insert_preposition":
+            if label in ("insert_preposition", "onboard_preposition"):
                 # A wrist angle near -2*pi can be collision-valid while its
                 # mathematically equivalent 0-angle branch is blocked.
                 variants.append(
@@ -577,8 +578,17 @@ class TesterLoadTest(RebarGraspTest):
                     # The +3.37 rad shoulder equivalent drove the loaded
                     # arm away from the jaws and then stalled in PhysX.
                     continue
+                if (label == "onboard_preposition"
+                        and not (2.0 < variant["shoulder_joint"] < 4.0
+                                 and 1.0 < abs(variant["wrist2_joint"]) < 4.0
+                                 and variant["upperArm_joint"] < 0.0
+                                 and variant["foreArm_joint"] < 0.0)):
+                    # The rack pickup reaches the vertical bar through the
+                    # opposite shoulder/elbow branch. This candidate was
+                    # collision-checked from the measured side approach.
+                    continue
                 cost = max(abs(variant[j] - current[j]) for j in ARM_JOINTS)
-                if (label == "insert_preposition" or
+                if (label in ("insert_preposition", "onboard_preposition") or
                         all(max(abs(variant[j] - other[j]) for j in ARM_JOINTS) > 0.02
                             for _, other in candidates)):
                     candidates.append((cost, variant))
@@ -591,7 +601,7 @@ class TesterLoadTest(RebarGraspTest):
         # repeatedly shifts the base by ~6 cm. Compare collision-valid plans
         # and require a route with at least 75 points for this waypoint.
         valid_plans = []
-        trials = 4 if label == "insert_preposition" else (
+        trials = 4 if label in ("insert_preposition", "onboard_preposition") else (
             3 if label == "insert_midway" else 1
         )
         for trial in range(1, trials + 1):
@@ -607,9 +617,9 @@ class TesterLoadTest(RebarGraspTest):
                 valid_plans.append((points, cost, trial, attempt, plan))
                 if label != "insert_midway":
                     break
-            if label not in ("insert_midway", "insert_preposition") or any(
+            if label not in ("insert_midway", "insert_preposition", "onboard_preposition") or any(
                 points >= 75 for points, *_ in valid_plans
-            ) or (label == "insert_preposition" and valid_plans):
+            ) or (label in ("insert_preposition", "onboard_preposition") and valid_plans):
                 break
         if label == "insert_midway":
             valid_plans = [item for item in valid_plans if item[0] >= 75]
@@ -625,7 +635,7 @@ class TesterLoadTest(RebarGraspTest):
             )
         else:
             points, _, trial, attempt, plan = valid_plans[0]
-        if label == "insert_preposition":
+        if label in ("insert_preposition", "onboard_preposition"):
             # OMPL finds this route at its normal speed scaling, then the
             # physical arm needs more time under load to track it accurately.
             for point in plan.trajectory.joint_trajectory.points:
@@ -954,6 +964,8 @@ class TesterLoadTest(RebarGraspTest):
 
         else:
             grasp = self.load_stage()
+            if grasp.get("source") == "onboard_slot":
+                self.args.onboard_slot = int(grasp["slot"])
             grasp["wrist_pose_for"] = self.wrist_pose_factory(grasp)
             wrist_pose_for = grasp["wrist_pose_for"]
             grasp_quat = tuple(grasp["grasp_quat"])
@@ -1074,16 +1086,19 @@ class TesterLoadTest(RebarGraspTest):
                                 and abs(self.rebar_axis_in_base()[2]) > 0.95)
             if not already_vertical:
                 # Reorient at a point clear of the machine and chassis.
+                verticalize_tcp = (ONBOARD_VERTICALIZE_TCP_BASE
+                                   if grasp.get("source") == "onboard_slot"
+                                   else VERTICALIZE_TCP_BASE)
                 self.cartesian_motion(
                     "move_to_verticalize_staging",
-                    [wrist_pose_for(VERTICALIZE_TCP_BASE, grasp_quat).pose],
+                    [wrist_pose_for(verticalize_tcp, grasp_quat).pose],
                 )
                 reorient_poses = []
                 for index in range(1, 25):
                     fraction = index / 24.0
                     orientation = quat_slerp(grasp_quat, insert_quat, fraction)
                     reorient_poses.append(
-                        wrist_pose_for(VERTICALIZE_TCP_BASE, orientation).pose
+                        wrist_pose_for(verticalize_tcp, orientation).pose
                     )
                 self.cartesian_slow("reorient_to_vertical", reorient_poses)
             else:
@@ -1115,10 +1130,40 @@ class TesterLoadTest(RebarGraspTest):
                 (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
             )
 
-            # Break the loaded move into a short, collision-checked approach
-            # and a retimed joint route. A single long Cartesian diagonal
-            # stalled the shoulder despite a model-valid path.
-            if self.rebar_in_base()[2] < 1.36:
+            # The rack pickup gives a different wrist branch. Roll around the
+            # vertical bar at the open staging point, then enter the insertion
+            # corridor from the side before the joint-space preposition.
+            onboard_source = grasp.get("source") == "onboard_slot"
+            if onboard_source:
+                side_quat = quat_from_basis((0.0, 1.0, 0.0), (1.0, 0.0, 0.0))
+                current_wrist = self.fk(self.current_arm(), "wrist3_Link")
+                wrist_quat = (current_wrist.orientation.x,
+                              current_wrist.orientation.y,
+                              current_wrist.orientation.z,
+                              current_wrist.orientation.w)
+                side_alignment = abs(sum(a * b for a, b in zip(wrist_quat, side_quat)))
+                if self.rebar_in_base()[1] > 0.35:
+                    if side_alignment < 0.98:
+                        roll_poses = [
+                            wrist_pose_for(
+                                ONBOARD_VERTICALIZE_TCP_BASE,
+                                quat_slerp(insert_quat, side_quat, i / 24.0),
+                            ).pose
+                            for i in range(1, 25)
+                        ]
+                        self.cartesian_slow("onboard_roll_for_insert", roll_poses)
+                    transition_tcp = (-0.55, 0.30, 1.40)
+                    self.cartesian_motion_min(
+                        "onboard_side_transition",
+                        [wrist_pose_for(transition_tcp, side_quat).pose],
+                        min_fraction=0.97, speed_scale=0.04,
+                    )
+                    self.check_payload_while_parked(transition_tcp, tolerance=0.06)
+                elif side_alignment < 0.95:
+                    raise RuntimeError("onboard insertion resumed with unexpected wrist pose")
+            elif self.rebar_in_base()[2] < 1.36:
+                # A single long Cartesian diagonal stalled the shoulder
+                # despite a model-valid path in the original arm-held flow.
                 transition_tcp = (-0.55, 0.30, 1.40)
                 self.cartesian_motion_min(
                     "insert_transition",
@@ -1155,7 +1200,8 @@ class TesterLoadTest(RebarGraspTest):
             # replay the preposition step.
             if self.rebar_position()[1] < GRIP_LINE_XY[1] - 0.24:
                 self.joint_fallback(
-                    "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
+                    "onboard_preposition" if onboard_source else "insert_preposition",
+                    wrist_pose_for(preinsert_base, insert_quat)
                 )
             # Two short pushes instead of one long one: the KDL chain solves
             # more reliably over short segments near the workspace edge.
