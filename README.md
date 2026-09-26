@@ -1,5 +1,20 @@
 # AuboAMR300_ROS2
 
+## 本地 Python 开发环境（uv）
+
+在 macOS 仓库根目录运行：
+
+```bash
+uv sync --python 3.14
+source .venv/bin/activate
+python -m pytest -q seer_description/test/test_rebar_tester_grip_gate.py
+```
+
+依赖固定在 `pyproject.toml` / `uv.lock`，`.venv` 留在本地且不提交。
+此环境用于纯 Python 工具、GUI 界面模块及不依赖 ROS 的测试；ROS 2
+节点仍需按 `aubo_control_gui/README.md` 使用 RoboStack 环境，Isaac Sim
+脚本仍使用仿真机自带的 Python。
+
 SEER AMB-300 底盘、AUBO i16H 机械臂、末端夹爪和工业相机的 ROS 2 开发与 Isaac 仿真项目。
 当前整合与验证面向 Isaac；实机部署留待后续。GUI 在 macOS 本地运行，通过 Fast DDS 连接 Ubuntu 上的 MoveIt 与仿真。
 

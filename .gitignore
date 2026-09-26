@@ -1,4 +1,5 @@
 devel/
+.venv/
 logs/
 build/
 bin/
