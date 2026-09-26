@@ -1112,9 +1112,17 @@ class TesterLoadTest(RebarGraspTest):
                 (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
             )
 
-            # The long diagonal Cartesian prefix can be model-valid yet
-            # physically stall the loaded shoulder near the cabinet. Use the
-            # collision-checked, retimed joint route for this transition.
+            # Break the loaded move into a short, collision-checked approach
+            # and a retimed joint route. A single long Cartesian diagonal
+            # stalled the shoulder despite a model-valid path.
+            if self.rebar_in_base()[2] < 1.36:
+                transition_tcp = (-0.55, 0.30, 1.40)
+                self.cartesian_motion_min(
+                    "insert_transition",
+                    [wrist_pose_for(transition_tcp, insert_quat).pose],
+                    min_fraction=0.98, speed_scale=0.04,
+                )
+                self.check_payload_while_parked(transition_tcp, tolerance=0.06)
             self.joint_fallback(
                 "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
             )
