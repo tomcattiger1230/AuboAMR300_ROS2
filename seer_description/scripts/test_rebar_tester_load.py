@@ -537,12 +537,23 @@ class TesterLoadTest(RebarGraspTest):
             )
             if not all(j in candidate for j in ARM_JOINTS):
                 continue
-            candidate = {j: unwind(candidate[j], current[j]) for j in ARM_JOINTS}
-            cost = max(abs(candidate[j] - current[j]) for j in ARM_JOINTS)
-            if (label == "insert_preposition" or
-                    all(max(abs(candidate[j] - other[j]) for j in ARM_JOINTS) > 0.02
-                        for _, other in candidates)):
-                candidates.append((cost, candidate))
+            variants = [{j: candidate[j] for j in ARM_JOINTS}]
+            if label == "insert_preposition":
+                # A wrist angle near -2*pi can be collision-valid while its
+                # mathematically equivalent 0-angle branch is blocked.
+                variants.append(
+                    {j: unwind(candidate[j], current[j]) for j in ARM_JOINTS}
+                )
+            else:
+                variants = [
+                    {j: unwind(candidate[j], current[j]) for j in ARM_JOINTS}
+                ]
+            for variant in variants:
+                cost = max(abs(variant[j] - current[j]) for j in ARM_JOINTS)
+                if (label == "insert_preposition" or
+                        all(max(abs(variant[j] - other[j]) for j in ARM_JOINTS) > 0.02
+                            for _, other in candidates)):
+                    candidates.append((cost, variant))
         if not candidates:
             self.record(label + "_ik", False)
             raise RuntimeError(f"{label}: no IK solution for the joint fallback")
