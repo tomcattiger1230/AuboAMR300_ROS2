@@ -402,6 +402,7 @@ class TesterLoadTest(RebarGraspTest):
         from moveit_msgs.srv import GetPositionIK
 
         current = self.current_arm()
+        planning_start = self.bounded_arm_for_planning(current)
 
         def unwind(angle, reference):
             return reference + math.atan2(
@@ -444,7 +445,9 @@ class TesterLoadTest(RebarGraspTest):
         for attempt, (_, solution) in enumerate(
             sorted(candidates, key=lambda item: item[0]), 1
         ):
-            plan = self.joint_plan(current, solution)
+            plan = self.joint_plan(
+                planning_start, self.bounded_arm_for_planning(solution)
+            )
             if plan.error_code.val == 1:
                 self.record(label + "_joint_branch", True, attempt=attempt,
                             candidates=len(candidates))
@@ -452,6 +455,16 @@ class TesterLoadTest(RebarGraspTest):
                 return
         self.record(label + "_joint_branch", False, candidates=len(candidates))
         raise RuntimeError(f"{label}: all IK branches failed collision-checked planning")
+
+    @staticmethod
+    def bounded_arm_for_planning(joints):
+        """Move a wrapped wrist angle a hair inside MoveIt's finite bound."""
+        bounded = dict(joints)
+        limit = 2.0 * math.pi - 0.0001
+        bounded["wrist3_joint"] = max(
+            -limit, min(limit, bounded["wrist3_joint"])
+        )
+        return bounded
 
     def cartesian_nc(self, label, poses):
         """Cartesian move without collision checking - fallback for the
@@ -999,7 +1012,9 @@ class TesterLoadTest(RebarGraspTest):
             ):
                 self.joint_fallback(label, pose)
         park = dict(zip(ARM_JOINTS, (0.0, -0.35, 0.6, 0.0, 0.35, 0.0)))
-        plan = self.joint_plan(self.current_arm(), park)
+        plan = self.joint_plan(
+            self.bounded_arm_for_planning(self.current_arm()), park
+        )
         self.run_motion("arm_parked", plan)
 
         self.spin(1.0)
