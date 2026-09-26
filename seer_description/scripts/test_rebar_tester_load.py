@@ -242,6 +242,18 @@ class TesterLoadTest(RebarGraspTest):
         self.record("base_parking_brake_locked", False)
         raise RuntimeError("Isaac did not confirm the base parking brake")
 
+    def release_base_lock(self, timeout=10.0):
+        self._base_lock_publisher.publish(Bool(data=False))
+        end = time.monotonic() + timeout
+        while time.monotonic() < end:
+            self.spin(0.1)
+            if (not self._base_locked
+                    and time.monotonic() - self._base_locked_time < 1.5):
+                self.record("base_parking_brake_released", True)
+                return
+        self.record("base_parking_brake_released", False)
+        raise RuntimeError("Isaac did not release the base parking brake")
+
     def wait_for_robot_attachment(self, timeout=10.0):
         self._robot_attach_publisher.publish(Bool(data=True))
         end = time.monotonic() + timeout
@@ -954,12 +966,23 @@ class TesterLoadTest(RebarGraspTest):
                 self.check_payload_while_parked(CARRY_TCP_BASE)
 
             if stage == "navigate":
+                self.wait_for_base_lock()
                 self.save_stage("navigate")
                 self.write_report()
                 return self._passed
 
         if stage in ("all", "insert"):
             if stage == "insert":
+                x, y, yaw = self.base_pose()
+                if (math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1]) >= 0.02
+                        or abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
+                                          math.cos(yaw - BASE_TARGET_YAW))) >= 0.02):
+                    if self._base_locked:
+                        self.release_base_lock()
+                    self.drive_to(BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW,
+                                  "repark_before_insert")
+                if not self._base_locked:
+                    self.wait_for_base_lock()
                 x, y, yaw = self.base_pose()
                 parked = (math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1]) < 0.04
                           and abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
@@ -1230,6 +1253,8 @@ class TesterLoadTest(RebarGraspTest):
         self._base_hold_target = None
         self.stop_base()
         self.spin(1.0)
+        if self._base_locked:
+            self.release_base_lock()
         self.clear_released_payload_from_scene()
         # The open fingers can still brush the stationary bar and jaws at
         # the insertion pose. Move the chassis straight south along its known
