@@ -1051,16 +1051,10 @@ class TesterLoadTest(RebarGraspTest):
         self.drive_to((BASE_DRIVE_WAYPOINTS_XY[-1][0], 2.75),
                       BASE_TARGET_YAW, "clear_tester")
         self.spin(0.2)
-        base_position, base_quat = self._base_position, self._base_quat
-        target_world = (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
-        preinsert_base = quat_rotate(
-            quat_conjugate(base_quat),
-            tuple(a - b for a, b in zip(target_world, base_position)),
-        )
-        for label, tcp in (
-            ("retract_preposition", preinsert_base),
-            ("retract_to_staging", VERTICALIZE_TCP_BASE),
-        ):
+        # Backing the chassis away already moves the wrist to the preinsert
+        # corridor in world space. Reaching that old pose again would require
+        # extra arm extension from the new base position.
+        for label, tcp in (("retract_to_staging", VERTICALIZE_TCP_BASE),):
             pose = wrist_pose_for(tcp, insert_quat)
             if not self.cartesian_motion_min(
                 label, [pose.pose], min_fraction=0.95,
