@@ -58,6 +58,19 @@ class RebarGripGateTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "robot_attached must be boolean"):
                 read_state(path)
 
+    def test_parking_brake_command_and_feedback_are_boolean(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "message.json"
+            path.write_text('{"base_lock": true}', encoding="utf-8")
+            self.assertTrue(read_command(path)["base_lock"])
+            path.write_text('{"base_lock": 1}', encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "base_lock must be boolean"):
+                read_command(path)
+            path.write_text('{"upper_z": 1.87, "lower_z": 1.12, '
+                            '"upper_opening": 0.024, "lower_opening": 0.024, '
+                            '"base_locked": true}', encoding="utf-8")
+            self.assertTrue(read_state(path)["base_locked"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -75,6 +75,10 @@ def read_command(path):
     if not isinstance(attach, bool):
         raise ValueError("robot_attach must be boolean")
     command["robot_attach"] = attach
+    base_lock = values.get("base_lock", False)
+    if not isinstance(base_lock, bool):
+        raise ValueError("base_lock must be boolean")
+    command["base_lock"] = base_lock
     return command
 
 
@@ -91,6 +95,10 @@ def read_state(path):
     if not isinstance(attached, bool):
         raise ValueError("robot_attached must be boolean")
     state["robot_attached"] = attached
+    base_locked = values.get("base_locked", False)
+    if not isinstance(base_locked, bool):
+        raise ValueError("base_locked must be boolean")
+    state["base_locked"] = base_locked
     return state
 
 
@@ -126,6 +134,12 @@ class IsaacRebarTesterController:
         self.robot_attached = False
         self.robot_attach_target = False
         self.robot_joint_path = "/World/RobotRebarGraspJoint"
+        self.base_joint_path = "/World/RobotParkingBrakeJoint"
+        self.base_lock_target = False
+        self.base_locked = False
+        self.base_prim = stage.GetPrimAtPath("/World/seer_aubo_composite/base_link")
+        if not self.base_prim.IsValid() or not UsdPhysics.RigidBodyAPI(self.base_prim):
+            raise RuntimeError("Missing robot base_link rigid body for parking brake")
         self.motor_prim = stage.GetPrimAtPath("/World/seer_aubo_composite/gripper_motor_link")
         if not self.motor_prim.IsValid():
             raise RuntimeError("Missing robot gripper motor prim")
@@ -144,7 +158,32 @@ class IsaacRebarTesterController:
     def write_state(self):
         atomic_write(self.state_path,
                      {**self.actual, "rebar_gripped": self.rebar_gripped,
-                      "robot_attached": self.robot_attached})
+                      "robot_attached": self.robot_attached,
+                      "base_locked": self.base_locked})
+
+    def update_base_lock(self):
+        if self.base_lock_target and not self.base_locked:
+            base_world = self.UsdGeom.Xformable(self.base_prim).ComputeLocalToWorldTransform(
+                self.Usd.TimeCode.Default()
+            )
+            position = base_world.ExtractTranslation()
+            rotation = base_world.ExtractRotationQuat()
+            joint = self.UsdPhysics.FixedJoint.Define(self.stage, self.base_joint_path)
+            # An empty body0 binds the current base pose to the static world.
+            joint.CreateBody1Rel().SetTargets([self.base_prim.GetPath()])
+            joint.CreateLocalPos0Attr().Set(self.Gf.Vec3f(*position))
+            joint.CreateLocalRot0Attr().Set(self.Gf.Quatf(
+                rotation.GetReal(), self.Gf.Vec3f(*rotation.GetImaginary())
+            ))
+            joint.CreateLocalPos1Attr().Set(self.Gf.Vec3f(0, 0, 0))
+            joint.CreateLocalRot1Attr().Set(self.Gf.Quatf(1, self.Gf.Vec3f(0, 0, 0)))
+            joint.CreateExcludeFromArticulationAttr().Set(True)
+            self.base_locked = True
+            print("Robot parking brake locked at measured base pose", flush=True)
+        elif not self.base_lock_target and self.base_locked:
+            self.stage.RemovePrim(self.base_joint_path)
+            self.base_locked = False
+            print("Robot parking brake released", flush=True)
 
     def update_robot_attachment(self):
         if self.rebar_kinematic is None:
@@ -234,6 +273,7 @@ class IsaacRebarTesterController:
             if mtime != self.last_command_mtime:
                 command = read_command(self.command_path)
                 self.robot_attach_target = command.pop("robot_attach")
+                self.base_lock_target = command.pop("base_lock")
                 self.targets.update(command)
                 self.last_command_mtime = mtime
         except FileNotFoundError:
@@ -257,6 +297,7 @@ class IsaacRebarTesterController:
             self.apply()
         self.update_rebar_grip()
         self.update_robot_attachment()
+        self.update_base_lock()
         if now - self.last_status_time >= 0.1:
             self.write_state()
             self.last_status_time = now
