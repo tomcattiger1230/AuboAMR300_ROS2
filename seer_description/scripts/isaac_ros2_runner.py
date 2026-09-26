@@ -246,9 +246,9 @@ def configure_stick_robot_drives(stage):
             drive.CreateStiffnessAttr(stiffness)
             drive.CreateDampingAttr(damping)
             if name in ("left_wheel_joint", "right_wheel_joint"):
-                # Bound contact-error corrections so the velocity drive cannot
-                # keep the mobile base awake with very large opposing torques.
-                drive.CreateMaxForceAttr(50.0)
+                # Allow the parked wheel controller to counter arm reaction
+                # loads during insertion while retaining a finite torque cap.
+                drive.CreateMaxForceAttr(120.0)
 
     print("Runtime USD: configured stick robot joint drives", flush=True)
 
