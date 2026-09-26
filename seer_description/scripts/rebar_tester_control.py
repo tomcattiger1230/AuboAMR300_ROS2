@@ -118,6 +118,7 @@ class IsaacRebarTesterController:
         self.last_status_time = 0.0
         self.rebar_prim = stage.GetPrimAtPath("/World/RebarStation/Rebar")
         self.rebar_kinematic = None
+        self.rebar_collision = None
         self.rebar_gripped = False
         self.robot_attached = False
         self.robot_attach_target = False
@@ -130,6 +131,10 @@ class IsaacRebarTesterController:
             self.rebar_kinematic = body.GetKinematicEnabledAttr()
             if not self.rebar_kinematic.IsValid():
                 self.rebar_kinematic = body.CreateKinematicEnabledAttr(False)
+            collision = UsdPhysics.CollisionAPI(self.rebar_prim)
+            self.rebar_collision = collision.GetCollisionEnabledAttr()
+            if not self.rebar_collision.IsValid():
+                self.rebar_collision = collision.CreateCollisionEnabledAttr(True)
         self.apply()
         self.write_state()
 
@@ -161,10 +166,14 @@ class IsaacRebarTesterController:
             joint.CreateLocalPos1Attr().Set(self.Gf.Vec3f(0, 0, 0))
             joint.CreateLocalRot1Attr().Set(self.Gf.Quatf(1, self.Gf.Vec3f(0, 0, 0)))
             joint.CreateExcludeFromArticulationAttr().Set(True)
+            # The joint now represents the grasp. Contact between the bar
+            # and the preloaded fingers would form a competing closed loop.
+            self.rebar_collision.Set(False)
             self.robot_attached = True
             print("Robot grasp joint attached at measured rebar pose", flush=True)
         elif not self.robot_attach_target and self.robot_attached:
             self.stage.RemovePrim(self.robot_joint_path)
+            self.rebar_collision.Set(True)
             self.robot_attached = False
             print("Robot grasp joint released", flush=True)
 
@@ -195,6 +204,7 @@ class IsaacRebarTesterController:
                 raise RuntimeError("Cannot lock rebar rigid body in tester")
             if self.robot_attached:
                 self.stage.RemovePrim(self.robot_joint_path)
+                self.rebar_collision.Set(True)
                 self.robot_attached = False
                 self.robot_attach_target = False
             self.rebar_gripped = True
