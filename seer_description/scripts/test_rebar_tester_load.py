@@ -689,26 +689,6 @@ class TesterLoadTest(RebarGraspTest):
             position=(round(x, 3), round(y, 3)),
             yaw_deg=round(math.degrees(yaw), 1),
         )
-        self.wait_for_base_lock()
-        self.spin(0.2)
-        base_position, base_quat = self._base_position, self._base_quat
-
-        def world_to_base(world_xyz):
-            relative = tuple(
-                a - b for a, b in zip(world_xyz, base_position)
-            )
-            return quat_rotate(quat_conjugate(base_quat), relative)
-
-        grip_base = world_to_base(
-            (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - INSERT_Y_INSET, BAR_HOLD_Z)
-        )
-        approach_base = world_to_base(
-            (GRIP_LINE_XY[0], APPROACH_FROM_SOUTH_Y, BAR_CENTER_Z)
-        )
-        preinsert_base = world_to_base(
-            (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
-        )
-
         # Insertion orientation: wrist Z points north (+Y world) toward the
         # machine, wrist X stays world X, so motor Y (the bar) is vertical.
         insert_quat = quat_from_basis((-1.0, 0.0, 0.0), (0.0, 1.0, 0.0))
@@ -733,6 +713,27 @@ class TesterLoadTest(RebarGraspTest):
         self.record("rebar_vertical", vertical, axis_in_base=list(axis))
         if not vertical:
             raise RuntimeError("bar did not end up vertical after reorientation")
+
+        # Let the slow reorientation finish before engaging the parking brake:
+        # constraining the base during this wide sweep can stall the physical
+        # arm. Freeze the actual resulting pose, then derive all world targets
+        # from its fresh transform instead of the earlier odometry sample.
+        self.wait_for_base_lock()
+        self.spin(0.2)
+        base_position, base_quat = self._base_position, self._base_quat
+
+        def world_to_base(world_xyz):
+            relative = tuple(
+                a - b for a, b in zip(world_xyz, base_position)
+            )
+            return quat_rotate(quat_conjugate(base_quat), relative)
+
+        grip_base = world_to_base(
+            (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - INSERT_Y_INSET, BAR_HOLD_Z)
+        )
+        preinsert_base = world_to_base(
+            (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.30, BAR_HOLD_Z)
+        )
 
         # This diagonal transition's Cartesian solver stops near its end at
         # the 1.50 m bar height. Follow its verified collision-free prefix;
