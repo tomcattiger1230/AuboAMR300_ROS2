@@ -407,8 +407,7 @@ class TesterLoadTest(RebarGraspTest):
                 math.sin(angle - reference), math.cos(angle - reference)
             )
 
-        solution = None
-        best_cost = None
+        candidates = []
         for seed in SEED_CONFIGS + [tuple(current[j] for j in ARM_JOINTS)]:
             request = GetPositionIK.Request()
             request.ik_request.group_name = "arm"
@@ -432,13 +431,26 @@ class TesterLoadTest(RebarGraspTest):
                 continue
             candidate = {j: unwind(candidate[j], current[j]) for j in ARM_JOINTS}
             cost = max(abs(candidate[j] - current[j]) for j in ARM_JOINTS)
-            if best_cost is None or cost < best_cost:
-                best_cost, solution = cost, candidate
-        if solution is None:
+            if all(max(abs(candidate[j] - other[j]) for j in ARM_JOINTS) > 0.02
+                   for _, other in candidates):
+                candidates.append((cost, candidate))
+        if not candidates:
             self.record(label + "_ik", False)
             raise RuntimeError(f"{label}: no IK solution for the joint fallback")
-        plan = self.joint_plan(current, solution)
-        self.run_motion(label + "_joint", plan)
+        # The closest IK branch can fold a finger into the upper arm halfway
+        # through OMPL's interpolated path. Try the other collision-checked
+        # branches before declaring this insertion waypoint unreachable.
+        for attempt, (_, solution) in enumerate(
+            sorted(candidates, key=lambda item: item[0]), 1
+        ):
+            plan = self.joint_plan(current, solution)
+            if plan.error_code.val == 1:
+                self.record(label + "_joint_branch", True, attempt=attempt,
+                            candidates=len(candidates))
+                self.run_motion(label + "_joint", plan)
+                return
+        self.record(label + "_joint_branch", False, candidates=len(candidates))
+        raise RuntimeError(f"{label}: all IK branches failed collision-checked planning")
 
     def cartesian_nc(self, label, poses):
         """Cartesian move without collision checking - fallback for the
