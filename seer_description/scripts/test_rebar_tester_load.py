@@ -1135,6 +1135,18 @@ class TesterLoadTest(RebarGraspTest):
             if stage == "insert" and not self._base_locked:
                 self.wait_for_base_to_settle()
                 x, y, yaw = self.base_pose()
+                distance = math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1])
+                yaw_error = abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
+                                           math.cos(yaw - BASE_TARGET_YAW)))
+                if distance >= 0.04 or yaw_error >= 0.04:
+                    if distance > 0.08 or yaw_error > 0.12:
+                        raise RuntimeError("base moved too far for a safe repark")
+                    self.drive_to(BASE_DRIVE_WAYPOINTS_XY[-1], BASE_TARGET_YAW,
+                                  "repark_before_joint_insert")
+                    self.check_payload_while_parked(
+                        (-0.55, 0.30, 1.40), tolerance=0.06
+                    )
+                    x, y, yaw = self.base_pose()
                 parked = (
                     math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1]) < 0.04
                     and abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
