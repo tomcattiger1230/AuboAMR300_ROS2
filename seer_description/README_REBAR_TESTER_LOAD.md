@@ -1,5 +1,9 @@
 # 钢筋自动装填拉伸测试机（Isaac Sim + MoveIt 2）
 
+若按“取料后先放到车载料槽，再载筋到测试台前”分步执行，请使用
+[车载运输两步流程](README_REBAR_ONBOARD_TRANSPORT.md)。下文原流程是
+机械臂持续夹持钢筋的运输方案。
+
 `test_rebar_tester_load.py` 实现完整流程：**机械臂抓取钢筋 → 底盘开到拉伸测试机
 → 钢筋竖直送入上下抱爪 → 闭合抱爪 → 确认测试机持有钢筋 → 松爪撤回**。
 配套 `rebar_tester_gui_qt.py` 提供测试机手动控制面板。

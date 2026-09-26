@@ -66,6 +66,7 @@ install(PROGRAMS
   scripts/rebar_tester_mission/01_plan.py
   scripts/rebar_tester_mission/02_pick.py
   scripts/rebar_tester_mission/03_navigate.py
+  scripts/rebar_tester_mission/navigate_onboard.py
   scripts/rebar_tester_mission/04_insert.py
   scripts/rebar_tester_mission/05_handoff.py
   scripts/rebar_tester_mission/06_retreat.py
