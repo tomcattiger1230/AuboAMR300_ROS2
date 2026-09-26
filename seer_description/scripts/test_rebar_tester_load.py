@@ -477,22 +477,47 @@ class TesterLoadTest(RebarGraspTest):
         if not candidates:
             self.record(label + "_ik", False)
             raise RuntimeError(f"{label}: no IK solution for the joint fallback")
-        # The closest IK branch can fold a finger into the upper arm halfway
-        # through OMPL's interpolated path. Try the other collision-checked
-        # branches before declaring this insertion waypoint unreachable.
-        for attempt, (_, solution) in enumerate(
-            sorted(candidates, key=lambda item: item[0]), 1
-        ):
-            plan = self.joint_plan(
-                planning_start, self.bounded_arm_for_planning(solution)
+        # OMPL may find a short path which passes its model checks but pushes
+        # the physical mobile base against the tester. Across remote runs the
+        # stable insertion routes have 82-93 points; the 60-point shortcut
+        # repeatedly shifts the base by ~6 cm. Compare collision-valid plans
+        # and require a route with at least 75 points for this waypoint.
+        valid_plans = []
+        trials = 3 if label == "insert_midway" else 1
+        for trial in range(1, trials + 1):
+            for attempt, (cost, solution) in enumerate(
+                sorted(candidates, key=lambda item: item[0]), 1
+            ):
+                plan = self.joint_plan(
+                    planning_start, self.bounded_arm_for_planning(solution)
+                )
+                if plan.error_code.val != 1:
+                    continue
+                points = len(plan.trajectory.joint_trajectory.points)
+                valid_plans.append((points, cost, trial, attempt, plan))
+                if label != "insert_midway":
+                    break
+            if label != "insert_midway" or any(
+                points >= 75 for points, *_ in valid_plans
+            ):
+                break
+        if label == "insert_midway":
+            valid_plans = [item for item in valid_plans if item[0] >= 75]
+        if not valid_plans:
+            self.record(label + "_joint_branch", False,
+                        candidates=len(candidates), trials=trials)
+            raise RuntimeError(
+                f"{label}: no collision-valid route with the required clearance"
             )
-            if plan.error_code.val == 1:
-                self.record(label + "_joint_branch", True, attempt=attempt,
-                            candidates=len(candidates))
-                self.run_motion(label + "_joint", plan)
-                return
-        self.record(label + "_joint_branch", False, candidates=len(candidates))
-        raise RuntimeError(f"{label}: all IK branches failed collision-checked planning")
+        if label == "insert_midway":
+            points, _, trial, attempt, plan = min(
+                valid_plans, key=lambda item: (abs(item[0] - 90), item[1])
+            )
+        else:
+            points, _, trial, attempt, plan = valid_plans[0]
+        self.record(label + "_joint_branch", True, attempt=attempt,
+                    candidates=len(candidates), trial=trial, points=points)
+        self.run_motion(label + "_joint", plan)
 
     @staticmethod
     def bounded_arm_for_planning(joints):
