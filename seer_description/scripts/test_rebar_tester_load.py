@@ -729,9 +729,12 @@ class TesterLoadTest(RebarGraspTest):
         if not vertical:
             raise RuntimeError("bar did not end up vertical after reorientation")
 
-        self.cartesian_motion_min(
-            "insert_preposition", [wrist_pose_for(preinsert_base, insert_quat).pose]
-        )
+        preinsert_pose = wrist_pose_for(preinsert_base, insert_quat)
+        if not self.cartesian_motion_min(
+            "insert_preposition", [preinsert_pose.pose],
+            allow_joint_fallback=True,
+        ):
+            self.joint_fallback("insert_preposition", preinsert_pose)
         # Two short pushes instead of one long one: the KDL chain solves
         # more reliably over short segments near the workspace edge.
         mid_base = world_to_base(
@@ -745,6 +748,24 @@ class TesterLoadTest(RebarGraspTest):
                 # The Cartesian solver stalls on an IK branch switch here;
                 # reach the same pose through joint-space planning instead.
                 self.joint_fallback(label, wrist_pose_for(tcp, insert_quat))
+
+        self.spin(0.2)
+        inserted = self.rebar_position()
+        axis = self.rebar_axis_in_base()
+        aligned = (
+            abs(inserted[0] - GRIP_LINE_XY[0]) < 0.035
+            and abs(inserted[1] - GRIP_LINE_XY[1]) < 0.055
+            and abs(inserted[2] - BAR_CENTER_Z) < 0.08
+            and abs(axis[2]) > 0.95
+        )
+        self.record(
+            "rebar_aligned_in_jaws", aligned,
+            position=[round(value, 3) for value in inserted],
+            axis_in_base=[round(value, 3) for value in axis],
+            base_pose=[round(value, 3) for value in self.base_pose()],
+        )
+        if not aligned:
+            raise RuntimeError("rebar is outside the tester jaw grip window")
 
         # --- 7. clamp with the tester jaws --------------------------------
         if args.manual_jaws:
