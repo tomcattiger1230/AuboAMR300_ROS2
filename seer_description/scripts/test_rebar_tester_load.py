@@ -1150,21 +1150,29 @@ class TesterLoadTest(RebarGraspTest):
             grip_base = world_to_base(
                 (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - INSERT_Y_INSET, BAR_HOLD_Z)
             )
-            self.joint_fallback(
-                "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
-            )
+            # A resumed insert may already have reached the narrow corridor.
+            # Avoid pulling the loaded bar back through the machine merely to
+            # replay the preposition step.
+            if self.rebar_position()[1] < GRIP_LINE_XY[1] - 0.24:
+                self.joint_fallback(
+                    "insert_preposition", wrist_pose_for(preinsert_base, insert_quat)
+                )
             # Two short pushes instead of one long one: the KDL chain solves
             # more reliably over short segments near the workspace edge.
             mid_base = world_to_base(
                 (GRIP_LINE_XY[0], GRIP_LINE_XY[1] - 0.15, BAR_HOLD_Z)
             )
             for label, tcp in (("insert_midway", mid_base), ("insert_to_gripline", grip_base)):
+                if (label == "insert_midway"
+                        and self.rebar_position()[1] >= GRIP_LINE_XY[1] - 0.17):
+                    self.record("insert_midway_already_reached", True)
+                    continue
                 pose = wrist_pose_for(tcp, insert_quat).pose
                 if label == "insert_to_gripline":
-                    # The last ~2 cm can exceed the IK envelope. The jaw window
-                    # accepts this collision-free prefix, and the measured bar
-                    # alignment gate below decides whether clamping is safe.
-                    self.cartesian_motion_min(label, [pose], min_fraction=0.80)
+                    # Near the machine, small chassis offsets can shorten the
+                    # collision-free prefix. Execute a useful prefix, then use
+                    # the measured bar alignment gate and correction loop below.
+                    self.cartesian_motion_min(label, [pose], min_fraction=0.50)
                     continue
                 if not self.cartesian_motion_min(
                     label, [pose], min_fraction=0.97, allow_joint_fallback=True
