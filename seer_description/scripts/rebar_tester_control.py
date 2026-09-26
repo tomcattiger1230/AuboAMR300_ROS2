@@ -246,14 +246,17 @@ class IsaacRebarTesterController:
                 raise RuntimeError("Cannot lock rebar rigid body in tester")
             if self.robot_attached:
                 self.stage.RemovePrim(self.robot_joint_path)
-                self.rebar_collision.Set(True)
                 self.robot_attached = False
                 self.robot_attach_target = False
+            # The tester's kinematic hold now owns the bar. Suppress contacts
+            # with the released robot fingers so they can leave the jaw gap.
+            self.rebar_collision.Set(False)
             self.rebar_gripped = True
             print("Rebar tester accepted and holds the rebar", flush=True)
         elif self.rebar_gripped and not closed:
             if not self.rebar_kinematic.Set(False):
                 raise RuntimeError("Cannot unlock rebar rigid body in tester")
+            self.rebar_collision.Set(True)
             self.rebar_gripped = False
             print("Rebar tester released the rebar", flush=True)
 
