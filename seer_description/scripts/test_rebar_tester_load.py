@@ -110,6 +110,11 @@ class TesterLoadTest(RebarGraspTest):
         self._tester_state_time = {}
         self._tester_gripped = False
         self._tester_gripped_time = 0.0
+        self._robot_attached = False
+        self._robot_attached_time = 0.0
+        self._robot_attach_publisher = self.create_publisher(
+            Bool, "/rebar_tester/robot_attach_cmd", 10
+        )
         self._tester_publishers = {}
         self._cmd_vel = self.create_publisher(Twist, "/cmd_vel", 10)
         for key in TESTER_CHANNELS:
@@ -130,6 +135,9 @@ class TesterLoadTest(RebarGraspTest):
         self.create_subscription(
             Bool, "/rebar_tester/rebar_gripped", self._on_rebar_gripped, 10
         )
+        self.create_subscription(
+            Bool, "/rebar_tester/robot_attached", self._on_robot_attached, 10
+        )
 
     # ---------- tester bridge ----------
 
@@ -146,13 +154,32 @@ class TesterLoadTest(RebarGraspTest):
         self._tester_gripped = bool(message.data)
         self._tester_gripped_time = time.monotonic()
 
+    def _on_robot_attached(self, message):
+        self._robot_attached = bool(message.data)
+        self._robot_attached_time = time.monotonic()
+
+    def wait_for_robot_attachment(self, timeout=10.0):
+        self._robot_attach_publisher.publish(Bool(data=True))
+        end = time.monotonic() + timeout
+        while time.monotonic() < end:
+            self.spin(0.1)
+            if (self._robot_attached
+                    and time.monotonic() - self._robot_attached_time < 1.5):
+                self.record("robot_rebar_attached", True)
+                return
+        self.record("robot_rebar_attached", False)
+        raise RuntimeError("robot grasp joint was not confirmed by Isaac")
+
     def wait_for_tester_grip(self, timeout=10.0):
         end = time.monotonic() + timeout
         while time.monotonic() < end:
             self.spin(0.1)
             if (self._tester_gripped
-                    and time.monotonic() - self._tester_gripped_time < 1.5):
-                self.record("tester_rebar_gripped", True)
+                    and time.monotonic() - self._tester_gripped_time < 1.5
+                    and not self._robot_attached
+                    and time.monotonic() - self._robot_attached_time < 1.5):
+                self.record("tester_rebar_gripped", True,
+                            robot_joint_released=True)
                 return
         self.record("tester_rebar_gripped", False)
         raise RuntimeError("tester has not confirmed that it holds the rebar")
@@ -576,6 +603,10 @@ class TesterLoadTest(RebarGraspTest):
             self.check_insertion_reachability(grasp)
             self.write_report()
             return self._passed
+
+        # Physical finger contact and the initial lift have already been
+        # verified. Add a temporary simulated joint for transport and rotation.
+        self.wait_for_robot_attachment()
 
         # --- 4. carry pose: high and retracted ---------------------------
         # Raising straight above the station exceeds the arm envelope

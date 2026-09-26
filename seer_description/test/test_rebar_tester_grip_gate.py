@@ -1,11 +1,12 @@
 """Safety checks for transfer of a rebar from robot fingers to tester jaws."""
 
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from rebar_tester_control import rebar_grip_ready  # noqa: E402
+from rebar_tester_control import read_command, read_state, rebar_grip_ready  # noqa: E402
 
 
 class RebarGripGateTest(unittest.TestCase):
@@ -38,6 +39,24 @@ class RebarGripGateTest(unittest.TestCase):
         self.assertFalse(rebar_grip_ready(
             self.jaws, self.expected, self.expected, (1, 0, 0)
         ))
+
+    def test_attachment_command_rejects_non_boolean(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "command.json"
+            path.write_text('{"robot_attach": 1}', encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "robot_attach must be boolean"):
+                read_command(path)
+            path.write_text('{"robot_attach": true}', encoding="utf-8")
+            self.assertTrue(read_command(path)["robot_attach"])
+
+    def test_attachment_feedback_rejects_non_boolean(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "state.json"
+            path.write_text('{"upper_z": 1.87, "lower_z": 1.12, '
+                            '"upper_opening": 0.024, "lower_opening": 0.024, '
+                            '"robot_attached": "yes"}', encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "robot_attached must be boolean"):
+                read_state(path)
 
 
 if __name__ == "__main__":

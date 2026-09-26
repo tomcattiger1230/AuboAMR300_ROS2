@@ -14,12 +14,19 @@ class RebarTesterBridge(Node):
         super().__init__("rebar_tester_bridge")
         self.command_path, self.state_path = paths()
         self.targets = DEFAULTS.copy()
+        self.targets["robot_attach"] = False
         self.last_state_mtime = None
         self.last_state = None
         self.last_state_publish = self.get_clock().now() - Duration(seconds=10)
         self.state_publishers = {}
         self.gripped_publisher = self.create_publisher(
             Bool, "/rebar_tester/rebar_gripped", 10
+        )
+        self.attached_publisher = self.create_publisher(
+            Bool, "/rebar_tester/robot_attached", 10
+        )
+        self.create_subscription(
+            Bool, "/rebar_tester/robot_attach_cmd", self.on_robot_attach, 10
         )
         for key in DEFAULTS:
             group, axis = key.split("_", 1)
@@ -29,6 +36,10 @@ class RebarTesterBridge(Node):
         atomic_write(self.command_path, self.targets)
         self.create_timer(0.1, self.publish_state)
         self.get_logger().info("Rebar tester command and state topics ready")
+
+    def on_robot_attach(self, message):
+        self.targets["robot_attach"] = bool(message.data)
+        atomic_write(self.command_path, self.targets)
 
     def callback(self, key):
         def on_message(message):
@@ -70,6 +81,9 @@ class RebarTesterBridge(Node):
             self.state_publishers[key].publish(Float64(data=value))
         self.gripped_publisher.publish(
             Bool(data=self.last_state["rebar_gripped"])
+        )
+        self.attached_publisher.publish(
+            Bool(data=self.last_state["robot_attached"])
         )
 
 

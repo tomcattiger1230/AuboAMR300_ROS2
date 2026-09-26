@@ -66,6 +66,18 @@ def read_values(path):
     return {key: clamp(key, values[key]) for key in DEFAULTS if key in values}
 
 
+def read_command(path):
+    values = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(values, dict):
+        raise ValueError("expected an object")
+    command = {key: clamp(key, values[key]) for key in DEFAULTS if key in values}
+    attach = values.get("robot_attach", False)
+    if not isinstance(attach, bool):
+        raise ValueError("robot_attach must be boolean")
+    command["robot_attach"] = attach
+    return command
+
+
 def read_state(path):
     values = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(values, dict):
@@ -75,6 +87,10 @@ def read_state(path):
     if not isinstance(gripped, bool):
         raise ValueError("rebar_gripped must be boolean")
     state["rebar_gripped"] = gripped
+    attached = values.get("robot_attached", False)
+    if not isinstance(attached, bool):
+        raise ValueError("robot_attached must be boolean")
+    state["robot_attached"] = attached
     return state
 
 
@@ -85,6 +101,7 @@ class IsaacRebarTesterController:
         self.Gf = Gf
         self.Usd = Usd
         self.UsdGeom = UsdGeom
+        self.UsdPhysics = UsdPhysics
         self.stage = stage
         self.command_path, self.state_path = paths()
         self.targets = DEFAULTS.copy()
@@ -102,6 +119,12 @@ class IsaacRebarTesterController:
         self.rebar_prim = stage.GetPrimAtPath("/World/RebarStation/Rebar")
         self.rebar_kinematic = None
         self.rebar_gripped = False
+        self.robot_attached = False
+        self.robot_attach_target = False
+        self.robot_joint_path = "/World/RobotRebarGraspJoint"
+        self.motor_prim = stage.GetPrimAtPath("/World/seer_aubo_composite/gripper_motor_link")
+        if not self.motor_prim.IsValid():
+            raise RuntimeError("Missing robot gripper motor prim")
         if self.rebar_prim.IsValid():
             body = UsdPhysics.RigidBodyAPI(self.rebar_prim)
             self.rebar_kinematic = body.GetKinematicEnabledAttr()
@@ -112,7 +135,38 @@ class IsaacRebarTesterController:
 
     def write_state(self):
         atomic_write(self.state_path,
-                     {**self.actual, "rebar_gripped": self.rebar_gripped})
+                     {**self.actual, "rebar_gripped": self.rebar_gripped,
+                      "robot_attached": self.robot_attached})
+
+    def update_robot_attachment(self):
+        if self.rebar_kinematic is None:
+            return
+        if self.robot_attach_target and not self.robot_attached and not self.rebar_gripped:
+            motor_world = self.UsdGeom.Xformable(self.motor_prim).ComputeLocalToWorldTransform(
+                self.Usd.TimeCode.Default()
+            )
+            bar_world = self.UsdGeom.Xformable(self.rebar_prim).ComputeLocalToWorldTransform(
+                self.Usd.TimeCode.Default()
+            )
+            local = bar_world * motor_world.GetInverse()
+            position = local.ExtractTranslation()
+            rotation = local.ExtractRotationQuat()
+            joint = self.UsdPhysics.FixedJoint.Define(self.stage, self.robot_joint_path)
+            joint.CreateBody0Rel().SetTargets([self.motor_prim.GetPath()])
+            joint.CreateBody1Rel().SetTargets([self.rebar_prim.GetPath()])
+            joint.CreateLocalPos0Attr().Set(self.Gf.Vec3f(*position))
+            joint.CreateLocalRot0Attr().Set(self.Gf.Quatf(
+                rotation.GetReal(), self.Gf.Vec3f(*rotation.GetImaginary())
+            ))
+            joint.CreateLocalPos1Attr().Set(self.Gf.Vec3f(0, 0, 0))
+            joint.CreateLocalRot1Attr().Set(self.Gf.Quatf(1, self.Gf.Vec3f(0, 0, 0)))
+            joint.CreateExcludeFromArticulationAttr().Set(True)
+            self.robot_attached = True
+            print("Robot grasp joint attached at measured rebar pose", flush=True)
+        elif not self.robot_attach_target and self.robot_attached:
+            self.stage.RemovePrim(self.robot_joint_path)
+            self.robot_attached = False
+            print("Robot grasp joint released", flush=True)
 
     def bar_in_grip(self):
         """Check the actual rigid-body pose before transferring support."""
@@ -139,6 +193,10 @@ class IsaacRebarTesterController:
             # when the robot fingers release it; no pose is teleported.
             if not self.rebar_kinematic.Set(True):
                 raise RuntimeError("Cannot lock rebar rigid body in tester")
+            if self.robot_attached:
+                self.stage.RemovePrim(self.robot_joint_path)
+                self.robot_attached = False
+                self.robot_attach_target = False
             self.rebar_gripped = True
             print("Rebar tester accepted and holds the rebar", flush=True)
         elif self.rebar_gripped and not closed:
@@ -161,7 +219,9 @@ class IsaacRebarTesterController:
         try:
             mtime = self.command_path.stat().st_mtime_ns
             if mtime != self.last_command_mtime:
-                self.targets.update(read_values(self.command_path))
+                command = read_command(self.command_path)
+                self.robot_attach_target = command.pop("robot_attach")
+                self.targets.update(command)
                 self.last_command_mtime = mtime
         except FileNotFoundError:
             pass
@@ -183,6 +243,7 @@ class IsaacRebarTesterController:
         if changed:
             self.apply()
         self.update_rebar_grip()
+        self.update_robot_attachment()
         if now - self.last_status_time >= 0.1:
             self.write_state()
             self.last_status_time = now
