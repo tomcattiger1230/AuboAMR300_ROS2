@@ -464,6 +464,28 @@ class TesterLoadTest(RebarGraspTest):
         if not result.success:
             raise RuntimeError("released payload scene cleanup rejected")
 
+    def clear_tester_from_scene_after_retreat(self):
+        """Drop tester boxes only after the chassis and arm clear the machine."""
+        from moveit_msgs.msg import PlanningScene
+
+        x, y, _ = self.base_pose()
+        clear = abs(x - GRIP_LINE_XY[0]) < 0.08 and y < 1.50
+        self.record("tester_clearance_before_scene_cleanup", clear,
+                    base_pose=[round(x, 3), round(y, 3)])
+        if not clear or not self._tester_gripped:
+            raise RuntimeError("cannot clear tester scene before safe retreat")
+        scene = PlanningScene(is_diff=True)
+        scene.world.collision_objects = [
+            CollisionObject(id=name, operation=CollisionObject.REMOVE)
+            for name in ("rebar_test_machine", "rebar_tester_console")
+        ]
+        result = self.call(
+            self._scene_apply, ApplyPlanningScene.Request(scene=scene)
+        )
+        self.record("tester_scene_cleared_after_retreat", result.success)
+        if not result.success:
+            raise RuntimeError("MoveIt rejected tester scene cleanup")
+
     def cartesian_motion_min(self, label, poses, min_fraction=0.93,
                              allow_joint_fallback=False, speed_scale=None):
         """Cartesian move tolerating an incomplete path (the next stage's
@@ -1289,11 +1311,12 @@ class TesterLoadTest(RebarGraspTest):
             self.release_base_lock()
         self.clear_released_payload_from_scene()
         # The open fingers can still brush the stationary bar and jaws at
-        # the insertion pose. Move the chassis straight south along its known
-        # clear approach corridor before asking the arm to fold.
-        self.drive_to((BASE_DRIVE_WAYPOINTS_XY[-1][0], 2.75),
+        # the insertion pose. Move straight south far enough that the folded
+        # gripper target is outside the tester collision geometry.
+        self.drive_to((BASE_DRIVE_WAYPOINTS_XY[-1][0], 1.40),
                       BASE_TARGET_YAW, "clear_tester")
         self.spin(0.2)
+        self.clear_tester_from_scene_after_retreat()
         # Backing the chassis away already moves the wrist to the preinsert
         # corridor in world space. Reaching that old pose again would require
         # extra arm extension from the new base position.
