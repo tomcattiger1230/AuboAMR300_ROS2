@@ -53,13 +53,16 @@ class OnboardPickup(TesterLoadTest):
         self.spin(2.0)
 
         x, y, yaw = self.base_pose()
-        parked = (math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[-1]) < 0.05
+        pickup_waypoint = (BASE_DRIVE_WAYPOINTS_XY[-2]
+                           if self.args.at_standoff else BASE_DRIVE_WAYPOINTS_XY[-1])
+        parked = (math.dist((x, y), pickup_waypoint) < 0.05
                   and abs(math.atan2(math.sin(yaw - BASE_TARGET_YAW),
                                      math.cos(yaw - BASE_TARGET_YAW))) < 0.08
                   and self._base_locked)
         self.record("base_parked_before_onboard_pickup", parked,
                     position=[round(x, 3), round(y, 3)],
-                    yaw=round(yaw, 3), brake_locked=self._base_locked)
+                    yaw=round(yaw, 3), brake_locked=self._base_locked,
+                    waypoint=list(pickup_waypoint))
         if not parked:
             raise RuntimeError("base is not parked and locked at the tester")
 
@@ -175,6 +178,7 @@ class OnboardPickup(TesterLoadTest):
             "lift_tcp": list(lift),
             "source": "onboard_slot",
             "slot": slot,
+            "pickup_waypoint": list(pickup_waypoint),
         }
         path = Path(self.args.state_file)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -191,6 +195,8 @@ def main():
     parser.description = __doc__
     parser.add_argument("--resume-clamped", action="store_true",
                         help="resume after confirmed finger contact at the rack")
+    parser.add_argument("--at-standoff", action="store_true",
+                        help="pick at the open turning waypoint (6.0, 2.6)")
     parser.set_defaults(state_file="/tmp/rebar_onboard_tester_state.json")
     args = parser.parse_args()
     if args.onboard_slot is None:

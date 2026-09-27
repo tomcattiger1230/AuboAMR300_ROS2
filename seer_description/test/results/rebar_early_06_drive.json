@@ -1,0 +1,77 @@
+[
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "vertical_drive_safe_start",
+    "pass": true,
+    "base_pose": [
+      5.9832,
+      2.6044,
+      -1.5662
+    ]
+  },
+  {
+    "test": "payload_retained_while_driving",
+    "pass": true,
+    "actual": [
+      -0.567,
+      0.007,
+      1.499
+    ],
+    "expected": [
+      -0.567,
+      0.0,
+      1.5
+    ],
+    "offset_m": 0.007
+  },
+  {
+    "test": "base_parking_brake_released",
+    "pass": true
+  },
+  {
+    "test": "vertical_drive_at_tester",
+    "pass": true,
+    "base_pose": [
+      5.9822,
+      3.0415,
+      -1.57
+    ],
+    "bar_base": [
+      -0.5672,
+      0.0069,
+      1.4985
+    ],
+    "slip_m": 0.0071
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      5.982,
+      3.042,
+      -1.57
+    ]
+  },
+  {
+    "test": "vertical_bar_before_micro_insert",
+    "pass": true,
+    "bar_world": [
+      5.9884,
+      3.6097,
+      1.4987
+    ],
+    "axis_base": [
+      -0.00239,
+      0.00013,
+      1.0
+    ],
+    "base_pose": [
+      5.9822,
+      3.0425,
+      -1.5696
+    ]
+  }
+]

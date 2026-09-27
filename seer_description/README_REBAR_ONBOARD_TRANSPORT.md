@@ -58,6 +58,8 @@ ros2 run seer_description 04_insert.py \
 **当前限制：**从新场景连续执行四段时，最后的
 `onboard_preposition` 逆解可能失败并安全停止。复现状态、返回分支和
 待解决事项见 [逆解问题记录](REBAR_ONBOARD_PREPOSITION_IK_ISSUE.md)。
+已验证的替代实验将竖直化和预定位提前到开阔点，再低速驱动至测试台，
+操作命令与结果见[提前竖直化流程](README_REBAR_EARLY_VERTICAL_APPROACH.md)。
 
 原 [自动装填流程](README_REBAR_TESTER_LOAD.md)中的 `02_pick.py`、
 `03_navigate.py` 采用**机械臂持续夹持**钢筋的运输方式，不是这里的车载
