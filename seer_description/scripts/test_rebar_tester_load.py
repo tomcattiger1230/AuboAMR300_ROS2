@@ -178,9 +178,10 @@ class TesterLoadTest(RebarGraspTest):
 
     def require_previous_stage(self, expected):
         state = self.load_stage()
-        if state.get("completed") != expected:
+        allowed = (expected,) if isinstance(expected, str) else tuple(expected)
+        if state.get("completed") not in allowed:
             raise RuntimeError(
-                f"stage {self.args.stage} requires completed {expected}; "
+                f"stage {self.args.stage} requires completed {allowed}; "
                 f"state contains {state.get('completed')!r}"
             )
         if state.get("route_xy") != [list(point) for point in BASE_DRIVE_WAYPOINTS_XY]:
@@ -915,7 +916,7 @@ class TesterLoadTest(RebarGraspTest):
             args.plan_only = True
         predecessors = {
             "pick": "plan", "navigate": "pick", "insert": "navigate",
-            "handoff": "insert", "retreat": "handoff",
+            "handoff": ("insert", "micro_insert"), "retreat": "handoff",
         }
         if stage in predecessors:
             self.require_previous_stage(predecessors[stage])
