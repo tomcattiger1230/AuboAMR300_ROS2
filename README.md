@@ -28,6 +28,7 @@ SEER AMB-300 底盘、AUBO i16H 机械臂、末端夹爪和工业相机的 ROS 2
 | 复合机器人与 ETM-6M 抗渗仪场景 | [ETM-6M Isaac 场景](seer_description/README_ETM6M.md) |
 | 钢筋拉伸测试机与设备联合场景 | [钢筋测试机场景](seer_description/README_REBAR_TEST_MACHINE.md) |
 | 双抗渗仪、拉伸机与钢筋抓取联合场景 | [钢筋实验室场景](seer_description/README_REBAR_LAB.md) |
+| 车载 1–4 号钢筋到目标位姿的规划窗口 | [钢筋末端姿态规划 GUI](seer_description/README_REBAR_POSE_PLANNER.md) |
 | 双雷达、SLAM、导航和视频 | [导航与相机](seer_description/ISAAC_NAVIGATION_CAMERA.md) |
 | 黑白相机参数、URDF/SDF/USD、视频入口 | [MV-CH100-60UM + 12 mm](seer_description/README_MONO_CAMERA.md) |
 | 新 finger + motor_adapter 夹爪模型与启动 | [新夹爪版本](seer_description/README_FINGER_GRIPPER.md) |
@@ -47,7 +48,7 @@ python3 scripts/check_git_portability.py
 
 ## 钢筋实验室仿真
 
-联合场景包含原 finger 复合机器人与钢筋取料工位，以及两台抗渗仪和一台可独立控制上下横梁、上下抱爪的钢筋拉伸测试机。模型文件、世界坐标和启动方法见[钢筋实验室场景](seer_description/README_REBAR_LAB.md)；四路 ROS 2 指令、行程和状态反馈见[钢筋测试机说明](seer_description/README_REBAR_TEST_MACHINE.md)。[自动装填脚本](seer_description/README_REBAR_TESTER_LOAD.md)已完成抓取至双抱爪闭合的仿真验证，松爪和撤回仍待联机验证。
+联合场景包含原 finger 复合机器人与钢筋取料工位，以及两台抗渗仪和一台可独立控制上下横梁、上下抱爪的钢筋拉伸测试机。模型文件、世界坐标和启动方法见[钢筋实验室场景](seer_description/README_REBAR_LAB.md)；四路 ROS 2 指令、行程和状态反馈见[钢筋测试机说明](seer_description/README_REBAR_TEST_MACHINE.md)。[正面接近流程](seer_description/README_REBAR_EARLY_VERTICAL_APPROACH.md)已完成取筋、运送、测试机接管和机械臂松爪的仿真验证，机械臂撤回尚未执行。
 
 ## Mac GUI 快速启动
 

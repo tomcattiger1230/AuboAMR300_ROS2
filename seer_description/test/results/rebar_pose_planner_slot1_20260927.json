@@ -1,0 +1,85 @@
+{
+  "ok": true,
+  "slot": 1,
+  "target_input": {
+    "frame": "base_footprint",
+    "tcp_xyz": [
+      0.15,
+      -0.2,
+      1.1
+    ],
+    "rpy_deg": [
+      180.0,
+      0.0,
+      0.0
+    ]
+  },
+  "base_world_xyz": [
+    6.063087428508425,
+    3.0468337480858327,
+    -3.948961158073416e-08
+  ],
+  "source_lift_tcp_base": [
+    0.2927,
+    0.0,
+    0.9
+  ],
+  "assumed_finger_position_m": 0.017,
+  "target_tcp_base": [
+    0.15,
+    -0.2,
+    1.1
+  ],
+  "target_tool_axis_world": [
+    -1.5139438522187065e-07,
+    -3.187613646724323e-07,
+    -0.9999999999999377
+  ],
+  "target_bar_axis_world": [
+    -0.9999877248907669,
+    -0.004954802494992583,
+    1.5297192644425057e-07
+  ],
+  "payload_collision_source": "virtual_preview_rebar",
+  "scene_warnings": [
+    "场景中已有一根钢筋，测试位可能被占用"
+  ],
+  "stages": [
+    {
+      "name": "source_lift_ik",
+      "ok": true,
+      "fk_error_m": 4.762118771772912e-10,
+      "joints_rad": [
+        3.4697022951353422,
+        4.779504761861825,
+        -1.5993343483365792,
+        4.61673517731113,
+        1.570796326796216,
+        1.8989059683374814
+      ]
+    },
+    {
+      "name": "target_ik",
+      "ok": true,
+      "fk_error_m": 6.456249201859824e-08,
+      "joints_rad": [
+        3.121679526519079,
+        5.234062231205665,
+        -1.2663972055833697,
+        4.495114850721221,
+        1.5707963267771072,
+        1.5508831997212182
+      ]
+    },
+    {
+      "name": "collision_checked_path",
+      "ok": true,
+      "points": 23,
+      "duration_s": 2.130433054,
+      "attached_bar": true
+    }
+  ],
+  "scope": "仅规划车载钢筋夹稳并抬升到 0.90 m 之后的机械臂路径；不规划抓取接触、底盘导航，不执行运动。",
+  "source_ik_candidates": 4,
+  "path_attempts": 1
+}

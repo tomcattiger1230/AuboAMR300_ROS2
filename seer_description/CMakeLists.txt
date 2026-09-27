@@ -62,6 +62,8 @@ install(PROGRAMS
   scripts/rebar_tester_geometry.py
   scripts/rebar_tester_gui.py
   scripts/rebar_tester_gui_qt.py
+  scripts/rebar_pose_planner/rebar_pose_planner_gui.py
+  scripts/rebar_pose_planner/rebar_pose_planner_backend.py
   scripts/test_rebar_tester_load.py
   scripts/rebar_tester_mission/01_plan.py
   scripts/rebar_tester_mission/02_pick.py
@@ -81,7 +83,8 @@ install(PROGRAMS
 )
 
 install(FILES scripts/rebar_experiment_geometry.py scripts/rebar_tester_control.py
-  scripts/rebar_tester_mission/stage_entry.py DESTINATION lib/${PROJECT_NAME})
+  scripts/rebar_tester_mission/stage_entry.py
+  scripts/rebar_pose_planner/rebar_pose_planner_core.py DESTINATION lib/${PROJECT_NAME})
 
 install(FILES
   README_ISAAC_ROS2.md
@@ -93,6 +96,7 @@ install(FILES
   README_REBAR_TEST_MACHINE.md
   README_REBAR_LAB.md
   README_REBAR_TESTER_LOAD.md
+  README_REBAR_POSE_PLANNER.md
   DESTINATION share/${PROJECT_NAME}
 )
 install(DIRECTORY test/results DESTINATION share/${PROJECT_NAME}/test)
