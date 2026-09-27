@@ -1,5 +1,47 @@
 # 提前竖直化钢筋，再驱动底盘靠近拉伸测试机
 
+## 第三视角自动化演示视频
+
+[观看完整演示（MP4，2 分 29 秒）](test/results/rebar_video_20260927/rebar_automation_third_person.mp4)。
+视频按八段脚本从起点取筋装车、载筋导航、车载再取筋、钢筋竖直化、
+测试台前预定位、竖直持筋接近、夹持线微调，直到测试机上下抱爪接管后
+机器人松爪。取料区、导航全景、测试台近景采用三个第三视角机位；
+片头阶段之前的仿真启动等待已裁去，前两段约 2.5 倍速，后六段约
+1.75 倍速。当前演示止于测试机接管，尚未运行拉伸/拉断动作。
+
+本次在 Ubuntu 的 Isaac Sim 上重新完整执行，八段[检查报告](test/results/rebar_video_20260927/)
+共 **100 项通过、0 失败**。视频为 960×540、H.264、24 fps；
+[视频阶段时长清单](test/results/rebar_video_20260927/rebar_automation_third_person.json)。
+
+如需重新录制，启动仿真前设置 `REBAR_VIDEO_DIR`，录制器会持续将 JPEG
+帧及 `frames.jsonl` 阶段标记写入此目录：
+
+```bash
+source /opt/ros/lyrical/setup.bash
+source ~/Develop/ROS_ws/hongshi_mm_ws/install/setup.bash
+export ROS_DOMAIN_ID=133
+export REBAR_VIDEO_DIR=/tmp/rebar_video_run
+ros2 run seer_description start_warehouse_finger_rebar_lab_demo.sh --no-rviz --domain-id 133
+```
+
+待启动完成，在另一终端执行：
+
+```bash
+source /opt/ros/lyrical/setup.bash
+source ~/Develop/ROS_ws/hongshi_mm_ws/install/setup.bash
+export ROS_DOMAIN_ID=133 REBAR_VIDEO_DIR=/tmp/rebar_video_run
+ros2 pkg prefix seer_description  # 确认使用当前工作区
+~/Develop/ROS_ws/hongshi_mm_ws/src/AuboAMR300_ROS2/seer_description/scripts/record_rebar_workflow.sh
+```
+
+第八段完成后结束仿真，让录制器关闭文件。用 Ubuntu 的 `ffmpeg`
+和 Noto CJK 字体生成带阶段标题的视频：
+
+```bash
+python3 ~/Develop/ROS_ws/hongshi_mm_ws/src/AuboAMR300_ROS2/seer_description/scripts/assemble_rebar_video.py \
+  "$REBAR_VIDEO_DIR" "$REBAR_VIDEO_DIR/rebar_automation_third_person.mp4"
+```
+
 本实验解决车载钢筋流程中最后一段大幅关节预定位偶发无逆解的问题。
 机械臂在测试机外的开阔点 `(6.08, 2.6)` m，从车载第 1 槽取筋、竖直化、
 进入正面预插入关节姿态；底盘保持这一姿态低速倒车到 `(6.08, 3.05)` m；

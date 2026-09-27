@@ -1,0 +1,137 @@
+[
+  {
+    "test": "base_at_source",
+    "pass": true,
+    "position": [
+      -0.009,
+      0.0
+    ]
+  },
+  {
+    "test": "gripper_released_after_loading",
+    "pass": true,
+    "fingers": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "test": "rebar_seated_before_drive",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0018,
+      0.715
+    ],
+    "axis": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "error_m": 0.0018
+  },
+  {
+    "test": "base_leg_1",
+    "pass": true,
+    "position": [
+      4.483,
+      0.001
+    ],
+    "yaw": 1.551,
+    "distance_error": 0.0174
+  },
+  {
+    "test": "rebar_seated_after_leg_1",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0018,
+      0.715
+    ],
+    "axis": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "error_m": 0.0018
+  },
+  {
+    "test": "base_leg_2",
+    "pass": true,
+    "position": [
+      4.497,
+      2.582
+    ],
+    "yaw": 0.019,
+    "distance_error": 0.0184
+  },
+  {
+    "test": "rebar_seated_after_leg_2",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0019,
+      0.715
+    ],
+    "axis": [
+      0.0,
+      -1.0,
+      -0.0
+    ],
+    "error_m": 0.0019
+  },
+  {
+    "test": "base_turn_south",
+    "pass": true,
+    "position": [
+      6.063,
+      2.603
+    ],
+    "yaw": -1.552,
+    "distance_error": 0.0173
+  },
+  {
+    "test": "rebar_seated_after_turn_south",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.0019,
+      0.715
+    ],
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "error_m": 0.0019
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      6.063,
+      2.603,
+      -1.555
+    ]
+  },
+  {
+    "test": "rebar_seated_at_standoff",
+    "pass": true,
+    "slot": 1,
+    "position": [
+      0.2927,
+      -0.002,
+      0.715
+    ],
+    "axis": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "error_m": 0.002
+  }
+]

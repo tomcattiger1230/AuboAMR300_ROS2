@@ -266,6 +266,9 @@ fi
 if [[ "$HEADLESS" == true ]]; then
   RUNNER_ARGS+=(--headless)
 fi
+if [[ -n "${REBAR_VIDEO_DIR:-}" ]]; then
+  RUNNER_ARGS+=(--observer-record-dir "$REBAR_VIDEO_DIR")
+fi
 
 ISAAC_PID=""
 READY_DIR="$(mktemp -d /tmp/seer_isaac_ready.XXXXXX)"
