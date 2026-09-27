@@ -106,5 +106,12 @@ ros2 run seer_description 05_handoff.py \
 
 ![测试机接管后机器人夹爪张开](test/results/rebar_early_handoff_camera_20260927.png)
 
+为查看工位整体布局，按交接后的 ROS 位姿在相同 USD 场景中离线重建了
+两个斜上方视角。这些图不是运行中相机的直接截图：
+
+![机器人与测试机工位全局视角](test/results/rebar_handoff_global_workcell_20260927.png)
+
+![包含周边设备的更宽全局视角](test/results/rebar_handoff_global_wide_20260927.png)
+
 这是一轮成功的完整场景实验；尚需多轮重跑来评估规划与物理仿真的
 重复性。机械臂退回、底盘驶离和测试机拉伸动作尚未执行。
