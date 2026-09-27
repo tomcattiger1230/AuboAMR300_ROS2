@@ -1,0 +1,88 @@
+[
+  {
+    "test": "base_at_standoff",
+    "pass": true,
+    "base_pose": [
+      6.064,
+      2.604,
+      -1.555
+    ]
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "base_parking_brake_released",
+    "pass": true
+  },
+  {
+    "test": "move_to_open_verticalize_staging",
+    "pass": true,
+    "planning_code": 1,
+    "points": 61,
+    "execution_code": 1
+  },
+  {
+    "test": "verticalize_before_base_approach",
+    "pass": true,
+    "fraction": 1.0
+  },
+  {
+    "test": "verticalize_before_base_approach_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 252,
+    "execution_code": 1
+  },
+  {
+    "test": "rebar_vertical_at_standoff",
+    "pass": true,
+    "axis_in_base": [
+      -0.00047,
+      0.00195,
+      1.0
+    ],
+    "rebar_world": [
+      6.6169,
+      2.956,
+      1.1986
+    ]
+  },
+  {
+    "test": "payload_retained_while_driving",
+    "pass": true,
+    "actual": [
+      -0.349,
+      0.554,
+      1.199
+    ],
+    "expected": [
+      -0.35,
+      0.55,
+      1.2
+    ],
+    "offset_m": 0.005
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      6.064,
+      2.605,
+      -1.567
+    ]
+  }
+]

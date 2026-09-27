@@ -89,7 +89,7 @@ class DriveWithVerticalRebar(TesterLoadTest):
         self.wait_for_base_lock()
         actual = self.rebar_position()
         world_ok = (abs(actual[0] - GRIP_LINE_XY[0]) < 0.05
-                    and abs(actual[1] - (GRIP_LINE_XY[1] - 0.30)) < 0.06
+                    and abs(actual[1] - (GRIP_LINE_XY[1] - 0.07)) < 0.06
                     and abs(actual[2] - BAR_CENTER_Z) < 0.06)
         self.record("vertical_bar_before_micro_insert", world_ok,
                     bar_world=[round(v, 4) for v in actual],

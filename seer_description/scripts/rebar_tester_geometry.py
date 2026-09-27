@@ -33,7 +33,9 @@ JAW_PLATE_HALFHEIGHT = 0.065
 
 # --- Insertion pose for the 0.6 m lab rebar --------------------------------
 # The bar hangs vertically on the grip line; the robot approaches from the
-# south (-Y) with the wrist horizontal. With both jaws pre-set open at the
+# south (-Y) with the wrist tool axis along world +Y, normal to the tester
+# front plane. The gripper closes along world X, like the tester jaws.
+# With both jaws pre-set open at the
 # extremes there is clear horizontal corridor: bar bottom 1.20 sits above
 # the lower plate top (0.92 + 0.065 = 0.985) and bar top 1.80 stays below
 # the upper plate bottom (1.88 - 0.065 = 1.815).
@@ -47,10 +49,8 @@ BAR_TOP_Z = BAR_CENTER_Z + BAR_LENGTH / 2         # 1.80
 # An IK probe confirms this is reachable from the 3.05 m parking position.
 BAR_HOLD_Z = BAR_CENTER_Z                         # 1.50
 APPROACH_FROM_SOUTH_Y = GRIP_LINE_XY[1] - 0.16    # wrist plane while inserting
-# The exact grip-line point is IK-inreachable from the parking spot (probe:
-# 20/21 corridor points solve, only y-offset 0 fails); 2 cm south stays
-# inside the jaw-tip grip span (y +/-0.05 around the grip line) and is
-# reliably reachable.
+# Stop 2 cm south of the nominal line, inside the jaw-tip grip span
+# (y +/-0.05). This leaves the front-facing wrist clear of the carriage.
 INSERT_Y_INSET = 0.02
 
 # Jaw z commands that grip the bar ends after insertion: the tip pads
@@ -62,11 +62,11 @@ JAW_INSERT_OPENING = JAW_OPENING_MAX
 
 # --- Mobile base staging ---------------------------------------------------
 # Final pose: facing south (yaw -90 deg) so the arm (mounted toward robot
-# -X, i.e. world +Y) reaches the grip line. The chassis box is 1.00 x 0.70,
-# so the rear edge stays 0.09 m clear of the cabinet front (y = 3.59).
-# Parking at y 3.05 makes the 1.50 m insertion centre reachable while
-# leaving 4 cm between the rear chassis edge and the cabinet front.
-BASE_TARGET_XY = (6.0, 3.05)
+# -X, i.e. world +Y) reaches the grip line. The chassis box is 1.00 x 0.70;
+# parking at y 3.05 keeps 4 cm between its rear edge and the cabinet front.
+# The 8 cm +X offset gives the front-facing gripper a collision-free IK
+# branch beside the tester frame.
+BASE_TARGET_XY = (6.08, 3.05)
 BASE_TARGET_YAW = -1.5707963267948966      # -90 deg
 # Route avoiding the work-table legs (x 5.99..6.11 at y +/-0.42, which
 # block a straight (0,0)->(6,0) run) and the bollards at (5.4, +/-1).
@@ -74,7 +74,7 @@ BASE_TARGET_YAW = -1.5707963267948966      # -90 deg
 # stays clear of the cabinet front at y 3.59); the last 0.45 m is a short
 # reverse so the chassis never sweeps near the cabinet corner.
 BASE_DRIVE_WAYPOINTS_XY = (
-    (0.0, 0.0), (4.5, 0.0), (4.5, 2.6), (6.0, 2.6), BASE_TARGET_XY,
+    (0.0, 0.0), (4.5, 0.0), (4.5, 2.6), (6.08, 2.6), BASE_TARGET_XY,
 )
 BASE_TOLERANCE_XY = 0.02
 BASE_TOLERANCE_YAW = 0.02

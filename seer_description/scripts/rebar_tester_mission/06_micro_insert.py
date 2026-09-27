@@ -37,7 +37,7 @@ class MicroInsert(TesterLoadTest):
                                      math.cos(yaw - BASE_TARGET_YAW))) < 0.08)
         bar = self.rebar_position()
         ready = (parked and abs(bar[0] - GRIP_LINE_XY[0]) < 0.05
-                 and abs(bar[1] - (GRIP_LINE_XY[1] - 0.30)) < 0.07
+                 and abs(bar[1] - (GRIP_LINE_XY[1] - 0.07)) < 0.07
                  and abs(bar[2] - BAR_CENTER_Z) < 0.06
                  and abs(self.rebar_axis_in_base()[2]) > 0.97)
         self.record("short_insert_start", ready,
@@ -56,7 +56,7 @@ class MicroInsert(TesterLoadTest):
         wrist_pose_for = self.wrist_pose_factory(state)
         insert_quat = tuple(state["insert_quat"])
 
-        for label, target_y in (("micro_midway", GRIP_LINE_XY[1] - 0.15),
+        for label, target_y in (("micro_midway", GRIP_LINE_XY[1] - 0.04),
                                 ("micro_to_gripline", GRIP_LINE_XY[1] - INSERT_Y_INSET)):
             self.spin(0.2)
             base_position, base_quat = self._base_position, self._base_quat
@@ -103,13 +103,21 @@ class MicroInsert(TesterLoadTest):
         self.spin(0.3)
         bar = self.rebar_position()
         axis = self.rebar_axis_in_base()
+        wrist = self.fk(self.current_arm(), "wrist3_Link")
+        wrist_quat = (wrist.orientation.x, wrist.orientation.y,
+                      wrist.orientation.z, wrist.orientation.w)
+        tool_axis = quat_rotate(wrist_quat, (0.0, 0.0, 1.0))
+        closing_axis = quat_rotate(wrist_quat, (1.0, 0.0, 0.0))
         aligned = (abs(bar[0] - GRIP_LINE_XY[0]) < 0.035
                    and abs(bar[1] - GRIP_LINE_XY[1]) < 0.055
                    and abs(bar[2] - BAR_CENTER_Z) < 0.08
-                   and abs(axis[2]) > 0.95)
+                   and abs(axis[2]) > 0.95
+                   and -tool_axis[0] > 0.98 and -closing_axis[1] > 0.98)
         self.record("rebar_aligned_in_jaws", aligned,
                     bar_world=[round(v, 4) for v in bar],
                     axis_base=[round(v, 5) for v in axis],
+                    tool_axis_base=[round(v, 5) for v in tool_axis],
+                    closing_axis_base=[round(v, 5) for v in closing_axis],
                     robot_attached=self._robot_attached,
                     tester_gripped=self._tester_gripped)
         if not aligned:

@@ -1,0 +1,115 @@
+[
+  {
+    "test": "short_insert_start",
+    "pass": true,
+    "base_pose": [
+      6.0631,
+      3.0407,
+      -1.5697
+    ],
+    "bar_world": [
+      5.9839,
+      3.8465,
+      1.4985
+    ]
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "base_parking_brake_released",
+    "pass": true
+  },
+  {
+    "test": "micro_midway",
+    "pass": true,
+    "fraction": 1.0,
+    "planning_code": 1
+  },
+  {
+    "test": "micro_midway_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 23,
+    "execution_code": 1
+  },
+  {
+    "test": "micro_midway_safety",
+    "pass": true,
+    "bar_world": [
+      5.9992,
+      3.8909,
+      1.4982
+    ],
+    "base_pose": [
+      6.0631,
+      3.0465,
+      -1.5666
+    ]
+  },
+  {
+    "test": "micro_to_gripline",
+    "pass": true,
+    "fraction": 1.0,
+    "planning_code": 1
+  },
+  {
+    "test": "micro_to_gripline_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 14,
+    "execution_code": 1
+  },
+  {
+    "test": "micro_to_gripline_safety",
+    "pass": true,
+    "bar_world": [
+      6.0014,
+      3.9055,
+      1.4981
+    ],
+    "base_pose": [
+      6.0631,
+      3.0468,
+      -1.5664
+    ]
+  },
+  {
+    "test": "rebar_aligned_in_jaws",
+    "pass": true,
+    "bar_world": [
+      6.0011,
+      3.9056,
+      1.4981
+    ],
+    "axis_base": [
+      -0.002,
+      0.00133,
+      1.0
+    ],
+    "robot_attached": true,
+    "tester_gripped": false
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      6.063,
+      3.047,
+      -1.566
+    ]
+  }
+]

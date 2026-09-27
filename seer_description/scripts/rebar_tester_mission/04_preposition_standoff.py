@@ -14,17 +14,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from rebar_tester_geometry import (  # noqa: E402
     BASE_DRIVE_WAYPOINTS_XY, BASE_TARGET_YAW,
 )
-from test_rebar_grasp import ARM_JOINTS  # noqa: E402
+from test_rebar_grasp import ARM_JOINTS, quat_rotate  # noqa: E402
 from test_rebar_tester_load import TesterLoadTest, build_parser  # noqa: E402
 
 
-# Measured collision-valid insertion branch from the earlier Isaac run.
+# Measured collision-valid front-facing branch from the Isaac run.
 # FK is checked against the requested TCP before any motion in this run.
 APPROACH_JOINT_CANDIDATES = (
-    (3.377, -0.045, -1.229, -1.184, -3.377, 0.0),
-    (3.379, -0.050, -1.234, -1.183, -3.379, 0.0),
+    (2.597, -0.357, -1.451, -1.094, -1.026, 0.0),
+    (2.600, -0.355, -1.449, -1.095, -1.029, 0.0),
 )
-APPROACH_TCP_BASE = (-0.567, 0.0, 1.50)
+APPROACH_TCP_BASE = (-0.80, -0.08, 1.50)
 
 
 class PrepositionAtStandoff(TesterLoadTest):
@@ -106,11 +106,19 @@ class PrepositionAtStandoff(TesterLoadTest):
         self.run_motion("standoff_preposition_exec", plan)
         measured = self.rebar_in_base()
         axis = self.rebar_axis_in_base()
+        wrist = self.fk(self.current_arm(), "wrist3_Link")
+        wrist_quat = (wrist.orientation.x, wrist.orientation.y,
+                      wrist.orientation.z, wrist.orientation.w)
+        tool_axis = quat_rotate(wrist_quat, (0.0, 0.0, 1.0))
+        closing_axis = quat_rotate(wrist_quat, (1.0, 0.0, 0.0))
         error = math.dist(measured, APPROACH_TCP_BASE)
-        reached = error < 0.035 and abs(axis[2]) > 0.95
+        reached = (error < 0.035 and abs(axis[2]) > 0.95
+                   and -tool_axis[0] > 0.98 and -closing_axis[1] > 0.98)
         self.record("vertical_approach_pose_at_standoff", reached,
                     rebar_base=[round(v, 4) for v in measured],
                     axis_base=[round(v, 5) for v in axis],
+                    tool_axis_base=[round(v, 5) for v in tool_axis],
+                    closing_axis_base=[round(v, 5) for v in closing_axis],
                     position_error=round(error, 4))
         if not reached:
             raise RuntimeError("steel missed its approach pose")

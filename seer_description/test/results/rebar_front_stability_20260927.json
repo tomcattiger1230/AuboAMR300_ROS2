@@ -1,0 +1,33 @@
+{
+  "wall_seconds": 3.0,
+  "bars": {
+    "rebar": {
+      "samples": 61,
+      "simulation_seconds": 1.0,
+      "last_base_position": [
+        -0.8591093341318068,
+        -0.057799872509240124,
+        1.498461320876438
+      ],
+      "base_span_mm": [
+        0.002122227143797062,
+        0.002585470137539403,
+        0.00024352918237546817
+      ],
+      "base_max_rotation_deg": 4.02271469862694e-05,
+      "world_span_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "world_max_rotation_deg": 0.0,
+      "pass": true
+    }
+  },
+  "missing_bars": [],
+  "pass": true,
+  "limits": {
+    "relative_span_mm": 0.1,
+    "relative_rotation_deg": 0.25
+  }
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "test": "tester_bridge_alive",
+    "pass": true,
+    "missing": []
+  },
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "rebar_aligned_before_handoff",
+    "pass": true,
+    "position": [
+      6.001029586791992,
+      3.905646800994873,
+      1.4984604120254517
+    ],
+    "axis": [
+      -0.002180243217230686,
+      0.001495367176205803,
+      0.9999965052021544
+    ]
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "tester_jaws_clamped",
+    "pass": true,
+    "lower_z": 1.12,
+    "upper_z": 1.87,
+    "openings": [
+      0.024,
+      0.024873252719989997
+    ]
+  },
+  {
+    "test": "tester_rebar_gripped",
+    "pass": true,
+    "robot_joint_released": true
+  },
+  {
+    "test": "robot_fingers_released",
+    "pass": true,
+    "fingers": [
+      0.0,
+      0.0001
+    ]
+  },
+  {
+    "test": "rebar_held_by_tester",
+    "pass": true,
+    "position": [
+      6.001,
+      3.906,
+      1.498
+    ],
+    "expected": [
+      6.0,
+      3.92,
+      1.5
+    ]
+  }
+]

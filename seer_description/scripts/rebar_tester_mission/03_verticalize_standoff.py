@@ -70,7 +70,10 @@ class VerticalizeAtStandoff(TesterLoadTest):
         self.spin(0.3)
         self.wait_for_base_lock()
         state["completed"] = "verticalize_at_standoff"
-        state["insert_quat"] = list(insert_quat)
+        # Preserve the vertical bar through the following 90-degree yaw.
+        # Tool +Z then points toward the tester, normal to its XZ front.
+        front_quat = quat_from_basis((0.0, -1.0, 0.0), (-1.0, 0.0, 0.0))
+        state["insert_quat"] = list(front_quat)
         temporary = state_path.with_suffix(state_path.suffix + ".tmp")
         temporary.write_text(json.dumps(state, indent=2), encoding="utf-8")
         temporary.replace(state_path)
