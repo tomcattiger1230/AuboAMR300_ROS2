@@ -1,0 +1,57 @@
+[INFO] [1790595209.824679476] [rebar_grasp_test]: {"test": "base_at_source", "pass": true, "position": [-0.009, 0.0]}
+[INFO] [1790595209.824881544] [rebar_grasp_test]: {"test": "gripper_released_after_loading", "pass": true, "fingers": [0.0, 0.0]}
+[INFO] [1790595210.147333508] [rebar_grasp_test]: {"test": "rebar_seated_before_drive", "pass": true, "slot": 1, "position": [0.2927, -0.0017, 0.715], "axis": [0.0, -1.0, 0.0], "error_m": 0.0017}
+[INFO] [1790595210.182970753] [rebar_grasp_test]: drive leg_1: at (-0.01,0.00,1deg) remaining 4.51 m
+[INFO] [1790595212.200946010] [rebar_grasp_test]: drive leg_1: at (0.25,0.00,0deg) remaining 4.25 m
+[INFO] [1790595214.266702614] [rebar_grasp_test]: drive leg_1: at (0.55,0.00,0deg) remaining 3.95 m
+[INFO] [1790595216.270699378] [rebar_grasp_test]: drive leg_1: at (0.85,0.00,0deg) remaining 3.65 m
+[INFO] [1790595218.395423104] [rebar_grasp_test]: drive leg_1: at (1.17,0.00,0deg) remaining 3.33 m
+[INFO] [1790595220.430562255] [rebar_grasp_test]: drive leg_1: at (1.47,0.00,-0deg) remaining 3.03 m
+[INFO] [1790595222.430445887] [rebar_grasp_test]: drive leg_1: at (1.77,0.00,0deg) remaining 2.73 m
+[INFO] [1790595224.500749883] [rebar_grasp_test]: drive leg_1: at (2.08,0.00,-0deg) remaining 2.42 m
+[INFO] [1790595226.514187993] [rebar_grasp_test]: drive leg_1: at (2.39,0.00,-0deg) remaining 2.11 m
+[INFO] [1790595228.543885206] [rebar_grasp_test]: drive leg_1: at (2.69,0.00,-0deg) remaining 1.81 m
+[INFO] [1790595230.557507878] [rebar_grasp_test]: drive leg_1: at (2.97,0.00,-0deg) remaining 1.53 m
+[INFO] [1790595232.601692836] [rebar_grasp_test]: drive leg_1: at (3.27,0.00,-0deg) remaining 1.23 m
+[INFO] [1790595234.636675266] [rebar_grasp_test]: drive leg_1: at (3.57,0.00,-0deg) remaining 0.93 m
+[INFO] [1790595236.647257061] [rebar_grasp_test]: drive leg_1: at (3.88,0.00,-0deg) remaining 0.62 m
+[INFO] [1790595238.656093112] [rebar_grasp_test]: drive leg_1: at (4.17,0.00,-0deg) remaining 0.33 m
+[INFO] [1790595240.774441258] [rebar_grasp_test]: drive leg_1: at (4.42,0.00,-0deg) remaining 0.08 m
+[INFO] [1790595242.901016481] [rebar_grasp_test]: drive leg_1: at (4.48,0.00,-0deg) remaining 0.02 m
+[INFO] [1790595245.001500364] [rebar_grasp_test]: drive leg_1: at (4.48,0.00,28deg) remaining 0.02 m
+[INFO] [1790595247.101083218] [rebar_grasp_test]: drive leg_1: at (4.48,0.00,58deg) remaining 0.02 m
+[INFO] [1790595249.238785419] [rebar_grasp_test]: drive leg_1: at (4.48,0.00,85deg) remaining 0.02 m
+[INFO] [1790595250.820667645] [rebar_grasp_test]: {"test": "base_leg_1", "pass": true, "position": [4.483, 0.001], "yaw": 1.553, "distance_error": 0.0171}
+[INFO] [1790595251.405618379] [rebar_grasp_test]: {"test": "rebar_seated_after_leg_1", "pass": true, "slot": 1, "position": [0.2927, -0.0017, 0.715], "axis": [0.0, -1.0, 0.0], "error_m": 0.0017}
+[INFO] [1790595251.432910902] [rebar_grasp_test]: drive leg_2: at (4.48,0.00,89deg) remaining 2.60 m
+[INFO] [1790595253.438555082] [rebar_grasp_test]: drive leg_2: at (4.49,0.27,90deg) remaining 2.33 m
+[INFO] [1790595255.543187937] [rebar_grasp_test]: drive leg_2: at (4.49,0.58,90deg) remaining 2.02 m
+[INFO] [1790595257.559957957] [rebar_grasp_test]: drive leg_2: at (4.49,0.87,90deg) remaining 1.73 m
+[INFO] [1790595259.579061846] [rebar_grasp_test]: drive leg_2: at (4.49,1.16,90deg) remaining 1.44 m
+[INFO] [1790595261.699769318] [rebar_grasp_test]: drive leg_2: at (4.49,1.44,90deg) remaining 1.16 m
+[INFO] [1790595263.770075549] [rebar_grasp_test]: drive leg_2: at (4.49,1.73,90deg) remaining 0.87 m
+[INFO] [1790595265.796547767] [rebar_grasp_test]: drive leg_2: at (4.50,2.03,90deg) remaining 0.57 m
+[INFO] [1790595267.796783104] [rebar_grasp_test]: drive leg_2: at (4.50,2.32,90deg) remaining 0.28 m
+[INFO] [1790595269.800931796] [rebar_grasp_test]: drive leg_2: at (4.50,2.53,90deg) remaining 0.07 m
+[INFO] [1790595271.808358028] [rebar_grasp_test]: drive leg_2: at (4.50,2.58,89deg) remaining 0.02 m
+[INFO] [1790595273.862913652] [rebar_grasp_test]: drive leg_2: at (4.50,2.58,62deg) remaining 0.02 m
+[INFO] [1790595275.910849905] [rebar_grasp_test]: drive leg_2: at (4.50,2.58,34deg) remaining 0.02 m
+[INFO] [1790595278.049068662] [rebar_grasp_test]: drive leg_2: at (4.50,2.58,7deg) remaining 0.02 m
+[INFO] [1790595279.800846372] [rebar_grasp_test]: {"test": "base_leg_2", "pass": true, "position": [4.497, 2.583], "yaw": 0.02, "distance_error": 0.0169}
+[INFO] [1790595280.421123918] [rebar_grasp_test]: {"test": "rebar_seated_after_leg_2", "pass": true, "slot": 1, "position": [0.2927, -0.0018, 0.715], "axis": [0.0, -1.0, 0.0], "error_m": 0.0018}
+[INFO] [1790595280.448879546] [rebar_grasp_test]: drive turn_south: at (4.50,2.58,1deg) remaining 1.58 m
+[INFO] [1790595282.500954813] [rebar_grasp_test]: drive turn_south: at (4.78,2.59,1deg) remaining 1.30 m
+[INFO] [1790595284.613082745] [rebar_grasp_test]: drive turn_south: at (5.09,2.59,1deg) remaining 0.99 m
+[INFO] [1790595286.615077050] [rebar_grasp_test]: drive turn_south: at (5.38,2.59,1deg) remaining 0.70 m
+[INFO] [1790595288.705577310] [rebar_grasp_test]: drive turn_south: at (5.67,2.60,1deg) remaining 0.41 m
+[INFO] [1790595290.715628295] [rebar_grasp_test]: drive turn_south: at (5.95,2.60,1deg) remaining 0.13 m
+[INFO] [1790595292.765429240] [rebar_grasp_test]: drive turn_south: at (6.05,2.60,0deg) remaining 0.03 m
+[INFO] [1790595294.769204158] [rebar_grasp_test]: drive turn_south: at (6.06,2.60,-16deg) remaining 0.02 m
+[INFO] [1790595296.801197893] [rebar_grasp_test]: drive turn_south: at (6.06,2.60,-44deg) remaining 0.02 m
+[INFO] [1790595298.836386153] [rebar_grasp_test]: drive turn_south: at (6.06,2.60,-73deg) remaining 0.02 m
+[INFO] [1790595300.879985130] [rebar_grasp_test]: drive turn_south: at (6.06,2.60,-88deg) remaining 0.02 m
+[INFO] [1790595301.512472809] [rebar_grasp_test]: {"test": "base_turn_south", "pass": true, "position": [6.063, 2.603], "yaw": -1.552, "distance_error": 0.0173}
+[INFO] [1790595302.134297403] [rebar_grasp_test]: {"test": "rebar_seated_after_turn_south", "pass": true, "slot": 1, "position": [0.2927, -0.0019, 0.715], "axis": [-0.0, -1.0, -0.0], "error_m": 0.0019}
+[INFO] [1790595302.535035329] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.063, 2.604, -1.556]}
+[INFO] [1790595302.842282523] [rebar_grasp_test]: {"test": "rebar_seated_at_standoff", "pass": true, "slot": 1, "position": [0.2927, -0.0019, 0.715], "axis": [0.0, -1.0, 0.0], "error_m": 0.0019}
+[INFO] [1790595302.842588632] [rebar_grasp_test]: report written to /tmp/rebar_compact_verified_20260928/reports/02.json

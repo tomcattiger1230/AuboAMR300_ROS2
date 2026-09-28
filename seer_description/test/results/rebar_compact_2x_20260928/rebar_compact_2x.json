@@ -1,0 +1,77 @@
+{
+  "video": "rebar_compact_2x.mp4",
+  "stages": [
+    {
+      "stage": "01",
+      "label": "取筋并装车",
+      "frames": 275,
+      "first_frame": 80,
+      "last_frame": 354,
+      "input_fps": 10,
+      "playback_seconds": 27.5
+    },
+    {
+      "stage": "02",
+      "label": "载筋导航",
+      "frames": 354,
+      "first_frame": 355,
+      "last_frame": 708,
+      "input_fps": 10,
+      "playback_seconds": 35.4
+    },
+    {
+      "stage": "03",
+      "label": "车载取筋",
+      "frames": 69,
+      "first_frame": 709,
+      "last_frame": 777,
+      "input_fps": 7,
+      "playback_seconds": 9.86
+    },
+    {
+      "stage": "04",
+      "label": "同步竖直化与正面预定位 (2x)",
+      "frames": 107,
+      "first_frame": 778,
+      "last_frame": 884,
+      "input_fps": 4,
+      "playback_seconds": 26.75
+    },
+    {
+      "stage": "05",
+      "label": "预定位状态确认",
+      "frames": 18,
+      "first_frame": 885,
+      "last_frame": 902,
+      "input_fps": 7,
+      "playback_seconds": 2.57
+    },
+    {
+      "stage": "06",
+      "label": "竖直持筋接近",
+      "frames": 65,
+      "first_frame": 903,
+      "last_frame": 967,
+      "input_fps": 7,
+      "playback_seconds": 9.29
+    },
+    {
+      "stage": "07",
+      "label": "夹持线微调",
+      "frames": 44,
+      "first_frame": 968,
+      "last_frame": 1011,
+      "input_fps": 7,
+      "playback_seconds": 6.29
+    },
+    {
+      "stage": "08",
+      "label": "测试机接管并松爪",
+      "frames": 162,
+      "first_frame": 1012,
+      "last_frame": 1173,
+      "input_fps": 7,
+      "playback_seconds": 23.14
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+[
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "vertical_drive_safe_start",
+    "pass": true,
+    "base_pose": [
+      6.063,
+      2.6049,
+      -1.5662
+    ]
+  },
+  {
+    "test": "payload_retained_while_driving",
+    "pass": true,
+    "actual": [
+      -0.804,
+      -0.079,
+      1.5
+    ],
+    "expected": [
+      -0.8,
+      -0.08,
+      1.5
+    ],
+    "offset_m": 0.004
+  },
+  {
+    "test": "base_parking_brake_released",
+    "pass": true
+  },
+  {
+    "test": "vertical_drive_error",
+    "pass": false,
+    "error": "vertical drive timed out"
+  }
+]

@@ -1,0 +1,155 @@
+[
+  {
+    "test": "compact_base_at_standoff",
+    "pass": true,
+    "base_pose": [
+      6.0629486688953875,
+      2.6036968176201345,
+      -1.5550034595843856
+    ]
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "compact_live_collision_scene",
+    "pass": true,
+    "attached": [
+      "carried_rebar",
+      "onboard_rebar_rack"
+    ],
+    "world": [
+      "compact_etm6m_1",
+      "compact_etm6m_2",
+      "onboard_rebar_slot_1",
+      "rebar_source_station",
+      "rebar_test_machine",
+      "rebar_tester_console"
+    ]
+  },
+  {
+    "test": "compact_source_feedback",
+    "pass": true,
+    "joints_rad": [
+      3.4663,
+      -0.1704,
+      1.6013,
+      0.198,
+      1.5711,
+      1.8956
+    ],
+    "rebar_base": [
+      0.29114255639017006,
+      -0.0018366812337655691,
+      0.8941666277917111
+    ],
+    "fingers": [
+      0.0285,
+      0.0285
+    ]
+  },
+  {
+    "test": "compact_target_fk",
+    "pass": true,
+    "target_joints_rad": [
+      1.1972675195027778,
+      -0.865295685402759,
+      -1.4513358765130908,
+      -0.5860401911103336,
+      0.37352880729211774,
+      0.0
+    ],
+    "position_error_m": 1.2412670766236366e-16,
+    "alignment": 1.0
+  },
+  {
+    "test": "compact_fcl_path",
+    "pass": true,
+    "samples": 1001,
+    "max_joint_step_deg": 0.3293937596748716,
+    "closed_fingers": {
+      "gripper1_joint": 0.0285,
+      "gripper2_joint": 0.0285
+    },
+    "duration_s": 44.0,
+    "schedule_parameters": [
+      0.5337147759276197,
+      0.12015015385496346,
+      1.1654059483050232,
+      2.8563159868915964,
+      0.23720811631913197,
+      2.4217649335460045
+    ]
+  },
+  {
+    "test": "base_parking_brake_released",
+    "pass": true
+  },
+  {
+    "test": "compact_vertical_exec",
+    "pass": true,
+    "execution_code": 1,
+    "duration_s": 44.0
+  },
+  {
+    "test": "payload_retained_while_driving",
+    "pass": true,
+    "actual": [
+      -0.804,
+      -0.079,
+      1.499
+    ],
+    "expected": [
+      -0.8,
+      -0.08,
+      1.5
+    ],
+    "offset_m": 0.005
+  },
+  {
+    "test": "compact_front_vertical_pose",
+    "pass": true,
+    "rebar_base": [
+      -0.8044463025382556,
+      -0.07938924179199192,
+      1.4990811967849873
+    ],
+    "axis_base": [
+      -0.0006495806997367051,
+      -0.001282241105339692,
+      0.9999989669507979
+    ],
+    "tool_axis_base": [
+      -0.9999998503236658,
+      0.00019665955005487845,
+      -0.0005105660258921674
+    ],
+    "closing_axis_base": [
+      -0.00019619815790550277,
+      -0.9999995725242901,
+      -0.0009035803890046767
+    ]
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      6.063,
+      2.605,
+      -1.566
+    ]
+  }
+]

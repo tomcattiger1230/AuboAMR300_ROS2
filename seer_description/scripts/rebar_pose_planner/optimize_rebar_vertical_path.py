@@ -95,6 +95,10 @@ def main():
     parser.add_argument("--start-height", type=float, choices=(.90, 1.05), default=.90)
     parser.add_argument("--samples", type=int, default=120)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--source-joints-file", type=Path,
+                        help="live exported trajectory JSON containing start_joints_rad")
+    parser.add_argument("--target-joints", type=float, nargs=6,
+                        help="restrict the endpoint to a previously tested joint branch")
     args = parser.parse_args()
     model = RobotModel()
     source = json.loads((ROOT / "seer_description/test/results/rebar_pose_planner_slot1_20260927.json").read_text())
@@ -102,13 +106,18 @@ def main():
     seed = (seed + np.pi) % (2 * np.pi) - np.pi
     start_tcp = np.array([.2927, 0, args.start_height])
     start = model.ik(start_tcp, START_ROTATION, seed)
+    if args.source_joints_file:
+        start = np.array(json.loads(args.source_joints_file.read_text())["start_joints_rad"])
+        start_tcp = model.tcp(start)[:3, 3]
     if start is None:
         raise RuntimeError("Source IK unavailable")
     # The second seed reaches the same front pose with a different shoulder branch.
     targets = []
-    for seed in ((2.597, -.357, -1.451, -1.094, -1.026, 0),
-                 (1.1973, -.8653, -1.4513, -.5861, .3735, 0)):
-        target = model.ik(FRONT_TCP, FRONT_ROTATION, seed)
+    seeds = [args.target_joints] if args.target_joints else [
+        (2.597, -.357, -1.451, -1.094, -1.026, 0),
+        (1.1973, -.8653, -1.4513, -.5861, .3735, 0)]
+    for seed in seeds:
+        target = np.array(seed) if args.target_joints else model.ik(FRONT_TCP, FRONT_ROTATION, seed)
         if target is None:
             continue
         for i in range(6):
@@ -162,7 +171,8 @@ def main():
         "status": "local_candidate_not_simulation_validated",
         "scope": "slot 1, base parked at (6.08, 2.60), yaw -90 degrees",
         "start_tcp": start_tcp.tolist(), "target_tcp": FRONT_TCP.tolist(),
-        "source_branch": "IK reconstructed from the saved GUI source-lift branch; not live joint feedback",
+        "source_branch": ("Actual Isaac joint feedback saved immediately after pickup" if args.source_joints_file
+                          else "IK reconstructed from the saved GUI source-lift branch; not live joint feedback"),
         "joint_names": ARM, "start_joints_rad": start.tolist(), "target_joints_rad": target.tolist(),
         "schedule_parameters": schedules.tolist(), "evaluations": attempts,
         "metrics": {"tcp_length_m": length, "orientation_arc_deg": math.degrees(angle),

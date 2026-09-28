@@ -1,0 +1,74 @@
+{
+  "completed": "handoff",
+  "route_xy": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      4.5,
+      0.0
+    ],
+    [
+      4.5,
+      2.6
+    ],
+    [
+      6.08,
+      2.6
+    ],
+    [
+      6.08,
+      3.05
+    ]
+  ],
+  "target_yaw": -1.5707963267948966,
+  "grasp_quat": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "tcp_in_wrist": [
+    0.0,
+    0.0,
+    0.16
+  ],
+  "lift_tcp": [
+    0.29270069832156703,
+    -0.0018642931213190828,
+    0.9
+  ],
+  "source": "onboard_slot",
+  "slot": 1,
+  "pickup_waypoint": [
+    6.08,
+    2.6
+  ],
+  "pickup_tcp": [
+    0.29270069832156703,
+    -0.0018642931213190828,
+    0.9
+  ],
+  "pickup_arm_joints": {
+    "shoulder_joint": 3.4665,
+    "upperArm_joint": -0.1704,
+    "foreArm_joint": 1.6013,
+    "wrist1_joint": 0.1979,
+    "wrist2_joint": 1.5709,
+    "wrist3_joint": 1.8957
+  },
+  "compact_start": true,
+  "compact_preposition_complete": true,
+  "approach_tcp_base": [
+    -0.8,
+    -0.08,
+    1.5
+  ],
+  "insert_quat": [
+    -0.5,
+    0.5,
+    0.5,
+    -0.5
+  ]
+}

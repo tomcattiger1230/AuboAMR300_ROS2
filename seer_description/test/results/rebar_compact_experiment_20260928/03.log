@@ -1,0 +1,17 @@
+[INFO] [1790595307.357106349] [rebar_grasp_test]: {"test": "base_parked_before_onboard_pickup", "pass": true, "position": [6.063, 2.604], "yaw": -1.556, "brake_locked": true, "waypoint": [6.08, 2.6]}
+[INFO] [1790595307.357363083] [rebar_grasp_test]: {"test": "rebar_seated_for_pickup", "pass": true, "slot": 1, "position": [0.2927, -0.0019, 0.715], "axis": [0.0, -1.0, 0.0]}
+[INFO] [1790595307.357480009] [rebar_grasp_test]: {"test": "gripper_open_before_pickup", "pass": true, "fingers": [0.0, 0.0]}
+[INFO] [1790595307.359226503] [rebar_grasp_test]: {"test": "tester_planning_scene", "pass": true, "boxes": ["cabinet", "column_1", "column_2", "top_beam", "lower_platen", "console"]}
+[INFO] [1790595309.434304461] [rebar_grasp_test]: {"test": "move_over_onboard_rebar", "pass": true, "planning_code": 1, "points": 12, "execution_code": 1}
+[INFO] [1790595312.805992675] [rebar_grasp_test]: {"test": "descend_to_onboard_rebar", "pass": true, "planning_code": 1, "points": 25, "execution_code": 1}
+[INFO] [1790595315.602578297] [rebar_grasp_test]: {"test": "grasp_onboard_rebar", "pass": true, "fingers": [0.0168, 0.0172], "action_status": 4}
+[INFO] [1790595315.604254602] [rebar_grasp_test]: {"test": "seated_rebar_removed_from_planning_scene", "pass": true, "slot": 1}
+[INFO] [1790595315.615110203] [rebar_grasp_test]: {"test": "clear_onboard_saddle", "pass": true, "fraction": 1.0, "planning_code": 1, "collision_checked": false}
+[INFO] [1790595317.871489288] [rebar_grasp_test]: {"test": "clear_onboard_saddle_exec", "pass": true, "planning_code": 1, "points": 14, "execution_code": 1}
+[INFO] [1790595317.872002170] [rebar_grasp_test]: {"test": "rebar_clear_of_onboard_saddle", "pass": true, "position": [0.2909, -0.0019, 0.7545]}
+[INFO] [1790595321.191738012] [rebar_grasp_test]: {"test": "lift_from_onboard_slot", "pass": true, "planning_code": 1, "points": 24, "execution_code": 1}
+[INFO] [1790595321.192263074] [rebar_grasp_test]: {"test": "rebar_lifted_from_onboard_slot", "pass": true, "before": [0.2927, -0.0019, 0.715], "after": [0.2912, -0.0018, 0.8942]}
+[INFO] [1790595321.435754068] [rebar_grasp_test]: {"test": "robot_rebar_attached", "pass": true}
+[INFO] [1790595321.437394282] [rebar_grasp_test]: {"test": "payload_retained_while_driving", "pass": true, "actual": [0.291, -0.002, 0.894], "expected": [0.29270069832156703, -0.0018642931213190828, 0.9], "offset_m": 0.006}
+[INFO] [1790595321.437829720] [rebar_grasp_test]: {"test": "onboard_pickup_checkpoint", "pass": true, "path": "/tmp/rebar_compact_verified_20260928/workflow_state.json"}
+[INFO] [1790595321.438118165] [rebar_grasp_test]: report written to /tmp/rebar_compact_verified_20260928/reports/03.json

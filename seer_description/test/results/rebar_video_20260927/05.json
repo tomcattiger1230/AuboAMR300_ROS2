@@ -1,0 +1,109 @@
+[
+  {
+    "test": "base_at_standoff_before_preposition",
+    "pass": true,
+    "base_pose": [
+      6.063,
+      2.604,
+      -1.567
+    ]
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "base_parking_brake_released",
+    "pass": true
+  },
+  {
+    "test": "known_approach_branch_fk",
+    "pass": true,
+    "joints": [
+      2.597,
+      -0.357,
+      -1.451,
+      -1.094,
+      -1.026,
+      0.0
+    ],
+    "position_error": 0.0002,
+    "alignment": 1.0
+  },
+  {
+    "test": "standoff_preposition_plan",
+    "pass": true,
+    "trial": 1,
+    "points": 69,
+    "target": {
+      "shoulder_joint": 2.597,
+      "upperArm_joint": -0.357,
+      "foreArm_joint": -1.451,
+      "wrist1_joint": -1.094,
+      "wrist2_joint": -1.026,
+      "wrist3_joint": 0.0
+    }
+  },
+  {
+    "test": "standoff_preposition_exec",
+    "pass": true,
+    "planning_code": 1,
+    "points": 69,
+    "execution_code": 1
+  },
+  {
+    "test": "vertical_approach_pose_at_standoff",
+    "pass": true,
+    "rebar_base": [
+      -0.8051,
+      -0.0784,
+      1.4986
+    ],
+    "axis_base": [
+      -0.00189,
+      0.00036,
+      1.0
+    ],
+    "tool_axis_base": [
+      -1.0,
+      -0.0004,
+      -0.00162
+    ],
+    "closing_axis_base": [
+      0.0004,
+      -1.0,
+      0.00079
+    ],
+    "position_error": 0.0055
+  },
+  {
+    "test": "base_safe_after_standoff_preposition",
+    "pass": true,
+    "base_pose": [
+      6.063,
+      2.605,
+      -1.566
+    ]
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      6.063,
+      2.605,
+      -1.566
+    ]
+  }
+]

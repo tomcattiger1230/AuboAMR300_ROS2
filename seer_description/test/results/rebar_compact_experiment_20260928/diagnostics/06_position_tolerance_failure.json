@@ -1,0 +1,49 @@
+[
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "vertical_drive_safe_start",
+    "pass": true,
+    "base_pose": [
+      6.0623,
+      2.6045,
+      -1.566
+    ]
+  },
+  {
+    "test": "payload_retained_while_driving",
+    "pass": true,
+    "actual": [
+      -0.806,
+      -0.078,
+      1.499
+    ],
+    "expected": [
+      -0.8,
+      -0.08,
+      1.5
+    ],
+    "offset_m": 0.006
+  },
+  {
+    "test": "base_parking_brake_released",
+    "pass": true
+  },
+  {
+    "test": "vertical_drive_no_progress",
+    "pass": false,
+    "base_pose": [
+      6.061510051189089,
+      3.04125642226491,
+      -1.568873540158026
+    ],
+    "remaining_m": 0.02045307699686488
+  },
+  {
+    "test": "vertical_drive_error",
+    "pass": false,
+    "error": "vertical drive stalled; stopped after 8 seconds without progress"
+  }
+]

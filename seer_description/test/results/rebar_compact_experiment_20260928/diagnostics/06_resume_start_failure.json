@@ -1,0 +1,20 @@
+[
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "vertical_drive_safe_start",
+    "pass": false,
+    "base_pose": [
+      6.0615,
+      3.0427,
+      -1.5539
+    ]
+  },
+  {
+    "test": "vertical_drive_error",
+    "pass": false,
+    "error": "base is not at standoff"
+  }
+]

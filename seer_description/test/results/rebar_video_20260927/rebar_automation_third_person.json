@@ -1,0 +1,53 @@
+{
+  "video": "rebar_automation_third_person.mp4",
+  "stages": [
+    {
+      "stage": "01",
+      "label": "取筋并装车",
+      "frames": 275,
+      "playback_seconds": 27.5
+    },
+    {
+      "stage": "02",
+      "label": "载筋导航",
+      "frames": 357,
+      "playback_seconds": 35.7
+    },
+    {
+      "stage": "03",
+      "label": "车载取筋",
+      "frames": 77,
+      "playback_seconds": 11.0
+    },
+    {
+      "stage": "04",
+      "label": "竖直化钢筋",
+      "frames": 144,
+      "playback_seconds": 20.57
+    },
+    {
+      "stage": "05",
+      "label": "测试台前预定位",
+      "frames": 122,
+      "playback_seconds": 17.43
+    },
+    {
+      "stage": "06",
+      "label": "竖直持筋接近",
+      "frames": 84,
+      "playback_seconds": 12.0
+    },
+    {
+      "stage": "07",
+      "label": "夹持线微调",
+      "frames": 43,
+      "playback_seconds": 6.14
+    },
+    {
+      "stage": "08",
+      "label": "测试机接管并松爪",
+      "frames": 128,
+      "playback_seconds": 18.29
+    }
+  ]
+}

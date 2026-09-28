@@ -1,0 +1,137 @@
+{
+  "status": "eight_stages_passed_in_isaac",
+  "stage_checks": [
+    {
+      "stage": "01",
+      "checks": 25,
+      "passed": 25
+    },
+    {
+      "stage": "02",
+      "checks": 11,
+      "passed": 11
+    },
+    {
+      "stage": "03",
+      "checks": 16,
+      "passed": 16
+    },
+    {
+      "stage": "04",
+      "checks": 12,
+      "passed": 12
+    },
+    {
+      "stage": "05",
+      "checks": 6,
+      "passed": 6
+    },
+    {
+      "stage": "06",
+      "checks": 7,
+      "passed": 7
+    },
+    {
+      "stage": "07",
+      "checks": 12,
+      "passed": 12
+    },
+    {
+      "stage": "08",
+      "checks": 8,
+      "passed": 8
+    }
+  ],
+  "total_checks_passed": 97,
+  "planned_duration_s": 44.0,
+  "feedback_samples": 221,
+  "planned": {
+    "tcp_length_m": 1.8063569543429094,
+    "orientation_arc_deg": 180.34095936191324,
+    "joint_total_travel_rad": 9.892800000000001
+  },
+  "feedback_fk": {
+    "tcp_length_m": 1.8103935073253605,
+    "orientation_arc_deg": 180.25698859539676,
+    "joint_total_travel_rad": 9.9009
+  },
+  "max_feedback_joint_error_rad": 0.03099616743505068,
+  "max_bar_to_nominal_tcp_offset_m": 0.005722747582457641,
+  "baseline_commanded_orientation_lower_bound_deg": 270,
+  "planned_orientation_reduction_from_baseline_lower_bound_percent": 33.207052088180276,
+  "handoff_checks": [
+    {
+      "test": "tester_bridge_alive",
+      "pass": true,
+      "missing": []
+    },
+    {
+      "test": "tester_planning_scene",
+      "pass": true,
+      "boxes": [
+        "cabinet",
+        "column_1",
+        "column_2",
+        "top_beam",
+        "lower_platen",
+        "console"
+      ]
+    },
+    {
+      "test": "rebar_aligned_before_handoff",
+      "pass": true,
+      "position": [
+        6.000416851043701,
+        3.9054534435272217,
+        1.4984699487686157
+      ],
+      "axis": [
+        -0.0023772878923013383,
+        0.0016645921540886506,
+        0.9999957888087518
+      ]
+    },
+    {
+      "test": "robot_rebar_attached",
+      "pass": true
+    },
+    {
+      "test": "tester_jaws_clamped",
+      "pass": true,
+      "lower_z": 1.12,
+      "upper_z": 1.87,
+      "openings": [
+        0.024,
+        0.024
+      ]
+    },
+    {
+      "test": "tester_rebar_gripped",
+      "pass": true,
+      "robot_joint_released": true
+    },
+    {
+      "test": "robot_fingers_released",
+      "pass": true,
+      "fingers": [
+        0.0003,
+        0.0003
+      ]
+    },
+    {
+      "test": "rebar_held_by_tester",
+      "pass": true,
+      "position": [
+        6.0,
+        3.905,
+        1.498
+      ],
+      "expected": [
+        6.0,
+        3.92,
+        1.5
+      ]
+    }
+  ],
+  "note": "Feedback FK uses nominal URDF TCP; steel center is measured separately. Feedback path length includes tracking noise. Baseline is a commanded waypoint lower bound, not a recorded old trajectory or a timing comparison. One completed trial does not establish a success rate."
+}

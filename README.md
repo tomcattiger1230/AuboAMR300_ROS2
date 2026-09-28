@@ -50,6 +50,11 @@ python3 scripts/check_git_portability.py
 
 联合场景包含原 finger 复合机器人与钢筋取料工位，以及两台抗渗仪和一台可独立控制上下横梁、上下抱爪的钢筋拉伸测试机。模型文件、世界坐标和启动方法见[钢筋实验室场景](seer_description/README_REBAR_LAB.md)；四路 ROS 2 指令、行程和状态反馈见[钢筋测试机说明](seer_description/README_REBAR_TEST_MACHINE.md)。[正面接近流程](seer_description/README_REBAR_EARLY_VERTICAL_APPROACH.md)已完成取筋、运送、测试机接管和机械臂松爪的仿真验证，机械臂撤回尚未执行。
 
+## 底盘 + 机械臂统一 GUI
+
+首版统一控制台支持明确选择 Isaac 仿真或真实 SEER + AUBO，包含地图导航、底盘驾驶、机械臂三维与控制页。
+离线预览：`.venv/bin/python scripts/start_unified_gui.py`。同网段连接与验证边界见 [统一 GUI 说明](docs/unified_gui/README.md)。
+
 ## Mac GUI 快速启动
 
 完成 [GUI 环境安装](aubo_control_gui/README.md#macos-本地-guifast-dds)，并先在 Ubuntu 启动 Isaac / MoveIt。

@@ -1,0 +1,13 @@
+[INFO] [1790595987.908564295] [rebar_grasp_test]: {"test": "short_insert_start", "pass": true, "base_pose": [6.0607, 3.0319, -1.57], "bar_world": [5.9817, 3.8372, 1.4987]}
+[INFO] [1790595988.238861050] [rebar_grasp_test]: {"test": "robot_rebar_attached", "pass": true}
+[INFO] [1790595988.245493859] [rebar_grasp_test]: {"test": "tester_planning_scene", "pass": true, "boxes": ["cabinet", "column_1", "column_2", "top_beam", "lower_platen", "console"]}
+[INFO] [1790595988.469110717] [rebar_grasp_test]: {"test": "base_parking_brake_released", "pass": true}
+[INFO] [1790595988.695770924] [rebar_grasp_test]: {"test": "micro_midway", "pass": true, "fraction": 1.0, "planning_code": 1}
+[INFO] [1790595992.190683715] [rebar_grasp_test]: {"test": "micro_midway_exec", "pass": true, "planning_code": 1, "points": 25, "execution_code": 1}
+[INFO] [1790595992.499894380] [rebar_grasp_test]: {"test": "micro_midway_safety", "pass": true, "bar_world": [5.9998, 3.8984, 1.4982], "base_pose": [6.0607, 3.046, -1.5676]}
+[INFO] [1790595992.705017035] [rebar_grasp_test]: {"test": "micro_to_gripline", "pass": true, "fraction": 1.0, "planning_code": 1}
+[INFO] [1790595994.629042002] [rebar_grasp_test]: {"test": "micro_to_gripline_exec", "pass": true, "planning_code": 1, "points": 10, "execution_code": 1}
+[INFO] [1790595994.936348838] [rebar_grasp_test]: {"test": "micro_to_gripline_safety", "pass": true, "bar_world": [6.0005, 3.9054, 1.4982], "base_pose": [6.0607, 3.0461, -1.5664]}
+[INFO] [1790595995.463449920] [rebar_grasp_test]: {"test": "rebar_aligned_in_jaws", "pass": true, "bar_world": [6.0002, 3.9054, 1.4982], "axis_base": [-0.00205, 0.00135, 1.0], "tool_axis_base": [-1.0, -0.0009, -0.00184], "closing_axis_base": [0.0009, -1.0, 0.00081], "robot_attached": true, "tester_gripped": false}
+[INFO] [1790595995.959035908] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.061, 3.046, -1.566]}
+[INFO] [1790595995.959785481] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/07.json

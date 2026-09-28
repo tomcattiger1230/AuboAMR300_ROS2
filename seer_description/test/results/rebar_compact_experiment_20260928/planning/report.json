@@ -1,0 +1,72 @@
+{
+  "status": "local_candidate_not_simulation_validated",
+  "scope": "slot 1, base parked at (6.08, 2.60), yaw -90 degrees",
+  "start_tcp": [
+    0.2922993762083564,
+    -0.0020658106464779206,
+    0.8983727926122371
+  ],
+  "target_tcp": [
+    -0.8,
+    -0.08,
+    1.5
+  ],
+  "source_branch": "Actual Isaac joint feedback saved immediately after pickup",
+  "joint_names": [
+    "shoulder_joint",
+    "upperArm_joint",
+    "foreArm_joint",
+    "wrist1_joint",
+    "wrist2_joint",
+    "wrist3_joint"
+  ],
+  "start_joints_rad": [
+    3.4663,
+    -0.1704,
+    1.6013,
+    0.198,
+    1.5711,
+    1.8956
+  ],
+  "target_joints_rad": [
+    2.597,
+    -0.357,
+    -1.451,
+    -1.094,
+    -1.026,
+    0.0
+  ],
+  "schedule_parameters": [
+    0.4113185111453064,
+    1.3400070529043515,
+    1.0641470249901905,
+    0.24599207492435196,
+    4.440138191401998,
+    1.251056459727879
+  ],
+  "evaluations": 200,
+  "metrics": {
+    "tcp_length_m": 1.8063030539961944,
+    "orientation_arc_deg": 180.35578893339064,
+    "joint_total_travel_rad": 9.892900000000001,
+    "joint_endpoint_lower_bound_rad": 9.892900000000001,
+    "min_screened_clearance_m": 0.021661046921637964,
+    "nearest_pair": "payload / upperArm_Link",
+    "samples": 801,
+    "max_joint_step_deg": 0.4736441349723369,
+    "tcp_endpoint_error_m": 0.00015950311687572217,
+    "final_bar_vertical_component": 1.0000000000000004
+  },
+  "baseline": {
+    "commanded_tcp_translation_lower_bound_from_090_m": 1.8394072495705867,
+    "commanded_orientation_arc_deg": 270.0,
+    "note": "Commanded waypoint comparison only; previous OMPL joint trajectory was not recorded."
+  },
+  "limits": [
+    "Conservative cylinders, URDF primitive boxes/spheres and SRDF collision exemptions.",
+    "Includes chassis, arm, fingers, wrist camera, carried 0.62 m bar with 20 mm radius, rack and static tester boxes.",
+    "Sampled screening; not continuous FCL/MoveIt validation or Isaac grasp dynamics.",
+    "Other occupied slots, warehouse fixtures and dynamic tester carriages are not included.",
+    "No execution times or success rates are established. Do not execute without fresh state and MoveIt validation."
+  ]
+}

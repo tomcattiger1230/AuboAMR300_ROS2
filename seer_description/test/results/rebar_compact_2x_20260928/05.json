@@ -1,0 +1,70 @@
+[
+  {
+    "test": "base_at_standoff_before_preposition",
+    "pass": true,
+    "base_pose": [
+      6.062,
+      2.605,
+      -1.566
+    ]
+  },
+  {
+    "test": "robot_rebar_attached",
+    "pass": true
+  },
+  {
+    "test": "tester_planning_scene",
+    "pass": true,
+    "boxes": [
+      "cabinet",
+      "column_1",
+      "column_2",
+      "top_beam",
+      "lower_platen",
+      "console"
+    ]
+  },
+  {
+    "test": "payload_retained_while_driving",
+    "pass": true,
+    "actual": [
+      -0.805,
+      -0.078,
+      1.499
+    ],
+    "expected": [
+      -0.8,
+      -0.08,
+      1.5
+    ],
+    "offset_m": 0.006
+  },
+  {
+    "test": "compact_preposition_verified_without_replanning",
+    "pass": true,
+    "rebar_base": [
+      -0.8054604031895636,
+      -0.07838565492446725,
+      1.498713041786834
+    ],
+    "tool_axis_base": [
+      -0.9999977269168716,
+      -0.0010047447460198033,
+      -0.0018805980657261578
+    ],
+    "closing_axis_base": [
+      0.0010025988982812484,
+      -0.9999988457255049,
+      0.0011416405330293977
+    ]
+  },
+  {
+    "test": "base_parking_brake_locked",
+    "pass": true,
+    "base_pose": [
+      6.062,
+      2.605,
+      -1.566
+    ]
+  }
+]

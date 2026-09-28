@@ -290,3 +290,8 @@ Ubuntu 当前运行的相机相对 `wrist3_Link` 为 `(0, 0.1, 0)` m、绕 Z 旋
 GUI 订阅远端 `/robot_description`（transient-local），同步夹爪、相机几何和腕部固定关节链。
 工具栏显示“模型：远端 robot_description”后，右侧工具外观以运行中的机器人描述为准；收到描述前使用本地 stick 模型。
 按用户确认，相机 URDF/Xacro、SDF、USD 及 USD 生成脚本均保持 `wrist3_Link` 安装，与当前运行模型一致。
+
+## 底盘与机械臂统一控制台
+
+新增入口 `seer_aubo_gui`，支持 Isaac 和真实 SEER + AUBO 的独立配置。
+源码预览：`../scripts/start_unified_gui.py`；详细运行、接口来源和验收边界见 [统一 GUI](../docs/unified_gui/README.md)。

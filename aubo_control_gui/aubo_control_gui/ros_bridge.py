@@ -18,7 +18,8 @@ class RosBridge(QObject):
     status=Signal(object); gripper=Signal(float); connection=Signal(bool); result=Signal(str,bool)
     def __init__(self,parent=None):
         super().__init__(parent)
-        rclpy.init(args=None)
+        if not rclpy.ok():
+            rclpy.init(args=None)
         self.node=MotionClient()
         self.gripper_closed=0.04
         self.last_camera_description=None
