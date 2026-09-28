@@ -1,5 +1,8 @@
 # 提前竖直化钢筋，再驱动底盘靠近拉伸测试机
 
+2026-09-28 的[本地精简路径候选](README_REBAR_COMPACT_LOCAL_PLAN.md)已生成，
+目前处于本地筛选阶段，下面的八段仿真流程仍采用原先已验证的路径。
+
 ## 第三视角自动化演示视频
 
 [观看完整演示（MP4，2 分 29 秒）](test/results/rebar_video_20260927/rebar_automation_third_person.mp4)。
