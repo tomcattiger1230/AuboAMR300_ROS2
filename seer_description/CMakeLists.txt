@@ -71,6 +71,7 @@ install(PROGRAMS
   scripts/rebar_tester_mission/navigate_onboard.py
   scripts/rebar_tester_mission/02_navigate_standoff.py
   scripts/rebar_tester_mission/03_verticalize_standoff.py
+  scripts/rebar_tester_mission/04_compact_vertical.py
   scripts/rebar_tester_mission/04_preposition_standoff.py
   scripts/rebar_tester_mission/05_drive_vertical_rebar.py
   scripts/rebar_tester_mission/06_micro_insert.py
@@ -83,6 +84,8 @@ install(PROGRAMS
 )
 
 install(FILES scripts/rebar_experiment_geometry.py scripts/rebar_tester_control.py
+  scripts/third_person_recorder.py
+  scripts/rebar_tester_mission/compact_curve.py
   scripts/rebar_tester_mission/stage_entry.py
   scripts/rebar_pose_planner/rebar_pose_planner_core.py DESTINATION lib/${PROJECT_NAME})
 
@@ -96,6 +99,8 @@ install(FILES
   README_REBAR_TEST_MACHINE.md
   README_REBAR_LAB.md
   README_REBAR_TESTER_LOAD.md
+  README_REBAR_COMPACT_EXPERIMENT.md
+  README_REBAR_COMPACT_LOCAL_PLAN.md
   README_REBAR_POSE_PLANNER.md
   DESTINATION share/${PROJECT_NAME}
 )

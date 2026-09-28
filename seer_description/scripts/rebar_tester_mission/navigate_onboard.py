@@ -7,6 +7,7 @@ node stops at the parking pose; it does not move the arm or operate the tester.
 
 import math
 import sys
+import time
 import traceback
 from pathlib import Path
 
@@ -23,6 +24,15 @@ from test_rebar_tester_load import TesterLoadTest, build_parser  # noqa: E402
 
 
 class OnboardTransport(TesterLoadTest):
+    def wait_for_transport_feedback(self):
+        """Allow DDS discovery before reading a freshly started node's odometry."""
+        deadline = time.monotonic() + 15.
+        while time.monotonic() < deadline:
+            self.spin(.1)
+            if time.monotonic() - self._base_pose_time < .5:
+                return
+        raise RuntimeError("no fresh base feedback after 15 seconds")
+
     def check_seated(self, label, slot):
         self.spin(0.3)
         position = self.rebar_in_base()
@@ -38,7 +48,7 @@ class OnboardTransport(TesterLoadTest):
             raise RuntimeError("rebar is not seated in the chassis rack")
 
     def run_transport(self, slot):
-        self.spin(2.0)
+        self.wait_for_transport_feedback()
         x, y, _ = self.base_pose()
         at_source = math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[0]) < 0.10
         self.record("base_at_source", at_source, position=[round(x, 3), round(y, 3)])

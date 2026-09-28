@@ -220,6 +220,9 @@ ros2 run seer_description rebar_tester_gui_qt.py
 
 ## 已知限制
 
+精简竖直化与正面预定位的连续轨迹、运行命令和完整实验录像见
+[README_REBAR_COMPACT_EXPERIMENT.md](README_REBAR_COMPACT_EXPERIMENT.md)。
+
 - 抱爪为运动学模型，无夹持力/拉断仿真。Isaac 仅在钢筋位姿、姿态和双爪状态
   均满足装填条件时把钢筋刚体切换为运动学保持，并通过
   `/rebar_tester/rebar_gripped` 报告；张开任一抱爪会解除保持。

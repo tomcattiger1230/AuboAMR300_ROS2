@@ -32,8 +32,14 @@ class DriveWithVerticalRebar(TesterLoadTest):
         safe_start = (math.dist(start[:2], BASE_DRIVE_WAYPOINTS_XY[-2]) < 0.08
                       and abs(math.atan2(math.sin(start[2] - BASE_TARGET_YAW),
                                          math.cos(start[2] - BASE_TARGET_YAW))) < 0.12)
+        if self.args.resume_drive:
+            safe_start = (abs(start[0] - BASE_DRIVE_WAYPOINTS_XY[-1][0]) < .07
+                          and BASE_DRIVE_WAYPOINTS_XY[-2][1] - .025 <= start[1]
+                          <= BASE_DRIVE_WAYPOINTS_XY[-1][1] + .025
+                          and abs(math.atan2(math.sin(start[2] - BASE_TARGET_YAW),
+                                             math.cos(start[2] - BASE_TARGET_YAW))) < .12)
         self.record("vertical_drive_safe_start", safe_start,
-                    base_pose=[round(v, 4) for v in start])
+                    base_pose=[round(v, 4) for v in start], resume_drive=self.args.resume_drive)
         if not safe_start:
             raise RuntimeError("base is not at standoff")
         self.check_payload_while_parked(expected, tolerance=0.04)
@@ -45,11 +51,15 @@ class DriveWithVerticalRebar(TesterLoadTest):
         target = BASE_DRIVE_WAYPOINTS_XY[-1]
         deadline = time.monotonic() + 180.0
         last_report = 0.0
+        last_progress_time = time.monotonic()
+        progress_y = start[1]
         try:
             while rclpy.ok() and time.monotonic() < deadline:
                 self.spin(0.03)
                 x, y, yaw = self.base_pose()
                 distance = math.dist((x, y), target)
+                if y - progress_y > .01:
+                    progress_y, last_progress_time = y, time.monotonic()
                 yaw_error = math.atan2(math.sin(BASE_TARGET_YAW - yaw),
                                        math.cos(BASE_TARGET_YAW - yaw))
                 bar = self.rebar_in_base()
@@ -63,12 +73,23 @@ class DriveWithVerticalRebar(TesterLoadTest):
                         f"vertical drive safety stop: bar error {slip:.3f} m, "
                         f"base ({x:.3f}, {y:.3f}, {yaw:.3f})"
                     )
-                if distance < 0.02 and abs(yaw_error) < 0.03:
+                # This leg commands only longitudinal translation and yaw. A
+                # small inherited lateral error must not prevent completion
+                # after the controllable longitudinal error has converged.
+                # The following micro-insertion measures and corrects bar XYZ.
+                position_ok = abs(x - target[0]) < .02 and abs(y - target[1]) < .02
+                if position_ok and abs(yaw_error) < 0.03:
                     self.record("vertical_drive_at_tester", True,
                                 base_pose=[round(x, 4), round(y, 4), round(yaw, 4)],
                                 bar_base=[round(v, 4) for v in bar],
+                                position_error_xy_m=[round(x-target[0], 4), round(y-target[1], 4)],
+                                position_tolerance_each_axis_m=.02,
                                 slip_m=round(slip, 4))
                     break
+                if time.monotonic() - last_progress_time > 8.0:
+                    self.record("vertical_drive_no_progress", False,
+                                base_pose=[x, y, yaw], remaining_m=distance)
+                    raise RuntimeError("vertical drive stalled; stopped after 8 seconds without progress")
                 command = Twist()
                 command.linear.x = -min(0.08, 0.8 * max(0.0, target[1] - y))
                 command.angular.z = max(-0.12, min(0.12, 1.2 * yaw_error))
@@ -108,6 +129,8 @@ class DriveWithVerticalRebar(TesterLoadTest):
 def main():
     parser = build_parser()
     parser.description = __doc__
+    parser.add_argument("--resume-drive", action="store_true",
+                        help="resume a stopped drive inside the checked standoff-to-tester corridor")
     args = parser.parse_args()
     rclpy.init(signal_handler_options=SignalHandlerOptions.NO)
     node = DriveWithVerticalRebar(args)

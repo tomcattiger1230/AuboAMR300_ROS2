@@ -164,9 +164,10 @@ class OnboardPickup(TesterLoadTest):
         self.payload_scene(True)
         # 04_insert.py starts by moving to its verticalisation staging point.
         # Raise above the deck first so that the horizontal bar clears its rack.
-        transit = (rebar[0], rebar[1], 1.05)
-        self.cartesian_motion("raise_above_onboard_rack",
-                              [wrist_pose_for(transit).pose])
+        transit = (rebar[0], rebar[1], .90 if self.args.compact_start else 1.05)
+        if not self.args.compact_start:
+            self.cartesian_motion("raise_above_onboard_rack",
+                                  [wrist_pose_for(transit).pose])
         self.check_payload_while_parked(transit, tolerance=0.06)
 
         state = {
@@ -179,6 +180,9 @@ class OnboardPickup(TesterLoadTest):
             "source": "onboard_slot",
             "slot": slot,
             "pickup_waypoint": list(pickup_waypoint),
+            "pickup_tcp": list(transit),
+            "pickup_arm_joints": self.current_arm(),
+            "compact_start": self.args.compact_start,
         }
         path = Path(self.args.state_file)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -197,6 +201,8 @@ def main():
                         help="resume after confirmed finger contact at the rack")
     parser.add_argument("--at-standoff", action="store_true",
                         help="pick at the open turning waypoint (6.0, 2.6)")
+    parser.add_argument("--compact-start", action="store_true",
+                        help="stop at the 0.90 m lift for the compact vertical path")
     parser.set_defaults(state_file="/tmp/rebar_onboard_tester_state.json")
     args = parser.parse_args()
     if args.onboard_slot is None:

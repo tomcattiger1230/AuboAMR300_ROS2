@@ -19,7 +19,7 @@ from rebar_tester_geometry import (  # noqa: E402
 
 class StandoffTransport(OnboardTransport):
     def run_standoff(self, slot):
-        self.spin(2.0)
+        self.wait_for_transport_feedback()
         x, y, _ = self.base_pose()
         at_source = math.dist((x, y), BASE_DRIVE_WAYPOINTS_XY[0]) < 0.10
         self.record("base_at_source", at_source, position=[round(x, 3), round(y, 3)])

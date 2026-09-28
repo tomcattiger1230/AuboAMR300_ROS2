@@ -1,0 +1,21 @@
+amcl:
+  ros__parameters:
+    use_sim_time: true
+    global_frame_id: map
+    odom_frame_id: odom
+    base_frame_id: base_footprint
+    scan_topic: /front_lidar/scan_filtered
+    robot_model_type: nav2_amcl::DifferentialMotionModel
+    laser_model_type: likelihood_field
+    laser_min_range: 0.3
+    laser_max_range: 20.0
+    max_beams: 120
+    min_particles: 500
+    max_particles: 2000
+    update_min_d: 0.1
+    update_min_a: 0.1
+    transform_tolerance: 0.8
+    tf_broadcast: true
+    set_initial_pose: false
+    always_reset_initial_pose: true
+    first_map_only: false

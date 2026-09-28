@@ -57,6 +57,7 @@ def parse_args():
     parser.add_argument("--camera-profile", choices=("gemini", "mv-ch100-60um"), default="gemini")
     parser.add_argument("--camera-resolution", choices=("preview", "full"), default="preview")
     parser.add_argument("--ready-file", help="Write this marker after simulation startup")
+    parser.add_argument("--observer-record-dir", help="Save third-person JPEG frames and stage metadata")
     return parser.parse_args()
 
 
@@ -835,6 +836,13 @@ def main():
         flush=True,
     )
 
+    observer_recorder = None
+    if ARGS.observer_record_dir:
+        from third_person_recorder import ThirdPersonRecorder
+
+        observer_recorder = ThirdPersonRecorder(stage, ARGS.observer_record_dir)
+        simulation_app.update()
+
     if ARGS.ready_file:
         with open(ARGS.ready_file, "w", encoding="utf-8") as ready_file:
             ready_file.write("ready\n")
@@ -842,11 +850,15 @@ def main():
     last_frame_time = time.monotonic()
     while simulation_app.is_running() and not stop_requested:
         simulation_app.update()
+        if observer_recorder is not None:
+            observer_recorder.capture_if_due()
         if rebar_tester is not None:
             now = time.monotonic()
             rebar_tester.update(now - last_frame_time, now)
             last_frame_time = now
 
+    if observer_recorder is not None:
+        observer_recorder.close()
     app_utils.stop()
 
 
