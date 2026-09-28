@@ -99,7 +99,7 @@ class CompactVertical(TesterLoadTest):
                            target_joints_rad=target, position_error_m=error, alignment=alignment):
             raise RuntimeError("compact target does not match front TCP")
 
-        rows, duration = retime(start, target, schedule)
+        rows, duration = retime(start, target, schedule, speed_scale=self.args.speed_scale)
         fingers = dict(zip(GRIPPER_JOINTS, self.finger_positions()))
         max_step = max(abs(b-a) for previous, current in zip(rows, rows[1:])
                        for a, b in zip(previous[0], current[0]))
@@ -119,9 +119,10 @@ class CompactVertical(TesterLoadTest):
                 raise RuntimeError("live MoveIt collision screening rejected the compact curve")
         self.record("compact_fcl_path", True, samples=len(rows),
                     max_joint_step_deg=math.degrees(max_step), closed_fingers=fingers,
-                    duration_s=duration, schedule_parameters=schedule)
+                    duration_s=duration, speed_scale=self.args.speed_scale, schedule_parameters=schedule)
         export = {"start_joints_rad": start, "target_joints_rad": target,
                   "schedule_parameters": schedule, "duration_s": duration,
+                  "speed_scale": self.args.speed_scale,
                   "base_pose": base, "rows": rows}
         Path(self.args.output).with_suffix(".trajectory.json").write_text(json.dumps(export))
         # Only the freshly screened trajectory can proceed to execution.
@@ -159,7 +160,8 @@ class CompactVertical(TesterLoadTest):
         finally:
             self.destroy_timer(timer)
             Path(self.args.output).with_suffix(".motion.json").write_text(json.dumps(telemetry))
-        if not self.record("compact_vertical_exec", code == 1, execution_code=code, duration_s=duration):
+        if not self.record("compact_vertical_exec", code == 1, execution_code=code,
+                           duration_s=duration, speed_scale=self.args.speed_scale):
             raise RuntimeError("compact execution failed")
         self.check_payload_while_parked(APPROACH_TCP, tolerance=.035)
         axis = self.rebar_axis_in_base()
@@ -184,7 +186,11 @@ def main():
     parser = build_parser()
     parser.add_argument("--schedule-file", help="parameters replanned from actual source joints")
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument("--speed-scale", type=float, default=2.,
+                        help="time compression relative to the 44 s reference (0.25 to 2; default 2)")
     args = parser.parse_args()
+    if not math.isfinite(args.speed_scale) or not .25 <= args.speed_scale <= 2.:
+        parser.error("--speed-scale must be finite and between 0.25 and 2")
     rclpy.init(signal_handler_options=SignalHandlerOptions.NO)
     node = CompactVertical(args)
     try:

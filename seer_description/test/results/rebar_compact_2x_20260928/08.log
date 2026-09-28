@@ -1,0 +1,9 @@
+[INFO] [1790596000.179796707] [rebar_grasp_test]: {"test": "tester_bridge_alive", "pass": true, "missing": []}
+[INFO] [1790596000.182207582] [rebar_grasp_test]: {"test": "tester_planning_scene", "pass": true, "boxes": ["cabinet", "column_1", "column_2", "top_beam", "lower_platen", "console"]}
+[INFO] [1790596000.485247249] [rebar_grasp_test]: {"test": "rebar_aligned_before_handoff", "pass": true, "position": [6.000197982788086, 3.905545473098755, 1.4985193014144897], "axis": [-0.0022301861922407575, 0.0015171571706960921, 0.999996362245217]}
+[INFO] [1790596000.600240043] [rebar_grasp_test]: {"test": "robot_rebar_attached", "pass": true}
+[INFO] [1790596004.843600817] [rebar_grasp_test]: {"test": "tester_jaws_clamped", "pass": true, "lower_z": 1.12, "upper_z": 1.87, "openings": [0.024, 0.024]}
+[INFO] [1790596004.958143673] [rebar_grasp_test]: {"test": "tester_rebar_gripped", "pass": true, "robot_joint_released": true}
+[INFO] [1790596006.966271677] [rebar_grasp_test]: {"test": "robot_fingers_released", "pass": true, "fingers": [0.0002, 0.0003]}
+[INFO] [1790596008.994351852] [rebar_grasp_test]: {"test": "rebar_held_by_tester", "pass": true, "position": [6.0, 3.906, 1.499], "expected": [6.0, 3.92, 1.5]}
+[INFO] [1790596008.995066667] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/08.json

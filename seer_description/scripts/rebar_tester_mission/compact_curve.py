@@ -40,7 +40,9 @@ def sample(start, target, schedule, progress):
     return positions, velocities, accelerations
 
 
-def retime(start, target, schedule, count=1001):
+def retime(start, target, schedule, count=1001, speed_scale=1.):
+    if not math.isfinite(speed_scale) or not .25 <= speed_scale <= 2.:
+        raise ValueError("speed scale must be finite and between 0.25 and 2.0")
     rows = [sample(start, target, schedule, i / (count - 1)) for i in range(count)]
     duration = 40.
     for _, speeds, accelerations in rows:
@@ -48,4 +50,5 @@ def retime(start, target, schedule, count=1001):
             duration = max(duration, abs(speeds[i]) / (VELOCITIES[i] * .06),
                            math.sqrt(abs(accelerations[i]) / .12))
     # Slack for controller interpolation and feedback settling.
-    return rows, duration * 1.1
+    # Time compression doubles velocity and quadruples acceleration at 2x.
+    return rows, duration * 1.1 / speed_scale

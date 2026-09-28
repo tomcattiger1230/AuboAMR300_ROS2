@@ -5,6 +5,7 @@ import sys
 import math
 
 import numpy as np
+import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "seer_description/scripts/rebar_tester_mission"))
@@ -46,3 +47,22 @@ def test_retiming_respects_slow_payload_velocity_and_acceleration():
     for _, speeds, accelerations in rows:
         assert all(abs(value)/duration <= limit*.06 for value, limit in zip(speeds, VELOCITIES))
         assert all(abs(value)/duration**2 <= .12 for value in accelerations)
+
+
+def test_double_speed_preserves_path_and_halves_duration_with_scaled_limits():
+    source = [3.4663, -.1704, 1.6013, .198, 1.5711, 1.8956]
+    target = nearest_target(source)
+    rows, reference = retime(source, target, SCHEDULE)
+    faster, duration = retime(source, target, SCHEDULE, speed_scale=2.)
+    assert faster == rows
+    assert reference == pytest.approx(44.)
+    assert duration == pytest.approx(22.)
+    for _, speeds, accelerations in faster:
+        assert all(abs(v)/duration <= limit*.12 for v, limit in zip(speeds, VELOCITIES))
+        assert all(abs(a)/duration**2 <= .48 for a in accelerations)
+
+
+@pytest.mark.parametrize('scale', [0., -1., 2.01, float('nan'), float('inf')])
+def test_speed_scale_rejects_invalid_or_untested_ranges(scale):
+    with pytest.raises(ValueError):
+        retime(TARGET, TARGET, SCHEDULE, speed_scale=scale)

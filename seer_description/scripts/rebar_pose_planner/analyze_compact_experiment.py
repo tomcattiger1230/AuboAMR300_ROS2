@@ -44,6 +44,8 @@ def main():
         raise RuntimeError('insufficient measured motion feedback')
     model = RobotModel()
     planned = np.array([row[0] for row in trajectory['rows']])
+    velocities = np.array([row[1] for row in trajectory['rows']]) / trajectory['duration_s']
+    accelerations = np.array([row[2] for row in trajectory['rows']]) / trajectory['duration_s']**2
     actual = np.array([row['joints_rad'] for row in motion])
     tcp_plan, plan_metrics = path_metrics(model, planned)
     tcp_live, live_metrics = path_metrics(model, actual)
@@ -55,6 +57,9 @@ def main():
         'status': 'eight_stages_passed_in_isaac',
         'stage_checks': counts, 'total_checks_passed': sum(row['passed'] for row in counts),
         'planned_duration_s': trajectory['duration_s'], 'feedback_samples': len(motion),
+        'speed_scale': trajectory.get('speed_scale', 1.),
+        'planned_peak_joint_velocity_rad_s': np.abs(velocities).max(axis=0).tolist(),
+        'planned_peak_joint_acceleration_rad_s2': np.abs(accelerations).max(axis=0).tolist(),
         'planned': plan_metrics, 'feedback_fk': live_metrics,
         'max_feedback_joint_error_rad': float(np.abs(actual-reference).max()),
         'max_bar_to_nominal_tcp_offset_m': float(np.linalg.norm(observed_bar-tcp_live, axis=1).max()),

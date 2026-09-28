@@ -46,6 +46,11 @@ def main():
         if args.compact and stage == "04":
             label = "同步竖直化与正面预定位"
             input_fps = 4
+            trajectory_file = args.record_dir / "reports" / "04.trajectory.json"
+            if trajectory_file.exists():
+                speed = json.loads(trajectory_file.read_text()).get("speed_scale", 1.)
+                if speed != 1.:
+                    label += f" ({speed:g}x)"
         elif args.compact and stage == "05":
             label = "预定位状态确认"
         frames = [row["frame"] for row in rows

@@ -1,0 +1,33 @@
+2026-09-28T11:42:27Z	01	取筋并装车
+[INFO] [1790595817.418152859] [rebar_grasp_test]: {"test": "retract_from_onboard_slot", "pass": true, "planning_code": 1, "points": 27, "execution_code": 1}
+[INFO] [1790595820.443912247] [rebar_grasp_test]: {"test": "onboard_rebar_stable", "pass": true, "drift_m": 5.346999521753696e-05, "position": [0.29292443074846797, -0.0017429707353046654, 0.7152268284115799]}
+[INFO] [1790595820.444438259] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/01.json
+2026-09-28T11:43:40Z	02	载筋导航
+[INFO] [1790595914.800278014] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.062, 2.604, -1.555]}
+[INFO] [1790595915.100921582] [rebar_grasp_test]: {"test": "rebar_seated_at_standoff", "pass": true, "slot": 1, "position": [0.2927, -0.0019, 0.715], "axis": [-0.0, -1.0, -0.0], "error_m": 0.0019}
+[INFO] [1790595915.101571086] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/02.json
+2026-09-28T11:45:15Z	03	车载取筋
+[INFO] [1790595933.701051514] [rebar_grasp_test]: {"test": "payload_retained_while_driving", "pass": true, "actual": [0.291, -0.002, 0.894], "expected": [0.29270068533102706, -0.0019213922641598269, 0.9], "offset_m": 0.006}
+[INFO] [1790595933.701286791] [rebar_grasp_test]: {"test": "onboard_pickup_checkpoint", "pass": true, "path": "/tmp/rebar_compact_2x_20260928/workflow_state.json"}
+[INFO] [1790595933.701439610] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/03.json
+2026-09-28T11:45:33Z	04	同步竖直化与正面预定位
+[INFO] [1790595961.518154757] [rebar_grasp_test]: {"test": "compact_front_vertical_pose", "pass": true, "rebar_base": [-0.8053020399839385, -0.07857238430297919, 1.4983832773820194], "axis_base": [-0.0019280913741714818, 0.0013641954216763001, 0.9999972107133622], "tool_axis_base": [-0.9999976881677765, -0.0013045583848114717, -0.001709323411073882], "closing_axis_base": [0.0013031267885652564, -0.9999987994987793, 0.0008383683996343594]}
+[INFO] [1790595961.923119018] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.062, 2.605, -1.566]}
+[INFO] [1790595961.923934168] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/04.json
+2026-09-28T11:46:02Z	05	预定位状态确认
+[INFO] [1790595966.516245134] [rebar_grasp_test]: {"test": "compact_preposition_verified_without_replanning", "pass": true, "rebar_base": [-0.8054604031895636, -0.07838565492446725, 1.498713041786834], "tool_axis_base": [-0.9999977269168716, -0.0010047447460198033, -0.0018805980657261578], "closing_axis_base": [0.0010025988982812484, -0.9999988457255049, 0.0011416405330293977]}
+[INFO] [1790595966.900089352] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.062, 2.605, -1.566]}
+[INFO] [1790595966.900471308] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/05.json
+2026-09-28T11:46:07Z	06	竖直持筋接近
+[INFO] [1790595984.343575318] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.061, 3.032, -1.57]}
+[INFO] [1790595984.343940451] [rebar_grasp_test]: {"test": "vertical_bar_before_micro_insert", "pass": true, "bar_world": [5.9816, 3.8372, 1.4985], "axis_base": [-0.00199, 0.00143, 1.0], "base_pose": [6.0607, 3.0319, -1.57]}
+[INFO] [1790595984.344569818] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/06.json
+2026-09-28T11:46:24Z	07	夹持线微调
+[INFO] [1790595995.463449920] [rebar_grasp_test]: {"test": "rebar_aligned_in_jaws", "pass": true, "bar_world": [6.0002, 3.9054, 1.4982], "axis_base": [-0.00205, 0.00135, 1.0], "tool_axis_base": [-1.0, -0.0009, -0.00184], "closing_axis_base": [0.0009, -1.0, 0.00081], "robot_attached": true, "tester_gripped": false}
+[INFO] [1790595995.959035908] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.061, 3.046, -1.566]}
+[INFO] [1790595995.959785481] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/07.json
+2026-09-28T11:46:36Z	08	测试机接管
+[INFO] [1790596006.966271677] [rebar_grasp_test]: {"test": "robot_fingers_released", "pass": true, "fingers": [0.0002, 0.0003]}
+[INFO] [1790596008.994351852] [rebar_grasp_test]: {"test": "rebar_held_by_tester", "pass": true, "position": [6.0, 3.906, 1.499], "expected": [6.0, 3.92, 1.5]}
+[INFO] [1790596008.995066667] [rebar_grasp_test]: report written to /tmp/rebar_compact_2x_20260928/reports/08.json
+All eight rebar workflow stages completed.

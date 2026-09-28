@@ -33,6 +33,9 @@ run_stage 02 '载筋导航' 02_navigate_standoff.py --onboard-slot 1
 if [[ "$COMPACT" == true ]]; then
   run_stage 03 '车载取筋' pickup_onboard.py --onboard-slot 1 --at-standoff --compact-start --state-file "$STATE_FILE"
   compact_args=()
+  if [[ -n "${REBAR_COMPACT_SPEED:-}" ]]; then
+    compact_args+=(--speed-scale "$REBAR_COMPACT_SPEED")
+  fi
   if [[ -n "${REBAR_COMPACT_SCHEDULE:-}" ]]; then
     compact_args+=(--schedule-file "$REBAR_COMPACT_SCHEDULE")
   fi
