@@ -1,0 +1,26 @@
+[INFO] [1790596298.837800943] [rebar_grasp_test]: {"test": "loading_collision_scene_ready", "pass": true, "attached": ["onboard_rebar_rack"], "world": ["rebar_source_station"]}
+[INFO] [1790596308.846290166] [rebar_grasp_test]: {"test": "source_rebar_stable", "pass": true, "duration_s": 10.0, "drift_m": 0.0}
+[INFO] [1790596308.846707782] [rebar_grasp_test]: {"test": "rebar_pose_feedback", "pass": true, "position": [-1.1499998569488468, -4.8553913075011224e-05, 0.52198725938797]}
+[INFO] [1790596310.051569879] [rebar_grasp_test]: {"test": "open_gripper", "pass": true, "fingers_opened": [0.0, 0.0]}
+[INFO] [1790596310.059187113] [rebar_grasp_test]: {"test": "tcp_calibration", "pass": true, "seed": {"shoulder_joint": 0.0, "upperArm_joint": -0.7, "foreArm_joint": 1.2, "wrist1_joint": 0.0, "wrist2_joint": 1.5, "wrist3_joint": 0.0}, "seed_wrist_to_rebar": 0.4202, "tcp_in_wrist": [0.0, 0.0, 0.16]}
+[INFO] [1790596310.074509737] [rebar_grasp_test]: {"test": "pregrasp_ik", "pass": true, "max_joint_delta": 2.9136, "joints": {"shoulder_joint": 0.2266, "upperArm_joint": -0.8704, "foreArm_joint": 1.0793, "wrist1_joint": 0.3789, "wrist2_joint": 1.5708, "wrist3_joint": -2.915}}
+[INFO] [1790596316.835393680] [rebar_grasp_test]: {"test": "approach_pregrasp", "pass": true, "planning_code": 1, "points": 57, "execution_code": 1}
+[INFO] [1790596319.734273492] [rebar_grasp_test]: {"test": "descend_to_grasp", "pass": true, "fraction": 1.0, "code": 1, "points": 20, "execution_code": 1}
+[INFO] [1790596322.466966562] [rebar_grasp_test]: {"test": "grasp_close_on_rebar", "pass": true, "fingers_stalled": [0.0156, 0.0184], "inferred_gap_m": 0.0124, "preload_target": 0.0285, "preload_status": 4}
+[INFO] [1790596325.603088562] [rebar_grasp_test]: {"test": "lift", "pass": true, "fraction": 1.0, "code": 1, "execution_code": 1}
+[INFO] [1790596325.603426227] [rebar_grasp_test]: {"test": "rebar_lifted", "pass": true, "before": [-1.1499893665317358, 1.5413884284498636e-06, 0.5219976902008057], "after": [-1.1504051685391459, -0.0032344383653253317, 0.7007916569709778], "vertical_distance": 0.17879396677017212}
+[INFO] [1790596327.121713072] [rebar_grasp_test]: {"test": "payload_retained_after_lift", "pass": true, "fingers": [0.0152, 0.0188], "grasp_stall": [0.0156, 0.0184]}
+[INFO] [1790596330.922647269] [rebar_grasp_test]: {"test": "raise_for_loading", "pass": true, "planning_code": 1, "points": 28, "execution_code": 1}
+[INFO] [1790596336.577753720] [rebar_grasp_test]: {"test": "rotate_rebar_90deg", "pass": true, "planning_code": 1, "points": 47, "execution_code": 1}
+[INFO] [1790596336.578319663] [rebar_grasp_test]: {"test": "rebar_rotated", "pass": true, "axis_in_base": [0.0006624770894195444, -0.9999944157224142, -0.0032756141551443974]}
+[INFO] [1790596341.426093885] [rebar_grasp_test]: {"test": "carry_via_side_1", "pass": true, "planning_code": 1, "points": 38, "execution_code": 1}
+[INFO] [1790596341.426357830] [rebar_grasp_test]: {"test": "payload_retained_at_stage_1", "pass": true, "actual": [-0.9017113875132848, -0.4516242125043405, 0.8992662461232194], "target": [-0.9, -0.45, 0.9]}
+[INFO] [1790596349.635633301] [rebar_grasp_test]: {"test": "carry_via_side_2", "pass": true, "planning_code": 1, "points": 72, "execution_code": 1}
+[INFO] [1790596349.636128499] [rebar_grasp_test]: {"test": "payload_retained_at_stage_2", "pass": true, "actual": [0.2914924085785854, -0.45147590287960626, 0.8999387778658353], "target": [0.2927, -0.45, 0.9]}
+[INFO] [1790596354.131358677] [rebar_grasp_test]: {"test": "carry_via_side_3", "pass": true, "planning_code": 1, "points": 35, "execution_code": 1}
+[INFO] [1790596354.131845396] [rebar_grasp_test]: {"test": "payload_retained_at_stage_3", "pass": true, "actual": [0.29131326247599654, -0.0016515751902618345, 0.9010432658697183], "target": [0.2927, 0.0, 0.9]}
+[INFO] [1790596357.737265416] [rebar_grasp_test]: {"test": "descend_to_onboard_slot", "pass": true, "planning_code": 1, "points": 27, "execution_code": 1}
+[INFO] [1790596361.273495013] [rebar_grasp_test]: {"test": "placed_in_onboard_slot", "pass": true, "slot": 1, "before": [0.29097369659119576, -0.0017483880382580443, 0.7215388428078797], "after": [0.29317264758736555, -0.0017502535325914484, 0.7152831562453172], "axis_in_base": [-0.0021428423538374605, -0.9999969762756376, -0.0012065099371910846], "fingers": [0.0001, 0.0]}
+[INFO] [1790596364.841745521] [rebar_grasp_test]: {"test": "retract_from_onboard_slot", "pass": true, "planning_code": 1, "points": 27, "execution_code": 1}
+[INFO] [1790596367.868161900] [rebar_grasp_test]: {"test": "onboard_rebar_stable", "pass": true, "drift_m": 0.0001532867629400538, "position": [0.29290705143465523, -0.0017253946043684174, 0.7152172686400228]}
+[INFO] [1790596367.868980229] [rebar_grasp_test]: report written to /tmp/rebar_compact_3x_20260928/reports/01.json

@@ -7,6 +7,9 @@ SCHEDULE = (.4113185111453064, 1.3400070529043515, 1.0641470249901905,
             .24599207492435196, 4.440138191401998, 1.251056459727879)
 VELOCITIES = (3.10668606855, 3.10668606855, 4.66002910282,
               4.13643032723, 4.13643032723, 4.13643032723)
+MIN_SPEED_SCALE = .25
+MAX_SPEED_SCALE = 3.
+DEFAULT_SPEED_SCALE = 3.
 
 
 def nearest_target(start, target=TARGET):
@@ -41,8 +44,8 @@ def sample(start, target, schedule, progress):
 
 
 def retime(start, target, schedule, count=1001, speed_scale=1.):
-    if not math.isfinite(speed_scale) or not .25 <= speed_scale <= 2.:
-        raise ValueError("speed scale must be finite and between 0.25 and 2.0")
+    if not math.isfinite(speed_scale) or not MIN_SPEED_SCALE <= speed_scale <= MAX_SPEED_SCALE:
+        raise ValueError(f"speed scale must be finite and between {MIN_SPEED_SCALE} and {MAX_SPEED_SCALE}")
     rows = [sample(start, target, schedule, i / (count - 1)) for i in range(count)]
     duration = 40.
     for _, speeds, accelerations in rows:
@@ -50,5 +53,5 @@ def retime(start, target, schedule, count=1001, speed_scale=1.):
             duration = max(duration, abs(speeds[i]) / (VELOCITIES[i] * .06),
                            math.sqrt(abs(accelerations[i]) / .12))
     # Slack for controller interpolation and feedback settling.
-    # Time compression doubles velocity and quadruples acceleration at 2x.
+    # Time compression scales velocity by s and acceleration by s squared.
     return rows, duration * 1.1 / speed_scale

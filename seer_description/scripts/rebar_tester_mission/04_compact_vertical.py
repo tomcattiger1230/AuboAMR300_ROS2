@@ -17,7 +17,8 @@ from trajectory_msgs.msg import JointTrajectoryPoint
 from rclpy.signals import SignalHandlerOptions
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from compact_curve import SCHEDULE, nearest_target, retime
+from compact_curve import (SCHEDULE, DEFAULT_SPEED_SCALE, MIN_SPEED_SCALE,
+                           MAX_SPEED_SCALE, nearest_target, retime)
 from rebar_tester_geometry import BASE_DRIVE_WAYPOINTS_XY, BASE_TARGET_YAW
 from test_rebar_grasp import ARM_JOINTS, GRIPPER_JOINTS, quat_from_basis, quat_rotate
 from test_rebar_tester_load import TesterLoadTest, build_parser
@@ -186,11 +187,12 @@ def main():
     parser = build_parser()
     parser.add_argument("--schedule-file", help="parameters replanned from actual source joints")
     parser.add_argument("--validate-only", action="store_true")
-    parser.add_argument("--speed-scale", type=float, default=2.,
-                        help="time compression relative to the 44 s reference (0.25 to 2; default 2)")
+    parser.add_argument("--speed-scale", type=float, default=DEFAULT_SPEED_SCALE,
+                        help=f"time compression relative to the 44 s reference "
+                        f"({MIN_SPEED_SCALE} to {MAX_SPEED_SCALE}; default {DEFAULT_SPEED_SCALE:g})")
     args = parser.parse_args()
-    if not math.isfinite(args.speed_scale) or not .25 <= args.speed_scale <= 2.:
-        parser.error("--speed-scale must be finite and between 0.25 and 2")
+    if not math.isfinite(args.speed_scale) or not MIN_SPEED_SCALE <= args.speed_scale <= MAX_SPEED_SCALE:
+        parser.error(f"--speed-scale must be finite and between {MIN_SPEED_SCALE} and {MAX_SPEED_SCALE}")
     rclpy.init(signal_handler_options=SignalHandlerOptions.NO)
     node = CompactVertical(args)
     try:

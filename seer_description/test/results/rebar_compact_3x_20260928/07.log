@@ -1,0 +1,13 @@
+[INFO] [1790596525.952719237] [rebar_grasp_test]: {"test": "short_insert_start", "pass": true, "base_pose": [6.0614, 3.0318, -1.5703], "bar_world": [5.9825, 3.8371, 1.4987]}
+[INFO] [1790596526.060165204] [rebar_grasp_test]: {"test": "robot_rebar_attached", "pass": true}
+[INFO] [1790596526.062811295] [rebar_grasp_test]: {"test": "tester_planning_scene", "pass": true, "boxes": ["cabinet", "column_1", "column_2", "top_beam", "lower_platen", "console"]}
+[INFO] [1790596526.284629564] [rebar_grasp_test]: {"test": "base_parking_brake_released", "pass": true}
+[INFO] [1790596526.534225486] [rebar_grasp_test]: {"test": "micro_midway", "pass": true, "fraction": 1.0, "planning_code": 1}
+[INFO] [1790596529.943379155] [rebar_grasp_test]: {"test": "micro_midway_exec", "pass": true, "planning_code": 1, "points": 25, "execution_code": 1}
+[INFO] [1790596530.285291563] [rebar_grasp_test]: {"test": "micro_midway_safety", "pass": true, "bar_world": [5.9999, 3.8996, 1.4982], "base_pose": [6.0614, 3.0464, -1.5681]}
+[INFO] [1790596530.533952310] [rebar_grasp_test]: {"test": "micro_to_gripline", "pass": true, "fraction": 1.0, "planning_code": 1}
+[INFO] [1790596532.408702971] [rebar_grasp_test]: {"test": "micro_to_gripline_exec", "pass": true, "planning_code": 1, "points": 9, "execution_code": 1}
+[INFO] [1790596532.735892425] [rebar_grasp_test]: {"test": "micro_to_gripline_safety", "pass": true, "bar_world": [6.0006, 3.9054, 1.4981], "base_pose": [6.0614, 3.0466, -1.567]}
+[INFO] [1790596533.244885712] [rebar_grasp_test]: {"test": "rebar_aligned_in_jaws", "pass": true, "bar_world": [6.0004, 3.9055, 1.4981], "axis_base": [-0.00209, 0.00135, 1.0], "tool_axis_base": [-1.0, -0.001, -0.00184], "closing_axis_base": [0.001, -1.0, 0.00081], "robot_attached": true, "tester_gripped": false}
+[INFO] [1790596533.743236998] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.061, 3.047, -1.567]}
+[INFO] [1790596533.743802691] [rebar_grasp_test]: report written to /tmp/rebar_compact_3x_20260928/reports/07.json

@@ -49,20 +49,21 @@ def test_retiming_respects_slow_payload_velocity_and_acceleration():
         assert all(abs(value)/duration**2 <= .12 for value in accelerations)
 
 
-def test_double_speed_preserves_path_and_halves_duration_with_scaled_limits():
+@pytest.mark.parametrize('scale', [2., 3.])
+def test_faster_speed_preserves_path_and_scales_duration_and_limits(scale):
     source = [3.4663, -.1704, 1.6013, .198, 1.5711, 1.8956]
     target = nearest_target(source)
     rows, reference = retime(source, target, SCHEDULE)
-    faster, duration = retime(source, target, SCHEDULE, speed_scale=2.)
+    faster, duration = retime(source, target, SCHEDULE, speed_scale=scale)
     assert faster == rows
     assert reference == pytest.approx(44.)
-    assert duration == pytest.approx(22.)
+    assert duration == pytest.approx(44./scale)
     for _, speeds, accelerations in faster:
-        assert all(abs(v)/duration <= limit*.12 for v, limit in zip(speeds, VELOCITIES))
-        assert all(abs(a)/duration**2 <= .48 for a in accelerations)
+        assert all(abs(v)/duration <= limit*.06*scale for v, limit in zip(speeds, VELOCITIES))
+        assert all(abs(a)/duration**2 <= .12*scale**2 for a in accelerations)
 
 
-@pytest.mark.parametrize('scale', [0., -1., 2.01, float('nan'), float('inf')])
+@pytest.mark.parametrize('scale', [0., -1., 3.01, float('nan'), float('inf')])
 def test_speed_scale_rejects_invalid_or_untested_ranges(scale):
     with pytest.raises(ValueError):
         retime(TARGET, TARGET, SCHEDULE, speed_scale=scale)

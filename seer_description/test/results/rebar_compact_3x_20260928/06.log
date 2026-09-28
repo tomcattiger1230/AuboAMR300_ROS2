@@ -1,0 +1,15 @@
+[INFO] [1790596507.706794282] [rebar_grasp_test]: {"test": "robot_rebar_attached", "pass": true}
+[INFO] [1790596507.706993742] [rebar_grasp_test]: {"test": "vertical_drive_safe_start", "pass": true, "base_pose": [6.0621, 2.6046, -1.5679], "resume_drive": false}
+[INFO] [1790596507.707096554] [rebar_grasp_test]: {"test": "payload_retained_while_driving", "pass": true, "actual": [-0.805, -0.078, 1.499], "expected": [-0.8, -0.08, 1.5], "offset_m": 0.006}
+[INFO] [1790596507.922024183] [rebar_grasp_test]: {"test": "base_parking_brake_released", "pass": true}
+[INFO] [1790596507.961867234] [rebar_grasp_test]: vertical drive base=(6.062,2.605,-1.568) bar slip=0.006 m remaining=0.446 m
+[INFO] [1790596510.103684867] [rebar_grasp_test]: vertical drive base=(6.062,2.682,-1.569) bar slip=0.006 m remaining=0.368 m
+[INFO] [1790596512.130927071] [rebar_grasp_test]: vertical drive base=(6.062,2.763,-1.570) bar slip=0.006 m remaining=0.288 m
+[INFO] [1790596514.207195964] [rebar_grasp_test]: vertical drive base=(6.062,2.841,-1.570) bar slip=0.006 m remaining=0.209 m
+[INFO] [1790596516.245112221] [rebar_grasp_test]: vertical drive base=(6.062,2.923,-1.570) bar slip=0.006 m remaining=0.129 m
+[INFO] [1790596518.298433498] [rebar_grasp_test]: vertical drive base=(6.061,2.994,-1.570) bar slip=0.006 m remaining=0.059 m
+[INFO] [1790596520.421661881] [rebar_grasp_test]: vertical drive base=(6.061,3.028,-1.570) bar slip=0.006 m remaining=0.029 m
+[INFO] [1790596520.728191566] [rebar_grasp_test]: {"test": "vertical_drive_at_tester", "pass": true, "base_pose": [6.0614, 3.0304, -1.5704], "bar_base": [-0.8053, -0.0786, 1.4983], "position_error_xy_m": [-0.0186, -0.0196], "position_tolerance_each_axis_m": 0.02, "slip_m": 0.0058}
+[INFO] [1790596521.770578936] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.061, 3.032, -1.57]}
+[INFO] [1790596521.770791836] [rebar_grasp_test]: {"test": "vertical_bar_before_micro_insert", "pass": true, "bar_world": [5.9825, 3.8371, 1.4984], "axis_base": [-0.00202, 0.00136, 1.0], "base_pose": [6.0614, 3.0318, -1.5703]}
+[INFO] [1790596521.771223062] [rebar_grasp_test]: report written to /tmp/rebar_compact_3x_20260928/reports/06.json

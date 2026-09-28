@@ -51,6 +51,9 @@ def main():
     tcp_live, live_metrics = path_metrics(model, actual)
     observed_bar = np.array([row['rebar_base'] for row in motion])
     times = np.array([row['elapsed_s'] for row in motion])
+    bases = np.array([row['base_pose'] for row in motion])
+    yaw_delta = bases[:, 2] - bases[0, 2]
+    yaw_delta = np.arctan2(np.sin(yaw_delta), np.cos(yaw_delta))
     planned_times = .2 + np.linspace(0, trajectory['duration_s'], len(planned))
     reference = np.stack([np.interp(times, planned_times, planned[:, i]) for i in range(6)], axis=1)
     summary = {
@@ -63,6 +66,9 @@ def main():
         'planned': plan_metrics, 'feedback_fk': live_metrics,
         'max_feedback_joint_error_rad': float(np.abs(actual-reference).max()),
         'max_bar_to_nominal_tcp_offset_m': float(np.linalg.norm(observed_bar-tcp_live, axis=1).max()),
+        'sampled_max_base_translation_from_motion_start_m':
+            float(np.linalg.norm(bases[:, :2]-bases[0, :2], axis=1).max()),
+        'sampled_max_base_yaw_change_rad': float(np.abs(yaw_delta).max()),
         'baseline_commanded_orientation_lower_bound_deg': 270,
         'planned_orientation_reduction_from_baseline_lower_bound_percent':
             100*(1-plan_metrics['orientation_arc_deg']/270),

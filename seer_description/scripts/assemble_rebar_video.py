@@ -26,7 +26,11 @@ def main():
     parser.add_argument("--compact", action="store_true", help="label the new combined vertical/preposition stage")
     parser.add_argument("--stage-start-frame", action="append", default=[], metavar="STAGE=FRAME",
                         help="trim a stage's idle prefix; retained source metadata is unchanged")
+    parser.add_argument("--complete-hold-frames", type=int,
+                        help="retain this many final static frames after workflow completion")
     args = parser.parse_args()
+    if args.complete_hold_frames is not None and args.complete_hold_frames < 0:
+        parser.error("--complete-hold-frames must be nonnegative")
     starts = {}
     for selection in args.stage_start_frame:
         stage, frame = selection.split("=", 1)
@@ -34,6 +38,11 @@ def main():
             parser.error("stage start must be STAGE=nonnegative frame number")
         starts[stage] = int(frame)
     rows = [json.loads(line) for line in (args.record_dir / "frames.jsonl").read_text().splitlines()]
+    if args.complete_hold_frames is not None:
+        complete = [row['frame'] for row in rows if row['stage'] == 'complete']
+        if complete:
+            cutoff = complete[0] + args.complete_hold_frames
+            rows = [row for row in rows if row['stage'] != 'complete' or row['frame'] < cutoff]
     args.output.parent.mkdir(parents=True, exist_ok=True)
     work = args.record_dir / "encoded"
     work.mkdir(exist_ok=True)
