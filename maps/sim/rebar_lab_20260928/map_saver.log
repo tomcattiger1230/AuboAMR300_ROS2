@@ -1,0 +1,17 @@
+[INFO] [1790605385.367587158] [map_saver]: 
+	map_saver lifecycle node launched. 
+	Waiting on external lifecycle transitions to activate
+	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[INFO] [1790605385.367642143] [map_saver]: Creating
+[INFO] [1790605385.367648034] [map_saver]: Configuring
+[INFO] [1790605385.373590284] [map_saver]: Saving map from 'map' topic to '/home/arnold/.local/share/aubo-mapping-runs/rebar_lab_20260928/export/rebar_lab' file
+[WARN] [1790605385.373605713] [map_saver]: Free threshold unspecified. Setting it to default value: 0.250000
+[WARN] [1790605385.373609017] [map_saver]: Occupied threshold unspecified. Setting it to default value: 0.650000
+[WARN] [1790605385.683120252] [map_io]: Image format unspecified. Setting it to: pgm
+[INFO] [1790605385.683439170] [map_io]: Received a 492 X 372 map @ 0.05 m/pix
+[INFO] [1790605385.704356216] [map_io]: Writing map occupancy data to /home/arnold/.local/share/aubo-mapping-runs/rebar_lab_20260928/export/rebar_lab.pgm
+[INFO] [1790605385.705891416] [map_io]: Writing map metadata to /home/arnold/.local/share/aubo-mapping-runs/rebar_lab_20260928/export/rebar_lab.yaml
+[INFO] [1790605385.705952910] [map_io]: Map saved
+[INFO] [1790605385.705958010] [map_saver]: Map saved successfully
+[INFO] [1790605385.708029831] [map_saver]: Destroying
+[WARN] [1790605385.708067307] [rclcpp_lifecycle]: LifecycleNode is not shut down: Node still in state(1) in destructor

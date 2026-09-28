@@ -6,6 +6,7 @@ View3D {
     id: view
     camera: sceneCamera
     property bool cameraInspection: false
+    property bool offlinePreview: false
     function focusCamera(point) {
         cameraInspection = true
         cameraRig.position = point
@@ -69,7 +70,7 @@ View3D {
         center: view.targetScene; basis: view.targetBasis; orientation: view.targetOrientation
         onDragged: function(axis, amount, rotation) { view.targetDrag(axis, amount, rotation) }
     }
-    Text { text: view.cameraInspection ? "MV-CH100-60UM · 12 mm C 口镜头" : "AUBO i16H · 机械臂实时反馈"; color: "#d7e8fa"; font.pixelSize: 21; x: 16; y: 14 }
+    Text { text: view.cameraInspection ? "MV-CH100-60UM · 12 mm C 口镜头" : (view.offlinePreview ? "AUBO i16H · 离线模型预览" : "AUBO i16H · 机械臂实时反馈"); color: "#d7e8fa"; font.pixelSize: 21; x: 16; y: 14 }
     Text { text: view.cameraInspection ? "深灰色机身 + 黑色圆柱镜头；拖动空白旋转观察" : view.targetStatus; color: "#73d7ec"; font.pixelSize: 15; x: 16; y: 46; width: parent.width-32; wrapMode: Text.WordWrap }
     Text { text: "拖动空白旋转视角 · 滚轮缩放 · 半透明模型为目标/轨迹预览"; color: "#8fa9c2"; font.pixelSize: 18; x: 16; anchors.bottom: parent.bottom; anchors.bottomMargin: 14 }
 }

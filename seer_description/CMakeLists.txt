@@ -22,6 +22,7 @@ install(
 install(PROGRAMS
   scripts/scan_filter.py
   scripts/camera_video.py
+  scripts/observer_video.py
   scripts/camera_mono.py
   scripts/generate_mono_camera_usd.py
   scripts/generate_mono_robot_models.py

@@ -1,0 +1,60 @@
+{"target": [1.5, 0], "pose": [-0.0, -0.0, 0.001], "map": {"width": 488, "height": 366, "resolution": 0.05000000074505806, "known_cells": 62977, "total_cells": 178608}}
+{"target": [1.5, 0], "pose": [1.243, 0.001, -0.003], "map": {"width": 489, "height": 367, "resolution": 0.05000000074505806, "known_cells": 101346, "total_cells": 179463}}
+Completed mapping waypoint [1.5, 0]
+{"target": [1.5, 2], "pose": [1.403, 0.075, 1.364], "map": {"width": 489, "height": 367, "resolution": 0.05000000074505806, "known_cells": 102630, "total_cells": 179463}}
+{"target": [1.5, 2], "pose": [1.487, 1.5, 1.544], "map": {"width": 489, "height": 367, "resolution": 0.05000000074505806, "known_cells": 146725, "total_cells": 179463}}
+Completed mapping waypoint [1.5, 2]
+{"target": [8.5, 2], "pose": [1.498, 1.886, 0.601], "map": {"width": 490, "height": 367, "resolution": 0.05000000074505806, "known_cells": 148780, "total_cells": 179830}}
+{"target": [8.5, 2], "pose": [2.644, 1.947, 0.011], "map": {"width": 490, "height": 368, "resolution": 0.05000000074505806, "known_cells": 152544, "total_cells": 180320}}
+{"target": [8.5, 2], "pose": [4.077, 1.961, 0.01], "map": {"width": 490, "height": 369, "resolution": 0.05000000074505806, "known_cells": 153292, "total_cells": 180810}}
+{"target": [8.5, 2], "pose": [5.452, 1.974, 0.009], "map": {"width": 490, "height": 369, "resolution": 0.05000000074505806, "known_cells": 154664, "total_cells": 180810}}
+{"target": [8.5, 2], "pose": [6.876, 1.987, 0.009], "map": {"width": 490, "height": 369, "resolution": 0.05000000074505806, "known_cells": 155461, "total_cells": 180810}}
+{"target": [8.5, 2], "pose": [8.242, 1.998, 0.006], "map": {"width": 490, "height": 369, "resolution": 0.05000000074505806, "known_cells": 155469, "total_cells": 180810}}
+Completed mapping waypoint [8.5, 2]
+{"target": [8.5, 6.5], "pose": [8.389, 2.005, 1.331], "map": {"width": 490, "height": 369, "resolution": 0.05000000074505806, "known_cells": 155469, "total_cells": 180810}}
+{"target": [8.5, 6.5], "pose": [8.458, 3.396, 1.557], "map": {"width": 490, "height": 369, "resolution": 0.05000000074505806, "known_cells": 159483, "total_cells": 180810}}
+{"target": [8.5, 6.5], "pose": [8.477, 4.82, 1.558], "map": {"width": 490, "height": 369, "resolution": 0.05000000074505806, "known_cells": 160238, "total_cells": 180810}}
+{"target": [8.5, 6.5], "pose": [8.496, 6.21, 1.556], "map": {"width": 490, "height": 369, "resolution": 0.05000000074505806, "known_cells": 160498, "total_cells": 180810}}
+Completed mapping waypoint [8.5, 6.5]
+{"target": [0, 6.5], "pose": [8.501, 6.384, 2.845], "map": {"width": 490, "height": 369, "resolution": 0.05000000074505806, "known_cells": 160513, "total_cells": 180810}}
+{"target": [0, 6.5], "pose": [7.121, 6.444, 3.134], "map": {"width": 490, "height": 371, "resolution": 0.05000000074505806, "known_cells": 161126, "total_cells": 181790}}
+{"target": [0, 6.5], "pose": [5.672, 6.455, 3.134], "map": {"width": 490, "height": 371, "resolution": 0.05000000074505806, "known_cells": 162125, "total_cells": 181790}}
+{"target": [0, 6.5], "pose": [4.238, 6.465, 3.134], "map": {"width": 490, "height": 371, "resolution": 0.05000000074505806, "known_cells": 163678, "total_cells": 181790}}
+{"target": [0, 6.5], "pose": [2.839, 6.476, 3.134], "map": {"width": 490, "height": 371, "resolution": 0.05000000074505806, "known_cells": 165133, "total_cells": 181790}}
+{"target": [0, 6.5], "pose": [1.4, 6.487, 3.133], "map": {"width": 490, "height": 371, "resolution": 0.05000000074505806, "known_cells": 166475, "total_cells": 181790}}
+{"target": [0, 6.5], "pose": [0.159, 6.498, 3.131], "map": {"width": 490, "height": 371, "resolution": 0.05000000074505806, "known_cells": 170514, "total_cells": 181790}}
+Completed mapping waypoint [0, 6.5]
+{"target": [0, 2], "pose": [0.076, 6.25, -1.661], "map": {"width": 490, "height": 371, "resolution": 0.05000000074505806, "known_cells": 170514, "total_cells": 181790}}
+{"target": [0, 2], "pose": [0.039, 4.806, -1.584], "map": {"width": 490, "height": 371, "resolution": 0.05000000074505806, "known_cells": 171513, "total_cells": 181790}}
+{"target": [0, 2], "pose": [0.02, 3.367, -1.585], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 171818, "total_cells": 182161}}
+{"target": [0, 2], "pose": [0.002, 2.151, -1.587], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 172104, "total_cells": 182161}}
+Completed mapping waypoint [0, 2]
+{"target": [-5, 2], "pose": [-0.214, 2.082, -3.04], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 172104, "total_cells": 182161}}
+{"target": [-5, 2], "pose": [-1.637, 2.042, -3.128], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 173035, "total_cells": 182161}}
+{"target": [-5, 2], "pose": [-3.076, 2.024, -3.129], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 173961, "total_cells": 182161}}
+{"target": [-5, 2], "pose": [-4.485, 2.006, -3.129], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 174378, "total_cells": 182161}}
+Completed mapping waypoint [-5, 2]
+{"target": [-5, -1.7], "pose": [-4.888, 2.003, -2.206], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 174571, "total_cells": 182161}}
+{"target": [-5, -1.7], "pose": [-4.959, 0.864, -1.588], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 174765, "total_cells": 182161}}
+{"target": [-5, -1.7], "pose": [-4.982, -0.581, -1.586], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 175102, "total_cells": 182161}}
+Completed mapping waypoint [-5, -1.7]
+{"target": [1.5, -1.7], "pose": [-4.998, -1.587, -1.479], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 175301, "total_cells": 182161}}
+{"target": [1.5, -1.7], "pose": [-4.514, -1.635, -0.036], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 175400, "total_cells": 182161}}
+{"target": [1.5, -1.7], "pose": [-3.065, -1.655, -0.009], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 175591, "total_cells": 182161}}
+{"target": [1.5, -1.7], "pose": [-1.646, -1.668, -0.009], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 175620, "total_cells": 182161}}
+{"target": [1.5, -1.7], "pose": [-0.227, -1.682, -0.01], "map": {"width": 491, "height": 371, "resolution": 0.05000000074505806, "known_cells": 175695, "total_cells": 182161}}
+{"target": [1.5, -1.7], "pose": [1.173, -1.696, -0.012], "map": {"width": 491, "height": 372, "resolution": 0.05000000074505806, "known_cells": 175849, "total_cells": 182652}}
+Completed mapping waypoint [1.5, -1.7]
+{"target": [1.5, 0], "pose": [1.386, -1.701, 1.236], "map": {"width": 491, "height": 372, "resolution": 0.05000000074505806, "known_cells": 175849, "total_cells": 182652}}
+{"target": [1.5, 0], "pose": [1.49, -0.369, 1.542], "map": {"width": 492, "height": 372, "resolution": 0.05000000074505806, "known_cells": 176085, "total_cells": 183024}}
+Completed mapping waypoint [1.5, 0]
+{"target": [0, 0], "pose": [1.5, -0.115, 2.709], "map": {"width": 492, "height": 372, "resolution": 0.05000000074505806, "known_cells": 176086, "total_cells": 183024}}
+{"target": [0, 0], "pose": [0.254, -0.006, 3.113], "map": {"width": 492, "height": 372, "resolution": 0.05000000074505806, "known_cells": 176151, "total_cells": 183024}}
+Traceback (most recent call last):
+  File "/home/arnold/.local/share/aubo-mapping-runs/rebar_lab_20260928/map_rebar_lab.py", line 133, in <module>
+    main()
+    ~~~~^^
+  File "/home/arnold/.local/share/aubo-mapping-runs/rebar_lab_20260928/map_rebar_lab.py", line 107, in main
+    if not clearance(turning): raise RuntimeError(f'Lidar clearance blocked at {(x,y)} toward {target}')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Lidar clearance blocked at (0.2235445925575732, -0.00526743419986353) toward [0, 0]

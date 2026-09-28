@@ -79,6 +79,11 @@ class ThirdPersonRecorder:
         frame = Image.fromarray(data[:, :, :3], "RGB")
         filename = f"{self.frame_number:06d}.jpg"
         frame.save(os.path.join(self.output_dir, "frames", filename), quality=83)
+        # Publish only a completed JPEG to live viewers.
+        latest_tmp = os.path.join(self.output_dir, 'latest.jpg.tmp')
+        if os.path.exists(latest_tmp): os.unlink(latest_tmp)
+        os.link(os.path.join(self.output_dir, 'frames', filename), latest_tmp)
+        os.replace(latest_tmp, os.path.join(self.output_dir, 'latest.jpg'))
         self.metadata.write(json.dumps({
             "frame": self.frame_number, "file": filename, "stage": stage,
             "view": view, "monotonic_time": now,

@@ -1,0 +1,36 @@
+{
+  "saved_at": "2026-09-28T22:23:39.962959+08:00",
+  "host": "arnold-NUC16JNK9XX11",
+  "scene": "warehouse_finger_rebar_lab_demo.usda",
+  "ros_domain": 133,
+  "map_saved": true,
+  "map": {
+    "width": 492,
+    "height": 372,
+    "resolution": 0.05000000074505806,
+    "known_cells": 176151,
+    "total_cells": 183024,
+    "free_cells": 169140,
+    "occupied_cells": 7011
+  },
+  "map_known_fraction": 0.9624475478625754,
+  "arm_actions_sent": false,
+  "nav2_actions_sent": false,
+  "stopped_speed_max": [
+    0.0,
+    0.0
+  ],
+  "stopped_position_span_m": [
+    0.0,
+    0.0
+  ],
+  "final_position": [
+    0.21308110147538173,
+    -0.004976213356071568
+  ],
+  "survey_note": "10 survey waypoints completed; final return to exact origin blocked by the lidar clearance guard at the rebar station. Map capture and export completed.",
+  "source_sha256": {
+    "urdf/warehouse_finger_rebar_lab_demo.usda": "af19f592fdefd22dfb70996674016df7473fcf76e51cda95b21acb704d372ca8",
+    "config/isaac_slam.yaml": "2db576918bc87555e53889f1f04eb8b6056bb1509bee925a48ba0ecaa231267e"
+  }
+}

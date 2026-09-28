@@ -1,0 +1,24 @@
+[INFO] [1790605445.859704074] [rebar_map_validation]: 
+	rebar_map_validation lifecycle node launched. 
+	Waiting on external lifecycle transitions to activate
+	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[INFO] [1790605445.859754700] [rebar_map_validation]: Creating
+[INFO] [1790605450.319116899] [rebar_map_validation]: Configuring
+[INFO] [1790605450.319234703] [map_io]: Loading yaml file: /home/arnold/.local/share/aubo-mapping-runs/rebar_lab_20260928/export/rebar_lab.yaml
+[INFO] [1790605450.319543693] [map_io]: resolution: 0.05
+[INFO] [1790605450.319552421] [map_io]: origin[0]: -12.335
+[INFO] [1790605450.319555971] [map_io]: origin[1]: -9.245
+[INFO] [1790605450.319559049] [map_io]: origin[2]: 0
+[INFO] [1790605450.319562408] [map_io]: free_thresh: 0.196
+[INFO] [1790605450.319565329] [map_io]: occupied_thresh: 0.65
+[INFO] [1790605450.319569561] [map_io]: mode: trinary
+[INFO] [1790605450.319573067] [map_io]: negate: 0
+[INFO] [1790605450.319752008] [map_io]: Loading image_file: /home/arnold/.local/share/aubo-mapping-runs/rebar_lab_20260928/export/rebar_lab.pgm
+[INFO] [1790605450.328304834] [map_io]: Read map /home/arnold/.local/share/aubo-mapping-runs/rebar_lab_20260928/export/rebar_lab.pgm: 492 X 372 map @ 0.05 m/cell
+[ros2run]: Received signal:  Interrupt
+[INFO] [1790605450.489033040] [rclcpp]: signal_handler(signum=2)
+[INFO] [1790605450.489131468] [rebar_map_validation]: Running Nav2 LifecycleNode rcl preshutdown (rebar_map_validation)
+[INFO] [1790605450.489189719] [rebar_map_validation]: Cleaning up
+[INFO] [1790605450.489208592] [rebar_map_validation]: Destroying bond (rebar_map_validation) to lifecycle manager.
+[INFO] [1790605450.490334224] [rebar_map_validation]: Destroying
+[WARN] [1790605450.490376245] [rclcpp_lifecycle]: LifecycleNode is not shut down: Node still in state(1) in destructor

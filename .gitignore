@@ -1,5 +1,6 @@
 devel/
 .venv/
+.DS_Store
 logs/
 build/
 bin/

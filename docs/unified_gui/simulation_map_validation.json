@@ -1,0 +1,31 @@
+{
+  "discovery_seconds": 0.6928141659591347,
+  "grid": {
+    "width": 492,
+    "height": 372,
+    "resolution": 0.05000000074505806
+  },
+  "success": true,
+  "phase": "initial",
+  "logs": "22:36:34  已启用 isaac 连接，ROS Domain=133，等待设备反馈",
+  "map_status": "ROS 实时地图 · AMCL 已返回定位结果 · 导航还需 Nav2 和实时 TF 就绪",
+  "position": {
+    "x": 0.013927827548766989,
+    "y": 0.010516486613756985,
+    "angle": 0.0020698804411677456
+  },
+  "speed": {
+    "vx": 0.0,
+    "w": 0.0
+  },
+  "localization_required": false,
+  "checks": {
+    "map_load_service": true,
+    "initial_pose_publication": true,
+    "amcl_feedback": true,
+    "map_tf": true
+  },
+  "navigation_executed": false,
+  "arm_motion_executed": false,
+  "tests_passed": 36
+}

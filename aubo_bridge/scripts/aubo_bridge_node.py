@@ -1031,11 +1031,9 @@ class AuboBridgeNode(Node):
             )
             response.success = ok
             response.message = message
-            response.joint_angles = list(result_joint)
         except Exception as e:
             response.success = False
             response.message = str(e)
-            response.joint_angles = [0.0] * 6
         return response
 
     # 函数说明：处理兼容旧接口 /aubo/move_to_joint_angles。
