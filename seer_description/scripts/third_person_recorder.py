@@ -17,12 +17,12 @@ from pxr import Gf, UsdGeom
 CAMERA_VIEWS = {
     "pickup": ((1.6, -3.5, 3.5), (0.3, 0.3, 0.9)),
     "navigate": ((6.8, -5.4, 5.6), (2.8, 1.6, 0.9)),
-    "tester": ((8.5, 0.5, 5.2), (5.0, 3.2, 1.0)),
+    "tester": ((8.2, 0.2, 3.5), (5.8, 3.2, 1.15)),
 }
 
 
 class ThirdPersonRecorder:
-    def __init__(self, stage, output_dir, fps=4.0, resolution=(960, 540)):
+    def __init__(self, stage, output_dir, fps=4.0, resolution=(1280, 720)):
         self.output_dir = os.path.abspath(output_dir)
         self.marker_path = os.environ.get(
             "REBAR_VIDEO_STAGE_FILE", os.path.join(self.output_dir, "stage.txt")

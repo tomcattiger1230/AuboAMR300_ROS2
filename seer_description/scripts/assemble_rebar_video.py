@@ -23,7 +23,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("record_dir", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--compact", action="store_true", help="label the new combined vertical/preposition stage")
+    parser.add_argument("--stage-start-frame", action="append", default=[], metavar="STAGE=FRAME",
+                        help="trim a stage's idle prefix; retained source metadata is unchanged")
     args = parser.parse_args()
+    starts = {}
+    for selection in args.stage_start_frame:
+        stage, frame = selection.split("=", 1)
+        if stage not in {entry[0] for entry in STAGES} or int(frame) < 0:
+            parser.error("stage start must be STAGE=nonnegative frame number")
+        starts[stage] = int(frame)
     rows = [json.loads(line) for line in (args.record_dir / "frames.jsonl").read_text().splitlines()]
     args.output.parent.mkdir(parents=True, exist_ok=True)
     work = args.record_dir / "encoded"
@@ -34,8 +43,14 @@ def main():
     clips = []
     manifest = []
     for stage, label, input_fps in STAGES:
+        if args.compact and stage == "04":
+            label = "同步竖直化与正面预定位"
+            input_fps = 4
+        elif args.compact and stage == "05":
+            label = "预定位状态确认"
         frames = [row["frame"] for row in rows
-                  if row["stage"] == stage or (stage == "08" and row["stage"] == "complete")]
+                  if (row["stage"] == stage or (stage == "08" and row["stage"] == "complete"))
+                  and row["frame"] >= starts.get(stage, 0)]
         if not frames:
             raise RuntimeError(f"Stage {stage} has no captured frames")
         start, end = frames[0], frames[-1]
@@ -45,7 +60,7 @@ def main():
         label_text = f"{stage}  {label}"
         # Use a solid translucent bar so labels remain legible on bright warehouse walls.
         vf = (
-            "drawbox=x=18:y=18:w=400:h=62:color=black@0.72:t=fill,"
+            "drawbox=x=18:y=18:w=510:h=62:color=black@0.72:t=fill,"
             f"drawtext=fontfile={font}:text='{label_text}':"
             "fontcolor=white:fontsize=30:x=34:y=31,"
             "fps=24,format=yuv420p"
@@ -58,6 +73,7 @@ def main():
         ], check=True)
         clips.append(clip)
         manifest.append({"stage": stage, "label": label, "frames": len(frames),
+                         "first_frame": start, "last_frame": end, "input_fps": input_fps,
                          "playback_seconds": round(len(frames) / input_fps, 2)})
         print(f"{stage} {label}: {len(frames)} frames, {len(frames)/input_fps:.1f}s")
 

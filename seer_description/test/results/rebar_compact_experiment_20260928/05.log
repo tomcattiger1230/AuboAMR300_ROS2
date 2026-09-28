@@ -1,0 +1,7 @@
+[INFO] [1790595378.505948584] [rebar_grasp_test]: {"test": "base_at_standoff_before_preposition", "pass": true, "base_pose": [6.063, 2.605, -1.566]}
+[INFO] [1790595378.626451586] [rebar_grasp_test]: {"test": "robot_rebar_attached", "pass": true}
+[INFO] [1790595378.628398422] [rebar_grasp_test]: {"test": "tester_planning_scene", "pass": true, "boxes": ["cabinet", "column_1", "column_2", "top_beam", "lower_platen", "console"]}
+[INFO] [1790595378.628519464] [rebar_grasp_test]: {"test": "payload_retained_while_driving", "pass": true, "actual": [-0.805, -0.078, 1.499], "expected": [-0.8, -0.08, 1.5], "offset_m": 0.006}
+[INFO] [1790595378.629014279] [rebar_grasp_test]: {"test": "compact_preposition_verified_without_replanning", "pass": true, "rebar_base": [-0.8054386185833388, -0.07843747806879764, 1.498686222666273], "tool_axis_base": [-0.9999977269168715, -0.0010047447460198033, -0.0018805980657261578], "closing_axis_base": [0.0010027870675631823, -0.9999989547007556, 0.0010416407694876506]}
+[INFO] [1790595378.992200401] [rebar_grasp_test]: {"test": "base_parking_brake_locked", "pass": true, "base_pose": [6.063, 2.605, -1.566]}
+[INFO] [1790595378.992519573] [rebar_grasp_test]: report written to /tmp/rebar_compact_verified_20260928/reports/05.json

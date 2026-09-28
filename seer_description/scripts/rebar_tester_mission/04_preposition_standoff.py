@@ -52,6 +52,25 @@ class PrepositionAtStandoff(TesterLoadTest):
         self.add_tester_to_scene()
         if abs(self.rebar_axis_in_base()[2]) < 0.95:
             raise RuntimeError("bar is no longer vertical")
+        if state.get("compact_preposition_complete"):
+            self.check_payload_while_parked(APPROACH_TCP_BASE, tolerance=.035)
+            wrist = self.fk(self.current_arm(), "wrist3_Link")
+            q = (wrist.orientation.x, wrist.orientation.y, wrist.orientation.z, wrist.orientation.w)
+            tool = quat_rotate(q, (0, 0, 1))
+            closing = quat_rotate(q, (1, 0, 0))
+            valid = -tool[0] > .98 and -closing[1] > .98
+            self.record("compact_preposition_verified_without_replanning", valid,
+                        rebar_base=self.rebar_in_base(), tool_axis_base=tool, closing_axis_base=closing)
+            if not valid:
+                raise RuntimeError("compact front pose did not remain aligned")
+            self.wait_for_base_lock()
+            state["completed"] = "preposition_at_standoff"
+            state["approach_tcp_base"] = list(APPROACH_TCP_BASE)
+            temporary = state_path.with_suffix(".tmp")
+            temporary.write_text(json.dumps(state, indent=2))
+            temporary.replace(state_path)
+            self.write_report()
+            return self._passed
         if self._base_locked:
             self.release_base_lock()
         self._base_hold_target = (BASE_DRIVE_WAYPOINTS_XY[-2], BASE_TARGET_YAW)
