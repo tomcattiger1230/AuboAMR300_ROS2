@@ -1,0 +1,42 @@
+{
+  "schema_version": "rebar_capture_v1",
+  "stride": 3,
+  "env_ids": [
+    0
+  ],
+  "max_envs": 4,
+  "cameras": [
+    {
+      "name": "wrist",
+      "mode": "existing",
+      "mount_body": "mono_camera_link",
+      "prim_path": "/World/envs/env_.*/Robot/mono_camera_link/camera_optical_frame/ros2_camera",
+      "width": 1024,
+      "height": 615,
+      "mono": true,
+      "policy_observable": true
+    },
+    {
+      "name": "overview",
+      "mode": "spawn",
+      "prim_path": "/World/envs/env_.*/CaptureOverview",
+      "width": 640,
+      "height": 384,
+      "position_env_m": [
+        -0.5,
+        2.0,
+        1.3
+      ],
+      "quaternion_xyzw": [
+        0.0,
+        0.7071067812,
+        -0.7071067812,
+        0.0
+      ],
+      "focal_length_mm": 18.0,
+      "horizontal_aperture_mm": 25.0,
+      "mono": false,
+      "policy_observable": false
+    }
+  ]
+}

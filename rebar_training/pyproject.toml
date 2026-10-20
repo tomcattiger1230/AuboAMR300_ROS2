@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aubo-rebar-training"
+version = "0.1.0"
+description = "Offline task contracts and Isaac Lab environments for AUBO rebar loading"
+requires-python = ">=3.12,<3.13"
+dependencies = ["torch>=2.5,<3"]
+
+[project.optional-dependencies]
+offline = ["pytest>=8", "usd-core>=25.5"]
+vision = ["numpy>=1.26,<3", "Pillow>=10", "jsonschema>=4.23", "opencv-python-headless>=4.10,<5", "scipy>=1.14,<2"]
+video = ["imageio==2.37.2", "imageio-ffmpeg==0.6.0", "Pillow>=10"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.setuptools.package-data]
+"rebar_training.vision" = ["*.json"]

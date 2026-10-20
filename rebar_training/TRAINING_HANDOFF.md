@@ -1,0 +1,267 @@
+# 钢筋视觉移动操作训练：接力指导
+
+## 当前状态：用户暂停，准备迁回 4090（2026-10-21 07:02）
+
+**测试及排队任务已暂停。未收到用户明确继续指令前，不启动仿真、训练或自动跟进。**
+2026-10-21 06:56（上海时间）已保存并停止课程父进程、两个评估子进程、新版验证控制器；核查无本任务残留进程，GPU 计算进程为空。automation-2 已暂停。
+
+迁移步骤、文件位置和下一位agent提示词见 [4090迁移指导](MIGRATE_4090.md)。
+全局暂停记录为 `artifacts/mobile_curriculum_20261020/PAUSED_20261021_MIGRATE4090.json`；恢复入口仍是 `artifacts/mobile_curriculum_20261020/review_20261020/status.json`。
+GitHub可读进度摘要为 [暂停摘要](reports/paused_20261021.json)。
+
+旧v7抓取放槽独立评估 **8/8通过**；到站训练 **2/2成功**、误差1.297/1.447mm，实际新增10次actor更新。
+但旧到站独立评估两组首回合均loading超时，第二回合被用户暂停；完整8回合未结束，不能宣称门槛通过。
+RGB有效，视觉误差约0.98–1.01mm仍高于原0.8mm对准门控，实际误差约1.90mm，四爪0N，未完成夹紧/松爪/退让。
+原始进度、失败图像、完整已产生的日志、源码快照、策略及optimizer均保留并同步本机。
+
+新修复源码SHA **2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2**：
+仅在loading route7按视觉目标与钢筋估计距离/20mm的平方收缩残差；其他阶段及20mm外修正不变。
+相机/机器人反馈控制和原观察器不变，0.8mm门控、3mm/3°、250N、真实四爪夹紧及卸载退让均未放宽。
+本机231通过/3跳过、原节点237通过；迁移打包/新目录准备另2项测试通过。
+**新版物理回归仍0/9，尚未证明修复有效；最终64回合整链验收及对应完整流程视频均未完成。**
+
+新冻结输入位于 `review_20261020/precision_residual_fix/`，候选课程`course_v8_precision_envelope`尚未启动。
+恢复时先用`python3 rebar_training/scripts/prepare_resume.py --help`了解只准备文件的接口，生成新目录，不能直接重启旧目录的验证脚本/PID/绝对路径job JSON。
+收到继续授权并核对新4090的Python3.12、Sim6.0.1、Labv3.0.0-beta2.patch1及CUDA后，先做同一失败策略/种子的物理对照，再做其余前置验证，之后重跑所有新课程gate及64回合预声明连续验收。
+新正式种子与顺序见`config/mobile_curriculum_recovery_v8.json`和迁移指导；旧成功/失败/中断回合不能混入新版本验收。
+
+独立迁移包为 `artifacts/rebar_training_migration_4090_20261021.tar.gz`，附SHA256、逐文件校验及暂停状态。
+包中包含当前移动资产及源CAD/纹理依赖、检测器、当前原始日志/失败图片、权重及optimizer、冻结源码和指导文件；不携带SDK/虚拟环境/SSH身份或多轮旧备份。
+此前完整历史备份继续保存在本机artifacts，不删除。GitHub提交代码/配置/测试/进度及迁移指导，大体积训练产物保存在本机迁移包。
+
+当前控制结构仍是76维视觉/机器人反馈、6维关节速度残差PPO叠加RGB伺服、阶段/夹爪管理与里程计导航；尚未调用Cosmos3，不能称为独立完整流程神经策略。仅限仿真。
+
+## 此前恢复覆盖说明（2026-10-20）
+
+用户已要求继续推进至稳定性验收，当前授权有效；仅仿真，直接 SSH 到 `arnold@192.168.0.103`。
+
+上一轮 `course_v1` 的抓取放槽独立门槛已 **8/8 通过**；到站上料为 **7/8**，
+课程已按门槛停在 `needs_analysis`，没有进入整链训练或宣称稳定。
+失败是空腕返回时纹理跟踪短暂丢失后无法恢复，夹爪保持打开、钢筋仍在槽上，最终 `pickup_tray` 超时。
+完整分析在 `artifacts/mobile_curriculum_20261020/review_20261020/failure_analysis.json`。
+
+本次修复新增 `vision/recovery.py`：仅当空腕已经返回、夹爪打开且无载荷、托槽有支撑载荷时，
+允许重新取得三帧完整端部观测，再以半速回放实际记录的关节路径；最多两次，不读取钢筋真值，
+不修改钢筋位姿或放宽 3 mm/3°、力限值、夹紧卸载退让判据。已通过相关 52 项测试和节点 CPU 全套 199 项；
+之后课程恢复/并行调度的相关 39 项测试通过。
+
+本次开发回归已 **5/5 通过**：短中断 2/2（1.11/1.22 mm）、旧失败种子 2/2（1.13/1.42 mm）、
+36 秒中断恢复 1/1（1.06 mm）。长中断实际触发重新观察一次：tick 2226 开始、3291 重新定位，
+随后半速回放返回并完成真实夹紧和退让。这些 regression 不计入独立稳定性验收。
+
+已启动新课程 `course_v2_recovery`，父进程 PID/PGID 25995，冻结源码 SHA
+`ca355ca665d6e0d945335c78cd6b34cf61cc4d1b33b83a532711141070c6df58`；
+当前抓取放槽训练（首个训练回合已成功，新增 6 次 actor 更新），初始检查点已复制到课程目录，当前**仍未通过新版本独立稳定性门槛**。
+每 15 分钟由本对话自动跟进（automation-2），处理失败并推进，阶段 gate 仍必须实际通过。
+自动跟进依赖本机及桌面应用保持运行；Ubuntu 后台课程使用独立进程组和 idle inhibitor。
+读取 `review_20261020/status.json` 与新课程 `active_jobs`，不要重复启动旧 `course_v1`。
+
+新计划为 `config/mobile_curriculum_recovery_v2.json`，所有正式评估种子均未用于此前调试。
+训练种子 431042/441043/451043；抓取放槽评估 531042/541042（各 4 回合），
+到站上料评估 551042/561042（各 4 回合）；整链评估八组 641042 至 711042、间隔 10000（各 8 回合，共 64）。
+独立评估最多并行两个仿真作业，训练仍单作业。每个报告固定同一冻结源码、策略、识别器和资产。
+整链门槛通过后自动另录一回合示范视频；视频回合标为 regression，不进入独立验收分母。
+
+课程支持 `--initial-checkpoint`：先复制并记录权重 SHA，再重跑每个阶段与 gate，不跳过旧已通过阶段。
+候选初始化是 `course_v1/dock_clamp_policy.pt`（SHA `fb14312a70f80454cfa13fb136746fb658f8d444471138f4555a519bb0b3a8b5`）；
+它是旧版 **7/8 未达标** 权重，只作 warm start，不能视为合格部署策略。
+旧奖励契约的早期纯 critic 检查点仍不可用；当前奖励契约为 `mobile_residual_potential_v2`。
+当前仍未达到最终稳定性验收，Cosmos 3 尚未调用。
+
+本地已完成原待办中的奖励与训练隔离修复：
+- 有界势函数整形，终止势函数固定为零，不读取下一复位回合的势函数；gamma 与 GAE 统一为 0.9995。
+- 未执行的随机残差不计动作成本。
+- surrogate、entropy、anchor 均只使用 active 样本。全无 active 样本时不建立 actor 计算图，
+  Adam 不更新 actor 动量；actor/critic 分开裁剪梯度，避免 critic 梯度范数影响 actor。
+- 新契约 `mobile_residual_potential_v2`，检查点显式保存 gamma 和 actor_updates；旧奖励契约拒绝加载。
+- 已补测试：失败进度不能增加折扣收益、终止不跨复位、势函数有界、critic-only 更新不改变已具有动量的 actor。
+
+准确测试结果和恢复状态见 `artifacts/mobile_curriculum_20261020/resume_20261020/`。
+接下来先核对 `course_v2_recovery` 的训练和独立评估进度，仍不能跳过 gate 或把小样本回归称为稳定。
+旧增量备份是上次暂停时的快照，不包含本次新修复；恢复网络后另做版本化备份，不覆盖历史包。
+
+## 上次暂停时的操作状态（历史）
+
+**此为此前暂停记录；用户现在已经恢复授权，以顶部最新状态为准。**
+本轮运行作业已停止；暂停时通过 `ps` 与 `nvidia-smi` 确认无残留仿真/GPU 训练进程。
+`artifacts/mobile_curriculum_20261020/PAUSED.json` 保存停止与同步信息，是操作记录，不是强制启动锁。
+没有设置自动唤醒、定时任务或后台课程。用户已授权恢复后直接 SSH，不再经过飞书。
+所有工作仅限仿真；不要启动实际机器人、ROS 驱动、夹具硬件或修改真实控制配置。
+
+## 项目与环境
+
+| 项目 | 位置或实测版本 |
+|---|---|
+| 本机仓库 | `/Users/weiluo/Develop/github/AuboAMR300_ROS2` |
+| 训练节点 | `arnold@192.168.0.103` |
+| 实际 GPU | RTX 5090 Laptop GPU，24463 MiB；不是旧节点的 4090 |
+| 训练工作副本 | `/home/arnold/Develop/rebar-training-0103` |
+| Python overlay | `/home/arnold/Develop/rebar-training-runtime/bin/python` |
+| Isaac Lab | `/home/arnold/Develop/IsaacLab-rebar`，`v3.0.0-beta2.patch1` |
+| Lab 提交 | `ffff603eafc6b74264a5261cc0183d6a65390d78` |
+| Isaac Sim | `/home/arnold/isaacsim`，6.0.1-rc.7 |
+| GPU Python / Torch | Python 3.12.14，Torch 2.11.0+cu130 |
+| 当前移动资产 | `rebar_training/artifacts/assets_mobile_v2` |
+| 其依赖的完整工位资产 | `rebar_training/artifacts/assets_full_v2_precision` |
+| 本轮产物 | `rebar_training/artifacts/mobile_curriculum_20261020` |
+| 上轮已验收产物 | `rebar_training/artifacts/visual_control_20261019` |
+
+训练模块独立于原 ROS 工作区。不要改原 ROS 模型或 Lab 源码，不要混用系统 ROS Lyrical/Python 3.14。
+Lab 3 数据是 ProxyArray，张量需 `.torch`；四元数 XYZW；浮动根 Jacobian 的关节列需偏移 6。
+运行脚本已经处理运行时路径，不要用 `uv sync` 替换 GPU 节点随 Isaac 安装的 Torch。
+Mac 上 CPU 检查使用 `rebar_training/.venv/bin/python`，版本与 GPU 环境不同。
+
+原 ROS 模型来源：`/home/arnold/Develop/ROS_ws/hongshi_mm_ws/src/AuboAMR300_ROS2`。
+当前仓库另有 GUI、地图、根 README 和 `.gitignore` 的已有改动，不属于本任务；不要 reset/clean 或覆盖。
+本轮修改集中在 `rebar_training/`，该目录目前仍是 Git 未跟踪内容，尚未提交。
+
+## 当前能力边界，避免混淆结果
+
+此前两个完整连续回合已经通过：视觉抓取→抬升→放入托槽→载料导航→停靠→再抓取→插入夹紧→松爪退让。
+种子 119042、125042，分别 9041/9199 步，实际最终误差 2.12/2.47 mm。这是旧版视觉伺服原型的小样本结果。
+完整录像为 `visual_control_20261019/mobile_full_125042_v7_recording.mp4`，306.6 s，10 fps。
+另有固定底盘的视觉 BC/DAgger 神经策略和更早的状态 PPO；它们均不是移动整链 RL 权重。
+
+当前移动流程仍使用视觉伺服、已知工位路点、观察运动、阶段/夹爪管理和里程计导航。
+不是 Nav2 动态避障、任意仓库寻筋或独立整链神经策略。初始底盘位于已知取料区域。
+料台、托槽、试验机位置已测定；钢筋精定位来自腕部 RGB/灰度图像。
+运行控制受 `blinded_control` 约束，不能读取钢筋/料台真值、奖励阶段或按钢筋身份过滤的接触力。
+真值只用于复位、奖励、标签和独立评分。每回合运行期间钢筋保持真实动力学，无附着、位姿写入或关闭碰撞。
+四爪受力、250 N 失败阈值、实际 3 mm/3°、松爪卸载与至少 6 cm 退让不应放宽。
+移动交接还保持约 1.5 s 验证；视觉触发夹紧采用 0.8 mm 内部余量，为视觉误差留出预算。
+
+**尚未下载、部署或调用 Cosmos 3。** 当前检测器为本地灰度 U-Net；Cosmos 扩增只准备了离线接口。
+
+## 本轮实验的准确状态
+
+以下文件均在 `artifacts/mobile_curriculum_20261020/`，已同步到 Mac。
+
+| 作业前缀 | 事实与结论 |
+|---|---|
+| `expanded_full_221042_v1` | 请求 4 回合；完成第 1 回合后自然失败，`stage timeout: tray_raise`，5091 步。之后终止旧版批次，因此是已完成 0/1，另外 3 回合未完成，不能写成完整 0/4。完整失败凭据在 `.progress.json`。 |
+| `expanded_tray_221042_v2_retract` | 修复抬升路径，同种子 **1/1 抓取放槽通过**，2762 步、92.07 s。槽内真实中心约 `(0.292700,-0.000036,0.714999)`；不是整链夹紧成功。 |
+| `residual_tray_231042_v1` | 初始钢筋更靠近底盘，原观察画面裁掉一端，拒绝初始化。试运行后停止；**4 次 critic 更新、policy_steps=0、没有完成的训练回合**。`residual_tray_v1.pt` 不能当作已训练策略或合格恢复起点。 |
+| `expanded_tray_231042_v3_wideview` | 尝试只抬高相机，目标姿态不可达，120 s 后 `stage timeout: pickup`，完整 **0/1**。保留用于诊断，不继续使用这组高位候选。 |
+| `expanded_tray_231042_v4_horizontal` | 新增横向观察、侧向偏置。暂停前最后日志 step=960：`valid=true`、已取得初始定位、正在回放实际关节路径返回，`returned=false`。没有完整回合结果，**不可记成功**。作业状态 `paused_by_user`。 |
+
+原视野裁端证据：`residual_tray_231042_v1/wrist_step300.png`；本机另存 `wrist_step300_overlay.png`。
+`*.job.json` 记录命令和源码 SHA，`source_snapshots/<作业名>/` 保存每个作业实际执行代码。
+`.job.status.json` 的 `completed` 只指进程退出；最终是否成功须读新鲜、完整的任务报告，不能只看进程 exit 0。
+Isaac Kit 异常有时也返回 0，现有 driver 用 UUID 和完整回合凭据再次确认。
+
+暂停时 canonical 源码和旧 v4 快照略有不同；恢复后的实际版本以顶部 SHA 和各作业快照为准。
+不要把不同源码的运行报告拼成同一稳定性验收。
+
+## 已完成的实现
+
+1. `randomization.py` / `reset.py` / `isaac_cfg.py`：基线、expanded、challenge 三档可复现复位。
+   expanded 为料台/钢筋整体 XY ±60 mm、yaw ±0.10 rad、手臂关节 ±0.035 rad，底盘 XY ±20 mm/yaw ±0.02 rad；
+   每回合图像增益 ±10%、偏置 ±4，逐帧高斯噪声 σ=1。challenge 扩至 ±90 mm、±0.16 rad，尚未验收。
+   料台与钢筋整体复位以保持支撑；没有测试独立乱放钢筋、摩擦/质量、尺寸或标定误差随机化。
+2. `mobile_env.py`：抓稳离台后，抬到 0.9 m 的同时将过远的视觉目标向内收到 x≥-1.10，解决最先发现的伸展极限卡死。
+   托槽课程初始化的钢筋姿态现按底盘真实复位旋转变换，避免底盘 yaw 随机化后坐标不一致。
+3. `vision/observation.py` 的 `PICKUP_SEARCH_VIEWS`：保留原观察位优先；若无法见到双端，尝试横向展开的候选。
+   第一候选相机 `(-0.50,-0.10,1.25)`，reference=(0,1,0)，避免对称手腕奇异位，并利用 1024 像素长边。
+   只有双端点、连续三张有效图像通过后才接受初始定位；全程保留真实外出关节历史以回放返回。
+   新候选有离线 USD IK 和全部 expanded 边界端帽投影检查；恢复后的完整抓取放槽已在 v5 回归 **1/1 通过**。
+4. `mobile_mission_check.py`：`--episodes`、`--randomization`、逐回合自动复位和原子进度；保留失败在分母中。
+   新版保存终止前实际相机包、阶段、根位姿、关节、接触载荷与估计值，便于分析自动复位前的失败。
+5. `mobile_residual.py`：纯 PyTorch 有界残差 PPO（与历史 RSL 状态策略分开）。
+   契约 `mobile_visual_manipulation_residual_v1`，76 维输入只含视觉估计、测量反馈、已知目标和阶段。
+   输出 6 个关节速度修正，默认归一化幅度 0.08，即最高 0.028 rad/s，叠加在视觉伺服上。
+   夹爪时序、观察、阶段和底盘导航仍是既有控制器。底层 Gym 实际执行 7 维动作；残差 driver 完成 6→7 的合成。
+   相机失效或观察引导期间 `active=false` 的样本不参加 surrogate/entropy/anchor；
+   critic-only minibatch 不改变 actor 或其 Adam 动量，GAE 在回合终止处截断。
+   检查点包含 actor/critic、optimizer、更新数、有效策略步数、训练种子与幅度契约。
+6. `mobile_acceptance.py`：独立评分门槛，拒绝训练回合、回归回合、缺失凭据、不同权重/源码/识别器/资产混合、
+   托槽初始化伪装整链、钢筋运行中写位姿或安全判据矛盾。整链至少 2 个种子/64 回合，成功率 ≥95%，
+   Wilson 95% 区间下界 ≥90%；课程阶段至少 2 个种子合计 8 回合。**这些门槛尚未实际通过。**
+7. `mobile_jobs.py`：单作业冻结源码、日志、进程组、可配置 SDK 路径；`mobile_curriculum.py`：有限课程调度，
+   冻结计划与源码，独立验收失败即停在 `needs_analysis`，不会自动晋级。
+   `config/mobile_curriculum.json` 预先区分训练/评估种子。**旧 course_v1 到站门槛失败；新 course_v2_recovery 正在重跑全部阶段。**
+
+## 当前优先处理的问题
+
+- 以 `review_20261020/status.json` 的 `current_course` 为准，读取 `course_v2_recovery/curriculum.status.json`、
+  `active_jobs` 及每个阶段的新鲜完整报告。旧 `course_v1` 已终止，不要重启或重复创建作业。
+- 新恢复逻辑已在 5/5 开发回归通过（包括 36 秒相机中断后重新观察），详见
+  `review_20261020/recovery_validation.json`；这些不是独立验收样本。
+- 新课程首个训练回合已成功，累计新增 6 次 actor 更新。冻结初始化权重不等于合格策略，
+  阶段门槛仍需两组共 8 个独立回合，整链仍需新计划固定 64 回合。
+- 本对话每 15 分钟自动跟进（automation-2）；元数据和提示词在 `review_20261020/stability_followup*`。
+  没有可行动变化时保持安静，失败时分析修复后继续，通过且备份交付完成后停用。
+- 换源码、识别器、资产或权重后重新做对应验收；不混用版本。评估失败经分析的种子成为开发样本，
+  新最终验收须另预声明未使用种子。不能修改失败分母、夹紧力、真值隔离或 3 mm/3°。
+
+## 继续核查现有作业
+
+已有恢复授权，直接 SSH；所有命令仅限本项目仿真。先读取进程、GPU 和作业状态，不要杀掉他人的进程：
+
+```bash
+ssh -o BatchMode=yes -o ConnectTimeout=8 arnold@192.168.0.103
+cd /home/arnold/Develop/rebar-training-0103
+nvidia-smi
+env PYTHONPATH="$PWD/rebar_training/src" python3 -m rebar_training.mobile_jobs --status
+env PYTHONPATH="$PWD/rebar_training/src" python3 -m rebar_training.mobile_jobs \
+  --artifact-dir "$PWD/rebar_training/artifacts/mobile_curriculum_20261020/course_v2_recovery" --status
+cat rebar_training/artifacts/mobile_curriculum_20261020/course_v2_recovery/curriculum.status.json
+```
+
+课程已用冻结源码启动，入口命令记录在 `course_v2_recovery/launch.json` 和 `plan.json`，不要重复执行。
+`launch.json` 包含课程父进程 PID/PGID，各 `*.job.status.json` 包含子作业的 runner PID/PGID。
+若用户后续要求暂停，先核验命令行归属并停止课程父进程组，再停止其正在运行的子作业进程组，
+防止父进程重新调度；保存状态、权重、完整日志和相机包，核对无本任务残留进程后再标记暂停。
+当前没有新的暂停指令。
+
+新计划顺序：抓取放槽训练→两组各 4 回合冻结评估；到站再抓取夹紧训练→两组各 4 回合；
+最后连续任务训练→八组各 8 个完整连续回合。种子、初始化权重和具体计划均保存在新课程 `plan.json`、
+`provenance.json`；最多两个评估作业并行，`active_jobs` 列出实际正在运行的作业。
+`needs_analysis` 必须分析修复，不能绕过 gate，也不能把后台启动当作验收完成。
+整链 gate 通过后自动另录 `full_policy_demo.mp4`；示范回合是 regression，不进入独立计数。
+
+需要另建恢复课程时，使用新输出目录并显式 `--initial-checkpoint <可信检查点>`，计划必须预声明新种子，
+初始权重会复制进课程并记录 SHA；仍重跑全部阶段，不以旧版本通过跳过 gate。
+独立评估默认拒绝训练种子；开发回归须加 `--regression`，其报告不能进入稳定性验收。
+
+每次启动前确认 GPU/内存和已有作业；`mobile_jobs` 自身不会替你限制并行作业数。
+保持 120 Hz 物理、30 Hz 控制、10 Hz 相机；Hydra 参数必须是 `env.sim.render_interval=12`。
+不要误用 `sim.render_interval=12`，必须带 `--enable_cameras`（作业 helper 已自动添加）。
+GPU 仿真异常也可能 exit 0，以完整凭据为准。
+
+## 测试、备份与迁移
+
+恢复后节点全套 CPU 接口测试 182 项通过；纹理版本 Mac 全套 178 项通过、3 项跳过，
+随后新增补点事务性测试另通过，节点相关 22 项通过。准确结果见 `resume_20261020/`；
+`handoff_tests.json` 和同名 `.log` 是上次暂停时的历史结果。
+这些是接口/离线测试，不能替代 GPU 物理回合验收。
+
+本机已保留此前完整基础包：
+`rebar_training/artifacts/rebar_training_transfer_20261020_visual_mobile.tar.gz`
+（1190537163 bytes，SHA-256 `ed1b5af118aef3f6543ecfed1b9dfb8f2f984fd70308b7fd9e00986d1c9dc86f`）。
+它包含完整移动模型依赖、识别器、既有策略、报告和录像；不包含本轮最新修改。
+本轮另制作 `rebar_training/artifacts/rebar_training_handoff_20261020_delta.tar.gz`，
+包含上次暂停时的训练源码、配置、测试、脚本、文档和当时产物/快照。
+对应 `.sha256` 和 `.verify.json` 保存校验；基础包先恢复，再将增量解压到同一仓库根目录。
+**增量包不能独立替代完整模型基础包，也不包含 SDK、Python 环境、SSH 凭据。**
+本机当前仓库已经具有这些文件，直接接力时无需重新解压覆盖工作区。
+
+恢复后的纹理修复另存 `rebar_training_resume_20261020_texture_fix.tar.gz`（502478 bytes，
+SHA-256 `c25c09d9f8e8ca069b7ee6774db70aa8acc3c5020c0b1ca0ee2930628e9e8a7c`，126 文件校验通过）。
+这是代码及已完成到站回归的增量快照，训练状态为 active；不包含此后更新的检查点或全部原始相机帧。
+实际学习检查点另外保存在 `resume_20261020/checkpoints/`，这些是旧恢复点；当前课程权重在 `course_v2_recovery/`。
+
+移动资产依赖 `assets_full_v2_precision` 和 manifest 所列原始源 USD、托槽 USD、纹理；不要只拷一个 robot.usda。
+换电脑后重新设置 `ISAACLAB_ROOT`、`ISAAC_SIM_ROOT`、`REBAR_TRAINING_PYTHON`、`REBAR_REPO_ROOT`；
+作业 helper 也支持 `--lab-root --sim-root --python --assets`。不要把旧机器绝对路径直接当成新机器可用路径。
+每次 GPU 长训/验收后，把检查点、完整日志、报告、源码 SHA 与失败图像同步回本机，再更新恢复包。
+
+任务完成标准是：声明范围内的冻结策略确实通过独立整链 gate，失败原因有凭据和修复，
+用户能取到权重、报告与真实运行视频。当前尚未达到；接力应从上方未解决问题继续。
+
+本轮最终抓取放槽训练检查点及最新文档另打包为 `rebar_training_resume_20261020_tray_checkpoint.tar.gz`；
+配套 `.sha256`/`.verify.json` 逐文件验证。该增量含冻结源代码、权重及报告快照，
+不包含全部原始相机帧或 SDK；训练继续 active，后续权重以当前状态文件指向的课程目录为准。
+
+本次恢复已另存 `rebar_training_recovery_20261020_v2.tar.gz`，源代码、冻结计划、warm start 与新增学习权重、
+失败 gate、5/5 回归和恢复记录共 383 文件校验通过；新课程仍 active，未通过最终稳定门槛。
+后续 `rebar_training_recovery_20261020_v2_handoff.tar.gz` 包含更新后的明确接力说明与最新课程快照。

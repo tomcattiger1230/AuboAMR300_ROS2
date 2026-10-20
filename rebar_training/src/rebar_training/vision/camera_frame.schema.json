@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:hongshi:rebar_camera_v1:frame",
+  "type": "object",
+  "required": ["schema_version", "frame_index", "t_start_ns", "t_end_ns", "action_applied", "action_history", "state", "terminal", "cameras"],
+  "properties": {
+    "schema_version": {"const": "rebar_camera_v1"},
+    "frame_index": {"type": "integer", "minimum": 0},
+    "t_start_ns": {"type": "integer", "minimum": 0},
+    "t_end_ns": {"type": "integer", "minimum": 1},
+    "action_applied": {"$ref": "#/$defs/action"},
+    "action_history": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "required": ["t_start_ns", "t_end_ns", "action_applied"], "properties": {
+        "t_start_ns": {"type": "integer", "minimum": 0}, "t_end_ns": {"type": "integer", "minimum": 1},
+        "action_applied": {"$ref": "#/$defs/action"}
+      }}
+    },
+    "state": {"type": "object", "required": ["tcp", "bar", "arm_joint_position_rad", "finger_position_m"], "properties": {
+      "tcp": {"$ref": "#/$defs/vec3"}, "bar": {"$ref": "#/$defs/vec3"},
+      "arm_joint_position_rad": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"type": "number"}},
+      "finger_position_m": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number"}}
+    }},
+    "terminal": {"type": "boolean"},
+    "on_capture_grid": {"type": "boolean"},
+    "cameras": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "object",
+      "required": ["image", "image_sha256", "width", "height", "encoding", "calibration", "sensor_frame", "sensor_t_end_ns", "auxiliary_labels_simulation_only"],
+      "properties": {
+        "image": {"type": "string"}, "image_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "width": {"type": "integer", "minimum": 1}, "height": {"type": "integer", "minimum": 1},
+        "encoding": {"enum": ["mono8", "rgb8"]},
+        "sensor_frame": {"type": "integer", "minimum": 0}, "sensor_t_end_ns": {"type": "integer", "minimum": 1},
+        "auxiliary_labels_simulation_only": {"const": true},
+        "calibration": {"type": "object", "required": ["K", "T_env_optical"], "properties": {
+          "K": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/vec3"}},
+          "T_env_optical": {"type": "array", "minItems": 4, "maxItems": 4,
+            "items": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}}}
+        }}
+      }
+    }}
+  },
+  "$defs": {
+    "vec3": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}},
+    "action": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"type": "number", "minimum": -1, "maximum": 1}}
+  }
+}

@@ -33,6 +33,7 @@ SEER AMB-300 底盘、AUBO i16H 机械臂、末端夹爪和工业相机的 ROS 2
 | 黑白相机参数、URDF/SDF/USD、视频入口 | [MV-CH100-60UM + 12 mm](seer_description/README_MONO_CAMERA.md) |
 | 新 finger + motor_adapter 夹爪模型与启动 | [新夹爪版本](seer_description/README_FINGER_GRIPPER.md) |
 | 钢筋抓取/释放测试场景与自动化测试 | [钢筋抓取测试](seer_description/README_REBAR_GRASP.md) |
+| Isaac Lab 钢筋抓取、插入上料训练与 4090 验证 | [钢筋训练模块](rebar_training/README.md) |
 | GUI 模型资源来源与 i16H 限位 | [模型资源 README](aubo_student_description/README.md) |
 | 学生关键位置与碰撞验证 | [关键位置验证](aubo_control_gui/KEY_POSITION_VALIDATION.md) |
 

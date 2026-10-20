@@ -1,0 +1,20 @@
+{
+  "schema_version": "rebar_bot_tool_v1",
+  "deployment_status": "offline_template_not_installed",
+  "transport": "Existing Hermes/OpenClaw bot on 192.168.3.144; fixed SSH command to 192.168.3.133",
+  "tool": {
+    "name": "rebar_readonly_debug",
+    "description": "Read saved rebar simulation status, logs and artifact manifests. Training is paused. No shell commands, robot motion or training launch.",
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_id", "operation"],
+      "properties": {
+        "request_id": {"type": "string", "maxLength": 128},
+        "operation": {"enum": ["status", "list_artifacts", "tail_log", "inspect_manifest"]},
+        "path": {"type": "string"},
+        "lines": {"type": "integer", "minimum": 1, "maximum": 200}
+      }
+    }
+  }
+}

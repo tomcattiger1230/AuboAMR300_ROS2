@@ -1,0 +1,15 @@
+{
+  "schema_version": "rebar_geometry_review_v1",
+  "job_id": "REPLACE_WITH_JOB_ID",
+  "source_media_sha256": "REPLACE_WITH_CONTROL_VIDEO_SHA256",
+  "generated_media_sha256": "REPLACE_WITH_GENERATED_VIDEO_SHA256",
+  "reviewer": "REPLACE_WITH_REVIEWER_OR_VALIDATED_ALIGNMENT_TOOL",
+  "geometry_verified": false,
+  "camera_pose_preserved": false,
+  "frame_count_and_timing_preserved": false,
+  "rebar_and_jaw_alignment_verified": false,
+  "max_landmark_error_px": null,
+  "labels_reusable": false,
+  "action_and_force_labels_validated_by_generated_video": false,
+  "note": "Template only. Generated appearance does not establish contact physics. Keep original masks/metric depth separate until geometry is independently checked."
+}

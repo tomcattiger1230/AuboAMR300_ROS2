@@ -1,0 +1,66 @@
+{
+  "schema_version": "mobile_residual_curriculum_v1",
+  "randomization": "expanded",
+  "residual_scale": 0.08,
+  "phases": [
+    {
+      "name": "tray",
+      "until": "tray",
+      "train_seed": 431042,
+      "train_episodes": 2,
+      "minimum_updates": 20,
+      "evaluation_seeds": [
+        531042,
+        541042
+      ],
+      "evaluation_episodes_per_seed": 4,
+      "start_on_tray": false,
+      "start_at_dock": false
+    },
+    {
+      "name": "dock_clamp",
+      "until": "clamp",
+      "train_seed": 441043,
+      "train_episodes": 2,
+      "minimum_updates": 20,
+      "evaluation_seeds": [
+        551042,
+        561042
+      ],
+      "evaluation_episodes_per_seed": 4,
+      "start_on_tray": true,
+      "start_at_dock": true,
+      "initial_joints": [
+        3.46970205934,
+        -0.16910621026,
+        1.59933403306,
+        0.1976438227,
+        1.57079641828,
+        -1.24268689272
+      ],
+      "visual_hint": "rebar_training/artifacts/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json"
+    },
+    {
+      "name": "full",
+      "until": "clamp",
+      "train_seed": 451043,
+      "train_episodes": 2,
+      "minimum_updates": 60,
+      "evaluation_seeds": [
+        641042,
+        651042,
+        661042,
+        671042,
+        681042,
+        691042,
+        701042,
+        711042
+      ],
+      "evaluation_episodes_per_seed": 8,
+      "start_on_tray": false,
+      "start_at_dock": false
+    }
+  ],
+  "evaluation_parallel_jobs": 2,
+  "record_completion_video": true
+}

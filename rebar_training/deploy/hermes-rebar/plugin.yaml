@@ -1,0 +1,5 @@
+name: rebar-debug
+version: 0.1.0
+description: Read saved rebar reports and logs through a fixed SSH receiver; training stays paused.
+provides_tools:
+  - rebar_readonly_debug
