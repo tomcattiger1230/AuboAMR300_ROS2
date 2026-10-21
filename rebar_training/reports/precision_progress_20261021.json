@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-21T02:48:57.933093+00:00",
+  "at": "2026-10-21T03:05:06.255995+00:00",
   "host": "arnold@192.168.3.133",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "regression_successes": 9,
@@ -52,7 +52,7 @@
   "independent_acceptance_qualified": false,
   "active_job": null,
   "verified_raw_files_on_both_hosts": 2876,
-  "next_action": "Preserve v8 dock_clamp_trainPG36398/controller30740. Traygate recomputed8/8passed with484rawfiles bothhosts SHA. Docktrain startsfrom19247f42 (151updates65actor14701steps); verify newactorupdates and all actual4pad/unload/retreat outcomes. Only complete training success may launch frozenpolicy dock5151042/5161042 each4independentgate; thenfulltrain5051043 and64declared5241042..5311042. Nofinal64qualification/video yet.",
+  "next_action": "Preserve declared dock_clamp_holdout5151042/5161042 each4 underfrozen9b2a66f9 policy/source2c/detector/assets, nolearning/regression. Need fullfreshJSON andindependentgate8episodes strict3mm3deg250N/all4pad/openunload/retreat before fulltrain5051043 and64unseenpredeclared fullruns. Docktrain2/2/+11actor verified, butno independentdockgatepassed yet. Keepcontroller30740 andbothPG39112/39113, no duplicate.",
   "full_development_training": {
     "at": "2026-10-21T01:16:38.080846+00:00",
     "run_id": "fe3a076e00fd47a59aaaca8feb44dd79",
@@ -274,7 +274,8 @@
     "scope": "In-progress v8 tray curriculum training from copied d287; not a completed stage or independent qualification."
   },
   "active_jobs": [
-    "dock_clamp_train"
+    "dock_clamp_holdout_5151042",
+    "dock_clamp_holdout_5161042"
   ],
   "v8_tray_training": {
     "at": "2026-10-21T02:21:55.990167+00:00",
@@ -476,5 +477,63 @@
       "valid": false,
       "last_error": "Move to the surveyed observation view first"
     }
+  },
+  "v8_dock_training": {
+    "at": "2026-10-21T03:02:56.688062+00:00",
+    "run_id": "0fc68baed9f643b6a40c6962cbddb722",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "report_sha256": "e46f957daf87e741516701dd760ddae629c2a1832d9314cdeffd7bc8d936b4c5",
+    "episodes": 2,
+    "successes": 2,
+    "checks": [
+      {
+        "episode": 0,
+        "error_mm": 2.0367035176604986,
+        "actual_axis_error_deg": 0.05709286501394009,
+        "jaw_forces_N": [
+          24.743539810180664,
+          25.16054916381836,
+          25.189682006835938,
+          24.78258514404297
+        ],
+        "tcp_clearance_mm": 78.77830415964127,
+        "physics_passed": true,
+        "safe_reobservations": 1
+      },
+      {
+        "episode": 1,
+        "error_mm": 1.404664944857359,
+        "actual_axis_error_deg": 0.042186863834680156,
+        "jaw_forces_N": [
+          25.289722442626953,
+          24.64643669128418,
+          24.660507202148438,
+          25.285518646240234
+        ],
+        "tcp_clearance_mm": 99.4754359126091,
+        "physics_passed": true,
+        "safe_reobservations": 0
+      }
+    ],
+    "learning": {
+      "snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/checkpoints/v8_dock_final_20261021_0303.pt",
+      "sha256": "9b2a66f90b1c2ee33ab3f8c4db8f814ffd20872c264a56f3146b8f2ec6d808c5",
+      "updates": 192,
+      "new_updates": 41,
+      "actor_updates": 76,
+      "new_actor_updates": 11,
+      "policy_steps": 16846,
+      "new_policy_steps": 2145,
+      "actor_weight_max_abs_change": 0.006260961294174194,
+      "model_and_optimizer_finite": true,
+      "includes_optimizer": true,
+      "training_complete": true,
+      "qualified": false,
+      "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+      "checkpoint_sha_verified_on_node_and_mac": true,
+      "scope": "V8 dock training complete2/2 with actualhandoff; independent5151042/5161042 evaluation required. Not full-mission qualification."
+    },
+    "independent_gate_passed": false,
+    "scope": "V8 dock training complete2/2 with actualhandoff; independent5151042/5161042 evaluation required. Not full-mission qualification."
   }
 }
