@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-21T07:38:20.379052+00:00",
+  "state": "paused_by_user",
+  "automation_state": "PAUSED",
+  "automatic_resume_allowed": false,
+  "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+  "policy_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+  "independent_full_evaluation": {
+    "declared_total": 64,
+    "complete_batches": 2,
+    "complete_batch_episodes": 16,
+    "partial_batch_complete_rows": 2,
+    "completed_rows": 18,
+    "successes": 18,
+    "failures": 0,
+    "batches_interrupted": [
+      "full_holdout_5261042",
+      "full_holdout_5271042"
+    ],
+    "full_gate_passed": false
+  },
+  "pause_record": "rebar_training/artifacts/mobile_curriculum_20261020/PAUSED_20261021_PLATFORM_CHANGE.json",
+  "interrupted_files_sha_verified_on_both_hosts": 492,
+  "training_processes_remaining": 0,
+  "one_shot_demo_authorized": true,
+  "demo_recording": true,
+  "migration_guide": "MIGRATE_PLATFORM_20261021.md",
+  "training_qualification": "2/2 complete training, skillgates8/8each. Full64incomplete. RGBservo/scriptedgripper/odometry+boundedresidualPPO, Cosmosinferencefalse.",
+  "migration_tests": {
+    "passed": 3,
+    "failed": 0,
+    "scope": "currentcourse,optimizer,partialreports,videoevidenceincluded;externalpathsrejected;priorarchives/venvexcluded"
+  },
+  "relocated_runtime_usd_dependencies_checked": 10,
+  "source_control_unchanged": true
+}

@@ -34,11 +34,25 @@ def test_mobile_transfer_is_closed_and_does_not_repackage_prior_backups(tmp_path
     write(f'{a}/visual_control_20261019/segment_v1.pt')
     write(f'{a}/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json')
     write(f'{a}/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.png')
+    write(f'{b}/course_v8_precision_envelope/full_policy.pt','policy and optimizer')
+    write(f'{b}/course_v8_precision_envelope/partial.progress.json')
+    write(f'{b}/review_20261020/migration_demo/current.mp4')
+    write(f'{b}/review_20261020/status.json',json.dumps({
+        'current_course':'course_v8_precision_envelope',
+        'migration_required_directories':['review_20261020/migration_demo']}))
     files={str(p.relative_to(root)) for p in module.collect_files(root,root/'out.tar.gz','mobile-resume')}
     assert 'robot.usda' in files and f'{b}/review_20261020/checkpoints/optimizer.pt' in files
     assert f'{b}/course_v7_support_lifecycle/dock_clamp_policy.pt' in files
     assert f'{a}/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.png' in files
+    assert f'{b}/course_v8_precision_envelope/full_policy.pt' in files
+    assert f'{b}/course_v8_precision_envelope/partial.progress.json' in files
+    assert f'{b}/review_20261020/migration_demo/current.mp4' in files
     assert not any('old.tar.gz' in name or '/.venv/' in name or 'unrelated_old_run' in name for name in files)
+    write(f'{b}/review_20261020/status.json',json.dumps({
+        'migration_required_directories':['../../outside']}))
+    with pytest.raises(ValueError):
+        module.collect_files(root,root/'out.tar.gz','mobile-resume')
+    write(f'{b}/review_20261020/status.json','{}')
     (root/'robot.usda').write_text('changed')
     with pytest.raises(ValueError,match='Source asset changed'):
         module.collect_files(root,root/'out.tar.gz','mobile-resume')

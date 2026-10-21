@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-21T07:04:19.422780+00:00",
+  "at": "2026-10-21T07:43:07.451438+00:00",
   "host": "arnold@192.168.3.133",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "regression_successes": 9,
@@ -52,7 +52,7 @@
   "independent_acceptance_qualified": false,
   "active_job": null,
   "verified_raw_files_on_both_hosts": 2876,
-  "next_action": "Preserve current2parallel full independent jobs; inspect all64completecontinuousrows/provenance, no finalstableclaim yet.",
+  "next_action": "Training/evaluationpausedbyuser. Onlyfinishrequestedcurrentpolicyone-shotdemovideo, verifyandbackupportablebundle, keepautomationpaused. SeeMIGRATE_PLATFORM_20261021.md andplatform_pause_20261021.json; noresumewithoutnewauthorization.",
   "full_development_training": {
     "at": "2026-10-21T01:16:38.080846+00:00",
     "run_id": "fe3a076e00fd47a59aaaca8feb44dd79",
@@ -798,7 +798,7 @@
     ]
   },
   "v8_full_independent_evaluation": {
-    "state": "running",
+    "state": "paused_user",
     "predeclared_seeds": [
       5241042,
       5251042,
@@ -812,13 +812,10 @@
     "episodes_per_seed": 8,
     "episodes_required": 64,
     "checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
-    "active_jobs": [
-      "full_holdout_5261042",
-      "full_holdout_5271042"
-    ],
+    "active_jobs": [],
     "qualified": false,
-    "complete_episodes": 16,
-    "successes": 16,
+    "complete_episodes": 18,
+    "successes": 18,
     "failures": 0
   },
   "v8_full_first16_completed": {
@@ -855,5 +852,7 @@
     },
     "qualified": false,
     "scope": "First2complete predeclared independent fullmission groups only.16/64 allsuccessful withzeroevidenceerrors; insufficient samples andWilsonlower for finalgate. Continue remaining6groups under unchangedfe48/source2c."
-  }
+  },
+  "state": "paused_by_user_for_platform_migration",
+  "automatic_resume_allowed": false
 }

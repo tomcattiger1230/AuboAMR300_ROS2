@@ -68,6 +68,17 @@ def collect_files(root, output, profile='all'):
         for folder in (base/'course_v7_support_lifecycle',review/'precision_residual_fix',review/'checkpoints'):
             if not folder.is_dir():raise FileNotFoundError(folder)
             add_tree(folder)
+        state_file=review/'status.json'
+        if state_file.is_file():
+            state=json.loads(state_file.read_text())
+            directories=list(state.get('migration_required_directories',[]))
+            if state.get('current_course'):directories.append(state['current_course'])
+            for relative in directories:
+                folder=(base/relative).resolve()
+                folder.relative_to(base.resolve())
+                if folder==base.resolve():raise ValueError('Select a specific migration artifact directory')
+                if not folder.is_dir():raise FileNotFoundError(folder)
+                add_tree(folder)
         files.extend(base.glob('PAUSED*.json'))
         files.extend(review.glob('*.json'))
         files.extend(review.joinpath('support_prior_lifecycle_fix').glob('*.json'))
@@ -91,7 +102,7 @@ def main():
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--profile', choices=('all','mobile-resume'), default='all',
-                        help='mobile-resume includes current mobile assets, policies and paused v7/v8 work; older backup archives stay on the source machine')
+                        help='mobile-resume includes mobile assets, the status-selected current course and migration evidence; older backup archives stay on the source machine')
     parser.add_argument('--training-state', choices=('paused', 'active', 'completed'), default='paused',
                         help='Describes this snapshot; building an archive does not change a training job')
     args = parser.parse_args()
