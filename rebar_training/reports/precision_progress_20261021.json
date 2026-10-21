@@ -1,8 +1,8 @@
 {
-  "at": "2026-10-21T01:32:22.962876+00:00",
+  "at": "2026-10-21T02:18:20.833998+00:00",
   "host": "arnold@192.168.3.133",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-  "regression_successes": 5,
+  "regression_successes": 9,
   "minimum_required_regressions": 9,
   "physical_receipts": [
     {
@@ -50,9 +50,9 @@
   "new_effective_policy_steps": 4930,
   "training_complete": true,
   "independent_acceptance_qualified": false,
-  "active_job": "full_1051042_reset_clearance",
-  "verified_raw_files_on_both_hosts": 1838,
-  "next_action": "Preserve four-episode same-process full_1051042_reset_clearance. Require all4 complete actualhandoff/strictphysicalreceipts with fresh finalJSON before controller can start v8. Partial-grasp outage1/1 now verified, two safe reobservations maximum. Formalallgates/64freshseeds still mandatory.",
+  "active_job": "tray_train",
+  "verified_raw_files_on_both_hosts": 2876,
+  "next_action": "Keep active v8 tray_train from frozen plan308bf361/source2c/warmd287. Check actual actor updates and complete training report; independenttray5131042/5141042 each4 mustpass beforedocktraining/eval5151042/5161042, thenfulltraining and8freshseed groups5241042..5311042 each8 (64). Allstagegatesmandatory, do not reusev7 or9developmentepisodes. No duplicate launches, simulation only.",
   "full_development_training": {
     "at": "2026-10-21T01:16:38.080846+00:00",
     "run_id": "fe3a076e00fd47a59aaaca8feb44dd79",
@@ -194,5 +194,83 @@
     "hold_joint_max_change_rad": 0.0012030601501464844,
     "independent_acceptance_qualified": false,
     "scope": "30-frame partial-grasp outage development regression. Measured unload/support/returned receipt for the partial grasp abort; second empty-wrist reobservation enforced by unchanged frozen runtime guard, with coarse logs not exposing every triggering tick. Two maximum reobservations, both freshly reacquired, final actual handoff strict checks passed."
+  },
+  "all_prerequisite_jobs_completed": true,
+  "reset_checks": [
+    {
+      "episode": 0,
+      "steps": 9820,
+      "error_mm": 1.8085232004523277,
+      "actual_axis_error_deg": 0.0367248114980041,
+      "jaw_forces_N": [
+        25.295312881469727,
+        24.626422882080078,
+        24.654796600341797,
+        25.303861618041992
+      ],
+      "tcp_clearance_mm": 88.42211961746216,
+      "all_physical_receipts_passed": true
+    },
+    {
+      "episode": 1,
+      "steps": 9762,
+      "error_mm": 1.8597161397337914,
+      "actual_axis_error_deg": 0.036978717536239575,
+      "jaw_forces_N": [
+        26.053003311157227,
+        23.898515701293945,
+        23.889156341552734,
+        26.0429630279541
+      ],
+      "tcp_clearance_mm": 88.50976079702377,
+      "all_physical_receipts_passed": true
+    },
+    {
+      "episode": 2,
+      "steps": 9762,
+      "error_mm": 1.7770794220268726,
+      "actual_axis_error_deg": 0.03563572453777081,
+      "jaw_forces_N": [
+        24.266164779663086,
+        25.66939926147461,
+        25.69369125366211,
+        24.280967712402344
+      ],
+      "tcp_clearance_mm": 90.42437374591827,
+      "all_physical_receipts_passed": true
+    },
+    {
+      "episode": 3,
+      "steps": 9757,
+      "error_mm": 1.8771222094073892,
+      "actual_axis_error_deg": 0.03647835255911168,
+      "jaw_forces_N": [
+        25.745519638061523,
+        24.192001342773438,
+        24.18874740600586,
+        25.741586685180664
+      ],
+      "tcp_clearance_mm": 90.27938544750214,
+      "all_physical_receipts_passed": true
+    }
+  ],
+  "active_course": "course_v8_precision_envelope",
+  "course_initial_learning": {
+    "snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/checkpoints/v8_tray_inprogress_20261021_0216.pt",
+    "sha256": "84f6ded6c31e4ae489b9414f8d3a34dad7802fc2a241dc5e479af6d5c900279e",
+    "updates": 136,
+    "new_updates": 7,
+    "actor_updates": 55,
+    "new_actor_updates": 2,
+    "policy_steps": 12310,
+    "new_policy_steps": 417,
+    "actor_weight_max_abs_change": 0.001651594415307045,
+    "model_and_optimizer_finite": true,
+    "includes_optimizer": true,
+    "training_complete": false,
+    "qualified": false,
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha_verified_on_node_and_mac": true,
+    "scope": "In-progress v8 tray curriculum training from copied d287; not a completed stage or independent qualification."
   }
 }
