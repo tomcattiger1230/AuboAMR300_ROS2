@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-21T14:59:53.769599+00:00",
-  "status": "course_v9_running_connection_restored",
+  "updated_at": "2026-10-21T15:07:18.890759+00:00",
+  "status": "intermittent_node_unreachable_after_successful_original_job_check",
   "stable": false,
   "user_authorized_resume": true,
   "requires_explicit_resume": false,
@@ -9,7 +9,7 @@
   "current_course": "course_v9_5090_resume",
   "pending_course": null,
   "pending_validation": null,
-  "active_phase": "tray_independent_holdouts",
+  "active_phase": "unknown_node_unreachable",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
   "warm_start_counters": {
@@ -21,14 +21,11 @@
   "pending_plan_sha256": "20246b24178ca3fbd925a2542353f052f8618e7715ef6a06649dbdb48fe923f4",
   "validation_launcher_pgid": 108926,
   "validation_state": "course_started",
-  "active_jobs": [
-    "tray_holdout_6141042",
-    "tray_holdout_6131042"
-  ],
+  "active_jobs": null,
   "independent_full_evaluation_episodes_required": 64,
-  "independent_full_evaluation_complete_episodes": 0,
-  "independent_full_evaluation_successes": 0,
-  "independent_full_evaluation_failures": 0,
+  "independent_full_evaluation_complete_episodes": null,
+  "independent_full_evaluation_successes": null,
+  "independent_full_evaluation_failures": null,
   "independent_full_evaluation_passed": false,
   "current_tray_gate": null,
   "current_dock_gate": null,
@@ -68,7 +65,7 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Keep original controller112563 and two holdouts114038/114039. Wait for both complete4-episode native reports and independently recompute tray gate/strict physical receipts; only after passed gate continue original automatic dock training. No duplicate launch.",
+  "next_action": "On reconnection first read original controller/native active_jobs/reports and recent suspend/hibernate journal. Keep existing jobs; no duplicate or old PID restart. Cause of intermittent connection unconfirmed; do not infer training stopped or failed.",
   "predeclaration": {
     "created_at": "2026-10-21T13:53:03.201933+00:00",
     "node": "arnold@192.168.0.103",
@@ -124,7 +121,7 @@
   "course_started": true,
   "validation_runner_pid": 108930,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
-  "training_still_active": false,
+  "training_still_active": null,
   "simulation_validation_active": false,
   "last_live_progress": {
     "at": "2026-10-21T14:59:53.769599+00:00",
@@ -162,10 +159,10 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "SSH restored to original5090; originalcontroller112563 and twooriginalholdouts running with fresh logs. Tray training nativecomplete2/2, +25PPO/+12actor/+2790effective steps, d1e26 output policy andoptimizerfinite,130training files+27partial snapshot files SHA checked bothhosts. Currenttrayholdouts each3/4, combined6/8successful,0failures; no formal gate yet. Newv9 finalfull0/64 separatefrom oldv8complete16plus2successrows. No process restarted.",
-  "independent_full_evaluation_new_episodes_since_last_check": 0,
+  "last_heartbeat_result": "Successfully reconnected and verified originalcontroller112563 plus2existingholdouts, no launch.Trainingcomplete2/2,+25PPO/+12actor/+2790steps,d1e26finite,130filesand27snapshotfilesSHAverifiedbothhosts.Skill6/8successfulat22:59,fullindependent0/64then.Three subsequentSSHtimeouts,targetping0/3,gateway2/2,currentcountsunknown.Suspendjournalnotavailable,causeunconfirmed.Backup165filesverified.Gitupdated.",
+  "independent_full_evaluation_new_episodes_since_last_check": null,
   "last_completed_validation": "review_20261020/resume_5090_20261021",
-  "current_course_state": "running",
+  "current_course_state": "unknown_node_unreachable",
   "course_runner_pid": 112563,
   "latest_migration_full_verification": {
     "at": "2026-10-21T14:31:28.178800+00:00",
@@ -327,14 +324,14 @@
   "new_actor_updates": 12,
   "new_effective_policy_steps": 2790,
   "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/tray_policy.pt",
-  "node_connection_state": "connected",
+  "node_connection_state": "unreachable_after_brief_restoration",
   "last_known_course_state": "running",
   "last_known_active_jobs": [
     "tray_holdout_6141042",
     "tray_holdout_6131042"
   ],
   "last_successful_node_check_at": "2026-10-21T14:59:53.769599+00:00",
-  "remote_live_state_fresh": true,
+  "remote_live_state_fresh": false,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T14:59:53.769599+00:00",
     "course": "course_v9_5090_resume",
@@ -354,24 +351,45 @@
     "policy_steps": 24623
   },
   "latest_connectivity_check": {
-    "at": "2026-10-21T14:59:53.769599+00:00",
-    "connected": true,
-    "host": "arnold-NUC16JNK9XX11",
+    "at": "2026-10-21T15:07:18.890759+00:00",
+    "connection_state": "intermittent_then_unreachable",
+    "last_verified_live_at": "2026-10-21T14:59:53.769599+00:00",
+    "last_connected_hostname": "arnold-NUC16JNK9XX11",
     "ssh_target": "arnold@192.168.0.103",
-    "controller_pid": 112563,
-    "existing_holdout_runners": [
-      114038,
-      114039
+    "latest_ipv4_ssh_timeouts": 3,
+    "target_ping": {
+      "sent": 3,
+      "received": 0
+    },
+    "gateway_ping": {
+      "sent": 2,
+      "received": 2
+    },
+    "original_controller": 112563,
+    "last_known_active_jobs": [
+      "tray_holdout_6141042",
+      "tray_holdout_6131042"
     ],
-    "no_job_launched_or_restarted": true
+    "last_known_runners": [
+      114039,
+      114038
+    ],
+    "training_complete_episodes": 2,
+    "training_successes": 2,
+    "last_known_tray_skill_episodes": 6,
+    "last_known_tray_skill_successes": 6,
+    "current_live_counts": "unknown",
+    "no_simulation_started_stopped_or_restarted": true,
+    "suspend_journal_obtained": false,
+    "diagnostic_output_previously_requested": true
   },
   "display_progress": {
-    "historical_4090_v8": "16/64 complete group reports plus2successful rows from interrupted groups;18total successes0failures, preserved separately.",
-    "current_5090_v9": "Full independent0/64, success0failure0, no new full episode. Tray skill holdouts6/8 successful partial rows; gate pending complete native reports."
+    "historical_4090_v8": "16/64complete groupreports plus2successful rows from interrupted groups,total18success0failure preserved.",
+    "current_5090_v9": "Currentliveunknown; last22:59complete traytraining2/2,skill6/8success0fail,finalfull0/64. No qualified gate or current count claim."
   },
   "user_reported_node_awake": true,
-  "waiting_for": null,
-  "evaluation_still_active": true,
+  "waiting_for": "Stable node connection or previously requested read-only Ubuntu diagnostics; do not repeat only wakeup requests.",
+  "evaluation_still_active": null,
   "latest_tray_training_verified": {
     "at": "2026-10-21T14:59:53.736106+00:00",
     "completed": true,
@@ -489,9 +507,9 @@
       ]
     }
   ],
-  "current_tray_independent_episodes": 6,
-  "current_tray_independent_successes": 6,
-  "current_tray_independent_failures": 0,
+  "current_tray_independent_episodes": null,
+  "current_tray_independent_successes": null,
+  "current_tray_independent_failures": null,
   "latest_reconnect_verification": {
     "at": "2026-10-21T14:59:53.769599+00:00",
     "training_files": 130,
@@ -507,7 +525,7 @@
     "checkpoint_and_all_listed_files_sha_verified_both_hosts": true,
     "qualified": false
   },
-  "network_diagnostic_output_no_longer_required": true,
+  "network_diagnostic_output_no_longer_required": false,
   "latest_training_native_progress": {
     "as_of": "2026-10-21T14:59:53.769599+00:00",
     "complete": true,
@@ -540,5 +558,20 @@
         "last_error": ""
       }
     }
+  },
+  "last_known_tray_independent": {
+    "as_of": "2026-10-21T14:59:53.769599+00:00",
+    "episodes": 6,
+    "successes": 6,
+    "failures": 0,
+    "required": 8,
+    "gate_passed": false
+  },
+  "latest_tray_independent_partial_fresh": false,
+  "latest_local_recovery_backup": {
+    "archive": "rebar_training/artifacts/rebar_training_recovery_20261021_v9_tray_training_pass_reconnected.tar.gz",
+    "sha256": "e4c8f3a244347c09e32db017e10119e4b7123b2ad5c2624a800d4c9a0cb0efbd",
+    "files": 165,
+    "mismatches": []
   }
 }
