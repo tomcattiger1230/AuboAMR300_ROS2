@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-21T14:52:44.619027+00:00",
-  "status": "node_unreachable_training_state_unknown",
+  "updated_at": "2026-10-21T14:59:53.769599+00:00",
+  "status": "course_v9_running_connection_restored",
   "stable": false,
   "user_authorized_resume": true,
   "requires_explicit_resume": false,
@@ -9,7 +9,7 @@
   "current_course": "course_v9_5090_resume",
   "pending_course": null,
   "pending_validation": null,
-  "active_phase": "unknown_node_unreachable",
+  "active_phase": "tray_independent_holdouts",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
   "warm_start_counters": {
@@ -21,11 +21,14 @@
   "pending_plan_sha256": "20246b24178ca3fbd925a2542353f052f8618e7715ef6a06649dbdb48fe923f4",
   "validation_launcher_pgid": 108926,
   "validation_state": "course_started",
-  "active_jobs": null,
+  "active_jobs": [
+    "tray_holdout_6141042",
+    "tray_holdout_6131042"
+  ],
   "independent_full_evaluation_episodes_required": 64,
-  "independent_full_evaluation_complete_episodes": null,
-  "independent_full_evaluation_successes": null,
-  "independent_full_evaluation_failures": null,
+  "independent_full_evaluation_complete_episodes": 0,
+  "independent_full_evaluation_successes": 0,
+  "independent_full_evaluation_failures": 0,
   "independent_full_evaluation_passed": false,
   "current_tray_gate": null,
   "current_dock_gate": null,
@@ -65,7 +68,7 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Network remains unavailable after reported wakeup and 3IPv4+2IPv6 SSH retries. Await requested read-only Ubuntu diagnostics; do not repeat wakeup request. On reconnection first inspect controller112563/native active_jobs/full reports before any launch; preserve existing jobs and SSH identity.",
+  "next_action": "Keep original controller112563 and two holdouts114038/114039. Wait for both complete4-episode native reports and independently recompute tray gate/strict physical receipts; only after passed gate continue original automatic dock training. No duplicate launch.",
   "predeclaration": {
     "created_at": "2026-10-21T13:53:03.201933+00:00",
     "node": "arnold@192.168.0.103",
@@ -121,15 +124,29 @@
   "course_started": true,
   "validation_runner_pid": 108930,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
-  "training_still_active": null,
+  "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "step": 660,
-    "episode": 0,
-    "stage": "pickup",
-    "valid": true,
-    "last_error": "",
-    "at": "2026-10-21T14:32:24.148784+00:00"
+    "at": "2026-10-21T14:59:53.769599+00:00",
+    "phase": "tray_independent_holdouts",
+    "jobs": {
+      "tray_holdout_6131042": {
+        "step": 9720,
+        "episode": 3,
+        "stage": "pickup",
+        "route": 0,
+        "valid": false,
+        "last_error": "Move to the surveyed observation view first"
+      },
+      "tray_holdout_6141042": {
+        "step": 9720,
+        "episode": 3,
+        "stage": "pickup",
+        "route": 0,
+        "valid": true,
+        "last_error": ""
+      }
+    }
   },
   "node_migration_regression_successes": 3,
   "node_migration_regression_complete_episodes": 3,
@@ -145,10 +162,10 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "User reported awake/sameIP, but further3IPv4 and2strict-identity IPv6 SSH attempts timed out; reverse diagnosis needed. Node current counts/newrows/processstate unknown; last22:39v9training active, finalindependent0/64 then. Old4090v8complete16/64plus2successrows preserved separately. Backup837files checksum rechecked intact. No remote process mutation.",
-  "independent_full_evaluation_new_episodes_since_last_check": null,
+  "last_heartbeat_result": "SSH restored to original5090; originalcontroller112563 and twooriginalholdouts running with fresh logs. Tray training nativecomplete2/2, +25PPO/+12actor/+2790effective steps, d1e26 output policy andoptimizerfinite,130training files+27partial snapshot files SHA checked bothhosts. Currenttrayholdouts each3/4, combined6/8successful,0failures; no formal gate yet. Newv9 finalfull0/64 separatefrom oldv8complete16plus2successrows. No process restarted.",
+  "independent_full_evaluation_new_episodes_since_last_check": 0,
   "last_completed_validation": "review_20261020/resume_5090_20261021",
-  "current_course_state": "unknown_node_unreachable",
+  "current_course_state": "running",
   "course_runner_pid": 112563,
   "latest_migration_full_verification": {
     "at": "2026-10-21T14:31:28.178800+00:00",
@@ -270,50 +287,56 @@
     "review_20261020/resume_5090_20261021"
   ],
   "latest_training_live": {
-    "at": "2026-10-21T14:35:25.409583+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/resume_5090_20261021/tray_policy_live_20261021_2235.pt",
-    "sha256": "0c6c217d36f38e8925daadc3c2f52df179af844faa1989e5e3572c1c85450596",
-    "updates": 289,
-    "actor_updates": 103,
-    "policy_steps": 22486,
-    "new_updates": 11,
-    "new_actor_updates": 3,
-    "new_policy_steps": 653,
-    "actor_weight_max_abs_change": 0.002863636240363121,
+    "at": "2026-10-21T14:58:34.471864+00:00",
+    "checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+    "initial_checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+    "updates": 303,
+    "actor_updates": 112,
+    "policy_steps": 24623,
+    "new_updates": 25,
+    "new_actor_updates": 12,
+    "new_policy_steps": 2790,
+    "actor_weight_max_abs_change": 0.009190434589982033,
     "model_and_optimizer_finite": true,
-    "training_complete": false,
-    "qualified": false,
-    "checkpoint_sha_verified_on_node_and_mac": true
+    "training_report_sha256": "c1ee75e95e84e1c297ca07f2141a60878a06c9cdb32c47643883a71eb92fbba1",
+    "training_complete": true,
+    "episodes": 2,
+    "successes": 2,
+    "qualified": false
   },
   "last_observed_learning": {
-    "at": "2026-10-21T14:35:25.409583+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/resume_5090_20261021/tray_policy_live_20261021_2235.pt",
-    "sha256": "0c6c217d36f38e8925daadc3c2f52df179af844faa1989e5e3572c1c85450596",
-    "updates": 289,
-    "actor_updates": 103,
-    "policy_steps": 22486,
-    "new_updates": 11,
-    "new_actor_updates": 3,
-    "new_policy_steps": 653,
-    "actor_weight_max_abs_change": 0.002863636240363121,
+    "at": "2026-10-21T14:58:34.471864+00:00",
+    "checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+    "initial_checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+    "updates": 303,
+    "actor_updates": 112,
+    "policy_steps": 24623,
+    "new_updates": 25,
+    "new_actor_updates": 12,
+    "new_policy_steps": 2790,
+    "actor_weight_max_abs_change": 0.009190434589982033,
     "model_and_optimizer_finite": true,
-    "training_complete": false,
+    "training_report_sha256": "c1ee75e95e84e1c297ca07f2141a60878a06c9cdb32c47643883a71eb92fbba1",
+    "training_complete": true,
+    "episodes": 2,
+    "successes": 2,
     "qualified": false,
     "checkpoint_sha_verified_on_node_and_mac": true
   },
   "resumed_learning_verified": true,
-  "new_actor_updates": 3,
-  "new_effective_policy_steps": 653,
-  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/resume_5090_20261021/tray_policy_live_20261021_2235.pt",
-  "node_connection_state": "unreachable",
+  "new_actor_updates": 12,
+  "new_effective_policy_steps": 2790,
+  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/tray_policy.pt",
+  "node_connection_state": "connected",
   "last_known_course_state": "running",
   "last_known_active_jobs": [
-    "tray_train"
+    "tray_holdout_6141042",
+    "tray_holdout_6131042"
   ],
-  "last_successful_node_check_at": "2026-10-21T14:39:08.993778+00:00",
-  "remote_live_state_fresh": false,
+  "last_successful_node_check_at": "2026-10-21T14:59:53.769599+00:00",
+  "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
-    "as_of": "2026-10-21T14:39:08.993778+00:00",
+    "as_of": "2026-10-21T14:59:53.769599+00:00",
     "course": "course_v9_5090_resume",
     "episodes": 0,
     "successes": 0,
@@ -322,49 +345,200 @@
     "qualified": false
   },
   "last_known_training_progress": {
-    "as_of": "2026-10-21T14:38:10.279783+00:00",
-    "completed": false,
-    "episodes": 1,
-    "successes": 1,
-    "updates": 298,
-    "actor_updates": 107,
-    "policy_steps": 23455,
-    "latest_live_stage": "tray_rotate",
-    "episode_in_progress": 1
+    "as_of": "2026-10-21T14:59:53.769599+00:00",
+    "completed": true,
+    "episodes": 2,
+    "successes": 2,
+    "updates": 303,
+    "actor_updates": 112,
+    "policy_steps": 24623
   },
   "latest_connectivity_check": {
-    "at": "2026-10-21T14:52:44.619027+00:00",
-    "user_reported_awake": true,
-    "user_confirmed_ipv4": "192.168.0.103",
-    "ssh_attempts_after_wakeup_ipv4": 3,
-    "ssh_attempts_after_wakeup_ipv6": 2,
-    "all_ssh_attempts_timed_out": true,
-    "node_ping_after_wakeup": {
-      "sent": 3,
-      "received": 0
-    },
-    "mdns_name": "arnold-NUC16JNK9XX11.local",
-    "mdns_ipv4": "192.168.0.103",
-    "mdns_ipv6": [
-      "fd86:6069:f94b:40ba:46f3:6922:161a:d470",
-      "fd86:6069:f94b:40ba:4cc9:d665:bb01:c20"
+    "at": "2026-10-21T14:59:53.769599+00:00",
+    "connected": true,
+    "host": "arnold-NUC16JNK9XX11",
+    "ssh_target": "arnold@192.168.0.103",
+    "controller_pid": 112563,
+    "existing_holdout_runners": [
+      114038,
+      114039
     ],
-    "ipv6_strict_host_key_checking_preserved": true,
-    "ssh_identity_unchanged": true,
-    "no_remote_process_started_or_stopped_by_this_check": true,
-    "requested_read_only_diagnostics": [
-      "hostname -I",
-      "systemctl is-active ssh",
-      "ping -c 3 192.168.0.160"
-    ],
-    "remote_state": "unknown",
-    "last_confirmed_remote_at": "2026-10-21T14:39:08.993778+00:00",
-    "last_completed_backup_rechecked_sha256": "27229c9865bf8a97fcdec23829b4e501edd2d441c78271650c3d4a98c30b0091"
+    "no_job_launched_or_restarted": true
   },
   "display_progress": {
-    "historical_4090_v8": "16/64 in complete group reports, plus 2 successful rows in user-interrupted groups; total18successful/0failed rows preserved.",
-    "current_5090_v9": "Live state unknown; last confirmed22:39 training in progress and final independent0/64. Do not present stale counts as current."
+    "historical_4090_v8": "16/64 complete group reports plus2successful rows from interrupted groups;18total successes0failures, preserved separately.",
+    "current_5090_v9": "Full independent0/64, success0failure0, no new full episode. Tray skill holdouts6/8 successful partial rows; gate pending complete native reports."
   },
   "user_reported_node_awake": true,
-  "waiting_for": "Ubuntu read-only hostname/IP, ssh-service and reverse-ping diagnostic output; retry connection if network restores independently."
+  "waiting_for": null,
+  "evaluation_still_active": true,
+  "latest_tray_training_verified": {
+    "at": "2026-10-21T14:59:53.736106+00:00",
+    "completed": true,
+    "episodes": 2,
+    "successes": 2,
+    "failures": 0,
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "output_checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+    "report_sha256": "c1ee75e95e84e1c297ca07f2141a60878a06c9cdb32c47643883a71eb92fbba1",
+    "checks": [
+      {
+        "episode": 0,
+        "tray_position_error_mm": 0.6322618010140699,
+        "base_axis_y": 0.9999999589060532,
+        "unloaded": true,
+        "tcp_clearance_mm": 179.73320186138153,
+        "physical_tray_acceptance_passed": true
+      },
+      {
+        "episode": 1,
+        "tray_position_error_mm": 0.0084855388868979,
+        "base_axis_y": 0.9999999625739485,
+        "unloaded": true,
+        "tcp_clearance_mm": 179.71517145633698,
+        "physical_tray_acceptance_passed": true
+      }
+    ],
+    "checkpoint": {
+      "at": "2026-10-21T14:58:34.471864+00:00",
+      "checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+      "initial_checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+      "updates": 303,
+      "actor_updates": 112,
+      "policy_steps": 24623,
+      "new_updates": 25,
+      "new_actor_updates": 12,
+      "new_policy_steps": 2790,
+      "actor_weight_max_abs_change": 0.009190434589982033,
+      "model_and_optimizer_finite": true,
+      "training_report_sha256": "c1ee75e95e84e1c297ca07f2141a60878a06c9cdb32c47643883a71eb92fbba1",
+      "training_complete": true,
+      "episodes": 2,
+      "successes": 2,
+      "qualified": false
+    },
+    "independent_qualification": false
+  },
+  "latest_tray_independent_partial": [
+    {
+      "name": "tray_holdout_6141042",
+      "run_id": "e96a0ba8bcea4544a3dee62c235e33fa",
+      "requested": 4,
+      "completed": false,
+      "episodes": 3,
+      "successes": 3,
+      "checks": [
+        {
+          "episode": 0,
+          "tray_position_error_mm": 0.8417792627121051,
+          "base_axis_y": 0.999999854326424,
+          "unloaded": true,
+          "tcp_clearance_mm": 179.6296238899231,
+          "physical_tray_acceptance_passed": true
+        },
+        {
+          "episode": 1,
+          "tray_position_error_mm": 0.6538864256293307,
+          "base_axis_y": 0.9999999280486801,
+          "unloaded": true,
+          "tcp_clearance_mm": 179.62601780891418,
+          "physical_tray_acceptance_passed": true
+        },
+        {
+          "episode": 2,
+          "tray_position_error_mm": 0.36103256281606894,
+          "base_axis_y": 0.9999998734612247,
+          "unloaded": true,
+          "tcp_clearance_mm": 179.6024888753891,
+          "physical_tray_acceptance_passed": true
+        }
+      ]
+    },
+    {
+      "name": "tray_holdout_6131042",
+      "run_id": "c5b246eefd8841ee81a1c2cd70c4ab26",
+      "requested": 4,
+      "completed": false,
+      "episodes": 3,
+      "successes": 3,
+      "checks": [
+        {
+          "episode": 0,
+          "tray_position_error_mm": 1.0073635567512695,
+          "base_axis_y": 0.9999999950320806,
+          "unloaded": true,
+          "tcp_clearance_mm": 179.581418633461,
+          "physical_tray_acceptance_passed": true
+        },
+        {
+          "episode": 1,
+          "tray_position_error_mm": 0.5289207395734843,
+          "base_axis_y": 0.9999998746468597,
+          "unloaded": true,
+          "tcp_clearance_mm": 179.62601780891418,
+          "physical_tray_acceptance_passed": true
+        },
+        {
+          "episode": 2,
+          "tray_position_error_mm": 0.37237604093466214,
+          "base_axis_y": 0.9999998158034148,
+          "unloaded": true,
+          "tcp_clearance_mm": 179.62723970413208,
+          "physical_tray_acceptance_passed": true
+        }
+      ]
+    }
+  ],
+  "current_tray_independent_episodes": 6,
+  "current_tray_independent_successes": 6,
+  "current_tray_independent_failures": 0,
+  "latest_reconnect_verification": {
+    "at": "2026-10-21T14:59:53.769599+00:00",
+    "training_files": 130,
+    "partial_snapshot_files": 27,
+    "mismatches": [],
+    "training_complete": true,
+    "training_episodes": 2,
+    "training_successes": 2,
+    "partial_tray_episodes": 6,
+    "partial_tray_successes": 6,
+    "tray_gate_passed": false,
+    "checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+    "checkpoint_and_all_listed_files_sha_verified_both_hosts": true,
+    "qualified": false
+  },
+  "network_diagnostic_output_no_longer_required": true,
+  "latest_training_native_progress": {
+    "as_of": "2026-10-21T14:59:53.769599+00:00",
+    "complete": true,
+    "episodes": 2,
+    "successes": 2,
+    "updates": 303,
+    "actor_updates": 112,
+    "policy_steps": 24623,
+    "new_updates": 25,
+    "new_actor_updates": 12,
+    "new_policy_steps": 2790
+  },
+  "latest_independent_active_live": {
+    "at": "2026-10-21T14:59:53.769599+00:00",
+    "jobs": {
+      "tray_holdout_6131042": {
+        "step": 9720,
+        "episode": 3,
+        "stage": "pickup",
+        "route": 0,
+        "valid": false,
+        "last_error": "Move to the surveyed observation view first"
+      },
+      "tray_holdout_6141042": {
+        "step": 9720,
+        "episode": 3,
+        "stage": "pickup",
+        "route": 0,
+        "valid": true,
+        "last_error": ""
+      }
+    }
+  }
 }
