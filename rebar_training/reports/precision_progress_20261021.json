@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-21T03:05:06.255995+00:00",
+  "at": "2026-10-21T03:48:11.836489+00:00",
   "host": "arnold@192.168.3.133",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "regression_successes": 9,
@@ -52,7 +52,7 @@
   "independent_acceptance_qualified": false,
   "active_job": null,
   "verified_raw_files_on_both_hosts": 2876,
-  "next_action": "Preserve declared dock_clamp_holdout5151042/5161042 each4 underfrozen9b2a66f9 policy/source2c/detector/assets, nolearning/regression. Need fullfreshJSON andindependentgate8episodes strict3mm3deg250N/all4pad/openunload/retreat before fulltrain5051043 and64unseenpredeclared fullruns. Docktrain2/2/+11actor verified, butno independentdockgatepassed yet. Keepcontroller30740 andbothPG39112/39113, no duplicate.",
+  "next_action": "Preserve v8 full_trainPG43750/controller30740, actual newactorupdates and allcontinuousrows required. Minimum2successfulepisodes and>=60newupdates, finalpolicy/source/detector/assets freeze then64predeclared full independentepisodes (5241042..5311042 each8). Keep allrows; no dock/trayinit/hint forfullacceptance, max2parallel. Only final64gate>=95%success andWilsonlower>=90%/zeroevidenceerrors allowsactualfullvideodelivery+completebackup andautomationstop.",
   "full_development_training": {
     "at": "2026-10-21T01:16:38.080846+00:00",
     "run_id": "fe3a076e00fd47a59aaaca8feb44dd79",
@@ -274,8 +274,7 @@
     "scope": "In-progress v8 tray curriculum training from copied d287; not a completed stage or independent qualification."
   },
   "active_jobs": [
-    "dock_clamp_holdout_5151042",
-    "dock_clamp_holdout_5161042"
+    "full_train"
   ],
   "v8_tray_training": {
     "at": "2026-10-21T02:21:55.990167+00:00",
@@ -535,5 +534,191 @@
     },
     "independent_gate_passed": false,
     "scope": "V8 dock training complete2/2 with actualhandoff; independent5151042/5161042 evaluation required. Not full-mission qualification."
+  },
+  "v8_dock_gate": {
+    "passed": true,
+    "phase": "dock_clamp",
+    "randomization": "expanded",
+    "episodes": 8,
+    "successes": 8,
+    "success_rate": 1.0,
+    "wilson_95_lower": 0.6755924351161198,
+    "minimum_episodes": 8,
+    "minimum_distinct_seeds": 2,
+    "distinct_seeds": [
+      5151042,
+      5161042
+    ],
+    "required_wilson_95_lower": 0.6,
+    "checkpoint_sha256": "9b2a66f90b1c2ee33ab3f8c4db8f814ffd20872c264a56f3146b8f2ec6d808c5",
+    "evidence_errors": [],
+    "sample_requirement_met": true,
+    "failures": [],
+    "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+  },
+  "v8_dock_eval_evidence": {
+    "at": "2026-10-21T03:46:04.709146+00:00",
+    "gate": {
+      "passed": true,
+      "phase": "dock_clamp",
+      "randomization": "expanded",
+      "episodes": 8,
+      "successes": 8,
+      "success_rate": 1.0,
+      "wilson_95_lower": 0.6755924351161198,
+      "minimum_episodes": 8,
+      "minimum_distinct_seeds": 2,
+      "distinct_seeds": [
+        5151042,
+        5161042
+      ],
+      "required_wilson_95_lower": 0.6,
+      "checkpoint_sha256": "9b2a66f90b1c2ee33ab3f8c4db8f814ffd20872c264a56f3146b8f2ec6d808c5",
+      "evidence_errors": [],
+      "sample_requirement_met": true,
+      "failures": [],
+      "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+    },
+    "checks": {
+      "dock_clamp_holdout_5151042": {
+        "run_id": "2bd871f84c92428a96ccd98b8958ce42",
+        "episodes": 4,
+        "successes": 4,
+        "checks": [
+          {
+            "episode": 0,
+            "error_mm": 1.8476375844329596,
+            "axis_error_deg": 0.040075890324961755,
+            "jaw_forces_N": [
+              25.663057327270508,
+              24.309263229370117,
+              24.277976989746094,
+              25.624059677124023
+            ],
+            "tcp_clearance_mm": 78.46023887395859,
+            "physical_receipts_passed": true
+          },
+          {
+            "episode": 1,
+            "error_mm": 1.6922171926125884,
+            "axis_error_deg": 0.042890411326090463,
+            "jaw_forces_N": [
+              24.708728790283203,
+              25.269994735717773,
+              25.208986282348633,
+              24.67291831970215
+            ],
+            "tcp_clearance_mm": 91.83362871408463,
+            "physical_receipts_passed": true
+          },
+          {
+            "episode": 2,
+            "error_mm": 1.7005651025101542,
+            "axis_error_deg": 0.039995881144602494,
+            "jaw_forces_N": [
+              24.21980094909668,
+              25.714195251464844,
+              25.74858283996582,
+              24.240751266479492
+            ],
+            "tcp_clearance_mm": 89.7536650300026,
+            "physical_receipts_passed": true
+          },
+          {
+            "episode": 3,
+            "error_mm": 1.8004553858190775,
+            "axis_error_deg": 0.03958013615494916,
+            "jaw_forces_N": [
+              25.12166404724121,
+              24.812782287597656,
+              24.81820297241211,
+              25.125629425048828
+            ],
+            "tcp_clearance_mm": 90.39768576622009,
+            "physical_receipts_passed": true
+          }
+        ],
+        "report_sha256": "99d7eb590d09f6be0a91abea36991ef438a3ccd85bf17e16c9c45285c2738e67"
+      },
+      "dock_clamp_holdout_5161042": {
+        "run_id": "3e84b56b7c664356962dd63c04a9f81c",
+        "episodes": 4,
+        "successes": 4,
+        "checks": [
+          {
+            "episode": 0,
+            "error_mm": 1.806850777938962,
+            "axis_error_deg": 0.0437490240747023,
+            "jaw_forces_N": [
+              25.880037307739258,
+              24.0756778717041,
+              24.04593276977539,
+              25.855945587158203
+            ],
+            "tcp_clearance_mm": 86.12633496522903,
+            "physical_receipts_passed": true
+          },
+          {
+            "episode": 1,
+            "error_mm": 1.653732848353684,
+            "axis_error_deg": 0.039979251571954935,
+            "jaw_forces_N": [
+              26.221542358398438,
+              23.735248565673828,
+              23.71531867980957,
+              26.214447021484375
+            ],
+            "tcp_clearance_mm": 96.03752195835114,
+            "physical_receipts_passed": true
+          },
+          {
+            "episode": 2,
+            "error_mm": 1.6872907290235162,
+            "axis_error_deg": 0.04169946206138818,
+            "jaw_forces_N": [
+              24.325742721557617,
+              25.634403228759766,
+              25.650056838989258,
+              24.337818145751953
+            ],
+            "tcp_clearance_mm": 80.39422333240509,
+            "physical_receipts_passed": true
+          },
+          {
+            "episode": 3,
+            "error_mm": 1.7167740734294057,
+            "axis_error_deg": 0.043619044819003035,
+            "jaw_forces_N": [
+              23.903865814208984,
+              26.019285202026367,
+              26.06212043762207,
+              23.961490631103516
+            ],
+            "tcp_clearance_mm": 75.46759396791458,
+            "physical_receipts_passed": true
+          }
+        ],
+        "report_sha256": "17071be512bebdf6c504cac989233f60dd3da19363ec01d05f5b8f2217b9e577"
+      }
+    },
+    "scope": "V8 independentdockskill gate8/8 exactrecomputedandallstrictphysicschecked; explicitdock/trayinitialization doesnotcount as64continuousfullqualification."
+  },
+  "full_training_initial_learning": {
+    "snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/checkpoints/v8_full_inprogress_20261021_0347.pt",
+    "sha256": "4fb1b791d0a07b3d4114b0d1a5348c08ed79f2005c557fb618c49e4cf6c02f01",
+    "updates": 226,
+    "new_updates": 34,
+    "actor_updates": 85,
+    "new_actor_updates": 9,
+    "policy_steps": 19003,
+    "new_policy_steps": 2157,
+    "actor_weight_max_abs_change": 0.004631441086530685,
+    "model_and_optimizer_finite": true,
+    "includes_optimizer": true,
+    "training_complete": false,
+    "qualified": false,
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha_verified_on_node_and_mac": true,
+    "scope": "V8 fullcontinuous training in progress with no dock/tray initialization or hint; not independent64qualification."
   }
 }

@@ -4,7 +4,7 @@
 
 用户已明确授权在 `arnold@192.168.3.133` 的 RTX 4090 继续，工作目录 `/home/arnold/Develop/rebar-training-4090`。
 迁移包 1428 文件与 10 个 USD 依赖、SDK/CUDA 检查已通过；`precision_resume_4090_20261021` 的前置物理回归已完整 **9/9 通过**。
-当前是 `artifacts/mobile_curriculum_20261020/course_v8_precision_envelope`，控制器 PID/PGID 30740；抓取放槽独立 gate 已 8/8 通过，到站训练已 2/2 完成，正在两个新种子的独立评估，以 README 和 status.json 的实时阶段为准。到站 gate、64 回合验收及完整流程视频仍须完成。
+当前是 `artifacts/mobile_curriculum_20261020/course_v8_precision_envelope`，控制器 PID/PGID 30740；抓取放槽独立 gate 已 8/8 通过，到站独立 gate 也已 8/8 通过，正在整链训练，以 README 和 status.json 的实时阶段为准。64 回合完整整链验收及对应视频仍须完成。
 先读取 README 顶部及 review/status.json，再查当前课程状态；不要重启旧验证控制器 15451、旧暂停目录或回到 0.103 启动任务。
 下面的暂停与初始迁移步骤为历史记录，当前授权及进度以 README 顶部和 status.json 为准。
 
