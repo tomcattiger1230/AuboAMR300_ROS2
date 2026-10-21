@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-21T14:35:25.409583+00:00",
-  "status": "course_v9_5090_running",
+  "updated_at": "2026-10-21T14:46:47.145621+00:00",
+  "status": "node_unreachable_training_state_unknown",
   "stable": false,
   "user_authorized_resume": true,
   "requires_explicit_resume": false,
@@ -9,7 +9,7 @@
   "current_course": "course_v9_5090_resume",
   "pending_course": null,
   "pending_validation": null,
-  "active_phase": "tray_train",
+  "active_phase": "unknown_node_unreachable",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
   "warm_start_counters": {
@@ -21,13 +21,11 @@
   "pending_plan_sha256": "20246b24178ca3fbd925a2542353f052f8618e7715ef6a06649dbdb48fe923f4",
   "validation_launcher_pgid": 108926,
   "validation_state": "course_started",
-  "active_jobs": [
-    "tray_train"
-  ],
+  "active_jobs": null,
   "independent_full_evaluation_episodes_required": 64,
-  "independent_full_evaluation_complete_episodes": 0,
-  "independent_full_evaluation_successes": 0,
-  "independent_full_evaluation_failures": 0,
+  "independent_full_evaluation_complete_episodes": null,
+  "independent_full_evaluation_successes": null,
+  "independent_full_evaluation_failures": null,
   "independent_full_evaluation_passed": false,
   "current_tray_gate": null,
   "current_dock_gate": null,
@@ -67,7 +65,7 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Keep existing tray_train. Verify complete successful 2-episode training, new finite actor updates and source/policy/asset/detector provenance before new tray holdout gate; all later gates and final64 remain pending.",
+  "next_action": "Retry existing5090 node on next follow-up or user restoration. First inspect controller112563, native active_jobs and reports before any launch. Keep all existing jobs, no duplicate or old PID restart. Network/wakeup needed; no SSH identity changes.",
   "predeclaration": {
     "created_at": "2026-10-21T13:53:03.201933+00:00",
     "node": "arnold@192.168.0.103",
@@ -123,7 +121,7 @@
   "course_started": true,
   "validation_runner_pid": 108930,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
-  "training_still_active": true,
+  "training_still_active": null,
   "simulation_validation_active": false,
   "last_live_progress": {
     "step": 660,
@@ -147,10 +145,10 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "5090 migration strict physics3/3 and766 files verified on both hosts. Newv9 tray_train active, sampled checkpoint289updates/103actor/22486steps; +11updates/+3actor/+653effective steps, actor maximum absolute change0.002863636 and model+optimizer finite. Snapshot SHA checked both hosts. Training and all newv9 independent gates still incomplete; finalfull0/64 remains separate from3regressions and18old4090 rows.",
-  "independent_full_evaluation_new_episodes_since_last_check": 0,
+  "last_heartbeat_result": "Three SSH timeouts and node ping0/3, gateway3/3. Cannot obtain fresh state. Last22:39v9tray_train still running,1/2training success observed22:38; final independent0/64 then. Current counts/newrows/processstate unknown, not a confirmed training failure. Historical4090v8complete16/64plus2successrows kept separate. Preserve jobs and backups; user asked to wake/checknetwork.",
+  "independent_full_evaluation_new_episodes_since_last_check": null,
   "last_completed_validation": "review_20261020/resume_5090_20261021",
-  "current_course_state": "running",
+  "current_course_state": "unknown_node_unreachable",
   "course_runner_pid": 112563,
   "latest_migration_full_verification": {
     "at": "2026-10-21T14:31:28.178800+00:00",
@@ -306,5 +304,62 @@
   "resumed_learning_verified": true,
   "new_actor_updates": 3,
   "new_effective_policy_steps": 653,
-  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/resume_5090_20261021/tray_policy_live_20261021_2235.pt"
+  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/resume_5090_20261021/tray_policy_live_20261021_2235.pt",
+  "node_connection_state": "unreachable",
+  "last_known_course_state": "running",
+  "last_known_active_jobs": [
+    "tray_train"
+  ],
+  "last_successful_node_check_at": "2026-10-21T14:39:08.993778+00:00",
+  "remote_live_state_fresh": false,
+  "last_known_independent_full_evaluation": {
+    "as_of": "2026-10-21T14:39:08.993778+00:00",
+    "course": "course_v9_5090_resume",
+    "episodes": 0,
+    "successes": 0,
+    "failures": 0,
+    "required": 64,
+    "qualified": false
+  },
+  "last_known_training_progress": {
+    "as_of": "2026-10-21T14:38:10.279783+00:00",
+    "completed": false,
+    "episodes": 1,
+    "successes": 1,
+    "updates": 298,
+    "actor_updates": 107,
+    "policy_steps": 23455,
+    "latest_live_stage": "tray_rotate",
+    "episode_in_progress": 1
+  },
+  "latest_connectivity_check": {
+    "at": "2026-10-21T14:46:47.145621+00:00",
+    "node": "arnold@192.168.0.103",
+    "ssh_attempts": 3,
+    "ssh_errors": [
+      "connect to host 192.168.0.103 port 22: Operation timed out",
+      "connect to host 192.168.0.103 port 22: Operation timed out",
+      "connect to host 192.168.0.103 port 22: Operation timed out"
+    ],
+    "node_ping": {
+      "sent": 3,
+      "received": 0
+    },
+    "gateway_ping": {
+      "address": "192.168.0.1",
+      "sent": 3,
+      "received": 3
+    },
+    "local_address": "192.168.0.160",
+    "local_interface": "en0",
+    "remote_process_state": "unknown",
+    "last_successful_remote_check": "2026-10-21T14:39:08.993778+00:00",
+    "no_remote_process_started_or_stopped": true,
+    "ssh_identity_unchanged": true,
+    "user_wakeup_or_network_check_requested": true
+  },
+  "display_progress": {
+    "historical_4090_v8": "16/64 in complete group reports, plus 2 successful rows in user-interrupted groups; total18successful/0failed rows preserved.",
+    "current_5090_v9": "Live state unknown; last confirmed22:39 training in progress and final independent0/64. Do not present stale counts as current."
+  }
 }
