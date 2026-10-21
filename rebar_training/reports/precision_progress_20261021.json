@@ -1,8 +1,8 @@
 {
-  "at": "2026-10-21T00:47:47.111063+00:00",
+  "at": "2026-10-21T01:17:34.435679+00:00",
   "host": "arnold@192.168.3.133",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-  "regression_successes": 2,
+  "regression_successes": 4,
   "minimum_required_regressions": 9,
   "physical_receipts": [
     {
@@ -46,11 +46,71 @@
       "physics_receipts_passed": true
     }
   ],
-  "new_actor_updates": 6,
-  "new_effective_policy_steps": 1414,
-  "training_complete": false,
+  "new_actor_updates": 23,
+  "new_effective_policy_steps": 4930,
+  "training_complete": true,
   "independent_acceptance_qualified": false,
-  "active_job": "full_851043_retraining",
-  "verified_raw_files_on_both_hosts": 359,
-  "next_action": "Preserve full_851043_retraining, verify all episodes and >=60 new updates including actor updates after complete. Then partial-grasp blackout1 and reset4 must all pass. Validator sequentially launches these and only starts v8 after all9+episodes succeed; no duplicate starts. Formal v8 allgates+64episodes remain required."
+  "active_job": "dock_partial_grasp_outage",
+  "verified_raw_files_on_both_hosts": 1060,
+  "next_action": "Keep existing partial-grasp blackout regression: inspect at most2 safe empty/unloaded/supported/returned reobservations and final actualclamp. Then4reset episodes mandatory. Only all9+development regressions passed allow v8 newcourse; allformal gates and64stillrequired. Preserve controller and job; no duplicate.",
+  "full_development_training": {
+    "at": "2026-10-21T01:16:38.080846+00:00",
+    "run_id": "fe3a076e00fd47a59aaaca8feb44dd79",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "report_sha256": "9fb6d827abfbfdae306b4323de1eee6bbca4155a98fcfb888bc1b2cdbc151da5",
+    "episodes": 2,
+    "successes": 2,
+    "rows": [
+      {
+        "episode": 0,
+        "steps": 9083,
+        "error_mm": 2.0312529522925615,
+        "axis_error_deg": 0.09723245914790615,
+        "jaw_forces_N": [
+          24.604103088378906,
+          25.29914093017578,
+          25.319185256958008,
+          24.632856369018555
+        ],
+        "tcp_clearance_mm": 90.52159637212753,
+        "max_force_N": 25.680158615112305,
+        "all_strict_physical_checks_passed": true
+      },
+      {
+        "episode": 1,
+        "steps": 9055,
+        "error_mm": 1.8297198694199324,
+        "axis_error_deg": 0.13069437283092658,
+        "jaw_forces_N": [
+          25.905630111694336,
+          24.0472354888916,
+          24.012062072753906,
+          25.883913040161133
+        ],
+        "tcp_clearance_mm": 90.25770425796509,
+        "max_force_N": 26.21800422668457,
+        "all_strict_physical_checks_passed": true
+      }
+    ],
+    "learning": {
+      "sha256": "e3fe24af2d5477ecad63a0460140f58ff311999814320cc3eab838862706e073",
+      "updates": 200,
+      "actor_updates": 76,
+      "policy_steps": 16823,
+      "new_updates": 71,
+      "new_actor_updates": 23,
+      "new_policy_steps": 4930,
+      "actor_weight_max_abs_change": 0.008676324039697647,
+      "model_and_optimizer_finite": true,
+      "includes_optimizer": true,
+      "training_complete": true,
+      "qualified": false,
+      "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+      "snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/checkpoints/precision_training_final_20261021_0115.pt",
+      "checkpoint_sha_verified_on_node_and_mac": true,
+      "scope": "Completed development full-mission training regression; not independent evaluation and not promotion until partial-grasp fault and four-reset regressions pass."
+    },
+    "independent_acceptance_qualified": false,
+    "scope": "Completed development full-mission training regression; not independent evaluation and not promotion until partial-grasp fault and four-reset regressions pass."
+  }
 }
