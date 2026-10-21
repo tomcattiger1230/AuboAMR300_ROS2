@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-21T07:54:29.298133+00:00",
+  "at": "2026-10-21T07:59:49.301606+00:00",
   "state": "paused_by_user",
   "automation_state": "PAUSED",
   "automatic_resume_allowed": false,
@@ -52,5 +52,14 @@
   },
   "gpu_compute_processes_after_demo": 0,
   "migration_bundle": "artifacts/rebar_training_migration_platform_20261021.tar.gz",
-  "migration_bundle_verification": "See accompanying .verify.json/.sha256 after build"
+  "migration_bundle_verification": {
+    "archive": "artifacts/rebar_training_migration_platform_20261021.tar.gz",
+    "sha256": "f1b47a58e67a618870fde663c3dca93b050732875050b43d1625b367a2d0970a",
+    "bytes": 5350801884,
+    "verified_files": 8439,
+    "mismatches": [],
+    "standalone": true,
+    "previous_archives_required": false,
+    "summary_added_after_archive_creation": true
+  }
 }
