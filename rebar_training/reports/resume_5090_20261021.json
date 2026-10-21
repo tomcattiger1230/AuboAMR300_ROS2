@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-21T15:07:18.890759+00:00",
-  "status": "intermittent_node_unreachable_after_successful_original_job_check",
+  "updated_at": "2026-10-21T15:17:28.608522+00:00",
+  "status": "v9_tray_gate_passed_dock_holdouts_running",
   "stable": false,
   "user_authorized_resume": true,
   "requires_explicit_resume": false,
@@ -9,7 +9,7 @@
   "current_course": "course_v9_5090_resume",
   "pending_course": null,
   "pending_validation": null,
-  "active_phase": "unknown_node_unreachable",
+  "active_phase": "dock_clamp_independent_holdouts",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
   "warm_start_counters": {
@@ -21,13 +21,36 @@
   "pending_plan_sha256": "20246b24178ca3fbd925a2542353f052f8618e7715ef6a06649dbdb48fe923f4",
   "validation_launcher_pgid": 108926,
   "validation_state": "course_started",
-  "active_jobs": null,
+  "active_jobs": [
+    "dock_clamp_holdout_6161042",
+    "dock_clamp_holdout_6151042"
+  ],
   "independent_full_evaluation_episodes_required": 64,
-  "independent_full_evaluation_complete_episodes": null,
-  "independent_full_evaluation_successes": null,
-  "independent_full_evaluation_failures": null,
+  "independent_full_evaluation_complete_episodes": 0,
+  "independent_full_evaluation_successes": 0,
+  "independent_full_evaluation_failures": 0,
   "independent_full_evaluation_passed": false,
-  "current_tray_gate": null,
+  "current_tray_gate": {
+    "passed": true,
+    "phase": "tray",
+    "randomization": "expanded",
+    "episodes": 8,
+    "successes": 8,
+    "success_rate": 1.0,
+    "wilson_95_lower": 0.6755924351161198,
+    "minimum_episodes": 8,
+    "minimum_distinct_seeds": 2,
+    "distinct_seeds": [
+      6131042,
+      6141042
+    ],
+    "required_wilson_95_lower": 0.6,
+    "checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+    "evidence_errors": [],
+    "sample_requirement_met": true,
+    "failures": [],
+    "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+  },
   "current_dock_gate": null,
   "current_full_gate": null,
   "current_development_regressions": {
@@ -65,7 +88,7 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "On reconnection first read original controller/native active_jobs/reports and recent suspend/hibernate journal. Keep existing jobs; no duplicate or old PID restart. Cause of intermittent connection unconfirmed; do not infer training stopped or failed.",
+  "next_action": "Keep original coursecontroller112563 and dock_holdouts119251/119252. Wait for both complete4-episode native reports, independently recompute dockclamp gate and strict4pad/openunload/retreat physics. Only after gatepassed proceed original fulltrain and64holdouts. No duplicate or old job launch.",
   "predeclaration": {
     "created_at": "2026-10-21T13:53:03.201933+00:00",
     "node": "arnold@192.168.0.103",
@@ -121,29 +144,49 @@
   "course_started": true,
   "validation_runner_pid": 108930,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
-  "training_still_active": null,
+  "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-21T14:59:53.769599+00:00",
-    "phase": "tray_independent_holdouts",
-    "jobs": {
-      "tray_holdout_6131042": {
-        "step": 9720,
-        "episode": 3,
-        "stage": "pickup",
-        "route": 0,
-        "valid": false,
-        "last_error": "Move to the surveyed observation view first"
+    "at": "2026-10-21T15:17:28.608522+00:00",
+    "connected": true,
+    "state": "running",
+    "phase": "dock_clamp",
+    "active_jobs": [
+      "dock_clamp_holdout_6161042",
+      "dock_clamp_holdout_6151042"
+    ],
+    "jobs": [
+      {
+        "name": "dock_clamp_holdout_6161042",
+        "runner_pid": 119252,
+        "pid": 119253,
+        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+        "state": "running",
+        "latest_trace": {
+          "step": 1230,
+          "episode": 0,
+          "stage": "pickup_tray",
+          "valid": true,
+          "last_error": ""
+        },
+        "log_age_seconds": 2.005107879638672
       },
-      "tray_holdout_6141042": {
-        "step": 9720,
-        "episode": 3,
-        "stage": "pickup",
-        "route": 0,
-        "valid": true,
-        "last_error": ""
+      {
+        "name": "dock_clamp_holdout_6151042",
+        "runner_pid": 119251,
+        "pid": 119254,
+        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+        "state": "running",
+        "latest_trace": {
+          "step": 1230,
+          "episode": 0,
+          "stage": "pickup_tray",
+          "valid": true,
+          "last_error": ""
+        },
+        "log_age_seconds": 1.901759386062622
       }
-    }
+    ]
   },
   "node_migration_regression_successes": 3,
   "node_migration_regression_complete_episodes": 3,
@@ -159,10 +202,10 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "Successfully reconnected and verified originalcontroller112563 plus2existingholdouts, no launch.Trainingcomplete2/2,+25PPO/+12actor/+2790steps,d1e26finite,130filesand27snapshotfilesSHAverifiedbothhosts.Skill6/8successfulat22:59,fullindependent0/64then.Three subsequentSSHtimeouts,targetping0/3,gateway2/2,currentcountsunknown.Suspendjournalnotavailable,causeunconfirmed.Backup165filesverified.Gitupdated.",
-  "independent_full_evaluation_new_episodes_since_last_check": null,
+  "last_heartbeat_result": "User restored connection; originalcourse advanced without manuallaunch. Newv9tray independent8/8passed; Wilsonlower0.675592435,zeroevidenceerrors,456rawfilesSHAverifiedbothhosts. Docktrainingnativecomplete2/2,error1.619/1.856mm,+26PPO/+10actor/+2089steps;f70fpolicy+optimizerfinite,156filesSHAverifiedbothhosts. Originalcontrollernowrunningdockholdouts6151042/6161042,firstepisodesstillinprogressat23:17. Newv9full0/64unchanged;historicalv8complete16plus2successfulrows separate. Journalhasno suspend entries, no powerconfigurationchanged.",
+  "independent_full_evaluation_new_episodes_since_last_check": 0,
   "last_completed_validation": "review_20261020/resume_5090_20261021",
-  "current_course_state": "unknown_node_unreachable",
+  "current_course_state": "running",
   "course_runner_pid": 112563,
   "latest_migration_full_verification": {
     "at": "2026-10-21T14:31:28.178800+00:00",
@@ -284,56 +327,122 @@
     "review_20261020/resume_5090_20261021"
   ],
   "latest_training_live": {
-    "at": "2026-10-21T14:58:34.471864+00:00",
-    "checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
-    "initial_checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
-    "updates": 303,
-    "actor_updates": 112,
-    "policy_steps": 24623,
-    "new_updates": 25,
-    "new_actor_updates": 12,
-    "new_policy_steps": 2790,
-    "actor_weight_max_abs_change": 0.009190434589982033,
-    "model_and_optimizer_finite": true,
-    "training_report_sha256": "c1ee75e95e84e1c297ca07f2141a60878a06c9cdb32c47643883a71eb92fbba1",
-    "training_complete": true,
+    "at": "2026-10-21T15:16:29.484451+00:00",
+    "completed": true,
     "episodes": 2,
     "successes": 2,
+    "report_sha256": "586063f04b3594ab608afcabac120a1d2a393dd1b1189f22770fbc1f2f9c515b",
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "input_checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
+    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+    "checks": [
+      {
+        "episode": 0,
+        "error_mm": 1.6188073204830289,
+        "axis_error_deg": 0.03238169976154305,
+        "jaw_forces_N": [
+          26.106151580810547,
+          23.89033317565918,
+          23.859283447265625,
+          26.070100784301758
+        ],
+        "tcp_clearance_mm": 96.73547744750977,
+        "unloaded": true,
+        "all_strict_clamp_physics_passed": true
+      },
+      {
+        "episode": 1,
+        "error_mm": 1.8555610440671444,
+        "axis_error_deg": 0.07286452910662779,
+        "jaw_forces_N": [
+          24.41220474243164,
+          25.483753204345703,
+          25.52713394165039,
+          24.4746150970459
+        ],
+        "tcp_clearance_mm": 88.71418982744217,
+        "unloaded": true,
+        "all_strict_clamp_physics_passed": true
+      }
+    ],
+    "updates": 329,
+    "actor_updates": 122,
+    "policy_steps": 26712,
+    "new_updates": 26,
+    "new_actor_updates": 10,
+    "new_policy_steps": 2089,
+    "actor_weight_max_abs_change": 0.007040524855256081,
+    "model_and_optimizer_finite": true,
     "qualified": false
   },
   "last_observed_learning": {
-    "at": "2026-10-21T14:58:34.471864+00:00",
-    "checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
-    "initial_checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
-    "updates": 303,
-    "actor_updates": 112,
-    "policy_steps": 24623,
-    "new_updates": 25,
-    "new_actor_updates": 12,
-    "new_policy_steps": 2790,
-    "actor_weight_max_abs_change": 0.009190434589982033,
-    "model_and_optimizer_finite": true,
-    "training_report_sha256": "c1ee75e95e84e1c297ca07f2141a60878a06c9cdb32c47643883a71eb92fbba1",
-    "training_complete": true,
+    "at": "2026-10-21T15:16:29.484451+00:00",
+    "completed": true,
     "episodes": 2,
     "successes": 2,
+    "report_sha256": "586063f04b3594ab608afcabac120a1d2a393dd1b1189f22770fbc1f2f9c515b",
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "input_checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
+    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+    "checks": [
+      {
+        "episode": 0,
+        "error_mm": 1.6188073204830289,
+        "axis_error_deg": 0.03238169976154305,
+        "jaw_forces_N": [
+          26.106151580810547,
+          23.89033317565918,
+          23.859283447265625,
+          26.070100784301758
+        ],
+        "tcp_clearance_mm": 96.73547744750977,
+        "unloaded": true,
+        "all_strict_clamp_physics_passed": true
+      },
+      {
+        "episode": 1,
+        "error_mm": 1.8555610440671444,
+        "axis_error_deg": 0.07286452910662779,
+        "jaw_forces_N": [
+          24.41220474243164,
+          25.483753204345703,
+          25.52713394165039,
+          24.4746150970459
+        ],
+        "tcp_clearance_mm": 88.71418982744217,
+        "unloaded": true,
+        "all_strict_clamp_physics_passed": true
+      }
+    ],
+    "updates": 329,
+    "actor_updates": 122,
+    "policy_steps": 26712,
+    "new_updates": 26,
+    "new_actor_updates": 10,
+    "new_policy_steps": 2089,
+    "actor_weight_max_abs_change": 0.007040524855256081,
+    "model_and_optimizer_finite": true,
     "qualified": false,
     "checkpoint_sha_verified_on_node_and_mac": true
   },
   "resumed_learning_verified": true,
-  "new_actor_updates": 12,
-  "new_effective_policy_steps": 2790,
-  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/tray_policy.pt",
-  "node_connection_state": "unreachable_after_brief_restoration",
+  "new_actor_updates": 10,
+  "new_effective_policy_steps": 2089,
+  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt",
+  "node_connection_state": "connected",
   "last_known_course_state": "running",
   "last_known_active_jobs": [
-    "tray_holdout_6141042",
-    "tray_holdout_6131042"
+    "dock_clamp_holdout_6161042",
+    "dock_clamp_holdout_6151042"
   ],
-  "last_successful_node_check_at": "2026-10-21T14:59:53.769599+00:00",
-  "remote_live_state_fresh": false,
+  "last_successful_node_check_at": "2026-10-21T15:17:28.608522+00:00",
+  "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
-    "as_of": "2026-10-21T14:59:53.769599+00:00",
+    "as_of": "2026-10-21T15:17:28.608522+00:00",
     "course": "course_v9_5090_resume",
     "episodes": 0,
     "successes": 0,
@@ -342,54 +451,32 @@
     "qualified": false
   },
   "last_known_training_progress": {
-    "as_of": "2026-10-21T14:59:53.769599+00:00",
-    "completed": true,
+    "as_of": "2026-10-21T15:16:29.484451+00:00",
+    "phase": "dock_clamp",
+    "complete": true,
     "episodes": 2,
     "successes": 2,
-    "updates": 303,
-    "actor_updates": 112,
-    "policy_steps": 24623
+    "updates": 329,
+    "actor_updates": 122,
+    "policy_steps": 26712,
+    "new_updates": 26,
+    "new_actor_updates": 10,
+    "new_policy_steps": 2089
   },
   "latest_connectivity_check": {
-    "at": "2026-10-21T15:07:18.890759+00:00",
-    "connection_state": "intermittent_then_unreachable",
-    "last_verified_live_at": "2026-10-21T14:59:53.769599+00:00",
-    "last_connected_hostname": "arnold-NUC16JNK9XX11",
-    "ssh_target": "arnold@192.168.0.103",
-    "latest_ipv4_ssh_timeouts": 3,
-    "target_ping": {
-      "sent": 3,
-      "received": 0
-    },
-    "gateway_ping": {
-      "sent": 2,
-      "received": 2
-    },
-    "original_controller": 112563,
-    "last_known_active_jobs": [
-      "tray_holdout_6141042",
-      "tray_holdout_6131042"
-    ],
-    "last_known_runners": [
-      114039,
-      114038
-    ],
-    "training_complete_episodes": 2,
-    "training_successes": 2,
-    "last_known_tray_skill_episodes": 6,
-    "last_known_tray_skill_successes": 6,
-    "current_live_counts": "unknown",
-    "no_simulation_started_stopped_or_restarted": true,
-    "suspend_journal_obtained": false,
-    "diagnostic_output_previously_requested": true
+    "at": "2026-10-21T15:17:28.608522+00:00",
+    "connected": true,
+    "host": "arnold-NUC16JNK9XX11",
+    "no_manual_job_launch_or_restart": true,
+    "suspend_hibernate_unit_journal_last45min": "no entries, returncode0, no stderr; no cause inferred or power settings changed"
   },
   "display_progress": {
-    "historical_4090_v8": "16/64complete groupreports plus2successful rows from interrupted groups,total18success0failure preserved.",
-    "current_5090_v9": "Currentliveunknown; last22:59complete traytraining2/2,skill6/8success0fail,finalfull0/64. No qualified gate or current count claim."
+    "historical_4090_v8": "16/64completegroupsplus2successfulrowsininterruptedgroups,total18success0failurepreserved.",
+    "current_5090_v9": "Tray skill gate8/8passed; dock training2/2complete, independentdockinprogress; finalfull0/64,succ0fail0,new0."
   },
   "user_reported_node_awake": true,
-  "waiting_for": "Stable node connection or previously requested read-only Ubuntu diagnostics; do not repeat only wakeup requests.",
-  "evaluation_still_active": null,
+  "waiting_for": null,
+  "evaluation_still_active": true,
   "latest_tray_training_verified": {
     "at": "2026-10-21T14:59:53.736106+00:00",
     "completed": true,
@@ -507,65 +594,81 @@
       ]
     }
   ],
-  "current_tray_independent_episodes": null,
-  "current_tray_independent_successes": null,
-  "current_tray_independent_failures": null,
+  "current_tray_independent_episodes": 8,
+  "current_tray_independent_successes": 8,
+  "current_tray_independent_failures": 0,
   "latest_reconnect_verification": {
-    "at": "2026-10-21T14:59:53.769599+00:00",
-    "training_files": 130,
-    "partial_snapshot_files": 27,
-    "mismatches": [],
-    "training_complete": true,
-    "training_episodes": 2,
-    "training_successes": 2,
-    "partial_tray_episodes": 6,
-    "partial_tray_successes": 6,
-    "tray_gate_passed": false,
-    "checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
-    "checkpoint_and_all_listed_files_sha_verified_both_hosts": true,
-    "qualified": false
+    "at": "2026-10-21T15:17:28.608522+00:00",
+    "connected": true,
+    "active_jobs": [
+      "dock_clamp_holdout_6161042",
+      "dock_clamp_holdout_6151042"
+    ],
+    "no_manual_job_launch_or_restart": true
   },
-  "network_diagnostic_output_no_longer_required": false,
+  "network_diagnostic_output_no_longer_required": true,
   "latest_training_native_progress": {
-    "as_of": "2026-10-21T14:59:53.769599+00:00",
+    "as_of": "2026-10-21T15:16:29.484451+00:00",
+    "phase": "dock_clamp",
     "complete": true,
     "episodes": 2,
     "successes": 2,
-    "updates": 303,
-    "actor_updates": 112,
-    "policy_steps": 24623,
-    "new_updates": 25,
-    "new_actor_updates": 12,
-    "new_policy_steps": 2790
+    "updates": 329,
+    "actor_updates": 122,
+    "policy_steps": 26712,
+    "new_updates": 26,
+    "new_actor_updates": 10,
+    "new_policy_steps": 2089
   },
   "latest_independent_active_live": {
-    "at": "2026-10-21T14:59:53.769599+00:00",
-    "jobs": {
-      "tray_holdout_6131042": {
-        "step": 9720,
-        "episode": 3,
-        "stage": "pickup",
-        "route": 0,
-        "valid": false,
-        "last_error": "Move to the surveyed observation view first"
+    "at": "2026-10-21T15:17:28.608522+00:00",
+    "connected": true,
+    "state": "running",
+    "phase": "dock_clamp",
+    "active_jobs": [
+      "dock_clamp_holdout_6161042",
+      "dock_clamp_holdout_6151042"
+    ],
+    "jobs": [
+      {
+        "name": "dock_clamp_holdout_6161042",
+        "runner_pid": 119252,
+        "pid": 119253,
+        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+        "state": "running",
+        "latest_trace": {
+          "step": 1230,
+          "episode": 0,
+          "stage": "pickup_tray",
+          "valid": true,
+          "last_error": ""
+        },
+        "log_age_seconds": 2.005107879638672
       },
-      "tray_holdout_6141042": {
-        "step": 9720,
-        "episode": 3,
-        "stage": "pickup",
-        "route": 0,
-        "valid": true,
-        "last_error": ""
+      {
+        "name": "dock_clamp_holdout_6151042",
+        "runner_pid": 119251,
+        "pid": 119254,
+        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+        "state": "running",
+        "latest_trace": {
+          "step": 1230,
+          "episode": 0,
+          "stage": "pickup_tray",
+          "valid": true,
+          "last_error": ""
+        },
+        "log_age_seconds": 1.901759386062622
       }
-    }
+    ]
   },
   "last_known_tray_independent": {
-    "as_of": "2026-10-21T14:59:53.769599+00:00",
-    "episodes": 6,
-    "successes": 6,
+    "as_of": "2026-10-21T15:13:00.017004+00:00",
+    "episodes": 8,
+    "successes": 8,
     "failures": 0,
     "required": 8,
-    "gate_passed": false
+    "gate_passed": true
   },
   "latest_tray_independent_partial_fresh": false,
   "latest_local_recovery_backup": {
@@ -573,5 +676,147 @@
     "sha256": "e4c8f3a244347c09e32db017e10119e4b7123b2ad5c2624a800d4c9a0cb0efbd",
     "files": 165,
     "mismatches": []
-  }
+  },
+  "latest_tray_gate_verified": {
+    "at": "2026-10-21T15:13:00.017004+00:00",
+    "files": 456,
+    "mismatches": [],
+    "gate": {
+      "passed": true,
+      "phase": "tray",
+      "randomization": "expanded",
+      "episodes": 8,
+      "successes": 8,
+      "success_rate": 1.0,
+      "wilson_95_lower": 0.6755924351161198,
+      "minimum_episodes": 8,
+      "minimum_distinct_seeds": 2,
+      "distinct_seeds": [
+        6131042,
+        6141042
+      ],
+      "required_wilson_95_lower": 0.6,
+      "checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+      "evidence_errors": [],
+      "sample_requirement_met": true,
+      "failures": [],
+      "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+    },
+    "native_gate_matches_local_independent_recompute": true,
+    "all_listed_files_sha_verified_both_hosts": true,
+    "full_mission_qualified": false
+  },
+  "current_dock_independent_episodes": 0,
+  "current_dock_independent_successes": 0,
+  "current_dock_independent_failures": 0,
+  "latest_dock_training_verified": {
+    "at": "2026-10-21T15:16:29.484451+00:00",
+    "completed": true,
+    "episodes": 2,
+    "successes": 2,
+    "report_sha256": "586063f04b3594ab608afcabac120a1d2a393dd1b1189f22770fbc1f2f9c515b",
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "input_checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
+    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+    "checks": [
+      {
+        "episode": 0,
+        "error_mm": 1.6188073204830289,
+        "axis_error_deg": 0.03238169976154305,
+        "jaw_forces_N": [
+          26.106151580810547,
+          23.89033317565918,
+          23.859283447265625,
+          26.070100784301758
+        ],
+        "tcp_clearance_mm": 96.73547744750977,
+        "unloaded": true,
+        "all_strict_clamp_physics_passed": true
+      },
+      {
+        "episode": 1,
+        "error_mm": 1.8555610440671444,
+        "axis_error_deg": 0.07286452910662779,
+        "jaw_forces_N": [
+          24.41220474243164,
+          25.483753204345703,
+          25.52713394165039,
+          24.4746150970459
+        ],
+        "tcp_clearance_mm": 88.71418982744217,
+        "unloaded": true,
+        "all_strict_clamp_physics_passed": true
+      }
+    ],
+    "updates": 329,
+    "actor_updates": 122,
+    "policy_steps": 26712,
+    "new_updates": 26,
+    "new_actor_updates": 10,
+    "new_policy_steps": 2089,
+    "actor_weight_max_abs_change": 0.007040524855256081,
+    "model_and_optimizer_finite": true,
+    "qualified": false
+  },
+  "latest_dock_training_both_hosts_verified": {
+    "at": "2026-10-21T15:16:29.484451+00:00",
+    "files": 156,
+    "mismatches": [],
+    "all_files_sha_verified_both_hosts": true,
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "model_and_optimizer_finite": true,
+    "training_episodes": 2,
+    "training_successes": 2,
+    "qualified": false
+  },
+  "total_v9_learning_since_migration": {
+    "new_updates": 51,
+    "new_actor_updates": 22,
+    "new_policy_steps": 4879
+  },
+  "latest_dock_independent_live": {
+    "at": "2026-10-21T15:17:28.608522+00:00",
+    "connected": true,
+    "state": "running",
+    "phase": "dock_clamp",
+    "active_jobs": [
+      "dock_clamp_holdout_6161042",
+      "dock_clamp_holdout_6151042"
+    ],
+    "jobs": [
+      {
+        "name": "dock_clamp_holdout_6161042",
+        "runner_pid": 119252,
+        "pid": 119253,
+        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+        "state": "running",
+        "latest_trace": {
+          "step": 1230,
+          "episode": 0,
+          "stage": "pickup_tray",
+          "valid": true,
+          "last_error": ""
+        },
+        "log_age_seconds": 2.005107879638672
+      },
+      {
+        "name": "dock_clamp_holdout_6151042",
+        "runner_pid": 119251,
+        "pid": 119254,
+        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+        "state": "running",
+        "latest_trace": {
+          "step": 1230,
+          "episode": 0,
+          "stage": "pickup_tray",
+          "valid": true,
+          "last_error": ""
+        },
+        "log_age_seconds": 1.901759386062622
+      }
+    ]
+  },
+  "current_phase_checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831"
 }
