@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-21T14:15:28.064839+00:00",
-  "status": "resumed_5090_migration_validation",
+  "updated_at": "2026-10-21T14:35:25.409583+00:00",
+  "status": "course_v9_5090_running",
   "stable": false,
   "user_authorized_resume": true,
   "requires_explicit_resume": false,
   "training_host": "arnold@192.168.0.103",
   "training_repository": "/home/arnold/Develop/rebar-training-5090-resume-20261021",
-  "current_course": null,
-  "pending_course": "course_v9_5090_resume",
-  "pending_validation": "review_20261020/resume_5090_20261021",
-  "active_phase": "migration_full_reset_regression",
+  "current_course": "course_v9_5090_resume",
+  "pending_course": null,
+  "pending_validation": null,
+  "active_phase": "tray_train",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
   "warm_start_counters": {
@@ -20,9 +20,9 @@
   "pending_plan": "config/mobile_curriculum_recovery_v9_5090.json",
   "pending_plan_sha256": "20246b24178ca3fbd925a2542353f052f8618e7715ef6a06649dbdb48fe923f4",
   "validation_launcher_pgid": 108926,
-  "validation_state": "regression_running",
+  "validation_state": "course_started",
   "active_jobs": [
-    "full_reset_regression_5241042"
+    "tray_train"
   ],
   "independent_full_evaluation_episodes_required": 64,
   "independent_full_evaluation_complete_episodes": 0,
@@ -34,10 +34,11 @@
   "current_full_gate": null,
   "current_development_regressions": {
     "required_episodes": 3,
-    "episodes": 1,
-    "successes": 1,
-    "native_completed_jobs_episodes": 0,
-    "all_prerequisite_jobs_completed": false
+    "episodes": 3,
+    "successes": 3,
+    "failures": 0,
+    "native_completed_jobs_episodes": 3,
+    "all_prerequisite_jobs_completed": true
   },
   "historical_4090": {
     "course": "course_v8_precision_envelope",
@@ -66,7 +67,7 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Follow validation.status.json and native jobs; all 3 strict regression episodes must pass before automatic course_v9 start. Fresh stage gates and 64 full acceptance use new predeclared seeds; old 18 rows excluded. No duplicate jobs.",
+  "next_action": "Keep existing tray_train. Verify complete successful 2-episode training, new finite actor updates and source/policy/asset/detector provenance before new tray holdout gate; all later gates and final64 remain pending.",
   "predeclaration": {
     "created_at": "2026-10-21T13:53:03.201933+00:00",
     "node": "arnold@192.168.0.103",
@@ -118,68 +119,192 @@
   },
   "runtime_preflight_passed": true,
   "cpu_suite_passed": true,
-  "physical_regressions_completed": 0,
-  "course_started": false,
+  "physical_regressions_completed": 3,
+  "course_started": true,
   "validation_runner_pid": 108930,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
-  "training_still_active": false,
-  "simulation_validation_active": true,
+  "training_still_active": true,
+  "simulation_validation_active": false,
   "last_live_progress": {
-    "step": 14130,
-    "episode": 1,
-    "stage": "navigate",
+    "step": 660,
+    "episode": 0,
+    "stage": "pickup",
     "valid": true,
     "last_error": "",
-    "at": "2026-10-21T14:15:28.064839+00:00"
+    "at": "2026-10-21T14:32:24.148784+00:00"
   },
-  "node_migration_regression_successes": 1,
-  "node_migration_regression_complete_episodes": 1,
-  "latest_migration_partial_physics": {
-    "at": "2026-10-21T14:15:28.064839+00:00",
-    "run_id": "6954b78d1c5347be9b78f5ef4ffa027f",
-    "completed_regression_rows": 1,
-    "successes": 1,
-    "checks": [
-      {
-        "episode": 0,
-        "error_mm": 1.5478938585147262,
-        "axis_error_deg": 0.03711979043541847,
-        "jaws_N": [
-          24.678834915161133,
-          25.25208854675293,
-          25.204565048217773,
-          24.621261596679688
-        ],
-        "tcp_clearance_mm": 85.23143082857132,
-        "strict_physical_receipts_passed": true
-      }
-    ],
-    "job_complete": false,
+  "node_migration_regression_successes": 3,
+  "node_migration_regression_complete_episodes": 3,
+  "latest_migration_raw_files_verified": {
+    "at": "2026-10-21T14:31:28.178800+00:00",
+    "files": 766,
+    "mismatches": [],
+    "complete_raw_files_sha_verified_on_both_hosts": true,
+    "episodes": 3,
+    "successes": 3,
+    "failures": 0,
+    "regression_only": true,
+    "qualified": false
+  },
+  "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
+  "last_heartbeat_result": "5090 migration strict physics3/3 and766 files verified on both hosts. Newv9 tray_train active, sampled checkpoint289updates/103actor/22486steps; +11updates/+3actor/+653effective steps, actor maximum absolute change0.002863636 and model+optimizer finite. Snapshot SHA checked both hosts. Training and all newv9 independent gates still incomplete; finalfull0/64 remains separate from3regressions and18old4090 rows.",
+  "independent_full_evaluation_new_episodes_since_last_check": 0,
+  "last_completed_validation": "review_20261020/resume_5090_20261021",
+  "current_course_state": "running",
+  "course_runner_pid": 112563,
+  "latest_migration_full_verification": {
+    "at": "2026-10-21T14:31:28.178800+00:00",
+    "complete": true,
     "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
     "checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
     "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
     "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
-    "last_trace": {
-      "step": 14130,
-      "episode": 1,
-      "stage": "navigate",
-      "valid": true,
-      "last_error": ""
-    },
-    "independent_qualification": false,
-    "independent_episodes": 0,
-    "scope": "Partial migration regression receipts, not completed native job or final gate."
+    "episodes": 3,
+    "successes": 3,
+    "failures": 0,
+    "jobs": [
+      {
+        "name": "full_reset_regression_5241042",
+        "run_id": "6954b78d1c5347be9b78f5ef4ffa027f",
+        "episodes": 2,
+        "successes": 2,
+        "checks": [
+          {
+            "episode": 0,
+            "error_mm": 1.5478938585147262,
+            "axis_error_deg": 0.03711979043541847,
+            "all_strict_physics_passed": true
+          },
+          {
+            "episode": 1,
+            "error_mm": 1.6125243855640292,
+            "axis_error_deg": 0.037480069165242526,
+            "all_strict_physics_passed": true
+          }
+        ],
+        "report_sha256": "6324e514556aca966f08e3bc6b4eb19a1743be5d80d65a75c118246df2773a60",
+        "grasp_aborts": [],
+        "reacquisitions": [],
+        "frozen_updates": 278,
+        "frozen_actor_updates": 100,
+        "frozen_policy_steps": 21833
+      },
+      {
+        "name": "partial_grasp_outage_241042",
+        "run_id": "800edb1e015342829f69621186754e4e",
+        "episodes": 1,
+        "successes": 1,
+        "checks": [
+          {
+            "episode": 0,
+            "error_mm": 1.5023754676803946,
+            "axis_error_deg": 0.03727167101777934,
+            "all_strict_physics_passed": true
+          }
+        ],
+        "report_sha256": "2c8eb70610f9157d3e3840394dca34454b057692a432e0571065654bb0de300c",
+        "grasp_aborts": [
+          {
+            "tick": 2332,
+            "reason": "No detected steel component",
+            "tcp_base": [
+              0.2926057193745679,
+              -0.0009295626710237315,
+              0.7231857563894308
+            ],
+            "finger_forces": [
+              61.32453155517578,
+              53.33127212524414
+            ],
+            "tray_load_N": 18.575593948364258,
+            "last_good_ns": 77200000000,
+            "arm_joints": [
+              3.468120574951172,
+              -0.3272216022014618,
+              1.917453646659851,
+              0.6742466688156128,
+              1.570940613746643,
+              -1.244764804840088
+            ],
+            "open_unloaded_tick": 2345,
+            "open_fingers": [
+              0.0012354262871667743,
+              0.0012424655724316835
+            ],
+            "open_forces": [
+              0.0,
+              0.0
+            ],
+            "supported_tray_load_N": 21.79046630859375,
+            "returned": true,
+            "open_arm_joints": [
+              3.4682674407958984,
+              -0.32659533619880676,
+              1.918287992477417,
+              0.6731018424034119,
+              1.5701003074645996,
+              -1.245507836341858
+            ]
+          }
+        ],
+        "reacquisitions": [
+          {
+            "tick": 2345,
+            "reason": "No detected steel component",
+            "last_good_ns": 77200000000,
+            "return_speed_scale": 0.5,
+            "trigger": "supported_partial_grasp_abort",
+            "reacquired_tick": 3492
+          }
+        ],
+        "frozen_updates": 278,
+        "frozen_actor_updates": 100,
+        "frozen_policy_steps": 21833
+      }
+    ],
+    "regression_only": true,
+    "qualified": false,
+    "independent_episodes": 0
   },
-  "latest_migration_raw_files_verified": {
-    "files": 125,
-    "mismatches": [],
-    "both_hosts_sha_verified": true,
-    "no_learning_argument_verified": true,
-    "source_snapshot_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-    "run_id": "6954b78d1c5347be9b78f5ef4ffa027f",
-    "qualified": false
+  "current_course_source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+  "migration_required_directories": [
+    "course_v9_5090_resume",
+    "review_20261020/resume_5090_20261021"
+  ],
+  "latest_training_live": {
+    "at": "2026-10-21T14:35:25.409583+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/resume_5090_20261021/tray_policy_live_20261021_2235.pt",
+    "sha256": "0c6c217d36f38e8925daadc3c2f52df179af844faa1989e5e3572c1c85450596",
+    "updates": 289,
+    "actor_updates": 103,
+    "policy_steps": 22486,
+    "new_updates": 11,
+    "new_actor_updates": 3,
+    "new_policy_steps": 653,
+    "actor_weight_max_abs_change": 0.002863636240363121,
+    "model_and_optimizer_finite": true,
+    "training_complete": false,
+    "qualified": false,
+    "checkpoint_sha_verified_on_node_and_mac": true
   },
-  "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "5090 migration regression: first continuous full episode successful at 1.547894mm; strict 4pad/unload/retreat/speeds independently verified.125 immutable raw files SHA verified on both hosts. Episode2 navigating with fresh valid RGB and no error. No completed native regression job or final64 gate; keep existing job and controller.",
-  "independent_full_evaluation_new_episodes_since_last_check": 0
+  "last_observed_learning": {
+    "at": "2026-10-21T14:35:25.409583+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/resume_5090_20261021/tray_policy_live_20261021_2235.pt",
+    "sha256": "0c6c217d36f38e8925daadc3c2f52df179af844faa1989e5e3572c1c85450596",
+    "updates": 289,
+    "actor_updates": 103,
+    "policy_steps": 22486,
+    "new_updates": 11,
+    "new_actor_updates": 3,
+    "new_policy_steps": 653,
+    "actor_weight_max_abs_change": 0.002863636240363121,
+    "model_and_optimizer_finite": true,
+    "training_complete": false,
+    "qualified": false,
+    "checkpoint_sha_verified_on_node_and_mac": true
+  },
+  "resumed_learning_verified": true,
+  "new_actor_updates": 3,
+  "new_effective_policy_steps": 653,
+  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/resume_5090_20261021/tray_policy_live_20261021_2235.pt"
 }
