@@ -4,7 +4,8 @@
 
 用户于 2026-10-21 明确要求暂停训练和独立验收，准备更换电脑。
 3.133 上的课程父进程及两组评估均已停止，录制前确认本任务无残留进程、GPU 空闲；定时任务 automation-2 已暂停。
-仅另行授权当前策略的一回合演示录像，不学习、不恢复课程、不计独立验收分母。录完后也停止仿真。
+另行授权的当前策略演示已 1/1 成功，约 5 分 4 秒，夹紧误差 1.435 mm；完整帧解码、物理凭据及阶段关键画面已核查。录像不学习、不恢复课程、不计独立验收分母，录制后全部本任务仿真进程已退出，GPU 空闲。
+录像为 `review_20261020/migration_pause_20261021/current_policy_demo_labeled.mp4`（相对于训练 campaign 目录），原生录屏和原始单回合报告一并保留。
 未收到明确恢复指令前，新旧设备都只能校验和准备文件。
 
 - 本机工程：`/Users/weiluo/Develop/github/AuboAMR300_ROS2`。
@@ -21,7 +22,7 @@
 ## 迁移文件
 
 准备的独立迁移包为 `rebar_training/artifacts/rebar_training_migration_platform_20261021.tar.gz`，同目录有 `.sha256`、`.verify.json`。
-只有校验报告存在且 `mismatches` 为空时，才表示包已完成。包内 `TRANSFER_MANIFEST.json` 逐文件记录 SHA256。
+只有校验报告存在且 `mismatches` 为空时，才表示包已完成。包内状态是生成归档前的快照；归档本身最终 SHA 以包外同名 `.sha256` / `.verify.json` 为准，包外 `.recovery_status.json` 保存最终恢复记录。包内 `TRANSFER_MANIFEST.json` 逐文件记录 SHA256。
 它应包含当前 v8 的权重和 optimizer、完整及中断的原生报告/日志/相机数据、冻结源码、预声明计划、前置物理回归、演示视频与凭据、生成 USD 及原 CAD/纹理依赖、检测器、配置、测试和本指导。
 
 虚拟环境、Isaac SDK、SSH 身份、Git 凭据及此前的备份压缩包不随包迁移。旧归档保留在本机，但这个新包不依赖逐层解开旧备份。
@@ -40,8 +41,16 @@
 
 ## 新电脑上的准备步骤（不会启动训练）
 
-1. 将迁移包及两个校验文件复制到新电脑，先执行 `sha256sum -c 包名.tar.gz.sha256`。
+1. 将迁移包及两个校验文件复制到新电脑，先执行 `sha256sum -c rebar_training_migration_platform_20261021.tar.gz.sha256`。
 2. 解压到新的专用工程目录，不能覆盖原 ROS 工作区；例如 `~/Develop/rebar-training-new-platform`。包中的路径均相对工程根目录。
+解压示例（从存放迁移包的目录执行）：
+
+```bash
+mkdir -p "$HOME/Develop/rebar-training-new-platform"
+tar -xzf rebar_training_migration_platform_20261021.tar.gz -C "$HOME/Develop/rebar-training-new-platform"
+cd "$HOME/Develop/rebar-training-new-platform"
+```
+
 3. 在新目录核验逐文件 SHA256：
 
 ```bash

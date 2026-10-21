@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-21T07:38:20.379052+00:00",
+  "at": "2026-10-21T07:54:29.298133+00:00",
   "state": "paused_by_user",
   "automation_state": "PAUSED",
   "automatic_resume_allowed": false,
@@ -23,7 +23,7 @@
   "interrupted_files_sha_verified_on_both_hosts": 492,
   "training_processes_remaining": 0,
   "one_shot_demo_authorized": true,
-  "demo_recording": true,
+  "demo_recording": false,
   "migration_guide": "MIGRATE_PLATFORM_20261021.md",
   "training_qualification": "2/2 complete training, skillgates8/8each. Full64incomplete. RGBservo/scriptedgripper/odometry+boundedresidualPPO, Cosmosinferencefalse.",
   "migration_tests": {
@@ -32,5 +32,25 @@
     "scope": "currentcourse,optimizer,partialreports,videoevidenceincluded;externalpathsrejected;priorarchives/venvexcluded"
   },
   "relocated_runtime_usd_dependencies_checked": 10,
-  "source_control_unchanged": true
+  "runtime_controller_source_sha256_unchanged": true,
+  "demo_complete": true,
+  "demo": {
+    "successes": 1,
+    "episodes": 1,
+    "regression": true,
+    "error_mm": 1.4347812393680215,
+    "duration_seconds": 304.4,
+    "video": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/migration_pause_20261021/current_policy_demo_labeled.mp4",
+    "video_sha256": "b829dc69b2d8c7e319c7da919d3a5d66e72bab19b004407b2e18469e2b3e36bf",
+    "raw_video_sha256": "8e8a1bec7195806fafcfdbf800c16940ff46de1866fca9557b64ad7f2fd20e57",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "policy_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+    "all_strict_physics": true,
+    "all_frames_decode": true,
+    "keyframes_inspected": true,
+    "independent_acceptance_qualified": false
+  },
+  "gpu_compute_processes_after_demo": 0,
+  "migration_bundle": "artifacts/rebar_training_migration_platform_20261021.tar.gz",
+  "migration_bundle_verification": "See accompanying .verify.json/.sha256 after build"
 }
