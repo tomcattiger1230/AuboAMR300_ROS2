@@ -1,0 +1,137 @@
+{
+  "updated_at": "2026-10-21T13:58:44.228976+00:00",
+  "status": "resumed_5090_migration_validation",
+  "stable": false,
+  "user_authorized_resume": true,
+  "requires_explicit_resume": false,
+  "training_host": "arnold@192.168.0.103",
+  "training_repository": "/home/arnold/Develop/rebar-training-5090-resume-20261021",
+  "current_course": null,
+  "pending_course": "course_v9_5090_resume",
+  "pending_validation": "review_20261020/resume_5090_20261021",
+  "active_phase": "migration_full_reset_regression",
+  "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+  "warm_start_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+  "warm_start_counters": {
+    "updates": 278,
+    "actor_updates": 100,
+    "policy_steps": 21833
+  },
+  "pending_plan": "config/mobile_curriculum_recovery_v9_5090.json",
+  "pending_plan_sha256": "20246b24178ca3fbd925a2542353f052f8618e7715ef6a06649dbdb48fe923f4",
+  "validation_launcher_pgid": 108926,
+  "validation_state": "regression_running",
+  "active_jobs": [
+    "full_reset_regression_5241042"
+  ],
+  "independent_full_evaluation_episodes_required": 64,
+  "independent_full_evaluation_complete_episodes": 0,
+  "independent_full_evaluation_successes": 0,
+  "independent_full_evaluation_failures": 0,
+  "independent_full_evaluation_passed": false,
+  "current_tray_gate": null,
+  "current_dock_gate": null,
+  "current_full_gate": null,
+  "current_development_regressions": {
+    "required_episodes": 3,
+    "episodes": 0,
+    "successes": 0,
+    "all_prerequisite_jobs_completed": false
+  },
+  "historical_4090": {
+    "course": "course_v8_precision_envelope",
+    "state": "paused_user",
+    "complete_rows": 18,
+    "successes": 18,
+    "failures": 0,
+    "fully_completed_group_rows": 16,
+    "qualified": false,
+    "counted_in_new_platform_acceptance": false,
+    "details": "review_20261020/resume_5090_20261021/historical_review_status_4090.json"
+  },
+  "old_0103_repository_state": "keep stopped and unchanged",
+  "old_4090_repository_state": "keep stopped",
+  "automation_id": "automation-2",
+  "automation_interval_minutes": 15,
+  "automation_state": "ACTIVE",
+  "migration_runtime_subset": {
+    "archive": "rebar_training_runtime_5090_20261021.tar.gz",
+    "sha256": "c5b04ea52edca59315becc76e87d8af793a59570b0038e565df1776f710d5d88",
+    "files": 217,
+    "node_verified": true
+  },
+  "local_verified_backup": "rebar_training/artifacts/rebar_training_migration_platform_20261021.tar.gz",
+  "local_verified_backup_sha256": "f1b47a58e67a618870fde663c3dca93b050732875050b43d1625b367a2d0970a",
+  "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
+  "forensic_archive_remote_sha_verified": true,
+  "do_not_unpack_forensic_archive_over_live_runtime": true,
+  "next_action": "Follow validation.status.json and native jobs; all 3 strict regression episodes must pass before automatic course_v9 start. Fresh stage gates and 64 full acceptance use new predeclared seeds; old 18 rows excluded. No duplicate jobs.",
+  "predeclaration": {
+    "created_at": "2026-10-21T13:53:03.201933+00:00",
+    "node": "arnold@192.168.0.103",
+    "new_repository": "/home/arnold/Develop/rebar-training-5090-resume-20261021",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "warm_start_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
+    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+    "plan_sha256": "20246b24178ca3fbd925a2542353f052f8618e7715ef6a06649dbdb48fe923f4",
+    "controller_sha256": "727598de9e215b76a7d08dbf478b2925198ca071dcb14f76b80fdd258d988b7a",
+    "regressions": [
+      {
+        "name": "full_reset_regression_5241042",
+        "episodes": 2,
+        "seed": 5241042,
+        "regression": true
+      },
+      {
+        "name": "partial_grasp_outage_241042",
+        "episodes": 1,
+        "seed": 241042,
+        "regression": true
+      }
+    ],
+    "minimum_successful_regression_episodes": 3,
+    "prior_4090_independent_rows": 18,
+    "mix_prior_rows_into_new_acceptance": false,
+    "evaluation_seeds_predeclared": [
+      6131042,
+      6141042,
+      6151042,
+      6161042,
+      6241042,
+      6251042,
+      6261042,
+      6271042,
+      6281042,
+      6291042,
+      6301042,
+      6311042
+    ],
+    "new_seed_overlap_with_checkpoint_contexts": [],
+    "existing_job_and_plan_seeds_checked": 115
+  },
+  "controller_contract_fixture_checks": {
+    "positive": 1,
+    "rejected_invalid_cases": 8,
+    "runtime_physics_test": false
+  },
+  "runtime_preflight_passed": true,
+  "cpu_suite_passed": true,
+  "physical_regressions_completed": 0,
+  "course_started": false,
+  "validation_runner_pid": 108930,
+  "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
+  "training_still_active": false,
+  "simulation_validation_active": true,
+  "last_live_progress": {
+    "episode": 0,
+    "step": 600,
+    "stage": "pickup",
+    "source": "fresh native stdout camera/joints/contact row",
+    "gpu_pid": 109381,
+    "gpu_memory_mib": 4798,
+    "at": "2026-10-21T13:58:44.228976+00:00"
+  },
+  "node_migration_regression_successes": 0,
+  "node_migration_regression_complete_episodes": 0
+}
