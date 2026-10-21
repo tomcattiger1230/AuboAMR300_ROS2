@@ -1,10 +1,10 @@
 # 迁回 4090：暂停与恢复交接
 
-## 当前恢复覆盖记录（2026-10-21 10:17）
+## 当前恢复覆盖记录（2026-10-21 12:18）
 
 用户已明确授权在 `arnold@192.168.3.133` 的 RTX 4090 继续，工作目录 `/home/arnold/Develop/rebar-training-4090`。
 迁移包 1428 文件与 10 个 USD 依赖、SDK/CUDA 检查已通过；`precision_resume_4090_20261021` 的前置物理回归已完整 **9/9 通过**。
-当前是 `artifacts/mobile_curriculum_20261020/course_v8_precision_envelope`，控制器 PID/PGID 30740；抓取放槽独立 gate 已 8/8 通过，到站独立 gate 也已 8/8 通过，正在整链训练，以 README 和 status.json 的实时阶段为准。64 回合完整整链验收及对应视频仍须完成。
+当前是 `artifacts/mobile_curriculum_20261020/course_v8_precision_envelope`，控制器 PID/PGID 30740；抓取放槽独立 gate 已 8/8 通过，到站独立 gate 也已 8/8 通过，整链训练已完整 2/2 成功并核实新增 24 次 actor 更新；最终 fe48b74d 策略的 64 回合独立整链验收正在运行，以 README 和 status.json 的实时阶段为准。最终稳定性门槛及对应视频仍须完成。
 先读取 README 顶部及 review/status.json，再查当前课程状态；不要重启旧验证控制器 15451、旧暂停目录或回到 0.103 启动任务。
 下面的暂停与初始迁移步骤为历史记录，当前授权及进度以 README 顶部和 status.json 为准。
 

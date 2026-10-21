@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-21T03:48:11.836489+00:00",
+  "at": "2026-10-21T04:17:30.157153+00:00",
   "host": "arnold@192.168.3.133",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "regression_successes": 9,
@@ -52,7 +52,7 @@
   "independent_acceptance_qualified": false,
   "active_job": null,
   "verified_raw_files_on_both_hosts": 2876,
-  "next_action": "Preserve v8 full_trainPG43750/controller30740, actual newactorupdates and allcontinuousrows required. Minimum2successfulepisodes and>=60newupdates, finalpolicy/source/detector/assets freeze then64predeclared full independentepisodes (5241042..5311042 each8). Keep allrows; no dock/trayinit/hint forfullacceptance, max2parallel. Only final64gate>=95%success andWilsonlower>=90%/zeroevidenceerrors allowsactualfullvideodelivery+completebackup andautomationstop.",
+  "next_action": "Preserve current2parallel full independent jobs; inspect all64completecontinuousrows/provenance, no finalstableclaim yet.",
   "full_development_training": {
     "at": "2026-10-21T01:16:38.080846+00:00",
     "run_id": "fe3a076e00fd47a59aaaca8feb44dd79",
@@ -720,5 +720,102 @@
     "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
     "checkpoint_sha_verified_on_node_and_mac": true,
     "scope": "V8 fullcontinuous training in progress with no dock/tray initialization or hint; not independent64qualification."
+  },
+  "v8_full_training": {
+    "at": "2026-10-21T04:16:34.954454+00:00",
+    "run_id": "c68abc4f6a1b4859a6a10d0e3db9c8b1",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "report_sha256": "2e043203bc7e5ed7c091777884682ac8135c1ded1f8225837c2248ef87c6cec3",
+    "episodes": 2,
+    "successes": 2,
+    "rows": [
+      {
+        "episode": 0,
+        "steps": 9009,
+        "error_mm": 2.0091820042580366,
+        "axis_error_deg": 0.07305978199736937,
+        "jaw_forces_N": [
+          24.336746215820312,
+          25.594955444335938,
+          25.626516342163086,
+          24.373573303222656
+        ],
+        "tcp_clearance_mm": 90.33066779375076,
+        "max_force_N": 25.788476943969727,
+        "safe_partial_grasp_recoveries": 0,
+        "all_strict_physical_checks_passed": true
+      },
+      {
+        "episode": 1,
+        "steps": 12908,
+        "error_mm": 2.1607549861073494,
+        "axis_error_deg": 0.105426674718089,
+        "jaw_forces_N": [
+          25.068111419677734,
+          24.65519905090332,
+          24.717561721801758,
+          25.177587509155273
+        ],
+        "tcp_clearance_mm": 83.89852941036224,
+        "max_force_N": 25.177587509155273,
+        "safe_partial_grasp_recoveries": 1,
+        "all_strict_physical_checks_passed": true
+      }
+    ],
+    "learning": {
+      "snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/checkpoints/v8_full_final_20261021_0417.pt",
+      "sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+      "updates": 278,
+      "actor_updates": 100,
+      "policy_steps": 21833,
+      "new_updates": 86,
+      "new_actor_updates": 24,
+      "new_policy_steps": 4987,
+      "actor_weight_max_abs_change": 0.010114841163158417,
+      "model_and_optimizer_finite": true,
+      "includes_optimizer": true,
+      "training_complete": true,
+      "qualified": false,
+      "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+      "checkpoint_sha_verified_on_node_and_mac": true
+    },
+    "independent_acceptance_qualified": false,
+    "scope": "V8 complete fullcontinuous training with no tray/dock/hint initialization;2/2 successful, activePPO actualactorupdates verified. This training is not in final64independent denominator.",
+    "independent_full_eval_predeclared": [
+      5241042,
+      5251042,
+      5261042,
+      5271042,
+      5281042,
+      5291042,
+      5301042,
+      5311042
+    ],
+    "independent_full_eval_parallel": 2,
+    "active_eval_jobs": [
+      "full_holdout_5251042",
+      "full_holdout_5241042"
+    ]
+  },
+  "v8_full_independent_evaluation": {
+    "state": "running",
+    "predeclared_seeds": [
+      5241042,
+      5251042,
+      5261042,
+      5271042,
+      5281042,
+      5291042,
+      5301042,
+      5311042
+    ],
+    "episodes_per_seed": 8,
+    "episodes_required": 64,
+    "checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+    "active_jobs": [
+      "full_holdout_5251042",
+      "full_holdout_5241042"
+    ],
+    "qualified": false
   }
 }
