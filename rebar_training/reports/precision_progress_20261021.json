@@ -1,0 +1,56 @@
+{
+  "at": "2026-10-21T00:47:47.111063+00:00",
+  "host": "arnold@192.168.3.133",
+  "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+  "regression_successes": 2,
+  "minimum_required_regressions": 9,
+  "physical_receipts": [
+    {
+      "seed": 4151042,
+      "run_id": "023ef21e01f44703a3d2836a8eab9923",
+      "report_sha256": "1aa2b24f84804ebc4193b57974429ec9c81f7b240b13d180c1ecb244fe47c312",
+      "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+      "policy_sha256": "b86ea96e72364169acf6ba0562391347a8d1ae425fdc7ca5546989e01e6eb4aa",
+      "machine_error_mm": 2.128829015418887,
+      "actual_axis_error_deg": 0.09250207886230219,
+      "jaw_forces_N": [
+        24.708005905151367,
+        25.24880599975586,
+        25.203149795532227,
+        24.67033576965332
+      ],
+      "tcp_clearance_mm": 87.23808079957962,
+      "max_force_N": 25.24880599975586,
+      "minimum_logged_alignment_gain": 0.16518377759241767,
+      "steps": 3281,
+      "physics_receipts_passed": true
+    },
+    {
+      "seed": 4161042,
+      "run_id": "6fb999e8c7c94db085bd12f05a57d7ce",
+      "report_sha256": "a87ef7f00252605f2e2d0b4cb1e31d2a0d70cd171275b432cfced91ec05ba5ff",
+      "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+      "policy_sha256": "b86ea96e72364169acf6ba0562391347a8d1ae425fdc7ca5546989e01e6eb4aa",
+      "machine_error_mm": 2.1144449710845947,
+      "actual_axis_error_deg": 0.08937275330103735,
+      "jaw_forces_N": [
+        23.99929428100586,
+        25.909076690673828,
+        25.90854263305664,
+        23.984088897705078
+      ],
+      "tcp_clearance_mm": 97.93893247842789,
+      "max_force_N": 26.201759338378906,
+      "minimum_logged_alignment_gain": 0.023923537539929124,
+      "steps": 3302,
+      "physics_receipts_passed": true
+    }
+  ],
+  "new_actor_updates": 6,
+  "new_effective_policy_steps": 1414,
+  "training_complete": false,
+  "independent_acceptance_qualified": false,
+  "active_job": "full_851043_retraining",
+  "verified_raw_files_on_both_hosts": 359,
+  "next_action": "Preserve full_851043_retraining, verify all episodes and >=60 new updates including actor updates after complete. Then partial-grasp blackout1 and reset4 must all pass. Validator sequentially launches these and only starts v8 after all9+episodes succeed; no duplicate starts. Formal v8 allgates+64episodes remain required."
+}
