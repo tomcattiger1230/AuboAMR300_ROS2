@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-21T14:46:47.145621+00:00",
+  "updated_at": "2026-10-21T14:52:44.619027+00:00",
   "status": "node_unreachable_training_state_unknown",
   "stable": false,
   "user_authorized_resume": true,
@@ -65,7 +65,7 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Retry existing5090 node on next follow-up or user restoration. First inspect controller112563, native active_jobs and reports before any launch. Keep all existing jobs, no duplicate or old PID restart. Network/wakeup needed; no SSH identity changes.",
+  "next_action": "Network remains unavailable after reported wakeup and 3IPv4+2IPv6 SSH retries. Await requested read-only Ubuntu diagnostics; do not repeat wakeup request. On reconnection first inspect controller112563/native active_jobs/full reports before any launch; preserve existing jobs and SSH identity.",
   "predeclaration": {
     "created_at": "2026-10-21T13:53:03.201933+00:00",
     "node": "arnold@192.168.0.103",
@@ -145,7 +145,7 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "Three SSH timeouts and node ping0/3, gateway3/3. Cannot obtain fresh state. Last22:39v9tray_train still running,1/2training success observed22:38; final independent0/64 then. Current counts/newrows/processstate unknown, not a confirmed training failure. Historical4090v8complete16/64plus2successrows kept separate. Preserve jobs and backups; user asked to wake/checknetwork.",
+  "last_heartbeat_result": "User reported awake/sameIP, but further3IPv4 and2strict-identity IPv6 SSH attempts timed out; reverse diagnosis needed. Node current counts/newrows/processstate unknown; last22:39v9training active, finalindependent0/64 then. Old4090v8complete16/64plus2successrows preserved separately. Backup837files checksum rechecked intact. No remote process mutation.",
   "independent_full_evaluation_new_episodes_since_last_check": null,
   "last_completed_validation": "review_20261020/resume_5090_20261021",
   "current_course_state": "unknown_node_unreachable",
@@ -333,33 +333,38 @@
     "episode_in_progress": 1
   },
   "latest_connectivity_check": {
-    "at": "2026-10-21T14:46:47.145621+00:00",
-    "node": "arnold@192.168.0.103",
-    "ssh_attempts": 3,
-    "ssh_errors": [
-      "connect to host 192.168.0.103 port 22: Operation timed out",
-      "connect to host 192.168.0.103 port 22: Operation timed out",
-      "connect to host 192.168.0.103 port 22: Operation timed out"
-    ],
-    "node_ping": {
+    "at": "2026-10-21T14:52:44.619027+00:00",
+    "user_reported_awake": true,
+    "user_confirmed_ipv4": "192.168.0.103",
+    "ssh_attempts_after_wakeup_ipv4": 3,
+    "ssh_attempts_after_wakeup_ipv6": 2,
+    "all_ssh_attempts_timed_out": true,
+    "node_ping_after_wakeup": {
       "sent": 3,
       "received": 0
     },
-    "gateway_ping": {
-      "address": "192.168.0.1",
-      "sent": 3,
-      "received": 3
-    },
-    "local_address": "192.168.0.160",
-    "local_interface": "en0",
-    "remote_process_state": "unknown",
-    "last_successful_remote_check": "2026-10-21T14:39:08.993778+00:00",
-    "no_remote_process_started_or_stopped": true,
+    "mdns_name": "arnold-NUC16JNK9XX11.local",
+    "mdns_ipv4": "192.168.0.103",
+    "mdns_ipv6": [
+      "fd86:6069:f94b:40ba:46f3:6922:161a:d470",
+      "fd86:6069:f94b:40ba:4cc9:d665:bb01:c20"
+    ],
+    "ipv6_strict_host_key_checking_preserved": true,
     "ssh_identity_unchanged": true,
-    "user_wakeup_or_network_check_requested": true
+    "no_remote_process_started_or_stopped_by_this_check": true,
+    "requested_read_only_diagnostics": [
+      "hostname -I",
+      "systemctl is-active ssh",
+      "ping -c 3 192.168.0.160"
+    ],
+    "remote_state": "unknown",
+    "last_confirmed_remote_at": "2026-10-21T14:39:08.993778+00:00",
+    "last_completed_backup_rechecked_sha256": "27229c9865bf8a97fcdec23829b4e501edd2d441c78271650c3d4a98c30b0091"
   },
   "display_progress": {
     "historical_4090_v8": "16/64 in complete group reports, plus 2 successful rows in user-interrupted groups; total18successful/0failed rows preserved.",
     "current_5090_v9": "Live state unknown; last confirmed22:39 training in progress and final independent0/64. Do not present stale counts as current."
-  }
+  },
+  "user_reported_node_awake": true,
+  "waiting_for": "Ubuntu read-only hostname/IP, ssh-service and reverse-ping diagnostic output; retry connection if network restores independently."
 }
