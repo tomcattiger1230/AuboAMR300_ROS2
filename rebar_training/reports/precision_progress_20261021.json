@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-21T02:18:20.833998+00:00",
+  "at": "2026-10-21T02:23:26.189918+00:00",
   "host": "arnold@192.168.3.133",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "regression_successes": 9,
@@ -50,9 +50,9 @@
   "new_effective_policy_steps": 4930,
   "training_complete": true,
   "independent_acceptance_qualified": false,
-  "active_job": "tray_train",
+  "active_job": null,
   "verified_raw_files_on_both_hosts": 2876,
-  "next_action": "Keep active v8 tray_train from frozen plan308bf361/source2c/warmd287. Check actual actor updates and complete training report; independenttray5131042/5141042 each4 mustpass beforedocktraining/eval5151042/5161042, thenfulltraining and8freshseed groups5241042..5311042 each8 (64). Allstagegatesmandatory, do not reusev7 or9developmentepisodes. No duplicate launches, simulation only.",
+  "next_action": "Preserve both tray holdout5131042/5141042 each4, source2c/checkpoint19247f42, nolearning/regression. Recompute independent8episode gate on complete freshJSON, inspect every failure. Only traygatepass may advance docktrain5041043/evals5151042/5161042. Final64full stillmandatory, noformalstagepassed yet.",
   "full_development_training": {
     "at": "2026-10-21T01:16:38.080846+00:00",
     "run_id": "fe3a076e00fd47a59aaaca8feb44dd79",
@@ -272,5 +272,53 @@
     "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
     "checkpoint_sha_verified_on_node_and_mac": true,
     "scope": "In-progress v8 tray curriculum training from copied d287; not a completed stage or independent qualification."
+  },
+  "active_jobs": [
+    "tray_holdout_5131042",
+    "tray_holdout_5141042"
+  ],
+  "v8_tray_training": {
+    "at": "2026-10-21T02:21:55.990167+00:00",
+    "run_id": "c4a68c7bfdaa49f780e63a3b5035741c",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "report_sha256": "ee5b0bc8145499a6bbefe9a4012d97dbee6b0ee40f2669cab0ae28f0da1858fa",
+    "episodes": 2,
+    "successes": 2,
+    "checks": [
+      {
+        "episode": 0,
+        "tray_position_error_mm": 0.02475189500610573,
+        "tray_axis_y": 0.9999999772937729,
+        "tcp_clearance_mm": 179.84998226165771,
+        "actual_tray": true
+      },
+      {
+        "episode": 1,
+        "tray_position_error_mm": 0.7236660419373503,
+        "tray_axis_y": 0.999999882889283,
+        "tcp_clearance_mm": 179.0982484817505,
+        "actual_tray": true
+      }
+    ],
+    "learning": {
+      "snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/checkpoints/v8_tray_final_20261021_0221.pt",
+      "sha256": "19247f42e0705408a220b9d52052133dc390a833939f8e2cb2980c1bf41adcf5",
+      "updates": 151,
+      "new_updates": 22,
+      "actor_updates": 65,
+      "new_actor_updates": 12,
+      "policy_steps": 14701,
+      "new_policy_steps": 2808,
+      "actor_weight_max_abs_change": 0.006238825619220734,
+      "model_and_optimizer_finite": true,
+      "includes_optimizer": true,
+      "training_complete": true,
+      "qualified": false,
+      "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+      "checkpoint_sha_verified_on_node_and_mac": true,
+      "scope": "V8 tray training complete; pending5131042/5141042 independent holdouts, no stage qualification."
+    },
+    "independent_gate_passed": false,
+    "scope": "V8 tray training complete; pending5131042/5141042 independent holdouts, no stage qualification."
   }
 }
