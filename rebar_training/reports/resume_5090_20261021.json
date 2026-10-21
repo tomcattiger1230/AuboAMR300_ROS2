@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-21T13:58:44.228976+00:00",
+  "updated_at": "2026-10-21T14:15:28.064839+00:00",
   "status": "resumed_5090_migration_validation",
   "stable": false,
   "user_authorized_resume": true,
@@ -34,8 +34,9 @@
   "current_full_gate": null,
   "current_development_regressions": {
     "required_episodes": 3,
-    "episodes": 0,
-    "successes": 0,
+    "episodes": 1,
+    "successes": 1,
+    "native_completed_jobs_episodes": 0,
     "all_prerequisite_jobs_completed": false
   },
   "historical_4090": {
@@ -124,14 +125,61 @@
   "training_still_active": false,
   "simulation_validation_active": true,
   "last_live_progress": {
-    "episode": 0,
-    "step": 600,
-    "stage": "pickup",
-    "source": "fresh native stdout camera/joints/contact row",
-    "gpu_pid": 109381,
-    "gpu_memory_mib": 4798,
-    "at": "2026-10-21T13:58:44.228976+00:00"
+    "step": 14130,
+    "episode": 1,
+    "stage": "navigate",
+    "valid": true,
+    "last_error": "",
+    "at": "2026-10-21T14:15:28.064839+00:00"
   },
-  "node_migration_regression_successes": 0,
-  "node_migration_regression_complete_episodes": 0
+  "node_migration_regression_successes": 1,
+  "node_migration_regression_complete_episodes": 1,
+  "latest_migration_partial_physics": {
+    "at": "2026-10-21T14:15:28.064839+00:00",
+    "run_id": "6954b78d1c5347be9b78f5ef4ffa027f",
+    "completed_regression_rows": 1,
+    "successes": 1,
+    "checks": [
+      {
+        "episode": 0,
+        "error_mm": 1.5478938585147262,
+        "axis_error_deg": 0.03711979043541847,
+        "jaws_N": [
+          24.678834915161133,
+          25.25208854675293,
+          25.204565048217773,
+          24.621261596679688
+        ],
+        "tcp_clearance_mm": 85.23143082857132,
+        "strict_physical_receipts_passed": true
+      }
+    ],
+    "job_complete": false,
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
+    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
+    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+    "last_trace": {
+      "step": 14130,
+      "episode": 1,
+      "stage": "navigate",
+      "valid": true,
+      "last_error": ""
+    },
+    "independent_qualification": false,
+    "independent_episodes": 0,
+    "scope": "Partial migration regression receipts, not completed native job or final gate."
+  },
+  "latest_migration_raw_files_verified": {
+    "files": 125,
+    "mismatches": [],
+    "both_hosts_sha_verified": true,
+    "no_learning_argument_verified": true,
+    "source_snapshot_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "run_id": "6954b78d1c5347be9b78f5ef4ffa027f",
+    "qualified": false
+  },
+  "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
+  "last_heartbeat_result": "5090 migration regression: first continuous full episode successful at 1.547894mm; strict 4pad/unload/retreat/speeds independently verified.125 immutable raw files SHA verified on both hosts. Episode2 navigating with fresh valid RGB and no error. No completed native regression job or final64 gate; keep existing job and controller.",
+  "independent_full_evaluation_new_episodes_since_last_check": 0
 }
