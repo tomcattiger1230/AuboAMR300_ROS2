@@ -1,8 +1,8 @@
 {
-  "at": "2026-10-21T01:17:34.435679+00:00",
+  "at": "2026-10-21T01:32:22.962876+00:00",
   "host": "arnold@192.168.3.133",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-  "regression_successes": 4,
+  "regression_successes": 5,
   "minimum_required_regressions": 9,
   "physical_receipts": [
     {
@@ -50,9 +50,9 @@
   "new_effective_policy_steps": 4930,
   "training_complete": true,
   "independent_acceptance_qualified": false,
-  "active_job": "dock_partial_grasp_outage",
-  "verified_raw_files_on_both_hosts": 1060,
-  "next_action": "Keep existing partial-grasp blackout regression: inspect at most2 safe empty/unloaded/supported/returned reobservations and final actualclamp. Then4reset episodes mandatory. Only all9+development regressions passed allow v8 newcourse; allformal gates and64stillrequired. Preserve controller and job; no duplicate.",
+  "active_job": "full_1051042_reset_clearance",
+  "verified_raw_files_on_both_hosts": 1838,
+  "next_action": "Preserve four-episode same-process full_1051042_reset_clearance. Require all4 complete actualhandoff/strictphysicalreceipts with fresh finalJSON before controller can start v8. Partial-grasp outage1/1 now verified, two safe reobservations maximum. Formalallgates/64freshseeds still mandatory.",
   "full_development_training": {
     "at": "2026-10-21T01:16:38.080846+00:00",
     "run_id": "fe3a076e00fd47a59aaaca8feb44dd79",
@@ -112,5 +112,87 @@
     },
     "independent_acceptance_qualified": false,
     "scope": "Completed development full-mission training regression; not independent evaluation and not promotion until partial-grasp fault and four-reset regressions pass."
+  },
+  "partial_grasp_outage": {
+    "at": "2026-10-21T01:31:06.255135+00:00",
+    "run_id": "fa590b63fe934f4896c2208855f63152",
+    "report_sha256": "7a93832ba49a8f35027d640b0e4631afc45d49139189d4399e6b71ca13056935",
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "policy_sha256": "d287596859c4f9627bdbe4d9765283fb40fb66d2d58f494663765adc63d11554",
+    "episodes": 1,
+    "successes": 1,
+    "steps": 10778,
+    "error_mm": 1.7612368101254106,
+    "actual_axis_error_deg": 0.03333410875405471,
+    "jaw_forces_N": [
+      25.803531646728516,
+      24.15448570251465,
+      24.157211303710938,
+      25.796146392822266
+    ],
+    "tcp_clearance_mm": 74.4067132472992,
+    "max_force_N": 25.803531646728516,
+    "partial_grasp_abort": {
+      "tick": 2314,
+      "reason": "No detected steel component",
+      "tcp_base": [
+        0.29271012068832025,
+        -0.0009405280172742891,
+        0.7237840639762443
+      ],
+      "finger_forces": [
+        55.04508590698242,
+        52.83111572265625
+      ],
+      "tray_load_N": 26.80945587158203,
+      "last_good_ns": 76600000000,
+      "arm_joints": [
+        3.467418670654297,
+        -0.32673758268356323,
+        1.9162040948867798,
+        0.6726999282836914,
+        1.5722697973251343,
+        -1.2463324069976807
+      ],
+      "open_unloaded_tick": 2327,
+      "open_fingers": [
+        0.0013512067962437868,
+        0.0011689253151416779
+      ],
+      "open_forces": [
+        0.0,
+        0.0
+      ],
+      "supported_tray_load_N": 23.130338668823242,
+      "returned": true,
+      "open_arm_joints": [
+        3.4675796031951904,
+        -0.3265542685985565,
+        1.9168986082077026,
+        0.6719881892204285,
+        1.5716357231140137,
+        -1.2475354671478271
+      ]
+    },
+    "reobservations": [
+      {
+        "tick": 2327,
+        "reason": "No detected steel component",
+        "last_good_ns": 76600000000,
+        "return_speed_scale": 0.5,
+        "trigger": "supported_partial_grasp_abort",
+        "reacquired_tick": 3453
+      },
+      {
+        "tick": 6011,
+        "reason": "Steel texture correspondence failed forward/backward consistency",
+        "last_good_ns": 193200000000,
+        "return_speed_scale": 0.5,
+        "reacquired_tick": 7125
+      }
+    ],
+    "hold_joint_max_change_rad": 0.0012030601501464844,
+    "independent_acceptance_qualified": false,
+    "scope": "30-frame partial-grasp outage development regression. Measured unload/support/returned receipt for the partial grasp abort; second empty-wrist reobservation enforced by unchanged frozen runtime guard, with coarse logs not exposing every triggering tick. Two maximum reobservations, both freshly reacquired, final actual handoff strict checks passed."
   }
 }
