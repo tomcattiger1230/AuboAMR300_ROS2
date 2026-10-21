@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-21T15:17:28.608522+00:00",
+  "updated_at": "2026-10-21T15:31:52.192061+00:00",
   "status": "v9_tray_gate_passed_dock_holdouts_running",
   "stable": false,
   "user_authorized_resume": true,
@@ -147,7 +147,7 @@
   "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-21T15:17:28.608522+00:00",
+    "at": "2026-10-21T15:31:52.192061+00:00",
     "connected": true,
     "state": "running",
     "phase": "dock_clamp",
@@ -155,38 +155,45 @@
       "dock_clamp_holdout_6161042",
       "dock_clamp_holdout_6151042"
     ],
+    "controller_pid": 112563,
+    "controller_alive": true,
     "jobs": [
       {
         "name": "dock_clamp_holdout_6161042",
-        "runner_pid": 119252,
-        "pid": 119253,
-        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
         "state": "running",
+        "pid": 119253,
+        "episodes": 2,
+        "successes": 2,
+        "completed": false,
+        "log_age_seconds": 2.9143316745758057,
         "latest_trace": {
-          "step": 1230,
-          "episode": 0,
+          "step": 7680,
+          "episode": 2,
           "stage": "pickup_tray",
+          "route_stage": null,
           "valid": true,
           "last_error": ""
-        },
-        "log_age_seconds": 2.005107879638672
+        }
       },
       {
         "name": "dock_clamp_holdout_6151042",
-        "runner_pid": 119251,
-        "pid": 119254,
-        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
         "state": "running",
+        "pid": 119254,
+        "episodes": 2,
+        "successes": 2,
+        "completed": false,
+        "log_age_seconds": 1.5019843578338623,
         "latest_trace": {
-          "step": 1230,
-          "episode": 0,
+          "step": 7710,
+          "episode": 2,
           "stage": "pickup_tray",
+          "route_stage": null,
           "valid": true,
           "last_error": ""
-        },
-        "log_age_seconds": 1.901759386062622
+        }
       }
-    ]
+    ],
+    "no_manual_job_launch_or_restart": true
   },
   "node_migration_regression_successes": 3,
   "node_migration_regression_complete_episodes": 3,
@@ -202,7 +209,7 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "User restored connection; originalcourse advanced without manuallaunch. Newv9tray independent8/8passed; Wilsonlower0.675592435,zeroevidenceerrors,456rawfilesSHAverifiedbothhosts. Docktrainingnativecomplete2/2,error1.619/1.856mm,+26PPO/+10actor/+2089steps;f70fpolicy+optimizerfinite,156filesSHAverifiedbothhosts. Originalcontrollernowrunningdockholdouts6151042/6161042,firstepisodesstillinprogressat23:17. Newv9full0/64unchanged;historicalv8complete16plus2successfulrows separate. Journalhasno suspend entries, no powerconfigurationchanged.",
+  "last_heartbeat_result": "23:32 Shanghai: original controller112563 and dockholdouts119251/119252 healthy. Each2/4 successful, combined4/8 zero failures, +2 completed since23:25. All4 rows strict physics passed; frozen f70f checkpoint unchanged. Newv9full0/64, success0 fail0 new0. Keep original evaluations until complete gate, then fulltrain; historicalv8 separate.",
   "independent_full_evaluation_new_episodes_since_last_check": 0,
   "last_completed_validation": "review_20261020/resume_5090_20261021",
   "current_course_state": "running",
@@ -439,7 +446,7 @@
     "dock_clamp_holdout_6161042",
     "dock_clamp_holdout_6151042"
   ],
-  "last_successful_node_check_at": "2026-10-21T15:17:28.608522+00:00",
+  "last_successful_node_check_at": "2026-10-21T15:31:52.192061+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -471,8 +478,8 @@
     "suspend_hibernate_unit_journal_last45min": "no entries, returncode0, no stderr; no cause inferred or power settings changed"
   },
   "display_progress": {
-    "historical_4090_v8": "16/64completegroupsplus2successfulrowsininterruptedgroups,total18success0failurepreserved.",
-    "current_5090_v9": "Tray skill gate8/8passed; dock training2/2complete, independentdockinprogress; finalfull0/64,succ0fail0,new0."
+    "historical_4090_v8": "Complete groups16/64 plus2 successful rows in interrupted groups;18success0fail, preserved separately.",
+    "current_5090_v9": "Traygate8/8passed, dockpartial4/8 success4 fail0 new2, dockgatepending; full0/64 success0 fail0 new0."
   },
   "user_reported_node_awake": true,
   "waiting_for": null,
@@ -706,8 +713,8 @@
     "all_listed_files_sha_verified_both_hosts": true,
     "full_mission_qualified": false
   },
-  "current_dock_independent_episodes": 0,
-  "current_dock_independent_successes": 0,
+  "current_dock_independent_episodes": 4,
+  "current_dock_independent_successes": 4,
   "current_dock_independent_failures": 0,
   "latest_dock_training_verified": {
     "at": "2026-10-21T15:16:29.484451+00:00",
@@ -777,7 +784,7 @@
     "new_policy_steps": 4879
   },
   "latest_dock_independent_live": {
-    "at": "2026-10-21T15:17:28.608522+00:00",
+    "at": "2026-10-21T15:31:52.192061+00:00",
     "connected": true,
     "state": "running",
     "phase": "dock_clamp",
@@ -785,38 +792,107 @@
       "dock_clamp_holdout_6161042",
       "dock_clamp_holdout_6151042"
     ],
+    "controller_pid": 112563,
+    "controller_alive": true,
     "jobs": [
       {
         "name": "dock_clamp_holdout_6161042",
-        "runner_pid": 119252,
-        "pid": 119253,
-        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
         "state": "running",
+        "pid": 119253,
+        "episodes": 2,
+        "successes": 2,
+        "completed": false,
+        "log_age_seconds": 2.9143316745758057,
         "latest_trace": {
-          "step": 1230,
-          "episode": 0,
+          "step": 7680,
+          "episode": 2,
           "stage": "pickup_tray",
+          "route_stage": null,
           "valid": true,
           "last_error": ""
-        },
-        "log_age_seconds": 2.005107879638672
+        }
       },
       {
         "name": "dock_clamp_holdout_6151042",
-        "runner_pid": 119251,
-        "pid": 119254,
-        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
         "state": "running",
+        "pid": 119254,
+        "episodes": 2,
+        "successes": 2,
+        "completed": false,
+        "log_age_seconds": 1.5019843578338623,
         "latest_trace": {
-          "step": 1230,
-          "episode": 0,
+          "step": 7710,
+          "episode": 2,
           "stage": "pickup_tray",
+          "route_stage": null,
           "valid": true,
           "last_error": ""
-        },
-        "log_age_seconds": 1.901759386062622
+        }
       }
-    ]
+    ],
+    "no_manual_job_launch_or_restart": true
   },
-  "current_phase_checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831"
+  "current_phase_checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+  "latest_dock_independent_partial_verified": {
+    "at": "2026-10-21T15:31:04.831130+00:00",
+    "reports": [
+      {
+        "seed": 6151042,
+        "run_id": "9bd717bb2cee403bbfebf3a144f50e23",
+        "episodes": 2,
+        "successes": 2,
+        "completed": false,
+        "checks": [
+          {
+            "episode": 0,
+            "error_mm": 1.3549183495342731,
+            "axis_error_deg": 0.03280099522679416,
+            "all_strict_clamp_physics_passed": true
+          },
+          {
+            "episode": 1,
+            "error_mm": 1.3707109028473496,
+            "axis_error_deg": 0.035341556434958676,
+            "all_strict_clamp_physics_passed": true
+          }
+        ]
+      },
+      {
+        "seed": 6161042,
+        "run_id": "3fbc7bf8feda4634befb4072eaafd654",
+        "episodes": 2,
+        "successes": 2,
+        "completed": false,
+        "checks": [
+          {
+            "episode": 0,
+            "error_mm": 1.2980342144146562,
+            "axis_error_deg": 0.03766274007925993,
+            "all_strict_clamp_physics_passed": true
+          },
+          {
+            "episode": 1,
+            "error_mm": 1.374230720102787,
+            "axis_error_deg": 0.03492410605996873,
+            "all_strict_clamp_physics_passed": true
+          }
+        ]
+      }
+    ],
+    "episodes": 4,
+    "successes": 4,
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "gate_passed": false,
+    "full_mission_qualified": false
+  },
+  "latest_dock_partial_both_hosts_verified": {
+    "at": "2026-10-21T15:31:52.339160+00:00",
+    "files": 21,
+    "mismatches": [],
+    "all_listed_files_sha_verified_both_hosts": true,
+    "partial_only": true,
+    "gate_passed": false,
+    "qualified": false
+  },
+  "latest_dock_partial_snapshot": "course_v9_5090_resume/dock_first4_snapshot_20261021_2331"
 }
