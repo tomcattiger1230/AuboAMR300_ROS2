@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-21T02:23:26.189918+00:00",
+  "at": "2026-10-21T02:48:57.933093+00:00",
   "host": "arnold@192.168.3.133",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "regression_successes": 9,
@@ -52,7 +52,7 @@
   "independent_acceptance_qualified": false,
   "active_job": null,
   "verified_raw_files_on_both_hosts": 2876,
-  "next_action": "Preserve both tray holdout5131042/5141042 each4, source2c/checkpoint19247f42, nolearning/regression. Recompute independent8episode gate on complete freshJSON, inspect every failure. Only traygatepass may advance docktrain5041043/evals5151042/5161042. Final64full stillmandatory, noformalstagepassed yet.",
+  "next_action": "Preserve v8 dock_clamp_trainPG36398/controller30740. Traygate recomputed8/8passed with484rawfiles bothhosts SHA. Docktrain startsfrom19247f42 (151updates65actor14701steps); verify newactorupdates and all actual4pad/unload/retreat outcomes. Only complete training success may launch frozenpolicy dock5151042/5161042 each4independentgate; thenfulltrain5051043 and64declared5241042..5311042. Nofinal64qualification/video yet.",
   "full_development_training": {
     "at": "2026-10-21T01:16:38.080846+00:00",
     "run_id": "fe3a076e00fd47a59aaaca8feb44dd79",
@@ -274,8 +274,7 @@
     "scope": "In-progress v8 tray curriculum training from copied d287; not a completed stage or independent qualification."
   },
   "active_jobs": [
-    "tray_holdout_5131042",
-    "tray_holdout_5141042"
+    "dock_clamp_train"
   ],
   "v8_tray_training": {
     "at": "2026-10-21T02:21:55.990167+00:00",
@@ -320,5 +319,162 @@
     },
     "independent_gate_passed": false,
     "scope": "V8 tray training complete; pending5131042/5141042 independent holdouts, no stage qualification."
+  },
+  "v8_tray_gate": {
+    "passed": true,
+    "phase": "tray",
+    "randomization": "expanded",
+    "episodes": 8,
+    "successes": 8,
+    "success_rate": 1.0,
+    "wilson_95_lower": 0.6755924351161198,
+    "minimum_episodes": 8,
+    "minimum_distinct_seeds": 2,
+    "distinct_seeds": [
+      5131042,
+      5141042
+    ],
+    "required_wilson_95_lower": 0.6,
+    "checkpoint_sha256": "19247f42e0705408a220b9d52052133dc390a833939f8e2cb2980c1bf41adcf5",
+    "evidence_errors": [],
+    "sample_requirement_met": true,
+    "failures": [],
+    "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+  },
+  "v8_tray_eval_evidence": {
+    "at": "2026-10-21T02:47:08.259140+00:00",
+    "gate": {
+      "passed": true,
+      "phase": "tray",
+      "randomization": "expanded",
+      "episodes": 8,
+      "successes": 8,
+      "success_rate": 1.0,
+      "wilson_95_lower": 0.6755924351161198,
+      "minimum_episodes": 8,
+      "minimum_distinct_seeds": 2,
+      "distinct_seeds": [
+        5131042,
+        5141042
+      ],
+      "required_wilson_95_lower": 0.6,
+      "checkpoint_sha256": "19247f42e0705408a220b9d52052133dc390a833939f8e2cb2980c1bf41adcf5",
+      "evidence_errors": [],
+      "sample_requirement_met": true,
+      "failures": [],
+      "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+    },
+    "checks": {
+      "tray_holdout_5131042": {
+        "run_id": "67d8d671f251465a8e4a067464e11c50",
+        "completed": true,
+        "episodes": 4,
+        "successes": 4,
+        "rows": [
+          {
+            "episode": 0,
+            "tray_error_mm": 0.4191293071245332,
+            "tray_axis_y": 0.9999999004798281,
+            "tcp_clearance_mm": 179.31070923805237,
+            "actual_tray": true
+          },
+          {
+            "episode": 1,
+            "tray_error_mm": 0.2885955349676836,
+            "tray_axis_y": 0.9999998941599335,
+            "tcp_clearance_mm": 179.31626737117767,
+            "actual_tray": true
+          },
+          {
+            "episode": 2,
+            "tray_error_mm": 0.8184698409713257,
+            "tray_axis_y": 1.0000000255567962,
+            "tcp_clearance_mm": 179.38321828842163,
+            "actual_tray": true
+          },
+          {
+            "episode": 3,
+            "tray_error_mm": 0.12165844935884464,
+            "tray_axis_y": 0.9999998503769735,
+            "tcp_clearance_mm": 179.3593317270279,
+            "actual_tray": true
+          }
+        ],
+        "report_sha256": "969715f1b2cecbeca7ab7b9084e0a35173025b024fe083999b2bc89aaa731dc8"
+      },
+      "tray_holdout_5141042": {
+        "run_id": "b066c4db45e141f981fae291ec8c6813",
+        "completed": true,
+        "episodes": 4,
+        "successes": 4,
+        "rows": [
+          {
+            "episode": 0,
+            "tray_error_mm": 0.29447428867068404,
+            "tray_axis_y": 0.9999999297171611,
+            "tcp_clearance_mm": 179.31625247001648,
+            "actual_tray": true
+          },
+          {
+            "episode": 1,
+            "tray_error_mm": 0.6915162102255578,
+            "tray_axis_y": 0.9999999002107061,
+            "tcp_clearance_mm": 179.29957807064056,
+            "actual_tray": true
+          },
+          {
+            "episode": 2,
+            "tray_error_mm": 0.0952887481809832,
+            "tray_axis_y": 0.9999999179592396,
+            "tcp_clearance_mm": 179.3178766965866,
+            "actual_tray": true
+          },
+          {
+            "episode": 3,
+            "tray_error_mm": 0.3511823423658699,
+            "tray_axis_y": 0.9999999162434107,
+            "tcp_clearance_mm": 179.30111289024353,
+            "actual_tray": true
+          }
+        ],
+        "report_sha256": "9c8f874bd16bd1453c1eb43d6c523c43e8aef99bd1c2d6eb023c866aec0a68e4"
+      }
+    },
+    "scope": "V8 tray independent8-episode skill gate passed under one frozen policy/source/detector/assets. Not a dock or64full mission qualification."
+  },
+  "latest_dock_training_live": {
+    ".job.status.json": {
+      "job": "/home/arnold/Develop/rebar-training-4090/rebar_training/artifacts/mobile_curriculum_20261020/course_v8_precision_envelope/dock_clamp_train.job.json",
+      "runner_pid": 36398,
+      "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+      "log": "/home/arnold/Develop/rebar-training-4090/rebar_training/artifacts/mobile_curriculum_20261020/course_v8_precision_envelope/dock_clamp_train.log",
+      "state": "running",
+      "pid": 36402,
+      "updated": 1792550782.3652117
+    },
+    ".training.json": {
+      "updates": 154,
+      "new_updates": 3,
+      "steps": 768,
+      "policy_steps": 14701,
+      "episodes": 0,
+      "checkpoint": "/home/arnold/Develop/rebar-training-4090/rebar_training/artifacts/mobile_curriculum_20261020/course_v8_precision_envelope/dock_clamp_policy.pt",
+      "latest_update": {
+        "update": 154,
+        "active_steps": 0,
+        "policy_steps": 14701,
+        "actor_updates": 65,
+        "loss": 0.0004302593442844227,
+        "approx_kl": 0.0
+      }
+    },
+    "last_trace": {
+      "step": 930,
+      "episode": 0,
+      "stage": "observe_tray",
+      "route": 0,
+      "valid": false,
+      "last_error": "Move to the surveyed observation view first"
+    }
   }
 }
