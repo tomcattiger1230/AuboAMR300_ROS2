@@ -1,0 +1,262 @@
+{
+  "updated_at": "2026-10-21T15:40:18.137875+00:00",
+  "status": "paused_user_migration_back_4090",
+  "user_authorized_resume": false,
+  "requires_explicit_resume": true,
+  "training_stopped": true,
+  "training_still_active": false,
+  "evaluation_still_active": false,
+  "automation_state": "PAUSED",
+  "automation_id": "automation-2",
+  "current_course": "course_v9_5090_resume",
+  "source_host": "arnold@192.168.0.103",
+  "source_repository": "/home/arnold/Develop/rebar-training-5090-resume-20261021",
+  "target_host_last_known": "arnold@192.168.3.133",
+  "target_connection_state": "ssh_timeout_during_readonly_check",
+  "target_repository_proposed": "/home/arnold/Develop/rebar-training-4090-return-20261021",
+  "target_training_started": false,
+  "current_checkpoint": {
+    "at": "2026-10-21T15:36:46.508495+00:00",
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "model_and_optimizer_finite": true,
+    "checkpoint_keys": [
+      "observation_contract",
+      "fields",
+      "residual_scale",
+      "reward_contract",
+      "gamma",
+      "actor_updates",
+      "model",
+      "optimizer",
+      "updates",
+      "policy_steps",
+      "history",
+      "training_contexts",
+      "controller",
+      "standalone_full_mission_policy",
+      "steel_truth_policy_input"
+    ],
+    "updates": 329,
+    "actor_updates": 122,
+    "policy_steps": 26712,
+    "training_paused": true,
+    "qualified": false
+  },
+  "stop_receipt": {
+    "at": "2026-10-21T15:35:40.023107+00:00",
+    "reason": "User explicitly requested stop training and prepare migration back to RTX4090. No resume authorized.",
+    "controller_group": 112563,
+    "active_job_groups": [
+      119252,
+      119251
+    ],
+    "processes_before": [
+      {
+        "pid": 112563,
+        "ppid": 1,
+        "pgid": 112563,
+        "state": "S",
+        "args": "systemd-inhibit --what=idle --mode=block --who=rebar-curriculum --why=Finite visual residual-PPO curriculum /usr/bin/python3 -m rebar_training.mobile_curriculum --worker --plan /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/plan.json --output /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume --initial-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/initial_policy.pt "
+      },
+      {
+        "pid": 112565,
+        "ppid": 112563,
+        "pgid": 112563,
+        "state": "S",
+        "args": "/usr/bin/python3 -m rebar_training.mobile_curriculum --worker --plan /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/plan.json --output /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume --initial-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/initial_policy.pt "
+      },
+      {
+        "pid": 119251,
+        "ppid": 1,
+        "pgid": 119251,
+        "state": "S",
+        "args": "/usr/bin/python3 -m rebar_training.mobile_jobs --run /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6151042.job.json "
+      },
+      {
+        "pid": 119252,
+        "ppid": 1,
+        "pgid": 119252,
+        "state": "S",
+        "args": "/usr/bin/python3 -m rebar_training.mobile_jobs --run /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6161042.job.json "
+      },
+      {
+        "pid": 119253,
+        "ppid": 119252,
+        "pgid": 119252,
+        "state": "S",
+        "args": "systemd-inhibit --what=idle --mode=block --who=rebar-simulation --why=Visual manipulation simulation experiment /usr/bin/env OMP_NUM_THREADS=4 REBAR_STARTUP_TRACE=1 PYTHONPATH=/home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/source_snapshots/dock_clamp_holdout_6161042 REBAR_REPO_ROOT=/home/arnold/Develop/rebar-training-5090-resume-20261021 REBAR_TRAINING_ASSETS=/home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/assets_mobile_v2 ISAACLAB_ROOT=/home/arnold/Develop/IsaacLab-rebar ISAAC_SIM_ROOT=/home/arnold/isaacsim REBAR_TRAINING_PYTHON=/home/arnold/Develop/rebar-training-runtime/bin/python bash /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/scripts/run_isaac_python.sh -m rebar_training.mobile_mission_check --headless --enable_cameras --detector /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/segment_v1.pt --camera-config /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/config/vision_runtime.json --until clamp --randomization expanded --residual-scale 0.08 --start-on-tray --start-at-dock --initial-joints 3.46970205934 -0.16910621026 1.59933403306 0.1976438227 1.57079641828 -1.24268689272 --survey-from-packet /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json --seed 6161042 --episodes 4 --residual-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt --report /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6161042.json env.sim.render_interval=12 "
+      },
+      {
+        "pid": 119254,
+        "ppid": 119251,
+        "pgid": 119251,
+        "state": "S",
+        "args": "systemd-inhibit --what=idle --mode=block --who=rebar-simulation --why=Visual manipulation simulation experiment /usr/bin/env OMP_NUM_THREADS=4 REBAR_STARTUP_TRACE=1 PYTHONPATH=/home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/source_snapshots/dock_clamp_holdout_6151042 REBAR_REPO_ROOT=/home/arnold/Develop/rebar-training-5090-resume-20261021 REBAR_TRAINING_ASSETS=/home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/assets_mobile_v2 ISAACLAB_ROOT=/home/arnold/Develop/IsaacLab-rebar ISAAC_SIM_ROOT=/home/arnold/isaacsim REBAR_TRAINING_PYTHON=/home/arnold/Develop/rebar-training-runtime/bin/python bash /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/scripts/run_isaac_python.sh -m rebar_training.mobile_mission_check --headless --enable_cameras --detector /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/segment_v1.pt --camera-config /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/config/vision_runtime.json --until clamp --randomization expanded --residual-scale 0.08 --start-on-tray --start-at-dock --initial-joints 3.46970205934 -0.16910621026 1.59933403306 0.1976438227 1.57079641828 -1.24268689272 --survey-from-packet /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json --seed 6151042 --episodes 4 --residual-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt --report /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6151042.json env.sim.render_interval=12 "
+      },
+      {
+        "pid": 119256,
+        "ppid": 119253,
+        "pgid": 119252,
+        "state": "S",
+        "args": "bash /home/arnold/isaacsim/python.sh -m rebar_training.mobile_mission_check --headless --enable_cameras --detector /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/segment_v1.pt --camera-config /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/config/vision_runtime.json --until clamp --randomization expanded --residual-scale 0.08 --start-on-tray --start-at-dock --initial-joints 3.46970205934 -0.16910621026 1.59933403306 0.1976438227 1.57079641828 -1.24268689272 --survey-from-packet /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json --seed 6161042 --episodes 4 --residual-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt --report /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6161042.json env.sim.render_interval=12 "
+      },
+      {
+        "pid": 119258,
+        "ppid": 119254,
+        "pgid": 119251,
+        "state": "S",
+        "args": "bash /home/arnold/isaacsim/python.sh -m rebar_training.mobile_mission_check --headless --enable_cameras --detector /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/segment_v1.pt --camera-config /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/config/vision_runtime.json --until clamp --randomization expanded --residual-scale 0.08 --start-on-tray --start-at-dock --initial-joints 3.46970205934 -0.16910621026 1.59933403306 0.1976438227 1.57079641828 -1.24268689272 --survey-from-packet /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json --seed 6151042 --episodes 4 --residual-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt --report /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6151042.json env.sim.render_interval=12 "
+      },
+      {
+        "pid": 119271,
+        "ppid": 119256,
+        "pgid": 119252,
+        "state": "S",
+        "args": "/home/arnold/Develop/rebar-training-runtime/bin/python -m rebar_training.mobile_mission_check --headless --enable_cameras --detector /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/segment_v1.pt --camera-config /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/config/vision_runtime.json --until clamp --randomization expanded --residual-scale 0.08 --start-on-tray --start-at-dock --initial-joints 3.46970205934 -0.16910621026 1.59933403306 0.1976438227 1.57079641828 -1.24268689272 --survey-from-packet /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json --seed 6161042 --episodes 4 --residual-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt --report /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6161042.json env.sim.render_interval=12 "
+      },
+      {
+        "pid": 119272,
+        "ppid": 119258,
+        "pgid": 119251,
+        "state": "S",
+        "args": "/home/arnold/Develop/rebar-training-runtime/bin/python -m rebar_training.mobile_mission_check --headless --enable_cameras --detector /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/segment_v1.pt --camera-config /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/config/vision_runtime.json --until clamp --randomization expanded --residual-scale 0.08 --start-on-tray --start-at-dock --initial-joints 3.46970205934 -0.16910621026 1.59933403306 0.1976438227 1.57079641828 -1.24268689272 --survey-from-packet /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json --seed 6151042 --episodes 4 --residual-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt --report /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6151042.json env.sim.render_interval=12 "
+      },
+      {
+        "pid": 119273,
+        "ppid": 119271,
+        "pgid": 119252,
+        "state": "R",
+        "args": "/home/arnold/Develop/rebar-training-runtime/bin/python -m rebar_training.mobile_mission_check --headless --enable_cameras --detector /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/segment_v1.pt --camera-config /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/config/vision_runtime.json --until clamp --randomization expanded --residual-scale 0.08 --start-on-tray --start-at-dock --initial-joints 3.46970205934 -0.16910621026 1.59933403306 0.1976438227 1.57079641828 -1.24268689272 --survey-from-packet /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json --seed 6161042 --episodes 4 --residual-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt --report /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6161042.json env.sim.render_interval=12 "
+      },
+      {
+        "pid": 119274,
+        "ppid": 119272,
+        "pgid": 119251,
+        "state": "R",
+        "args": "/home/arnold/Develop/rebar-training-runtime/bin/python -m rebar_training.mobile_mission_check --headless --enable_cameras --detector /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/segment_v1.pt --camera-config /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/config/vision_runtime.json --until clamp --randomization expanded --residual-scale 0.08 --start-on-tray --start-at-dock --initial-joints 3.46970205934 -0.16910621026 1.59933403306 0.1976438227 1.57079641828 -1.24268689272 --survey-from-packet /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/visual_control_20261019/mobile_navigation_packets_v11_cad/wrist_step300.json --seed 6151042 --episodes 4 --residual-checkpoint /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt --report /home/arnold/Develop/rebar-training-5090-resume-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_holdout_6151042.json env.sim.render_interval=12 "
+      },
+      {
+        "pid": 119431,
+        "ppid": 119274,
+        "pgid": 119251,
+        "state": "Z",
+        "args": ""
+      },
+      {
+        "pid": 119432,
+        "ppid": 119273,
+        "pgid": 119252,
+        "state": "Z",
+        "args": ""
+      },
+      {
+        "pid": 119832,
+        "ppid": 119274,
+        "pgid": 119251,
+        "state": "Z",
+        "args": ""
+      },
+      {
+        "pid": 119833,
+        "ppid": 119273,
+        "pgid": 119252,
+        "state": "Z",
+        "args": ""
+      }
+    ],
+    "events": [
+      {
+        "at": "2026-10-21T15:35:40.023216+00:00",
+        "signal": "TERM+CONT",
+        "pgid": 112563
+      },
+      {
+        "at": "2026-10-21T15:35:40.023227+00:00",
+        "signal": "INT",
+        "pgid": 119252
+      },
+      {
+        "at": "2026-10-21T15:35:40.023234+00:00",
+        "signal": "INT",
+        "pgid": 119251
+      }
+    ],
+    "native_reports_not_rewritten": true,
+    "remaining_task_processes": [],
+    "remaining_repo_processes": [],
+    "gpu_processes": "",
+    "stopped_at": "2026-10-21T15:35:42.094132+00:00",
+    "stopped": true,
+    "partial_evaluations": [
+      {
+        "name": "dock_clamp_holdout_6161042",
+        "run_id": "3fbc7bf8feda4634befb4072eaafd654",
+        "completed": false,
+        "episodes": 2,
+        "successes": 2,
+        "failures": 0,
+        "interrupted_episode_not_counted": true
+      },
+      {
+        "name": "dock_clamp_holdout_6151042",
+        "run_id": "9bd717bb2cee403bbfebf3a144f50e23",
+        "completed": false,
+        "episodes": 2,
+        "successes": 2,
+        "failures": 0,
+        "interrupted_episode_not_counted": true
+      }
+    ],
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831"
+  },
+  "raw_files_verified": {
+    "files": 2212,
+    "bytes": 1424971305,
+    "mismatches": [],
+    "complete_current_course_and_migration_regression_sha_verified_both_hosts": true
+  },
+  "current_tray_gate_passed": true,
+  "current_tray_independent_episodes": 8,
+  "current_tray_independent_successes": 8,
+  "current_tray_independent_failures": 0,
+  "current_dock_independent_episodes": 4,
+  "current_dock_independent_successes": 4,
+  "current_dock_independent_failures": 0,
+  "current_dock_gate_passed": false,
+  "interrupted_dock_episode": "Episode index2 in each job was interrupted by user pause; not counted as success or physical failure. Native files preserved without a synthetic complete report.",
+  "independent_full_evaluation_complete_episodes": 0,
+  "independent_full_evaluation_successes": 0,
+  "independent_full_evaluation_failures": 0,
+  "independent_full_evaluation_passed": false,
+  "historical_4090_v8": {
+    "fully_completed_group_rows": 16,
+    "additional_successful_rows_in_interrupted_groups": 2,
+    "successes": 18,
+    "failures": 0,
+    "counted_in_new_platform_acceptance": false
+  },
+  "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+  "next_action": "Only prepare and verify transfer. Do not launch on either host until explicit user resume. On authorization, use a new target repository/output and new predeclared seeds, validate runtime/frozen hashes and physical regressions, then independently gate stages and final64 without mixing previous platform counts.",
+  "stable": false,
+  "latest_local_recovery_backup": {
+    "at": "2026-10-21T15:39:42.158204+00:00",
+    "archive": "rebar_training/artifacts/rebar_training_migration_back4090_20261021.tar.gz",
+    "bytes": 1439210328,
+    "sha256": "766c0d05c86bf3c5864b918ce064282f0272dc2a2323d2d469c23e481f320e26",
+    "verified_files": 2573,
+    "mismatches": [],
+    "training_state": "paused_user",
+    "requires_explicit_resume": true,
+    "training_resumed": false,
+    "current_runtime_standalone": true,
+    "historical_older_courses_separate": true
+  },
+  "migration_package_ready": true,
+  "migration_transferred_to_target": false,
+  "latest_quiescence_recheck": {
+    "at": "2026-10-21T15:39:19.798630+00:00",
+    "remaining_repo_processes": [],
+    "gpu_processes": "",
+    "training_restarted": false
+  }
+}

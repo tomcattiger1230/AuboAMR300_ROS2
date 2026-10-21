@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-21T15:31:52.192061+00:00",
-  "status": "v9_tray_gate_passed_dock_holdouts_running",
+  "updated_at": "2026-10-21T15:40:18.137467+00:00",
+  "status": "paused_user_migration_back_4090",
   "stable": false,
-  "user_authorized_resume": true,
-  "requires_explicit_resume": false,
+  "user_authorized_resume": false,
+  "requires_explicit_resume": true,
   "training_host": "arnold@192.168.0.103",
   "training_repository": "/home/arnold/Develop/rebar-training-5090-resume-20261021",
   "current_course": "course_v9_5090_resume",
   "pending_course": null,
   "pending_validation": null,
-  "active_phase": "dock_clamp_independent_holdouts",
+  "active_phase": "paused_user_migration_back_4090",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
   "warm_start_counters": {
@@ -21,10 +21,7 @@
   "pending_plan_sha256": "20246b24178ca3fbd925a2542353f052f8618e7715ef6a06649dbdb48fe923f4",
   "validation_launcher_pgid": 108926,
   "validation_state": "course_started",
-  "active_jobs": [
-    "dock_clamp_holdout_6161042",
-    "dock_clamp_holdout_6151042"
-  ],
+  "active_jobs": [],
   "independent_full_evaluation_episodes_required": 64,
   "independent_full_evaluation_complete_episodes": 0,
   "independent_full_evaluation_successes": 0,
@@ -76,7 +73,7 @@
   "old_4090_repository_state": "keep stopped",
   "automation_id": "automation-2",
   "automation_interval_minutes": 15,
-  "automation_state": "ACTIVE",
+  "automation_state": "PAUSED",
   "migration_runtime_subset": {
     "archive": "rebar_training_runtime_5090_20261021.tar.gz",
     "sha256": "c5b04ea52edca59315becc76e87d8af793a59570b0038e565df1776f710d5d88",
@@ -88,7 +85,7 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Keep original coursecontroller112563 and dock_holdouts119251/119252. Wait for both complete4-episode native reports, independently recompute dockclamp gate and strict4pad/openunload/retreat physics. Only after gatepassed proceed original fulltrain and64holdouts. No duplicate or old job launch.",
+  "next_action": "Only prepare and verify transfer. Do not launch on either host until explicit user resume. On authorization, use a new target repository/output and new predeclared seeds, validate runtime/frozen hashes and physical regressions, then independently gate stages and final64 without mixing previous platform counts.",
   "predeclaration": {
     "created_at": "2026-10-21T13:53:03.201933+00:00",
     "node": "arnold@192.168.0.103",
@@ -209,10 +206,10 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "23:32 Shanghai: original controller112563 and dockholdouts119251/119252 healthy. Each2/4 successful, combined4/8 zero failures, +2 completed since23:25. All4 rows strict physics passed; frozen f70f checkpoint unchanged. Newv9full0/64, success0 fail0 new0. Keep original evaluations until complete gate, then fulltrain; historicalv8 separate.",
+  "last_heartbeat_result": "User pause supersedes all previous resume instructions; scheduler and both simulations stopped, GPU empty. No restart on4090. Snapshot2212files verified bothhosts; f70f optimizer finite. Traygate8/8,dockpartial4/8,full0/64.",
   "independent_full_evaluation_new_episodes_since_last_check": 0,
   "last_completed_validation": "review_20261020/resume_5090_20261021",
-  "current_course_state": "running",
+  "current_course_state": "paused_user",
   "course_runner_pid": 112563,
   "latest_migration_full_verification": {
     "at": "2026-10-21T14:31:28.178800+00:00",
@@ -331,7 +328,8 @@
   "current_course_source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "migration_required_directories": [
     "course_v9_5090_resume",
-    "review_20261020/resume_5090_20261021"
+    "review_20261020/resume_5090_20261021",
+    "review_20261020/migration_back_4090_20261021"
   ],
   "latest_training_live": {
     "at": "2026-10-21T15:16:29.484451+00:00",
@@ -442,10 +440,7 @@
   "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt",
   "node_connection_state": "connected",
   "last_known_course_state": "running",
-  "last_known_active_jobs": [
-    "dock_clamp_holdout_6161042",
-    "dock_clamp_holdout_6151042"
-  ],
+  "last_known_active_jobs": [],
   "last_successful_node_check_at": "2026-10-21T15:31:52.192061+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
@@ -482,8 +477,8 @@
     "current_5090_v9": "Traygate8/8passed, dockpartial4/8 success4 fail0 new2, dockgatepending; full0/64 success0 fail0 new0."
   },
   "user_reported_node_awake": true,
-  "waiting_for": null,
-  "evaluation_still_active": true,
+  "waiting_for": "Explicit user resume after4090 migration preparation",
+  "evaluation_still_active": false,
   "latest_tray_training_verified": {
     "at": "2026-10-21T14:59:53.736106+00:00",
     "completed": true,
@@ -679,10 +674,17 @@
   },
   "latest_tray_independent_partial_fresh": false,
   "latest_local_recovery_backup": {
-    "archive": "rebar_training/artifacts/rebar_training_recovery_20261021_v9_tray_training_pass_reconnected.tar.gz",
-    "sha256": "e4c8f3a244347c09e32db017e10119e4b7123b2ad5c2624a800d4c9a0cb0efbd",
-    "files": 165,
-    "mismatches": []
+    "at": "2026-10-21T15:39:42.158204+00:00",
+    "archive": "rebar_training/artifacts/rebar_training_migration_back4090_20261021.tar.gz",
+    "bytes": 1439210328,
+    "sha256": "766c0d05c86bf3c5864b918ce064282f0272dc2a2323d2d469c23e481f320e26",
+    "verified_files": 2573,
+    "mismatches": [],
+    "training_state": "paused_user",
+    "requires_explicit_resume": true,
+    "training_resumed": false,
+    "current_runtime_standalone": true,
+    "historical_older_courses_separate": true
   },
   "latest_tray_gate_verified": {
     "at": "2026-10-21T15:13:00.017004+00:00",
@@ -894,5 +896,58 @@
     "gate_passed": false,
     "qualified": false
   },
-  "latest_dock_partial_snapshot": "course_v9_5090_resume/dock_first4_snapshot_20261021_2331"
+  "latest_dock_partial_snapshot": "course_v9_5090_resume/dock_first4_snapshot_20261021_2331",
+  "training_stopped": true,
+  "source_host": "arnold@192.168.0.103",
+  "source_repository": "/home/arnold/Develop/rebar-training-5090-resume-20261021",
+  "target_host_last_known": "arnold@192.168.3.133",
+  "target_connection_state": "ssh_timeout_during_readonly_check",
+  "target_repository_proposed": "/home/arnold/Develop/rebar-training-4090-return-20261021",
+  "target_training_started": false,
+  "current_checkpoint": {
+    "at": "2026-10-21T15:36:46.508495+00:00",
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "model_and_optimizer_finite": true,
+    "checkpoint_keys": [
+      "observation_contract",
+      "fields",
+      "residual_scale",
+      "reward_contract",
+      "gamma",
+      "actor_updates",
+      "model",
+      "optimizer",
+      "updates",
+      "policy_steps",
+      "history",
+      "training_contexts",
+      "controller",
+      "standalone_full_mission_policy",
+      "steel_truth_policy_input"
+    ],
+    "updates": 329,
+    "actor_updates": 122,
+    "policy_steps": 26712,
+    "training_paused": true,
+    "qualified": false
+  },
+  "raw_files_verified": {
+    "files": 2212,
+    "bytes": 1424971305,
+    "mismatches": [],
+    "complete_current_course_and_migration_regression_sha_verified_both_hosts": true
+  },
+  "current_tray_gate_passed": true,
+  "current_dock_gate_passed": false,
+  "interrupted_dock_episode": "Episode index2 in each job was interrupted by user pause; not counted as success or physical failure. Native files preserved without a synthetic complete report.",
+  "latest_pause_receipt": "artifacts/mobile_curriculum_20261020/review_20261020/migration_back_4090_20261021/pause.stopped.json",
+  "training_resumed": false,
+  "migration_package_ready": true,
+  "migration_transferred_to_target": false,
+  "latest_quiescence_recheck": {
+    "at": "2026-10-21T15:39:19.798630+00:00",
+    "remaining_repo_processes": [],
+    "gpu_processes": "",
+    "training_restarted": false
+  }
 }
