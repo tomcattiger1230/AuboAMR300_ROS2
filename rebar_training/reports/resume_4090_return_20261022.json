@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T01:47:23.998510+00:00",
+  "updated_at": "2026-10-22T01:56:30.235615+00:00",
   "status": "v10_tray_holdouts_running",
   "stable": false,
   "user_authorized_resume": true,
@@ -75,16 +75,16 @@
   "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-22T01:47:23.998510+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/tray_holdouts_snapshot_20261022_094723",
+    "at": "2026-10-22T01:56:30.235615+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/tray_holdouts_snapshot_20261022_095630",
     "checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
     "reports": [
       {
         "seed": 7131042,
         "name": "tray_holdout_7131042",
         "run_id": "f2ad829fc51947f5add8f9e6320f1cab",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "completed": false,
         "checks": [
           {
@@ -94,24 +94,32 @@
             "unloaded": true,
             "tcp_clearance_mm": 179.10319566726685,
             "strict_tray_physics_passed": true
+          },
+          {
+            "episode": 1,
+            "error_mm": 0.4281964130117484,
+            "base_axis_y": 0.999999845346336,
+            "unloaded": true,
+            "tcp_clearance_mm": 179.09115552902222,
+            "strict_tray_physics_passed": true
           }
         ],
         "trace": {
-          "step": 4590,
-          "episode": 1,
-          "stage": "pickup",
-          "route": 0,
+          "step": 8730,
+          "episode": 2,
+          "stage": "tray_above",
+          "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333333144
+          "camera_age_ms": 33.33333333335986
         }
       },
       {
         "seed": 7141042,
         "name": "tray_holdout_7141042",
         "run_id": "b909b3a9888f480986d5d2788a55ece9",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "completed": false,
         "checks": [
           {
@@ -121,21 +129,29 @@
             "unloaded": true,
             "tcp_clearance_mm": 179.35602366924286,
             "strict_tray_physics_passed": true
+          },
+          {
+            "episode": 1,
+            "error_mm": 0.582210173825253,
+            "base_axis_y": 0.9999999364028649,
+            "unloaded": true,
+            "tcp_clearance_mm": 179.0960729122162,
+            "strict_tray_physics_passed": true
           }
         ],
         "trace": {
-          "step": 4560,
-          "episode": 1,
-          "stage": "tray_via_side",
+          "step": 8700,
+          "episode": 2,
+          "stage": "tray_via_front",
           "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333333144
+          "camera_age_ms": 33.33333333335986
         }
       }
     ],
-    "episodes": 2,
-    "successes": 2,
+    "episodes": 4,
+    "successes": 4,
     "failures": 0,
     "independent_skill_gate_passed": false,
     "formal_full_episodes": 0,
@@ -166,7 +182,7 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "09:47Shanghai: traytrainingcomplete2/2success,error0.4195/0.2797mm,unloaded/179.7mmretreat/truecontactandtruthisolationverified;129completefilesSHAverifiedbothhosts. Actual+25PPO/+14actor/+2815steps,final354/136/29527,95863de3policyoptimizerfinite,actorchange0.007649. Originaltrayholdouts7131042/7141042running,partial2/8success0fail (713/714firstrowerrors0.4647/0.3625mm),15immutablefilesbothhostsSHA. No formaltraygateyet;full0/64success0fail0new0. Oldv8/v9separate.",
+  "last_heartbeat_result": "09:56 Shanghai: independent tray partial4/8success0fail,new2; both original jobs22448/22449running episode2,steps8730/8700,tray_above/tray_via_front,validRGB33ms,noerror. New completed row errors0.4282/0.5822mm and strict unloading/179.1mm retreat verified;21immutablefiles both-hosts SHA. Complete8 gate still pending. Formal full0/64success0fail,new0. Traytraining2/2,+25PPO/+14actor/+2815steps,final354/136/29527,95863 remains frozen; v8/v9 histories separate. Corrected stale top-level pause/tray-gate flags inherited from historical v9; original historical receipts retained.",
   "independent_full_evaluation_new_episodes_since_last_check": 0,
   "latest_local_recovery_backup": {
     "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_tray_training_pass.tar.gz",
@@ -420,22 +436,25 @@
   "new_effective_policy_steps": 2815,
   "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/tray_policy.pt",
   "latest_training_native_progress": {
-    "as_of": "2026-10-21T15:16:29.484451+00:00",
-    "phase": "dock_clamp",
+    "as_of": "2026-10-22T01:42:13.532381+00:00",
+    "phase": "tray",
     "complete": true,
     "episodes": 2,
     "successes": 2,
-    "updates": 329,
-    "actor_updates": 122,
-    "policy_steps": 26712,
-    "new_updates": 26,
-    "new_actor_updates": 10,
-    "new_policy_steps": 2089
+    "updates": 354,
+    "actor_updates": 136,
+    "policy_steps": 29527,
+    "new_updates": 25,
+    "new_actor_updates": 14,
+    "new_policy_steps": 2815
   },
   "node_connection_state": "connected",
   "last_known_course_state": "running",
-  "last_known_active_jobs": [],
-  "last_successful_node_check_at": "2026-10-22T01:47:23.998510+00:00",
+  "last_known_active_jobs": [
+    "tray_holdout_7131042",
+    "tray_holdout_7141042"
+  ],
+  "last_successful_node_check_at": "2026-10-22T01:56:30.235615+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -582,8 +601,8 @@
       ]
     }
   ],
-  "current_tray_independent_episodes": 2,
-  "current_tray_independent_successes": 2,
+  "current_tray_independent_episodes": 4,
+  "current_tray_independent_successes": 4,
   "current_tray_independent_failures": 0,
   "latest_reconnect_verification": {
     "at": "2026-10-21T15:17:28.608522+00:00",
@@ -901,39 +920,52 @@
     "qualified": false
   },
   "latest_dock_partial_snapshot": "course_v9_5090_resume/dock_first4_snapshot_20261021_2331",
-  "training_stopped": true,
+  "training_stopped": false,
   "source_host": "arnold@192.168.0.103",
   "source_repository": "/home/arnold/Develop/rebar-training-5090-resume-20261021",
   "target_host_last_known": "arnold@192.168.3.133",
   "target_connection_state": "connected_and_migration_verified",
   "target_repository_proposed": "/home/arnold/Develop/rebar-training-4090-return-20261021",
-  "target_training_started": false,
+  "target_training_started": true,
   "current_checkpoint": {
-    "at": "2026-10-21T15:36:46.508495+00:00",
-    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
-    "model_and_optimizer_finite": true,
-    "checkpoint_keys": [
-      "observation_contract",
-      "fields",
-      "residual_scale",
-      "reward_contract",
-      "gamma",
-      "actor_updates",
-      "model",
-      "optimizer",
-      "updates",
-      "policy_steps",
-      "history",
-      "training_contexts",
-      "controller",
-      "standalone_full_mission_policy",
-      "steel_truth_policy_input"
+    "at": "2026-10-22T01:42:13.532381+00:00",
+    "completed": true,
+    "episodes": 2,
+    "successes": 2,
+    "failures": 0,
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
+    "initial_checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "report_sha256": "f11a2203c341663b7f2046fa2c749d85a20297c2a604c627413ec58f4b046244",
+    "checks": [
+      {
+        "episode": 0,
+        "tray_error_mm": 0.4194927788317365,
+        "base_axis_y": 1.000000020152568,
+        "unloaded": true,
+        "tcp_clearance_mm": 179.65634167194366,
+        "physical_tray_acceptance_passed": true
+      },
+      {
+        "episode": 1,
+        "tray_error_mm": 0.2797098726287898,
+        "base_axis_y": 0.9999999559741812,
+        "unloaded": true,
+        "tcp_clearance_mm": 179.75132167339325,
+        "physical_tray_acceptance_passed": true
+      }
     ],
-    "updates": 329,
-    "actor_updates": 122,
-    "policy_steps": 26712,
-    "training_paused": true,
-    "qualified": false
+    "updates": 354,
+    "actor_updates": 136,
+    "policy_steps": 29527,
+    "new_updates": 25,
+    "new_actor_updates": 14,
+    "new_policy_steps": 2815,
+    "actor_weight_max_abs_change": 0.007648971397429705,
+    "model_and_optimizer_finite": true,
+    "qualified": false,
+    "training_paused": false,
+    "phase": "tray"
   },
   "raw_files_verified": {
     "files": 2212,
@@ -941,11 +973,11 @@
     "mismatches": [],
     "complete_current_course_and_migration_regression_sha_verified_both_hosts": true
   },
-  "current_tray_gate_passed": true,
+  "current_tray_gate_passed": false,
   "current_dock_gate_passed": false,
   "interrupted_dock_episode": "Episode index2 in each job was interrupted by user pause; not counted as success or physical failure. Native files preserved without a synthetic complete report.",
   "latest_pause_receipt": "artifacts/mobile_curriculum_20261020/review_20261020/migration_back_4090_20261021/pause.stopped.json",
-  "training_resumed": false,
+  "training_resumed": true,
   "migration_package_ready": true,
   "migration_transferred_to_target": true,
   "latest_quiescence_recheck": {
@@ -1298,16 +1330,16 @@
     "qualified": false
   },
   "latest_tray_independent_partial_verified": {
-    "at": "2026-10-22T01:47:23.998510+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/tray_holdouts_snapshot_20261022_094723",
+    "at": "2026-10-22T01:56:30.235615+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/tray_holdouts_snapshot_20261022_095630",
     "checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
     "reports": [
       {
         "seed": 7131042,
         "name": "tray_holdout_7131042",
         "run_id": "f2ad829fc51947f5add8f9e6320f1cab",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "completed": false,
         "checks": [
           {
@@ -1317,24 +1349,32 @@
             "unloaded": true,
             "tcp_clearance_mm": 179.10319566726685,
             "strict_tray_physics_passed": true
+          },
+          {
+            "episode": 1,
+            "error_mm": 0.4281964130117484,
+            "base_axis_y": 0.999999845346336,
+            "unloaded": true,
+            "tcp_clearance_mm": 179.09115552902222,
+            "strict_tray_physics_passed": true
           }
         ],
         "trace": {
-          "step": 4590,
-          "episode": 1,
-          "stage": "pickup",
-          "route": 0,
+          "step": 8730,
+          "episode": 2,
+          "stage": "tray_above",
+          "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333333144
+          "camera_age_ms": 33.33333333335986
         }
       },
       {
         "seed": 7141042,
         "name": "tray_holdout_7141042",
         "run_id": "b909b3a9888f480986d5d2788a55ece9",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "completed": false,
         "checks": [
           {
@@ -1344,33 +1384,43 @@
             "unloaded": true,
             "tcp_clearance_mm": 179.35602366924286,
             "strict_tray_physics_passed": true
+          },
+          {
+            "episode": 1,
+            "error_mm": 0.582210173825253,
+            "base_axis_y": 0.9999999364028649,
+            "unloaded": true,
+            "tcp_clearance_mm": 179.0960729122162,
+            "strict_tray_physics_passed": true
           }
         ],
         "trace": {
-          "step": 4560,
-          "episode": 1,
-          "stage": "tray_via_side",
+          "step": 8700,
+          "episode": 2,
+          "stage": "tray_via_front",
           "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333333144
+          "camera_age_ms": 33.33333333335986
         }
       }
     ],
-    "episodes": 2,
-    "successes": 2,
+    "episodes": 4,
+    "successes": 4,
     "failures": 0,
     "independent_skill_gate_passed": false,
     "formal_full_episodes": 0,
     "qualified": false
   },
   "latest_tray_partial_both_hosts_verified": {
-    "at": "2026-10-22T01:48:07.277107+00:00",
-    "files": 15,
+    "at": "2026-10-22T01:56:45.684995+00:00",
+    "files": 21,
     "mismatches": [],
     "all_listed_files_sha_verified_both_hosts": true,
     "partial_skill_only": true,
     "qualified": false
   },
-  "latest_tray_independent_snapshot": "course_v10_4090_return/tray_holdouts_snapshot_20261022_094723"
+  "latest_tray_independent_snapshot": "course_v10_4090_return/tray_holdouts_snapshot_20261022_095630",
+  "current_tray_independent_new_episodes_since_last_check": 2,
+  "historical_top_level_flags_corrected_at": "2026-10-22T01:56:30.235615+00:00"
 }
