@@ -166,12 +166,19 @@
   "last_heartbeat_result": "10:12 Shanghai: tray independent complete8/8success0fail,+4since previous; node and local gate exact match, Wilson lower0.675592435>=skill0.60, zero evidence errors; tray errors0.265519..0.582210mm, strict unload/retreat/speeds passed;412completefiles both-hostsSHA. Original controller20756 advanced docktrain24799/GPU24810; partial1/2success0fail, error1.552295mm,4jaw/openunload/94.675mmretreat/speeds verified. Snapshot709a1abd374updates/141actor/30577steps,+20PPO/+5actor/+1050steps,finite modeloptimizer and realactorchange0.00362813;10snapshotfilesSHA. Secondrowstep5280pickup_tray,validRGB33ms,noerror. Formal full0/64success0fail,new0; historiesv8complete16+2success and v9dock4success kept separate. No manual launch/stop this check.",
   "independent_full_evaluation_new_episodes_since_last_check": 0,
   "latest_local_recovery_backup": {
-    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_tray_training_pass.tar.gz",
-    "bytes": 56235559,
-    "files": 132,
-    "sha256": "79160d92190c66c8c82ea54af2265041f53fdd13992af06e47f538be18b57a2b",
+    "at": "2026-10-22T02:14:46.818929+00:00",
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_tray_gate_dock_learning.tar.gz",
+    "bytes": 239743905,
+    "files": 433,
+    "sha256": "772a7fd08e69721640c735dd21bff54c2a3c34b69ba70f0a3800874a63be946d",
     "mismatches": [],
-    "qualified": false
+    "requires": [
+      "79160d92190c66c8c82ea54af2265041f53fdd13992af06e47f538be18b57a2b"
+    ],
+    "scope": "Complete tray8/8 gate receipts and full raw evidence/source plus immutable ongoing dock1/2 learning snapshot; full64 still pending.",
+    "qualified": false,
+    "archive_sha_verified_both_hosts": true,
+    "remote_archive": "/home/arnold/Develop/rebar-migration-back4090-20261022/rebar_training_recovery_20261022_v10_tray_gate_dock_learning.tar.gz"
   },
   "last_completed_validation": "review_20261020/resume_4090_return_20261022",
   "current_course_state": "running",
