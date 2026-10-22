@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T04:23:36.779961+00:00",
+  "updated_at": "2026-10-22T04:38:52.987734+00:00",
   "status": "v10_full_holdouts_running",
   "stable": false,
   "user_authorized_resume": true,
@@ -26,8 +26,8 @@
     "full_holdout_7251042"
   ],
   "independent_full_evaluation_episodes_required": 64,
-  "independent_full_evaluation_complete_episodes": 5,
-  "independent_full_evaluation_successes": 5,
+  "independent_full_evaluation_complete_episodes": 6,
+  "independent_full_evaluation_successes": 6,
   "independent_full_evaluation_failures": 0,
   "independent_full_evaluation_passed": false,
   "current_tray_gate": {
@@ -115,8 +115,8 @@
   "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-22T04:23:36.779961+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_122336",
+    "at": "2026-10-22T04:38:52.987734+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_123852",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
@@ -174,21 +174,21 @@
           }
         ],
         "trace": {
-          "step": 28200,
+          "step": 34890,
           "episode": 3,
-          "stage": "pickup",
+          "stage": "pickup_tray",
           "route": 0,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333318933
+          "camera_age_ms": 33.33333333330302
         }
       },
       {
         "seed": 7251042,
         "name": "full_holdout_7251042",
         "run_id": "f3227271d77949a792d5d983a499090a",
-        "episodes": 2,
-        "successes": 2,
+        "episodes": 3,
+        "successes": 3,
         "completed": false,
         "checks": [
           {
@@ -220,21 +220,36 @@
             "unsafe_force_N": 25.838035583496094,
             "tcp_clearance_mm": 89.54612165689468,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "continuous_mission_phases_verified": true,
+            "episode": 2,
+            "error_mm": 1.2141171609982848,
+            "axis_error_deg": 0.0397067291761432,
+            "jaw_forces_N": [
+              24.724573135375977,
+              25.184926986694336,
+              25.21954345703125,
+              24.77450942993164
+            ],
+            "unsafe_force_N": 25.818374633789062,
+            "tcp_clearance_mm": 89.61356431245804,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 28050,
-          "episode": 2,
-          "stage": "loading",
-          "route": 10,
+          "step": 34710,
+          "episode": 3,
+          "stage": "navigate",
+          "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333318933
+          "camera_age_ms": 33.33333333330302
         }
       }
     ],
-    "episodes": 5,
-    "successes": 5,
+    "episodes": 6,
+    "successes": 6,
     "failures": 0,
     "independent_full_gate_passed": false,
     "formal_full_episodes": 0,
@@ -266,7 +281,7 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "{\"shanghai_time\": \"2026-10-22T12:23:36.779961+08:00\", \"full_completed_rows\": 5, \"successes\": 5, \"failures\": 0, \"new_rows\": 1, \"fully_completed_native_group_rows\": 0, \"qualified\": false, \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"snapshot\": \"full_holdouts_snapshot_20261022_122336\", \"sha_verified_files\": 24, \"new_physics_checks\": [{\"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2370655313134193, \"axis_error_deg\": 0.03984187842428986, \"jaw_forces_N\": [24.115434646606445, 25.823179244995117, 25.826282501220703, 24.11939811706543], \"unsafe_force_N\": 25.826282501220703, \"tcp_clearance_mm\": 89.68202769756317, \"all_strict_clamp_physics_passed\": true}], \"groups\": [{\"seed\": 7241042, \"name\": \"full_holdout_7241042\", \"run_id\": \"a710e29cc1ee4785b15024aa52b2fe57\", \"episodes\": 3, \"successes\": 3, \"completed\": false, \"checks\": [{\"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.114375307224691, \"axis_error_deg\": 0.040243625138614236, \"jaw_forces_N\": [24.115081787109375, 25.824697494506836, 25.820592880249023, 24.11128044128418], \"unsafe_force_N\": 25.824697494506836, \"tcp_clearance_mm\": 89.44138884544373, \"all_strict_clamp_physics_passed\": true}, {\"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.096139196306467, \"axis_error_deg\": 0.04014963996662507, \"jaw_forces_N\": [25.852046966552734, 24.08210563659668, 24.08237075805664, 25.8514461517334], \"unsafe_force_N\": 25.852046966552734, \"tcp_clearance_mm\": 89.4801914691925, \"all_strict_clamp_physics_passed\": true}, {\"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2370655313134193, \"axis_error_deg\": 0.03984187842428986, \"jaw_forces_N\": [24.115434646606445, 25.823179244995117, 25.826282501220703, 24.11939811706543], \"unsafe_force_N\": 25.826282501220703, \"tcp_clearance_mm\": 89.68202769756317, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 28200, \"episode\": 3, \"stage\": \"pickup\", \"route\": 0, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333318933}}, {\"seed\": 7251042, \"name\": \"full_holdout_7251042\", \"run_id\": \"f3227271d77949a792d5d983a499090a\", \"episodes\": 2, \"successes\": 2, \"completed\": false, \"checks\": [{\"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.1342812795192003, \"axis_error_deg\": 0.04002145717271096, \"jaw_forces_N\": [24.11974334716797, 25.820194244384766, 25.816967010498047, 24.11646842956543], \"unsafe_force_N\": 25.832740783691406, \"tcp_clearance_mm\": 89.53092992305756, \"all_strict_clamp_physics_passed\": true}, {\"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.159358536824584, \"axis_error_deg\": 0.041229175644850145, \"jaw_forces_N\": [25.83334732055664, 24.089923858642578, 24.09501075744629, 25.838035583496094], \"unsafe_force_N\": 25.838035583496094, \"tcp_clearance_mm\": 89.54612165689468, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 28050, \"episode\": 2, \"stage\": \"loading\", \"route\": 10, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333318933}}], \"action\": \"Keep original controller20756/jobs; no duplicate launch. Require complete native group reports and all64 strict same-fingerprint receipts before finalgate/video. Training and oldv8/v9 excluded.\"}",
+  "last_heartbeat_result": "{\"shanghai_time\": \"2026-10-22T12:38:52.987734+08:00\", \"full_completed_rows\": 6, \"successes\": 6, \"failures\": 0, \"new_rows\": 1, \"fully_completed_native_group_rows\": 0, \"qualified\": false, \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"snapshot\": \"full_holdouts_snapshot_20261022_123852\", \"sha_verified_files\": 27, \"new_physics_checks\": [{\"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2141171609982848, \"axis_error_deg\": 0.0397067291761432, \"jaw_forces_N\": [24.724573135375977, 25.184926986694336, 25.21954345703125, 24.77450942993164], \"unsafe_force_N\": 25.818374633789062, \"tcp_clearance_mm\": 89.61356431245804, \"all_strict_clamp_physics_passed\": true}], \"groups\": [{\"seed\": 7241042, \"name\": \"full_holdout_7241042\", \"run_id\": \"a710e29cc1ee4785b15024aa52b2fe57\", \"episodes\": 3, \"successes\": 3, \"completed\": false, \"checks\": [{\"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.114375307224691, \"axis_error_deg\": 0.040243625138614236, \"jaw_forces_N\": [24.115081787109375, 25.824697494506836, 25.820592880249023, 24.11128044128418], \"unsafe_force_N\": 25.824697494506836, \"tcp_clearance_mm\": 89.44138884544373, \"all_strict_clamp_physics_passed\": true}, {\"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.096139196306467, \"axis_error_deg\": 0.04014963996662507, \"jaw_forces_N\": [25.852046966552734, 24.08210563659668, 24.08237075805664, 25.8514461517334], \"unsafe_force_N\": 25.852046966552734, \"tcp_clearance_mm\": 89.4801914691925, \"all_strict_clamp_physics_passed\": true}, {\"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2370655313134193, \"axis_error_deg\": 0.03984187842428986, \"jaw_forces_N\": [24.115434646606445, 25.823179244995117, 25.826282501220703, 24.11939811706543], \"unsafe_force_N\": 25.826282501220703, \"tcp_clearance_mm\": 89.68202769756317, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 34890, \"episode\": 3, \"stage\": \"pickup_tray\", \"route\": 0, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333330302}}, {\"seed\": 7251042, \"name\": \"full_holdout_7251042\", \"run_id\": \"f3227271d77949a792d5d983a499090a\", \"episodes\": 3, \"successes\": 3, \"completed\": false, \"checks\": [{\"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.1342812795192003, \"axis_error_deg\": 0.04002145717271096, \"jaw_forces_N\": [24.11974334716797, 25.820194244384766, 25.816967010498047, 24.11646842956543], \"unsafe_force_N\": 25.832740783691406, \"tcp_clearance_mm\": 89.53092992305756, \"all_strict_clamp_physics_passed\": true}, {\"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.159358536824584, \"axis_error_deg\": 0.041229175644850145, \"jaw_forces_N\": [25.83334732055664, 24.089923858642578, 24.09501075744629, 25.838035583496094], \"unsafe_force_N\": 25.838035583496094, \"tcp_clearance_mm\": 89.54612165689468, \"all_strict_clamp_physics_passed\": true}, {\"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2141171609982848, \"axis_error_deg\": 0.0397067291761432, \"jaw_forces_N\": [24.724573135375977, 25.184926986694336, 25.21954345703125, 24.77450942993164], \"unsafe_force_N\": 25.818374633789062, \"tcp_clearance_mm\": 89.61356431245804, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 34710, \"episode\": 3, \"stage\": \"navigate\", \"route\": 4, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333330302}}], \"action\": \"Keep original controller20756/jobs; no duplicate launch. Require complete native group reports and all64 strict same-fingerprint receipts before finalgate/video. Training and oldv8/v9 excluded.\"}",
   "independent_full_evaluation_new_episodes_since_last_check": 1,
   "latest_local_recovery_backup": {
     "at": "2026-10-22T03:26:43.384854+00:00",
@@ -581,7 +596,7 @@
     "full_holdout_7241042",
     "full_holdout_7251042"
   ],
-  "last_successful_node_check_at": "2026-10-22T04:23:36.779961+00:00",
+  "last_successful_node_check_at": "2026-10-22T04:38:52.987734+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -2162,8 +2177,8 @@
     "qualified": false
   },
   "latest_full_independent_partial_verified": {
-    "at": "2026-10-22T04:23:36.779961+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_122336",
+    "at": "2026-10-22T04:38:52.987734+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_123852",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
@@ -2221,21 +2236,21 @@
           }
         ],
         "trace": {
-          "step": 28200,
+          "step": 34890,
           "episode": 3,
-          "stage": "pickup",
+          "stage": "pickup_tray",
           "route": 0,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333318933
+          "camera_age_ms": 33.33333333330302
         }
       },
       {
         "seed": 7251042,
         "name": "full_holdout_7251042",
         "run_id": "f3227271d77949a792d5d983a499090a",
-        "episodes": 2,
-        "successes": 2,
+        "episodes": 3,
+        "successes": 3,
         "completed": false,
         "checks": [
           {
@@ -2267,21 +2282,36 @@
             "unsafe_force_N": 25.838035583496094,
             "tcp_clearance_mm": 89.54612165689468,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "continuous_mission_phases_verified": true,
+            "episode": 2,
+            "error_mm": 1.2141171609982848,
+            "axis_error_deg": 0.0397067291761432,
+            "jaw_forces_N": [
+              24.724573135375977,
+              25.184926986694336,
+              25.21954345703125,
+              24.77450942993164
+            ],
+            "unsafe_force_N": 25.818374633789062,
+            "tcp_clearance_mm": 89.61356431245804,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 28050,
-          "episode": 2,
-          "stage": "loading",
-          "route": 10,
+          "step": 34710,
+          "episode": 3,
+          "stage": "navigate",
+          "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333318933
+          "camera_age_ms": 33.33333333330302
         }
       }
     ],
-    "episodes": 5,
-    "successes": 5,
+    "episodes": 6,
+    "successes": 6,
     "failures": 0,
     "independent_full_gate_passed": false,
     "formal_full_episodes": 0,
@@ -2289,14 +2319,14 @@
     "qualified": false
   },
   "latest_full_partial_both_hosts_verified": {
-    "at": "2026-10-22T04:24:19.698668+00:00",
-    "files": 24,
+    "at": "2026-10-22T04:38:53.743699+00:00",
+    "files": 27,
     "mismatches": [],
     "all_listed_files_sha_verified_both_hosts": true,
     "partial_full_only": true,
     "qualified": false
   },
-  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_122336",
+  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_123852",
   "final_full_frozen_fingerprints": {
     "recorded_at": "2026-10-22T03:26:23.316910+00:00",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
