@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-22T12:23:24.887715+00:00",
+  "updated_at": "2026-10-22T12:28:42.342812+00:00",
   "user_authorized_resume": true,
   "user_confirmed_target": "arnold@192.168.0.103",
   "hardware": "RTX5090 Laptop GPU",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
   "current_job_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
-  "state": "candidate_regression_connection_intermittent",
+  "state": "candidate_regression_host_unreachable",
   "launch_receipt": {
     "directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
     "plan_sha256": "86fcfc2133cbbe77ae8a7fed38f70337a015235030ad4afb7e57da13b81b77c4",
@@ -127,16 +127,22 @@
   },
   "continuous_group_replay_reason": "Simulator state not serialized; same frozen candidate, policy, seeds; replay interrupted continuous groups in fresh output; do not merge interrupted receipts.",
   "connectivity": {
-    "at": "2026-10-22T12:23:24.887715+00:00",
-    "state": "intermittent_ssh_timeout_after_verified_progress",
+    "at": "2026-10-22T12:28:42.342812+00:00",
+    "state": "ssh_timeout_then_host_unreachable",
+    "local_ip": "192.168.0.160",
+    "target": "192.168.0.103",
+    "target_ping": "0/3",
+    "gateway_ping": "2/2",
+    "arp": "incomplete",
+    "cause": "unknown_no_remote_logs_available",
     "last_trusted_at": "2026-10-22T12:21:30.662175+00:00",
     "last_trusted_episodes": 5,
     "last_trusted_successes": 5,
     "last_trusted_failures": 0,
     "current_native_progress": "unknown",
-    "no_restart": true,
-    "remote_document_sync": "newest sync interrupted; local records and GitHub current",
-    "cause": "unknown"
+    "new_completed_rows_since_last_check": "unknown",
+    "no_simulation_mutation": true,
+    "archive_transfer": "previous transfer exited255; not restarted while unreachable"
   },
   "outage_job": {
     "state": "running",
