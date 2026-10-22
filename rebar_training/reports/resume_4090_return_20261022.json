@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T08:03:53.598271+00:00",
+  "updated_at": "2026-10-22T08:16:46.801870+00:00",
   "status": "source_return_candidate_v2_physics_running",
   "stable": false,
   "user_authorized_resume": true,
@@ -964,7 +964,7 @@
     "source_return_reset8_7241042",
     "source_return_reset2_7271042"
   ],
-  "last_successful_node_check_at": "2026-10-22T08:03:53.598271+00:00",
+  "last_successful_node_check_at": "2026-10-22T08:16:46.801870+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -1125,7 +1125,7 @@
   },
   "network_diagnostic_output_no_longer_required": true,
   "latest_independent_active_live": {
-    "at": "2026-10-22T08:03:53.598271+00:00",
+    "at": "2026-10-22T08:16:46.801870+00:00",
     "phase": "candidate_development_regressions",
     "active_jobs": [
       "source_return_reset8_7241042",
@@ -1139,21 +1139,78 @@
         "state": "running",
         "runner_pid": 46837,
         "pid": 46838,
-        "run_id": null,
-        "episodes": 0,
-        "successes": 0,
+        "run_id": "a0ecf86f368748ceba8e8688b9d557c4",
+        "episodes": 1,
+        "successes": 1,
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 3540,
-          "episode": 0,
-          "stage": "observe_tray",
-          "route": 4,
+          "step": 8910,
+          "episode": 1,
+          "stage": "pickup",
+          "route": 0,
           "valid": false,
           "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 118033.33333433334
+          "camera_age_ms": 297033.3333343333
         },
-        "checks": [],
+        "checks": [
+          {
+            "episode": 0,
+            "success": true,
+            "failure": null,
+            "error_mm": 1.1971485801041126,
+            "all_strict_physics_passed": true,
+            "handoffs": [
+              {
+                "tick": 1041,
+                "packet_tag": "source_return_handoff_tick1041",
+                "pixel": [
+                  553.0554906934739,
+                  519.1349759627483
+                ],
+                "source_clearance_m": 0.2828513661958678,
+                "safe_conditions_verified": true,
+                "frame": 347,
+                "timestamp_ns": 34700000000
+              }
+            ],
+            "diagnostic_grasp_outage_triggered": false,
+            "source_return_handoffs": [
+              {
+                "tick": 1041,
+                "last_good_ns": 34700000000,
+                "tcp_base": [
+                  -1.0283932196081313,
+                  0.008156322211109662,
+                  0.8048521605047341
+                ],
+                "return_index": 68,
+                "history_length": 343,
+                "stage": "pickup",
+                "route": 0,
+                "source_center": [
+                  -1.166440886956478,
+                  -0.033826393404070815,
+                  0.5220007943088663
+                ],
+                "source_clearance_m": 0.2828513661958678,
+                "fingers": [
+                  -5.542655046042455e-08,
+                  1.8980899767484516e-05
+                ],
+                "finger_forces": [
+                  0.0,
+                  0.0
+                ],
+                "visible_edges": 96,
+                "residual_px": 1.6657188096821622,
+                "camera_timestamp_ns": 34700000000,
+                "camera_frame": 347,
+                "packet_tag": "source_return_handoff_tick1041"
+              }
+            ]
+          }
+        ],
         "saved_handoff_packets": [
           "source_return_handoff_tick1041"
         ]
@@ -1165,21 +1222,78 @@
         "state": "running",
         "runner_pid": 46911,
         "pid": 46912,
-        "run_id": null,
-        "episodes": 0,
-        "successes": 0,
+        "run_id": "713bd88ad99d404fb2c8fe6e5d0a53c3",
+        "episodes": 1,
+        "successes": 1,
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 3510,
+          "step": 8850,
           "episode": 0,
-          "stage": "observe_tray",
-          "route": 4,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 117033.33333433334
+          "stage": "loading",
+          "route": 10,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333335986
         },
-        "checks": [],
+        "checks": [
+          {
+            "episode": 0,
+            "success": true,
+            "failure": null,
+            "error_mm": 0.9750439785420895,
+            "all_strict_physics_passed": true,
+            "handoffs": [
+              {
+                "tick": 1041,
+                "packet_tag": "source_return_handoff_tick1041",
+                "pixel": [
+                  579.4076139947747,
+                  534.2612773276242
+                ],
+                "source_clearance_m": 0.29351485539649025,
+                "safe_conditions_verified": true,
+                "frame": 347,
+                "timestamp_ns": 34700000000
+              }
+            ],
+            "diagnostic_grasp_outage_triggered": false,
+            "source_return_handoffs": [
+              {
+                "tick": 1041,
+                "last_good_ns": 34700000000,
+                "tcp_base": [
+                  -0.9804389974387527,
+                  0.022835961514114954,
+                  0.8155153643440937
+                ],
+                "return_index": 89,
+                "history_length": 359,
+                "stage": "pickup",
+                "route": 0,
+                "source_center": [
+                  -1.1832307499992052,
+                  -0.038278321467891355,
+                  0.5220005089476034
+                ],
+                "source_clearance_m": 0.29351485539649025,
+                "fingers": [
+                  -6.670119745422198e-08,
+                  1.1198885658814106e-05
+                ],
+                "finger_forces": [
+                  0.0,
+                  0.0
+                ],
+                "visible_edges": 98,
+                "residual_px": 0.487960485620703,
+                "camera_timestamp_ns": 34700000000,
+                "camera_frame": 347,
+                "packet_tag": "source_return_handoff_tick1041"
+              }
+            ]
+          }
+        ],
         "saved_handoff_packets": [
           "source_return_handoff_tick1041"
         ]
@@ -3643,8 +3757,8 @@
   },
   "latest_user_priority_change": "Save/stop both v10 groups and prioritize candidate11 physics",
   "candidate_regression_directory": "artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022",
-  "candidate_regression_completed_episodes": 0,
-  "candidate_regression_successes": 0,
+  "candidate_regression_completed_episodes": 2,
+  "candidate_regression_successes": 2,
   "candidate_regression_failures": 0,
   "candidate_regression_required_episodes": 11,
   "candidate_regression_launch": {
@@ -3742,11 +3856,11 @@
   },
   "candidate_regression_verified_passed": false,
   "hardware_migration_policy": "Hardware change alone does not require policy retraining or a new acceptance denominator. Preserve frozen source/policy/detector/assets, validate runtime/physics, then continue existing predeclared remaining episodes; new learning or control changes require separate evidence and frozen identity.",
-  "candidate_regression_new_episodes": 0,
-  "latest_candidate_regression_snapshot": "artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/snapshot_20261022_160353",
+  "candidate_regression_new_episodes": 2,
+  "latest_candidate_regression_snapshot": "artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/snapshot_20261022_161646",
   "latest_candidate_regression_summary": {
-    "at": "2026-10-22T08:03:53.598271+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/snapshot_20261022_160353",
+    "at": "2026-10-22T08:16:46.801870+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/snapshot_20261022_161646",
     "candidate_source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "groups": [
@@ -3757,21 +3871,78 @@
         "state": "running",
         "runner_pid": 46837,
         "pid": 46838,
-        "run_id": null,
-        "episodes": 0,
-        "successes": 0,
+        "run_id": "a0ecf86f368748ceba8e8688b9d557c4",
+        "episodes": 1,
+        "successes": 1,
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 3540,
-          "episode": 0,
-          "stage": "observe_tray",
-          "route": 4,
+          "step": 8910,
+          "episode": 1,
+          "stage": "pickup",
+          "route": 0,
           "valid": false,
           "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 118033.33333433334
+          "camera_age_ms": 297033.3333343333
         },
-        "checks": [],
+        "checks": [
+          {
+            "episode": 0,
+            "success": true,
+            "failure": null,
+            "error_mm": 1.1971485801041126,
+            "all_strict_physics_passed": true,
+            "handoffs": [
+              {
+                "tick": 1041,
+                "packet_tag": "source_return_handoff_tick1041",
+                "pixel": [
+                  553.0554906934739,
+                  519.1349759627483
+                ],
+                "source_clearance_m": 0.2828513661958678,
+                "safe_conditions_verified": true,
+                "frame": 347,
+                "timestamp_ns": 34700000000
+              }
+            ],
+            "diagnostic_grasp_outage_triggered": false,
+            "source_return_handoffs": [
+              {
+                "tick": 1041,
+                "last_good_ns": 34700000000,
+                "tcp_base": [
+                  -1.0283932196081313,
+                  0.008156322211109662,
+                  0.8048521605047341
+                ],
+                "return_index": 68,
+                "history_length": 343,
+                "stage": "pickup",
+                "route": 0,
+                "source_center": [
+                  -1.166440886956478,
+                  -0.033826393404070815,
+                  0.5220007943088663
+                ],
+                "source_clearance_m": 0.2828513661958678,
+                "fingers": [
+                  -5.542655046042455e-08,
+                  1.8980899767484516e-05
+                ],
+                "finger_forces": [
+                  0.0,
+                  0.0
+                ],
+                "visible_edges": 96,
+                "residual_px": 1.6657188096821622,
+                "camera_timestamp_ns": 34700000000,
+                "camera_frame": 347,
+                "packet_tag": "source_return_handoff_tick1041"
+              }
+            ]
+          }
+        ],
         "saved_handoff_packets": [
           "source_return_handoff_tick1041"
         ]
@@ -3783,21 +3954,78 @@
         "state": "running",
         "runner_pid": 46911,
         "pid": 46912,
-        "run_id": null,
-        "episodes": 0,
-        "successes": 0,
+        "run_id": "713bd88ad99d404fb2c8fe6e5d0a53c3",
+        "episodes": 1,
+        "successes": 1,
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 3510,
+          "step": 8850,
           "episode": 0,
-          "stage": "observe_tray",
-          "route": 4,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 117033.33333433334
+          "stage": "loading",
+          "route": 10,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333335986
         },
-        "checks": [],
+        "checks": [
+          {
+            "episode": 0,
+            "success": true,
+            "failure": null,
+            "error_mm": 0.9750439785420895,
+            "all_strict_physics_passed": true,
+            "handoffs": [
+              {
+                "tick": 1041,
+                "packet_tag": "source_return_handoff_tick1041",
+                "pixel": [
+                  579.4076139947747,
+                  534.2612773276242
+                ],
+                "source_clearance_m": 0.29351485539649025,
+                "safe_conditions_verified": true,
+                "frame": 347,
+                "timestamp_ns": 34700000000
+              }
+            ],
+            "diagnostic_grasp_outage_triggered": false,
+            "source_return_handoffs": [
+              {
+                "tick": 1041,
+                "last_good_ns": 34700000000,
+                "tcp_base": [
+                  -0.9804389974387527,
+                  0.022835961514114954,
+                  0.8155153643440937
+                ],
+                "return_index": 89,
+                "history_length": 359,
+                "stage": "pickup",
+                "route": 0,
+                "source_center": [
+                  -1.1832307499992052,
+                  -0.038278321467891355,
+                  0.5220005089476034
+                ],
+                "source_clearance_m": 0.29351485539649025,
+                "fingers": [
+                  -6.670119745422198e-08,
+                  1.1198885658814106e-05
+                ],
+                "finger_forces": [
+                  0.0,
+                  0.0
+                ],
+                "visible_edges": 98,
+                "residual_px": 0.487960485620703,
+                "camera_timestamp_ns": 34700000000,
+                "camera_frame": 347,
+                "packet_tag": "source_return_handoff_tick1041"
+              }
+            ]
+          }
+        ],
         "saved_handoff_packets": [
           "source_return_handoff_tick1041"
         ]
@@ -3812,8 +4040,8 @@
         "failures": 0
       }
     ],
-    "episodes": 0,
-    "successes": 0,
+    "episodes": 2,
+    "successes": 2,
     "failures": 0,
     "required_episodes": 11,
     "verified_passed": false,
@@ -3822,14 +4050,71 @@
     "worker_state": "T (stopped)"
   },
   "latest_candidate_regression_sha_proof": {
-    "at": "2026-10-22T08:05:07.995658+00:00",
-    "files": 13,
+    "at": "2026-10-22T08:17:35.590743+00:00",
+    "files": 21,
     "mismatches": [],
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/snapshot_20261022_160353",
-    "episodes": 0,
-    "successes": 0,
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/snapshot_20261022_161646",
+    "episodes": 2,
+    "successes": 2,
     "failures": 0,
-    "guard_packet_evidence_present": true,
-    "full_guard_conditions_pending_native_receipts": true
+    "independent_completed_row_checks": [
+      {
+        "name": "source_return_reset8_7241042",
+        "episode": 0,
+        "success": true,
+        "error_mm": 1.1971485801041126,
+        "axis_deg": 0.039987482130131785,
+        "jaws_N": [
+          24.2933349609375,
+          25.60698890686035,
+          25.640663146972656,
+          24.338401794433594
+        ],
+        "unsafe_N": 26.023637771606445,
+        "retreat_mm": 89.62277323007584,
+        "strict_physics_verified": true,
+        "handoffs": [
+          {
+            "tick": 1041,
+            "frame": 347,
+            "pixel": [
+              553.0554906934739,
+              519.1349759627483
+            ],
+            "clearance_m": 0.2828513661958678,
+            "guards_verified": true
+          }
+        ]
+      },
+      {
+        "name": "source_return_reset2_7271042",
+        "episode": 0,
+        "success": true,
+        "error_mm": 0.9750439785420895,
+        "axis_deg": 0.03989780451459453,
+        "jaws_N": [
+          24.124399185180664,
+          25.803239822387695,
+          25.811738967895508,
+          24.132625579833984
+        ],
+        "unsafe_N": 25.826171875,
+        "retreat_mm": 88.88968080282211,
+        "strict_physics_verified": true,
+        "handoffs": [
+          {
+            "tick": 1041,
+            "frame": 347,
+            "pixel": [
+              579.4076139947747,
+              534.2612773276242
+            ],
+            "clearance_m": 0.29351485539649025,
+            "guards_verified": true
+          }
+        ]
+      }
+    ],
+    "complete_development_gate_passed": false
   }
 }
