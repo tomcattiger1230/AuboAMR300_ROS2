@@ -1,6 +1,19 @@
 # 钢筋视觉移动操作训练：接力指导
 
-迁移包已完整校验：`artifacts/rebar_training_migration_back4090_20261021.tar.gz`，1,439,210,328 字节、2573 文件、零不匹配，SHA256 `766c0d05c86bf3c5864b918ce064282f0272dc2a2323d2d469c23e481f320e26`。同名 `.sha256`、`.verify.json`、`.recovery_status.json` 提供包外最终校验和暂停入口。4090当前不可达，尚未上传；新旧设备均不自动恢复。
+## 最新迁移校验：4090 已接收，训练仍暂停（2026-10-22 上海 08:49）
+
+已按用户“先完成迁移和校验，暂时不要启动训练”的要求，将迁移包传至 `arnold@192.168.3.133` 并解压到新专用目录 `/home/arnold/Develop/rebar-training-4090-return-20261021`。旧4090目录完整保留，未恢复任何旧PID或job。
+
+- 包 SHA256 与本机一致，**2573 文件逐一匹配、零不匹配**。原始包及校验文件在目标 `/home/arnold/Develop/rebar-migration-back4090-20261022/`；当前运行依赖和全部v9证据已落盘。
+- 4090 CUDA 实际加载 f70f6115 策略及optimizer，网络/optimizer有限，输出1×6，计数保持 **329 updates /122 actor /26712 steps**；未执行策略更新。源码2c、检测器845f及资产d543指纹一致，10个USD依赖闭合，SDK的OmniPBR材质文件存在。
+- CPU全套 **239通过，无跳过**。初次检查发现缺少jsonschema，按 `uv.lock` 精确版本及wheel哈希安装到新目录 `.runtime_overlay` 后补验通过，未改共享Isaac Lab/SDK环境。手动环境文件为目标根目录 `MIGRATION_ENV.sh`，仅导出路径，不启动进程。
+- **未启动训练、评估、SimulationApp或物理回归；无本任务进程，GPU空闲，automation-2继续PAUSED。** 用户明确恢复前保持此状态。迁移校验不等于物理回归或稳定验收通过。
+- 恢复候选仍是f70f权重，v9抓取gate8/8、到站独立4成功0失败但gate未完成、最终full0/64；历史v8完整组16回合另2成功单列。物理回归和新种子的后续课程须待恢复授权，在新输出中执行。
+
+目标现场入口 `MIGRATION_TARGET_STATE.json`，详细凭据 `reports/return_4090_20261022.json` 及 `review_20261020/return4090_20261022/`。后续文档更新仅覆盖迁移元数据；冻结源码、模型、资产和原生证据不改动，原包保留原始清单，目标迁移后文件以 `TARGET_FILES_MANIFEST.json` 复验；`target_metadata_overlay.verified.json` 单列迁移文档变更。
+
+
+迁移包已完整校验：`artifacts/rebar_training_migration_back4090_20261021.tar.gz`，1,439,210,328 字节、2573 文件、零不匹配，SHA256 `766c0d05c86bf3c5864b918ce064282f0272dc2a2323d2d469c23e481f320e26`。同名 `.sha256`、`.verify.json`、`.recovery_status.json` 提供包外最终校验和暂停入口。4090已完成接收与校验；新旧设备均不自动恢复。
 
 
 ## 当前暂停：准备从 5090 迁移回 4090（2026-10-21 上海 23:35）
