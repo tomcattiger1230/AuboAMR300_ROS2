@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-22T08:31:43.004820+00:00",
-  "status": "source_return_candidate_v2_physics_running",
+  "updated_at": "2026-10-22T08:54:12.338503+00:00",
+  "status": "paused_user_migration_5090D_ready",
   "stable": false,
-  "user_authorized_resume": true,
-  "requires_explicit_resume": false,
+  "user_authorized_resume": false,
+  "requires_explicit_resume": true,
   "training_host": "arnold@192.168.3.133",
   "training_repository": "/home/arnold/Develop/rebar-training-4090-return-20261021",
   "current_course": "course_v10_4090_return",
   "pending_course": null,
   "pending_validation": null,
-  "active_phase": "source_return_candidate_v2_physics",
+  "active_phase": "paused_user_prepare_migration_5090D",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
   "warm_start_counters": {
@@ -21,10 +21,7 @@
   "pending_plan_sha256": "ef6828b0c3b034cc735312df77261fe9b9cc57b774a6582573e8e379739c3590",
   "validation_launcher_pgid": 16882,
   "validation_state": "course_started",
-  "active_jobs": [
-    "source_return_reset8_7241042",
-    "source_return_reset2_7271042"
-  ],
+  "active_jobs": [],
   "independent_full_evaluation_episodes_required": 64,
   "independent_full_evaluation_complete_episodes": 26,
   "independent_full_evaluation_successes": 24,
@@ -96,7 +93,7 @@
   "old_4090_repository_state": "keep stopped",
   "automation_id": "automation-2",
   "automation_interval_minutes": 15,
-  "automation_state": "ACTIVE",
+  "automation_state": "PAUSED",
   "migration_runtime_subset": {
     "archive": "rebar_training_runtime_5090_20261021.tar.gz",
     "sha256": "c5b04ea52edca59315becc76e87d8af793a59570b0038e565df1776f710d5d88",
@@ -108,12 +105,12 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Keep healthy candidate jobs. Finite one-shot outage dispatcher49758 waits for strict reset2 native success plus actual capacity<2 and dispatches predeclared supported_partial_outage_241042 once. Inspect its status/job files first; do not duplicate launch. No v10 resume. Require all11 strict physical/handoff/outage receipts before adoption.",
+  "next_action": "Task remains paused. Complete5090D destination identification, transfer to a new directory and verify outer/archive/inner file SHA. No simulation, regression, training, video or dispatcher startup without explicit resume. Preserve source8a24/current393b+optimizer and all historical results; hardware-only migration does not retrain.",
   "validation_runner_pid": 16884,
   "cpu_suite_passed": true,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
   "training_still_active": false,
-  "simulation_validation_active": true,
+  "simulation_validation_active": false,
   "last_live_progress": {
     "at": "2026-10-22T07:54:08.669870+00:00",
     "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_155408",
@@ -960,10 +957,7 @@
   },
   "node_connection_state": "connected",
   "last_known_course_state": "running",
-  "last_known_active_jobs": [
-    "source_return_reset8_7241042",
-    "source_return_reset2_7271042"
-  ],
+  "last_known_active_jobs": [],
   "last_successful_node_check_at": "2026-10-22T08:31:43.004820+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
@@ -1732,7 +1726,7 @@
   "current_dock_gate_passed": true,
   "interrupted_dock_episode": "Episode index2 in each job was interrupted by user pause; not counted as success or physical failure. Native files preserved without a synthetic complete report.",
   "latest_pause_receipt": "artifacts/mobile_curriculum_20261020/review_20261020/migration_back_4090_20261021/pause.stopped.json",
-  "training_resumed": true,
+  "training_resumed": false,
   "migration_package_ready": true,
   "migration_transferred_to_target": true,
   "latest_quiescence_recheck": {
@@ -3608,7 +3602,7 @@
     "both_hosts_verified": true,
     "qualified": false
   },
-  "current_phase": "source_return_candidate_v2_physics",
+  "current_phase": "paused_user_prepare_migration_5090D",
   "controller_dispatch_paused_for_analysis": true,
   "dispatch_pause_proof": {
     "at": "2026-10-22T06:20:05.906363+00:00",
@@ -3647,7 +3641,7 @@
     "state_after": "T (stopped)"
   },
   "current_fixed64_gate_unattainable": true,
-  "user_task_paused": false,
+  "user_task_paused": true,
   "autonomous_repair_authorized": true,
   "historical_5090_live_state_20261021": {
     "at": "2026-10-21T15:17:28.608522+00:00",
@@ -4126,7 +4120,7 @@
     "created_at": "2026-10-22T08:33:17.363683+00:00",
     "scope": "One finite dispatch of predeclared supported_partial_outage_241042 after strict two-episode report and actual slot; never old v10 resume",
     "max_simulations": 2,
-    "state": "waiting_for_strict_two_episode_completion_and_actual_slot",
+    "state": "stopped_user_for_5090D_migration",
     "at": "2026-10-22T08:34:17.657401+00:00",
     "two_episode_job": "running",
     "gpu_processes": 2,
@@ -4135,5 +4129,99 @@
       46911
     ]
   },
-  "candidate_outage_dispatcher_script": "artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/review_tools/dispatch_candidate_outage_once.py"
+  "candidate_outage_dispatcher_script": "artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/review_tools/dispatch_candidate_outage_once.py",
+  "pause_proof": {
+    "at": "2026-10-22T08:37:18.885991+00:00",
+    "user_instruction": "Pause all new work; prepare all data for migration to 5090D. No automatic resume.",
+    "actions": [
+      {
+        "pid": 49758,
+        "pgid": 49758,
+        "signal": "SIGTERM",
+        "role": "one-shot dispatcher"
+      },
+      {
+        "pid": 46837,
+        "pgid": 46837,
+        "signal": "SIGTERM",
+        "role": "source_return_reset8_7241042"
+      },
+      {
+        "pid": 46911,
+        "pgid": 46911,
+        "signal": "SIGTERM",
+        "role": "source_return_reset2_7271042"
+      },
+      {
+        "pid": 20758,
+        "signal": "SIGKILL",
+        "role": "previously SIGSTOP worker; no SIGCONT"
+      }
+    ],
+    "jobs_before": [
+      {
+        "name": "source_return_reset8_7241042",
+        "status": {
+          "job": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/source_return_reset8_7241042.job.json",
+          "runner_pid": 46837,
+          "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+          "log": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/source_return_reset8_7241042.log",
+          "state": "running",
+          "pid": 46838,
+          "updated": 1792655750.4031289
+        },
+        "completed_episodes": 1,
+        "successes": 1,
+        "physical_failures": 0,
+        "interrupted_episode_not_counted": true
+      },
+      {
+        "name": "source_return_reset2_7271042",
+        "status": {
+          "job": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/source_return_reset2_7271042.job.json",
+          "runner_pid": 46911,
+          "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+          "log": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/source_return_reset2_7271042.log",
+          "state": "running",
+          "pid": 46912,
+          "updated": 1792655751.4794648
+        },
+        "completed_episodes": 1,
+        "successes": 1,
+        "physical_failures": 0,
+        "interrupted_episode_not_counted": true
+      }
+    ],
+    "remaining_owned_groups": {},
+    "stopped_at": "2026-10-22T08:37:21.105477+00:00",
+    "gpu_after": "",
+    "all_task_processes_stopped": true,
+    "automatic_resume_allowed": false,
+    "candidate_complete_episodes": 2,
+    "candidate_successes": 2,
+    "candidate_physical_failures": 0
+  },
+  "migration_target": "5090D (SSH address pending)",
+  "migration_package_state": "complete_and_verified",
+  "migration_package": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_migration_5090D_20261022.tar.gz",
+  "migration_package_sha256": "d8f0a99269cad0a58a953ccdf03ee3118b21f8d4087d598c0ee8aa8d7fe4f753",
+  "migration_package_bytes": 12698828724,
+  "migration_package_payload_files": 12000,
+  "migration_package_verification": {
+    "verified_at": "2026-10-22T08:52:46.086974+00:00",
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_migration_5090D_20261022.tar.gz",
+    "bytes": 12698828724,
+    "sha256": "d8f0a99269cad0a58a953ccdf03ee3118b21f8d4087d598c0ee8aa8d7fe4f753",
+    "payload_files": 12000,
+    "archive_regular_files": 12001,
+    "uncompressed_payload_bytes": 14267773013,
+    "manifest_sha256": "5ac8c9efc855e55e3dfefb2f0b6937b4a6d085be8b9e55c3da6af6533dc8fc5d",
+    "mismatches": [],
+    "all_archive_entries_verified": true,
+    "full_current_repo_node_to_mac_sha_verified": true,
+    "current_repo_original_files": 11976,
+    "historical_archive_sha_verified": true,
+    "task_state": "PAUSED",
+    "automatic_resume_allowed": false
+  }
 }
