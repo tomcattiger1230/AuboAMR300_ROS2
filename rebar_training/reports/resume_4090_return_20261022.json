@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-22T02:44:30.910654+00:00",
-  "status": "v10_dock_holdouts_running",
+  "updated_at": "2026-10-22T03:09:31.726629+00:00",
+  "status": "v10_full_training_running",
   "stable": false,
   "user_authorized_resume": true,
   "requires_explicit_resume": false,
@@ -9,7 +9,7 @@
   "current_course": "course_v10_4090_return",
   "pending_course": null,
   "pending_validation": null,
-  "active_phase": "dock_clamp_independent_holdouts",
+  "active_phase": "full_training",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
   "warm_start_counters": {
@@ -22,8 +22,7 @@
   "validation_launcher_pgid": 16882,
   "validation_state": "course_started",
   "active_jobs": [
-    "dock_clamp_holdout_7151042",
-    "dock_clamp_holdout_7161042"
+    "full_train"
   ],
   "independent_full_evaluation_episodes_required": 64,
   "independent_full_evaluation_complete_episodes": 0,
@@ -51,7 +50,27 @@
     "failures": [],
     "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
   },
-  "current_dock_gate": null,
+  "current_dock_gate": {
+    "passed": true,
+    "phase": "dock_clamp",
+    "randomization": "expanded",
+    "episodes": 8,
+    "successes": 8,
+    "success_rate": 1.0,
+    "wilson_95_lower": 0.6755924351161198,
+    "minimum_episodes": 8,
+    "minimum_distinct_seeds": 2,
+    "distinct_seeds": [
+      7151042,
+      7161042
+    ],
+    "required_wilson_95_lower": 0.6,
+    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+    "evidence_errors": [],
+    "sample_requirement_met": true,
+    "failures": [],
+    "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+  },
   "current_full_gate": null,
   "current_development_regressions": {
     "required_episodes": 3,
@@ -88,146 +107,56 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Keep original controller20756 and dockholdouts26207/26208. Require complete4+4 fresh native reports, frozena1124cf1/source2c/detector/assets, strict4pad/openunload/retreat/speeds and independent gate exact recomputation before fulltrain7051043 and final64. No duplicate launch or premature stability claim.",
+  "next_action": "Keep original controller20756 and fulltrain28710. Require complete2/2 successful continuous missions, >=60newupdates, real actorlearning, strict4pad/openunload/retreat/speeds and finite finalpolicyoptimizer. Then freeze same finalpolicy/source/detector/assets and run prespecified7241042..7311042 each8 final64; no old evidence mixed or duplicate launches.",
   "validation_runner_pid": 16884,
   "cpu_suite_passed": true,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
-  "training_still_active": false,
+  "training_still_active": true,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-22T02:44:30.910654+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_holdouts_snapshot_20261022_104430",
-    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
-    "reports": [
+    "at": "2026-10-22T03:09:31.726629+00:00",
+    "checkpoint_sha256": "4f839541b34c58137c71a7fdf66b5963071ffaa1066576b201e37718c0eaa1f8",
+    "initial_checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+    "updates": 443,
+    "actor_updates": 165,
+    "policy_steps": 35556,
+    "new_updates": 48,
+    "new_actor_updates": 18,
+    "new_policy_steps": 3875,
+    "actor_weight_max_abs_change": 0.009224407374858856,
+    "model_and_optimizer_finite": true,
+    "actual_new_actor_update_verified": true,
+    "training_completed": false,
+    "qualified": false,
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_learning_snapshot_20261022_110931",
+    "run_id": "af9fcbd5b2e3490683302b11cf959866",
+    "episodes": 1,
+    "successes": 1,
+    "checks": [
       {
-        "seed": 7151042,
-        "name": "dock_clamp_holdout_7151042",
-        "run_id": "acb4ef89112b4770a2e1c5b597f55c15",
-        "episodes": 3,
-        "successes": 3,
-        "completed": false,
-        "checks": [
-          {
-            "episode": 0,
-            "error_mm": 1.2826422462239861,
-            "axis_error_deg": 0.036556149582419054,
-            "jaw_forces_N": [
-              24.323585510253906,
-              25.630674362182617,
-              25.64735221862793,
-              24.34163475036621
-            ],
-            "unsafe_force_N": 25.832290649414062,
-            "tcp_clearance_mm": 90.32173454761505,
-            "all_strict_clamp_physics_passed": true
-          },
-          {
-            "episode": 1,
-            "error_mm": 1.3428943930193782,
-            "axis_error_deg": 0.03361296396421024,
-            "jaw_forces_N": [
-              24.123323440551758,
-              25.815589904785156,
-              25.811567306518555,
-              24.11947250366211
-            ],
-            "unsafe_force_N": 25.822538375854492,
-            "tcp_clearance_mm": 79.0625512599945,
-            "all_strict_clamp_physics_passed": true
-          },
-          {
-            "episode": 2,
-            "error_mm": 1.3240441912785172,
-            "axis_error_deg": 0.03546786278155401,
-            "jaw_forces_N": [
-              24.129100799560547,
-              25.811105728149414,
-              25.81441307067871,
-              24.132158279418945
-            ],
-            "unsafe_force_N": 25.833093643188477,
-            "tcp_clearance_mm": 82.69906044006348,
-            "all_strict_clamp_physics_passed": true
-          }
+        "episode": 0,
+        "error_mm": 1.5440845163539052,
+        "axis_error_deg": 0.049813917539558106,
+        "jaw_forces_N": [
+          26.09235191345215,
+          23.85004425048828,
+          23.819568634033203,
+          26.064634323120117
         ],
-        "trace": {
-          "step": 10050,
-          "episode": 3,
-          "stage": "observe_tray",
-          "route": 0,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 335033.3333343333
-        }
-      },
-      {
-        "seed": 7161042,
-        "name": "dock_clamp_holdout_7161042",
-        "run_id": "14a687a684f543a781d4d6c196d25a32",
-        "episodes": 3,
-        "successes": 3,
-        "completed": false,
-        "checks": [
-          {
-            "episode": 0,
-            "error_mm": 1.3707319740206003,
-            "axis_error_deg": 0.035206632328515154,
-            "jaw_forces_N": [
-              25.838787078857422,
-              24.098615646362305,
-              24.09670639038086,
-              25.835708618164062
-            ],
-            "unsafe_force_N": 25.844083786010742,
-            "tcp_clearance_mm": 91.34253114461899,
-            "all_strict_clamp_physics_passed": true
-          },
-          {
-            "episode": 1,
-            "error_mm": 1.503604929894209,
-            "axis_error_deg": 0.03703625492713074,
-            "jaw_forces_N": [
-              24.64296531677246,
-              25.32680892944336,
-              25.30855369567871,
-              24.613243103027344
-            ],
-            "unsafe_force_N": 25.993574142456055,
-            "tcp_clearance_mm": 76.33548229932785,
-            "all_strict_clamp_physics_passed": true
-          },
-          {
-            "episode": 2,
-            "error_mm": 1.5721904346719384,
-            "axis_error_deg": 0.03770374742226708,
-            "jaw_forces_N": [
-              24.265443801879883,
-              25.681692123413086,
-              25.684146881103516,
-              24.26630210876465
-            ],
-            "unsafe_force_N": 26.030698776245117,
-            "tcp_clearance_mm": 92.44807809591293,
-            "all_strict_clamp_physics_passed": true
-          }
-        ],
-        "trace": {
-          "step": 9990,
-          "episode": 3,
-          "stage": "observe_tray",
-          "route": 0,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 333033.3333343333
-        }
+        "unsafe_force_N": 26.09235191345215,
+        "tcp_clearance_mm": 90.78600257635117,
+        "all_strict_clamp_physics_passed": true
       }
     ],
-    "episodes": 6,
-    "successes": 6,
-    "failures": 0,
-    "independent_skill_gate_passed": false,
-    "formal_full_episodes": 0,
-    "qualified": false
+    "trace": {
+      "step": 12480,
+      "episode": 1,
+      "stage": "observe_tray",
+      "route": 4,
+      "valid": false,
+      "last_error": "Move to the surveyed observation view first",
+      "camera_age_ms": 416033.3333343333
+    }
   },
   "node_migration_regression_successes": 3,
   "node_migration_regression_complete_episodes": 3,
@@ -254,22 +183,22 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "10:44 Shanghai: independent dock partial6/8success0fail,+6since last; each3/4 complete, errors1.282642..1.572190mm, strict4pad/openunload/76.3..92.4mmretreat/speeds verified;27immutablefiles both-hostsSHA. Fourthrow observe_tray: steps10050/9990, returning observation view. 10:45 followup10320/10260 with view errors0.460/0.504m; initial invalidRGB/oldage/Move to surveyed view is not physicalfailure, retain original jobs26207/26208 and monitor fresh acquisition/native result. Complete8 gate still pending. Docktraining2/2,+41PPO/+11actor/+2154steps,final395/147/31681,a1124cf1 unchanged. Traygate8/8passed; formal full0/64success0fail,new0. Oldv8complete16+2success and v9dock4 separate. No launch/stop/fix needed this check.",
+  "last_heartbeat_result": "11:09 Shanghai: dock independent complete8/8success0fail,+2since previous, Mac/node gate exact match, Wilson lower0.675592435>=skill0.60,zeroevidenceerrors; strict errors1.253961..1.572190mm,4pad/openunload/72.7..92.4mmretreat/speeds passed;419completefiles SHA bothhosts. Originalcontroller20756 advanced fulltrain28710/GPU28721,partial1/2success0fail; first full continuous mission error1.544085mm,strictphysics and all continuous stages verified. No tray/dock init/hint/regression. Snapshot4f839541443updates/165actor/35556steps,+48PPO/+18actor/+3875steps,actorchange0.00922441,finite modeloptimizer,10snapshotfilesSHA. Secondrowstep12480observe_trayroute4,pending new observation,keep original job. Fulltraining not complete and minimum60newupdates not yet met. Formalfull0/64success0fail,new0. Historiesv8complete16+2success/v9dock4 kept separate. No manual launch/stop.",
   "independent_full_evaluation_new_episodes_since_last_check": 0,
   "latest_local_recovery_backup": {
-    "at": "2026-10-22T02:29:02.720131+00:00",
-    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_dock_training_pass.tar.gz",
-    "bytes": 107129462,
-    "files": 210,
-    "sha256": "0347948253cfba5874c5a1b247b5c1d6d343ec2984ca4bcb2928efbb1f6132bb",
+    "at": "2026-10-22T03:11:25.155472+00:00",
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_dock_gate_full_training_started.tar.gz",
+    "bytes": 243830391,
+    "files": 440,
+    "sha256": "5307197b08596d8205aea42b0bc0899eaa0d2ff7427e7ca2e9ae57db1006a83a",
     "mismatches": [],
     "requires": [
-      "772a7fd08e69721640c735dd21bff54c2a3c34b69ba70f0a3800874a63be946d"
+      "0347948253cfba5874c5a1b247b5c1d6d343ec2984ca4bcb2928efbb1f6132bb"
     ],
-    "scope": "Complete docktraining2/2 raw evidence/source/finalpolicyoptimizer and immutable two active holdout startup snapshots; dock8 gate and full64 pending.",
+    "scope": "Complete dock8/8 gate raw evidence/source and immutable ongoing fulltraining1/2 learning snapshot; final64 still pending.",
     "qualified": false,
     "archive_sha_verified_both_hosts": true,
-    "remote_archive": "/home/arnold/Develop/rebar-migration-back4090-20261022/rebar_training_recovery_20261022_v10_dock_training_pass.tar.gz"
+    "remote_archive": "/home/arnold/Develop/rebar-migration-back4090-20261022/rebar_training_recovery_20261022_v10_dock_gate_full_training_started.tar.gz"
   },
   "last_completed_validation": "review_20261020/resume_4090_return_20261022",
   "current_course_state": "running",
@@ -435,137 +364,118 @@
   },
   "current_course_source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "latest_training_live": {
-    "at": "2026-10-22T02:26:30.376438+00:00",
-    "completed": true,
-    "episodes": 2,
-    "successes": 2,
-    "failures": 0,
-    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
-    "initial_checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
-    "report_sha256": "a18ab5197177c05bdcda47485f6b7cea7125511cb0cdda31b5820b63b8db6ad6",
+    "at": "2026-10-22T03:09:31.726629+00:00",
+    "checkpoint_sha256": "4f839541b34c58137c71a7fdf66b5963071ffaa1066576b201e37718c0eaa1f8",
+    "initial_checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+    "updates": 443,
+    "actor_updates": 165,
+    "policy_steps": 35556,
+    "new_updates": 48,
+    "new_actor_updates": 18,
+    "new_policy_steps": 3875,
+    "actor_weight_max_abs_change": 0.009224407374858856,
+    "model_and_optimizer_finite": true,
+    "actual_new_actor_update_verified": true,
+    "training_completed": false,
+    "qualified": false,
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_learning_snapshot_20261022_110931",
+    "run_id": "af9fcbd5b2e3490683302b11cf959866",
+    "episodes": 1,
+    "successes": 1,
     "checks": [
       {
         "episode": 0,
-        "error_mm": 1.5522948233410716,
-        "axis_error_deg": 0.006744050935165453,
+        "error_mm": 1.5440845163539052,
+        "axis_error_deg": 0.049813917539558106,
         "jaw_forces_N": [
-          25.29115104675293,
-          24.547962188720703,
-          24.593994140625,
-          25.362457275390625
+          26.09235191345215,
+          23.85004425048828,
+          23.819568634033203,
+          26.064634323120117
         ],
-        "unsafe_force_N": 26.022552490234375,
-        "tcp_clearance_mm": 94.67504173517227,
-        "steel_linear_speed_m_s": 0.0025996663607656956,
-        "steel_angular_speed_rad_s": 0.018030758947134018,
-        "all_strict_clamp_physics_passed": true
-      },
-      {
-        "episode": 1,
-        "error_mm": 1.3926193350926042,
-        "axis_error_deg": 0.02783523485451976,
-        "jaw_forces_N": [
-          25.16905403137207,
-          24.776302337646484,
-          24.708675384521484,
-          25.056676864624023
-        ],
-        "unsafe_force_N": 25.955652236938477,
-        "tcp_clearance_mm": 81.37403428554535,
-        "steel_linear_speed_m_s": 0.0011677818838506937,
-        "steel_angular_speed_rad_s": 0.010058442130684853,
+        "unsafe_force_N": 26.09235191345215,
+        "tcp_clearance_mm": 90.78600257635117,
         "all_strict_clamp_physics_passed": true
       }
     ],
-    "updates": 395,
-    "actor_updates": 147,
-    "policy_steps": 31681,
-    "new_updates": 41,
-    "new_actor_updates": 11,
-    "new_policy_steps": 2154,
-    "actor_weight_max_abs_change": 0.005715876817703247,
-    "model_and_optimizer_finite": true,
-    "qualified": false
+    "trace": {
+      "step": 12480,
+      "episode": 1,
+      "stage": "observe_tray",
+      "route": 4,
+      "valid": false,
+      "last_error": "Move to the surveyed observation view first",
+      "camera_age_ms": 416033.3333343333
+    }
   },
   "last_observed_learning": {
-    "at": "2026-10-22T02:26:30.376438+00:00",
-    "completed": true,
-    "episodes": 2,
-    "successes": 2,
-    "failures": 0,
-    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
-    "initial_checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
-    "report_sha256": "a18ab5197177c05bdcda47485f6b7cea7125511cb0cdda31b5820b63b8db6ad6",
+    "at": "2026-10-22T03:09:31.726629+00:00",
+    "checkpoint_sha256": "4f839541b34c58137c71a7fdf66b5963071ffaa1066576b201e37718c0eaa1f8",
+    "initial_checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+    "updates": 443,
+    "actor_updates": 165,
+    "policy_steps": 35556,
+    "new_updates": 48,
+    "new_actor_updates": 18,
+    "new_policy_steps": 3875,
+    "actor_weight_max_abs_change": 0.009224407374858856,
+    "model_and_optimizer_finite": true,
+    "actual_new_actor_update_verified": true,
+    "training_completed": false,
+    "qualified": false,
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_learning_snapshot_20261022_110931",
+    "run_id": "af9fcbd5b2e3490683302b11cf959866",
+    "episodes": 1,
+    "successes": 1,
     "checks": [
       {
         "episode": 0,
-        "error_mm": 1.5522948233410716,
-        "axis_error_deg": 0.006744050935165453,
+        "error_mm": 1.5440845163539052,
+        "axis_error_deg": 0.049813917539558106,
         "jaw_forces_N": [
-          25.29115104675293,
-          24.547962188720703,
-          24.593994140625,
-          25.362457275390625
+          26.09235191345215,
+          23.85004425048828,
+          23.819568634033203,
+          26.064634323120117
         ],
-        "unsafe_force_N": 26.022552490234375,
-        "tcp_clearance_mm": 94.67504173517227,
-        "steel_linear_speed_m_s": 0.0025996663607656956,
-        "steel_angular_speed_rad_s": 0.018030758947134018,
-        "all_strict_clamp_physics_passed": true
-      },
-      {
-        "episode": 1,
-        "error_mm": 1.3926193350926042,
-        "axis_error_deg": 0.02783523485451976,
-        "jaw_forces_N": [
-          25.16905403137207,
-          24.776302337646484,
-          24.708675384521484,
-          25.056676864624023
-        ],
-        "unsafe_force_N": 25.955652236938477,
-        "tcp_clearance_mm": 81.37403428554535,
-        "steel_linear_speed_m_s": 0.0011677818838506937,
-        "steel_angular_speed_rad_s": 0.010058442130684853,
+        "unsafe_force_N": 26.09235191345215,
+        "tcp_clearance_mm": 90.78600257635117,
         "all_strict_clamp_physics_passed": true
       }
     ],
-    "updates": 395,
-    "actor_updates": 147,
-    "policy_steps": 31681,
-    "new_updates": 41,
-    "new_actor_updates": 11,
-    "new_policy_steps": 2154,
-    "actor_weight_max_abs_change": 0.005715876817703247,
-    "model_and_optimizer_finite": true,
-    "qualified": false
+    "trace": {
+      "step": 12480,
+      "episode": 1,
+      "stage": "observe_tray",
+      "route": 4,
+      "valid": false,
+      "last_error": "Move to the surveyed observation view first",
+      "camera_age_ms": 416033.3333343333
+    }
   },
   "resumed_learning_verified": true,
-  "new_actor_updates": 11,
-  "new_effective_policy_steps": 2154,
-  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_clamp_policy.pt",
+  "new_actor_updates": 18,
+  "new_effective_policy_steps": 3875,
+  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_learning_snapshot_20261022_110931/full_policy.pt",
   "latest_training_native_progress": {
-    "as_of": "2026-10-22T02:26:30.376438+00:00",
-    "phase": "dock_clamp",
-    "complete": true,
-    "episodes": 2,
-    "successes": 2,
-    "updates": 395,
-    "actor_updates": 147,
-    "policy_steps": 31681,
-    "new_updates": 41,
-    "new_actor_updates": 11,
-    "new_policy_steps": 2154
+    "as_of": "2026-10-22T03:09:31.726629+00:00",
+    "phase": "full",
+    "complete": false,
+    "episodes": 1,
+    "successes": 1,
+    "updates": 443,
+    "actor_updates": 165,
+    "policy_steps": 35556,
+    "new_updates": 48,
+    "new_actor_updates": 18,
+    "new_policy_steps": 3875
   },
   "node_connection_state": "connected",
   "last_known_course_state": "running",
   "last_known_active_jobs": [
-    "dock_clamp_holdout_7151042",
-    "dock_clamp_holdout_7161042"
+    "full_train"
   ],
-  "last_successful_node_check_at": "2026-10-22T02:44:30.910654+00:00",
+  "last_successful_node_check_at": "2026-10-22T03:09:31.726629+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -603,7 +513,7 @@
   },
   "user_reported_node_awake": true,
   "waiting_for": null,
-  "evaluation_still_active": true,
+  "evaluation_still_active": false,
   "latest_tray_training_verified": {
     "at": "2026-10-22T01:42:13.532381+00:00",
     "completed": true,
@@ -805,8 +715,8 @@
     "all_listed_files_sha_verified_both_hosts": true,
     "full_mission_qualified": false
   },
-  "current_dock_independent_episodes": 6,
-  "current_dock_independent_successes": 6,
+  "current_dock_independent_episodes": 8,
+  "current_dock_independent_successes": 8,
   "current_dock_independent_failures": 0,
   "latest_dock_training_verified": {
     "at": "2026-10-22T02:26:30.376438+00:00",
@@ -923,7 +833,7 @@
     ],
     "no_manual_job_launch_or_restart": true
   },
-  "current_phase_checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+  "current_phase_checkpoint_sha256": "4f839541b34c58137c71a7fdf66b5963071ffaa1066576b201e37718c0eaa1f8",
   "latest_dock_independent_partial": {
     "at": "2026-10-21T15:25:41.222087+00:00",
     "reports": [
@@ -1120,59 +1030,50 @@
   "target_repository_proposed": "/home/arnold/Develop/rebar-training-4090-return-20261021",
   "target_training_started": true,
   "current_checkpoint": {
-    "at": "2026-10-22T02:26:30.376438+00:00",
-    "completed": true,
-    "episodes": 2,
-    "successes": 2,
-    "failures": 0,
-    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
-    "initial_checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
-    "report_sha256": "a18ab5197177c05bdcda47485f6b7cea7125511cb0cdda31b5820b63b8db6ad6",
+    "at": "2026-10-22T03:09:31.726629+00:00",
+    "checkpoint_sha256": "4f839541b34c58137c71a7fdf66b5963071ffaa1066576b201e37718c0eaa1f8",
+    "initial_checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+    "updates": 443,
+    "actor_updates": 165,
+    "policy_steps": 35556,
+    "new_updates": 48,
+    "new_actor_updates": 18,
+    "new_policy_steps": 3875,
+    "actor_weight_max_abs_change": 0.009224407374858856,
+    "model_and_optimizer_finite": true,
+    "actual_new_actor_update_verified": true,
+    "training_completed": false,
+    "qualified": false,
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_learning_snapshot_20261022_110931",
+    "run_id": "af9fcbd5b2e3490683302b11cf959866",
+    "episodes": 1,
+    "successes": 1,
     "checks": [
       {
         "episode": 0,
-        "error_mm": 1.5522948233410716,
-        "axis_error_deg": 0.006744050935165453,
+        "error_mm": 1.5440845163539052,
+        "axis_error_deg": 0.049813917539558106,
         "jaw_forces_N": [
-          25.29115104675293,
-          24.547962188720703,
-          24.593994140625,
-          25.362457275390625
+          26.09235191345215,
+          23.85004425048828,
+          23.819568634033203,
+          26.064634323120117
         ],
-        "unsafe_force_N": 26.022552490234375,
-        "tcp_clearance_mm": 94.67504173517227,
-        "steel_linear_speed_m_s": 0.0025996663607656956,
-        "steel_angular_speed_rad_s": 0.018030758947134018,
-        "all_strict_clamp_physics_passed": true
-      },
-      {
-        "episode": 1,
-        "error_mm": 1.3926193350926042,
-        "axis_error_deg": 0.02783523485451976,
-        "jaw_forces_N": [
-          25.16905403137207,
-          24.776302337646484,
-          24.708675384521484,
-          25.056676864624023
-        ],
-        "unsafe_force_N": 25.955652236938477,
-        "tcp_clearance_mm": 81.37403428554535,
-        "steel_linear_speed_m_s": 0.0011677818838506937,
-        "steel_angular_speed_rad_s": 0.010058442130684853,
+        "unsafe_force_N": 26.09235191345215,
+        "tcp_clearance_mm": 90.78600257635117,
         "all_strict_clamp_physics_passed": true
       }
     ],
-    "updates": 395,
-    "actor_updates": 147,
-    "policy_steps": 31681,
-    "new_updates": 41,
-    "new_actor_updates": 11,
-    "new_policy_steps": 2154,
-    "actor_weight_max_abs_change": 0.005715876817703247,
-    "model_and_optimizer_finite": true,
-    "qualified": false,
-    "phase": "dock_clamp",
+    "trace": {
+      "step": 12480,
+      "episode": 1,
+      "stage": "observe_tray",
+      "route": 4,
+      "valid": false,
+      "last_error": "Move to the surveyed observation view first",
+      "camera_age_ms": 416033.3333343333
+    },
+    "phase": "full",
     "training_paused": false
   },
   "raw_files_verified": {
@@ -1182,7 +1083,7 @@
     "complete_current_course_and_migration_regression_sha_verified_both_hosts": true
   },
   "current_tray_gate_passed": true,
-  "current_dock_gate_passed": false,
+  "current_dock_gate_passed": true,
   "interrupted_dock_episode": "Episode index2 in each job was interrupted by user pause; not counted as success or physical failure. Native files preserved without a synthetic complete report.",
   "latest_pause_receipt": "artifacts/mobile_curriculum_20261020/review_20261020/migration_back_4090_20261021/pause.stopped.json",
   "training_resumed": true,
@@ -1822,7 +1723,7 @@
   "current_dock_training_successes": 2,
   "current_dock_training_failures": 0,
   "latest_dock_independent_snapshot": "course_v10_4090_return/dock_holdouts_snapshot_20261022_104430",
-  "current_dock_independent_new_episodes_since_last_check": 6,
+  "current_dock_independent_new_episodes_since_last_check": 2,
   "latest_dock_observation_followup": {
     "at": "2026-10-22T02:45:10.418997+00:00",
     "seeds": [
@@ -1841,5 +1742,243 @@
     "both_running": true,
     "episode_reset_observation_pending": true,
     "physical_failure_confirmed": false
-  }
+  },
+  "latest_dock_independent_complete_verified": {
+    "at": "2026-10-22T03:08:53.091080+00:00",
+    "completed": true,
+    "episodes": 8,
+    "successes": 8,
+    "failures": 0,
+    "gate": {
+      "passed": true,
+      "phase": "dock_clamp",
+      "randomization": "expanded",
+      "episodes": 8,
+      "successes": 8,
+      "success_rate": 1.0,
+      "wilson_95_lower": 0.6755924351161198,
+      "minimum_episodes": 8,
+      "minimum_distinct_seeds": 2,
+      "distinct_seeds": [
+        7151042,
+        7161042
+      ],
+      "required_wilson_95_lower": 0.6,
+      "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+      "evidence_errors": [],
+      "sample_requirement_met": true,
+      "failures": [],
+      "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+    },
+    "checks": [
+      {
+        "seed": 7151042,
+        "episode": 0,
+        "error_mm": 1.2826422462239861,
+        "axis_error_deg": 0.036556149582419054,
+        "jaw_forces_N": [
+          24.323585510253906,
+          25.630674362182617,
+          25.64735221862793,
+          24.34163475036621
+        ],
+        "unsafe_force_N": 25.832290649414062,
+        "tcp_clearance_mm": 90.32173454761505,
+        "steel_linear_speed_m_s": 0.002829753328114748,
+        "steel_angular_speed_rad_s": 0.0040704370476305485,
+        "strict_clamp_physics_passed": true
+      },
+      {
+        "seed": 7151042,
+        "episode": 1,
+        "error_mm": 1.3428943930193782,
+        "axis_error_deg": 0.03361296396421024,
+        "jaw_forces_N": [
+          24.123323440551758,
+          25.815589904785156,
+          25.811567306518555,
+          24.11947250366211
+        ],
+        "unsafe_force_N": 25.822538375854492,
+        "tcp_clearance_mm": 79.0625512599945,
+        "steel_linear_speed_m_s": 0.0028524138033390045,
+        "steel_angular_speed_rad_s": 0.005356958601623774,
+        "strict_clamp_physics_passed": true
+      },
+      {
+        "seed": 7151042,
+        "episode": 2,
+        "error_mm": 1.3240441912785172,
+        "axis_error_deg": 0.03546786278155401,
+        "jaw_forces_N": [
+          24.129100799560547,
+          25.811105728149414,
+          25.81441307067871,
+          24.132158279418945
+        ],
+        "unsafe_force_N": 25.833093643188477,
+        "tcp_clearance_mm": 82.69906044006348,
+        "steel_linear_speed_m_s": 0.002846002811565995,
+        "steel_angular_speed_rad_s": 0.005277259275317192,
+        "strict_clamp_physics_passed": true
+      },
+      {
+        "seed": 7151042,
+        "episode": 3,
+        "error_mm": 1.253960537724197,
+        "axis_error_deg": 0.036630589089314804,
+        "jaw_forces_N": [
+          25.831501007080078,
+          24.10355567932129,
+          24.108675003051758,
+          25.83600616455078
+        ],
+        "unsafe_force_N": 25.846233367919922,
+        "tcp_clearance_mm": 72.69752770662308,
+        "steel_linear_speed_m_s": 0.002732484368607402,
+        "steel_angular_speed_rad_s": 0.006135427393019199,
+        "strict_clamp_physics_passed": true
+      },
+      {
+        "seed": 7161042,
+        "episode": 0,
+        "error_mm": 1.3707319740206003,
+        "axis_error_deg": 0.035206632328515154,
+        "jaw_forces_N": [
+          25.838787078857422,
+          24.098615646362305,
+          24.09670639038086,
+          25.835708618164062
+        ],
+        "unsafe_force_N": 25.844083786010742,
+        "tcp_clearance_mm": 91.34253114461899,
+        "steel_linear_speed_m_s": 0.0027206987142562866,
+        "steel_angular_speed_rad_s": 0.006224335636943579,
+        "strict_clamp_physics_passed": true
+      },
+      {
+        "seed": 7161042,
+        "episode": 1,
+        "error_mm": 1.503604929894209,
+        "axis_error_deg": 0.03703625492713074,
+        "jaw_forces_N": [
+          24.64296531677246,
+          25.32680892944336,
+          25.30855369567871,
+          24.613243103027344
+        ],
+        "unsafe_force_N": 25.993574142456055,
+        "tcp_clearance_mm": 76.33548229932785,
+        "steel_linear_speed_m_s": 0.0011630806839093566,
+        "steel_angular_speed_rad_s": 0.0032200501300394535,
+        "strict_clamp_physics_passed": true
+      },
+      {
+        "seed": 7161042,
+        "episode": 2,
+        "error_mm": 1.5721904346719384,
+        "axis_error_deg": 0.03770374742226708,
+        "jaw_forces_N": [
+          24.265443801879883,
+          25.681692123413086,
+          25.684146881103516,
+          24.26630210876465
+        ],
+        "unsafe_force_N": 26.030698776245117,
+        "tcp_clearance_mm": 92.44807809591293,
+        "steel_linear_speed_m_s": 0.0028277013916522264,
+        "steel_angular_speed_rad_s": 0.004267330747097731,
+        "strict_clamp_physics_passed": true
+      },
+      {
+        "seed": 7161042,
+        "episode": 3,
+        "error_mm": 1.3595384079962969,
+        "axis_error_deg": 0.03536910062126509,
+        "jaw_forces_N": [
+          24.360427856445312,
+          25.58148765563965,
+          25.597265243530273,
+          24.37193489074707
+        ],
+        "unsafe_force_N": 25.988101959228516,
+        "tcp_clearance_mm": 91.06706082820892,
+        "steel_linear_speed_m_s": 0.002841094508767128,
+        "steel_angular_speed_rad_s": 0.003814949654042721,
+        "strict_clamp_physics_passed": true
+      }
+    ],
+    "report_sha256": {
+      "7151042": "e8c9d9fd120c5b95c6652c803cb35096052a91bcdfa987a7f36693ecd8ce77f8",
+      "7161042": "4ecbc40532eb56b775183f224226c5e87e7b549f871fd7a2b60ae83c9422a2bf"
+    },
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+    "independent_gate_recomputed": true,
+    "formal_full_episodes": 0,
+    "qualified": false
+  },
+  "latest_dock_complete_both_hosts_verified": {
+    "at": "2026-10-22T03:10:10.276151+00:00",
+    "files": 419,
+    "mismatches": [],
+    "all_listed_files_sha_verified_both_hosts": true,
+    "qualified": false
+  },
+  "latest_full_learning_verified": {
+    "at": "2026-10-22T03:09:31.726629+00:00",
+    "checkpoint_sha256": "4f839541b34c58137c71a7fdf66b5963071ffaa1066576b201e37718c0eaa1f8",
+    "initial_checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+    "updates": 443,
+    "actor_updates": 165,
+    "policy_steps": 35556,
+    "new_updates": 48,
+    "new_actor_updates": 18,
+    "new_policy_steps": 3875,
+    "actor_weight_max_abs_change": 0.009224407374858856,
+    "model_and_optimizer_finite": true,
+    "actual_new_actor_update_verified": true,
+    "training_completed": false,
+    "qualified": false,
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_learning_snapshot_20261022_110931",
+    "run_id": "af9fcbd5b2e3490683302b11cf959866",
+    "episodes": 1,
+    "successes": 1,
+    "checks": [
+      {
+        "episode": 0,
+        "error_mm": 1.5440845163539052,
+        "axis_error_deg": 0.049813917539558106,
+        "jaw_forces_N": [
+          26.09235191345215,
+          23.85004425048828,
+          23.819568634033203,
+          26.064634323120117
+        ],
+        "unsafe_force_N": 26.09235191345215,
+        "tcp_clearance_mm": 90.78600257635117,
+        "all_strict_clamp_physics_passed": true
+      }
+    ],
+    "trace": {
+      "step": 12480,
+      "episode": 1,
+      "stage": "observe_tray",
+      "route": 4,
+      "valid": false,
+      "last_error": "Move to the surveyed observation view first",
+      "camera_age_ms": 416033.3333343333
+    }
+  },
+  "latest_full_learning_both_hosts_verified": {
+    "at": "2026-10-22T03:10:10.281414+00:00",
+    "files": 10,
+    "mismatches": [],
+    "all_listed_files_sha_verified_both_hosts": true,
+    "qualified": false
+  },
+  "current_full_training_complete": false,
+  "current_full_training_episodes": 1,
+  "current_full_training_successes": 1,
+  "current_full_training_failures": 0
 }
