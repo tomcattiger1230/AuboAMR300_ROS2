@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T03:25:02.671237+00:00",
+  "updated_at": "2026-10-22T03:38:46.131217+00:00",
   "status": "v10_full_holdouts_running",
   "stable": false,
   "user_authorized_resume": true,
@@ -115,8 +115,8 @@
   "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-22T03:25:02.671237+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_112502",
+    "at": "2026-10-22T03:38:46.131217+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_113846",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
@@ -128,13 +128,13 @@
         "completed": false,
         "checks": [],
         "trace": {
-          "step": 3240,
+          "step": 8910,
           "episode": 0,
-          "stage": "observe_tray",
-          "route": 4,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 108033.33333433334
+          "stage": "loading",
+          "route": 9,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333335986
         }
       },
       {
@@ -146,13 +146,13 @@
         "completed": false,
         "checks": [],
         "trace": {
-          "step": 3150,
+          "step": 8910,
           "episode": 0,
-          "stage": "tray_via_front",
-          "route": 4,
+          "stage": "pickup_tray",
+          "route": 1,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333333144
+          "camera_age_ms": 33.33333333335986
         }
       }
     ],
@@ -189,7 +189,7 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "11:25 Shanghai: fulltraining complete2/2success0fail, errors1.544085/1.518349mm, all continuous stages and strict4pad/openunload/90.786and89.966mmretreat/speeds verified;291completefiles both-hostsSHA. Actual+71PPO/+23actor/+4921steps,final466/170/36602,actorchange0.01233708,final393b47f8policyoptimizer finite. Originalcontroller20756 launched fullholdout7241042/7251042 each8,runners30122/30121,GPU30143/30144. Snapshot0/64completed0success0fail,new0;steps3240observe_tray/3150tray_via_front,existingjobs progress;7immutablefilesSHA. Frozen same393b/source2c/detector845f/assetd543/planef68,predeclared7241042..7311042 each8. Final64gate not passed; training not in denominator. Historicalv8complete16+2success,v9dock4 separate. No manual simulation launch/stop.",
+  "last_heartbeat_result": "11:38 Shanghai: finalindependentfull0/64complete0success0fail,new0. Originalcontroller20756 and fullholdouts7241042/7251042 runners30122/30121 running,step8910 loadingroute9/pickup_trayroute1,validRGB33ms,no last_error,actual progress. No completed row yet to score; no confirmed anomaly, no restart/fix needed. Same frozen393b47f8 SHA unchanged,7immutableprogresssnapshotfiles both-hostsSHA. Fulltraining2/2passed,+71PPO/+23actor/+4921steps,final466/170/36602 not in denominator. Historicalv8complete16+2success and v9dock4 separate. Keep original jobs and require all8groups completed strict receipts/final gate before video delivery.",
   "independent_full_evaluation_new_episodes_since_last_check": 0,
   "latest_local_recovery_backup": {
     "at": "2026-10-22T03:26:43.384854+00:00",
@@ -504,7 +504,7 @@
     "full_holdout_7241042",
     "full_holdout_7251042"
   ],
-  "last_successful_node_check_at": "2026-10-22T03:25:02.671237+00:00",
+  "last_successful_node_check_at": "2026-10-22T03:38:46.131217+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -2085,8 +2085,8 @@
     "qualified": false
   },
   "latest_full_independent_partial_verified": {
-    "at": "2026-10-22T03:25:02.671237+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_112502",
+    "at": "2026-10-22T03:38:46.131217+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_113846",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
@@ -2098,13 +2098,13 @@
         "completed": false,
         "checks": [],
         "trace": {
-          "step": 3240,
+          "step": 8910,
           "episode": 0,
-          "stage": "observe_tray",
-          "route": 4,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 108033.33333433334
+          "stage": "loading",
+          "route": 9,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333335986
         }
       },
       {
@@ -2116,13 +2116,13 @@
         "completed": false,
         "checks": [],
         "trace": {
-          "step": 3150,
+          "step": 8910,
           "episode": 0,
-          "stage": "tray_via_front",
-          "route": 4,
+          "stage": "pickup_tray",
+          "route": 1,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333333144
+          "camera_age_ms": 33.33333333335986
         }
       }
     ],
@@ -2135,13 +2135,14 @@
     "qualified": false
   },
   "latest_full_partial_both_hosts_verified": {
-    "at": "2026-10-22T03:25:22.411877+00:00",
+    "at": "2026-10-22T03:38:59.143433+00:00",
     "files": 7,
     "mismatches": [],
     "all_listed_files_sha_verified_both_hosts": true,
+    "partial_full_only": true,
     "qualified": false
   },
-  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_112502",
+  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_113846",
   "final_full_frozen_fingerprints": {
     "recorded_at": "2026-10-22T03:26:23.316910+00:00",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
