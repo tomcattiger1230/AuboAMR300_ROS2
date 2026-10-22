@@ -1,0 +1,110 @@
+{
+  "at": "2026-10-22T06:24:23.036857+00:00",
+  "failure_cases": [
+    {
+      "seed": 7241042,
+      "episode": 5,
+      "failure": "stage timeout: pickup",
+      "evidence": "reports/v10_pickup_visual_failure_20261022.json"
+    },
+    {
+      "seed": 7271042,
+      "episode": 0,
+      "failure": "stage timeout: pickup",
+      "steps": 3601,
+      "paused_steps": 2302,
+      "unsafe_force_N": 41.79854202270508,
+      "finger_forces": [
+        0.0,
+        0.0
+      ],
+      "arm_contact_loads_N": {
+        "shoulder_Link": 0.0,
+        "upperArm_Link": 0.0,
+        "foreArm_Link": 0.0,
+        "wrist1_Link": 0.0,
+        "wrist2_Link": 0.0,
+        "wrist3_Link": 0.0,
+        "gripper_adapter_link": 0.0,
+        "gripper_motor_link": 0.0,
+        "mono_camera_link": 0.0
+      },
+      "last_perception_error": "Visual update exceeds the bounded pose prior",
+      "source_center_pixel_from_visual_estimate_only": [
+        602.1709386405547,
+        1037.6496427791997
+      ],
+      "packet": "wrist_step3300",
+      "diagnostics": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/vision_stall_7271042_20261022_141826",
+      "both_hosts_verified_files": 37
+    }
+  ],
+  "diagnosis": "Both source-return paths lose the surveyed source from the wrist image at the low nominal return pose. Source center projects below image615px and edge fits become insufficient or inconsistent with the fixed support prior. Route0 residual is inactive; robot safely holds open unloaded until the native stage timeout.",
+  "no_threshold_relaxation": true,
+  "failures_retained_in_denominator": true,
+  "source_or_policy_changed_in_current_jobs": false,
+  "dispatch": {
+    "at": "2026-10-22T06:20:05.906363+00:00",
+    "reason": "Second failed receipt makes original prespecified64 gate unattainable; retain active jobs and prevent further dispatch",
+    "worker_pid": 20758,
+    "launcher_pid": 20756,
+    "command": "/home/arnold/Develop/rebar-training-runtime/bin/python -m rebar_training.mobile_curriculum --worker --plan /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/plan.json --output /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return --initial-checkpoint /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/initial_policy.pt ",
+    "state_before": "S (sleeping)",
+    "signal": "SIGSTOP_worker_only",
+    "active_simulations_preserved": [
+      {
+        "name": "full_holdout_7261042",
+        "pid": 38758,
+        "runner_pid": 38757,
+        "state_before": "S (sleeping)",
+        "state_after": "S (sleeping)"
+      },
+      {
+        "name": "full_holdout_7271042",
+        "pid": 39557,
+        "runner_pid": 39556,
+        "state_before": "S (sleeping)",
+        "state_after": "S (sleeping)"
+      }
+    ],
+    "failed_receipts": 2,
+    "best_case_successes_in_fixed64": 62,
+    "best_case_wilson95_lower": 0.8930270822904168,
+    "required_lower": 0.9,
+    "source_changed": false,
+    "policy_changed": false,
+    "old_evidence_modified": false,
+    "user_task_paused": false,
+    "automation_remains_active": true,
+    "resume_old_dispatcher": false,
+    "state_after": "T (stopped)"
+  },
+  "old_fixed_plan_qualified": false,
+  "best_case_fixed64_successes": 62,
+  "best_case_fixed64_wilson95_lower": 0.8930270822904168,
+  "required_lower": 0.9,
+  "next": "Keep existing two native jobs; never resume dispatcher20758. Validate isolated candidatev2 source8a24 with all11 development regressions when a real simulation slot is free. Adoption needs new course/all gates/fresh predeclared seeds.",
+  "candidate": {
+    "directory": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v2",
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "deployed": false,
+    "physical_passed": false,
+    "regression_plan": "reports/source_return_regression_plan_v2_20261022.json",
+    "required_development_episodes": 11,
+    "cpu_passed": 251,
+    "plan_sha256": "42c6b3f1001d70dc148e13d273dedf5eecc92ffb396ab4324778e33ff867f4ea"
+  },
+  "recovery_archive": {
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_second_failure_repair.tar.gz",
+    "node_archive": "/home/arnold/Develop/rebar-migration-back4090-20261022/rebar_training_recovery_20261022_v10_second_failure_repair.tar.gz",
+    "files": 192,
+    "bytes": 73151644,
+    "sha256": "5af601cf1133c02fb3f92b66fd29b4bf7aeaf80dd5d9a40a5e792b7da792f498",
+    "requires": [
+      "20f941f76575826c928f7bd85aee46cb83887c9bf455db153437549b48722ef0",
+      "fe0a57df9fbf3394c42c417af0752296bc681c1c0eafe42dfbd8c7e7ffc27b7d"
+    ],
+    "both_hosts_verified": true,
+    "qualified": false
+  }
+}

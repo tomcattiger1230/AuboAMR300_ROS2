@@ -1,0 +1,130 @@
+--- a/rebar_training/src/rebar_training/mobile_env.py
++++ b/rebar_training/src/rebar_training/mobile_env.py
+@@ -25,6 +25,7 @@
+ from .vision.servo import RobotServo
+ from .vision.blind import blinded_control
+ from .vision.recovery import tray_reobservation_allowed
++from .vision.source_return import source_return_handoff
+ 
+ 
+ class BaseServo(RobotServo):
+@@ -63,6 +64,7 @@
+         self.grasp_recovery=TrayGraspRecovery();self.tray_grasp_aborts=[]
+         self.grasp_outage_triggered=False
+         self.initial_views=[]
++        self.source_return_handoffs=[]
+         self.initial_view_ready_tick=None
+         self.view_search=False;self.view_good_images=0
+         self.logic.initial_height[:]=.522
+@@ -186,6 +188,23 @@
+             survey_allowed=bool(self.motion.motion.ready[0]),
+             grasp_allowed=picking and bool(e.route.stage[0]>=2),
+             release_requested=self.stage=='loading' and bool(e.route.stage[0]>=9))
++        if (self.stage=='pickup' and e.route.stage[0]==0 and not o.anchored
++                and not self.motion.ready[0] and self.motion.motion.ready[0]
++                and source_return_handoff(valid=bool(self.valid[0]),last_good_ns=o.last_good_ns,
++                    last_error=o.last_error,camera=camera,center=o.initial_position if o.acquired else np.full(3,np.nan),
++                    tcp=self.packets[0].tcp,fingers=self.packets[0].fingers,
++                    finger_forces=self.packets[0].finger_forces,
++                    visible_edges=o.quality.get('visible_edges',0),residual_px=o.quality.get('residual_px',np.inf),
++                    return_index=self.motion.index[0],history_length=len(self.motion.history[0]))):
++            self.motion.ready[0]=True
++            self.source_return_handoffs.append(dict(tick=self.tick,last_good_ns=o.last_good_ns,
++                tcp_base=self.packets[0].tcp.tolist(),return_index=self.motion.index[0],
++                history_length=len(self.motion.history[0]),stage=self.stage,route=int(e.route.stage[0]),
++                source_center=o.initial_position.tolist(),source_clearance_m=float(self.packets[0].tcp[2]-o.initial_position[2]),
++                fingers=self.packets[0].fingers.tolist(),finger_forces=self.packets[0].finger_forces.tolist(),
++                visible_edges=o.quality.get('visible_edges',0),residual_px=o.quality.get('residual_px'),
++                camera_timestamp_ns=camera.timestamp_ns,camera_frame=camera.frame,
++                packet_tag='source_return_handoff_tick'+str(self.tick)))
+         if self.view_search and camera is not None:
+             self.view_good_images=self.view_good_images+1 if self.valid[0] and not o.last_error else 0
+             if self.view_good_images>=3:
+@@ -577,6 +596,7 @@
+                 for name,loads in self._contact_peaks.items()}
+             self.mobile_receipts[-1]['finger_positions']=v.packets[0].fingers.tolist()
+             self.mobile_receipts[-1]['raw_finger_forces_N']=v.packets[0].finger_forces.tolist()
++            self.mobile_receipts[-1]['source_return_handoffs']=v.source_return_handoffs
+             self.mobile_receipts[-1]['tcp_quaternion_xyzw']=v.packets[0].quaternion_xyzw.tolist()
+             self.mobile_receipts[-1]['grasp_goal_quaternion_xyzw']=self.route.quaternion[0].tolist()
+             self.mobile_receipts[-1]['grasp_alignment_error_deg']=float(self.route.grasp_alignment_error_deg[0])
+--- a/rebar_training/src/rebar_training/mobile_mission_check.py
++++ b/rebar_training/src/rebar_training/mobile_mission_check.py
+@@ -203,6 +203,11 @@
+                             if len(e.mobile_receipts)>=args.episodes and (not args.learn_residual
+                                     or learner.updates-initial_updates>=args.rl_iterations):break
+                             continue
++                        handoffs=e.visual.source_return_handoffs
++                        if handoffs and handoffs[-1]['tick']==e.visual.tick:
++                            # Save the actual accepted RGB/probability/K/TF packet
++                            # at the motion handoff, rather than a later image.
++                            save_packet(handoffs[-1]['packet_tag'])
+                         if writer and (step+1)%3==0:
+                             view=('machine' if args.start_at_dock else 'travel' if e.visual.stage in ('navigate','dock') else 'machine'
+                                   if e.visual.stage in ('pickup_tray','tray_lift_high','loading') else 'pickup')
+--- a/rebar_training/src/rebar_training/vision/source_return.py
++++ b/rebar_training/src/rebar_training/vision/source_return.py
+@@ -0,0 +1,32 @@
++"""Candidate: yield recorded empty-wrist return before source leaves the image.
++
++Uses only the already surveyed source, fresh camera extrinsics and robot
++feedback. This is a motion handoff, never an estimator freshness exemption.
++Must pass physical branch/collision and full-mission regression before use.
++"""
++import numpy as np
++
++
++def source_return_handoff(*, valid, last_good_ns, last_error, camera, center,
++                          tcp, fingers, finger_forces, visible_edges,
++                          residual_px, return_index, history_length):
++    if (not valid or camera is None or last_error or last_good_ns != camera.timestamp_ns
++            or history_length < 4 or not 0 < return_index <= history_length // 4
++            or visible_edges < 24 or not np.isfinite(residual_px) or residual_px > 4.):
++        return False
++    values = [center, tcp, fingers, finger_forces, camera.K, camera.T_scene_optical]
++    if not all(np.isfinite(x).all() for x in values):
++        return False
++    if (np.max(np.abs(fingers)) >= .003 or np.max(finger_forces) >= .5
++            or tcp[2] - center[2] < .10):
++        return False
++    T = camera.T_scene_optical
++    point = T[:3, :3].T @ (center - T[:3, 3])
++    if point[2] <= 0:
++        return False
++    pixel = camera.K @ point
++    pixel = pixel[:2] / pixel[2]
++    height, width = camera.mono8.shape
++    # Leave a 96-pixel image-space margin while observations still pass the
++    # existing estimator. No arm action is enabled after a rejected frame.
++    return bool(not (96 <= pixel[0] <= width - 96 and 96 <= pixel[1] <= height - 96))
+--- /dev/null
++++ b/rebar_training/tests/test_source_return.py
+@@ -0,0 +1,28 @@
++from types import SimpleNamespace
++import numpy as np
++import pytest
++from rebar_training.vision.source_return import source_return_handoff
++
++
++def inputs():
++    # Last quarter of the measured return, source still has fresh side edges.
++    K=np.array([[870.,0,512],[0,870.,307.5],[0,0,1.]])
++    camera=SimpleNamespace(timestamp_ns=123,K=K,T_scene_optical=np.eye(4),mono8=np.zeros((615,1024)))
++    return dict(valid=True,last_good_ns=123,last_error='',camera=camera,
++        center=np.array([0.,.25,1.]),tcp=np.array([0.,0.,1.2]),
++        fingers=np.zeros(2),finger_forces=np.zeros(2),visible_edges=66,
++        residual_px=1.,return_index=20,history_length=100)
++
++
++def test_handoff_before_fresh_source_exits_the_image():
++    assert source_return_handoff(**inputs())
++    x=inputs();x['center']=np.array([0.,0.,1.]);assert not source_return_handoff(**x)
++
++
++@pytest.mark.parametrize('change',[
++    dict(valid=False),dict(last_good_ns=122),dict(last_error='Insufficient bilateral image edges'),
++    dict(fingers=np.array([.01,0.])),dict(finger_forces=np.array([.5,0.])),
++    dict(tcp=np.array([0.,0.,1.05])),dict(visible_edges=17),dict(residual_px=4.1),
++    dict(return_index=90),dict(return_index=0),dict(center=np.array([0.,0.,np.nan]))])
++def test_source_handoff_cannot_bypass_vision_load_height_or_return_branch(change):
++    x=inputs();x.update(change);assert not source_return_handoff(**x)

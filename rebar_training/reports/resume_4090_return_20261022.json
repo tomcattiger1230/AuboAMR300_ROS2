@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T05:54:50.254483+00:00",
+  "updated_at": "2026-10-22T06:29:42.171466+00:00",
   "status": "v10_full_holdouts_running",
   "stable": false,
   "user_authorized_resume": true,
@@ -26,9 +26,9 @@
     "full_holdout_7251042"
   ],
   "independent_full_evaluation_episodes_required": 64,
-  "independent_full_evaluation_complete_episodes": 14,
-  "independent_full_evaluation_successes": 13,
-  "independent_full_evaluation_failures": 1,
+  "independent_full_evaluation_complete_episodes": 18,
+  "independent_full_evaluation_successes": 16,
+  "independent_full_evaluation_failures": 2,
   "independent_full_evaluation_passed": false,
   "current_tray_gate": {
     "passed": true,
@@ -108,24 +108,24 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Preserve current frozen baseline jobs and failed receipt; validate isolated source-return handoff candidate with CPU and physical regressions when a simulation slot is free. Never deploy into active jobs or mix candidate with source2c/393b acceptance.",
+  "next_action": "Do not SIGCONT/restart worker20758 or launch728+. Keep native726/727 jobs running and collect all receipts. Actual native job statuses/GPU determine capacity because curriculum.active_jobs is stale while dispatcher stopped. Run candidatev2 source8a24 all11 labeled development regressions in fresh output once capacity<2; no adoption until physical passes, then new course/all gates/fresh seed audit.",
   "validation_runner_pid": 16884,
   "cpu_suite_passed": true,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
   "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-22T05:54:50.254483+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_135450",
+    "at": "2026-10-22T06:29:42.171466+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_142942",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
         "seed": 7241042,
         "name": "full_holdout_7241042",
         "run_id": "a710e29cc1ee4785b15024aa52b2fe57",
-        "episodes": 7,
-        "successes": 6,
-        "completed": false,
+        "episodes": 8,
+        "successes": 7,
+        "completed": true,
         "checks": [
           {
             "success": true,
@@ -240,13 +240,29 @@
             "unsafe_force_N": 25.834392547607422,
             "tcp_clearance_mm": 89.3421322107315,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 7,
+            "error_mm": 1.059033558703959,
+            "axis_error_deg": 0.039319595986768895,
+            "jaw_forces_N": [
+              24.10580062866211,
+              25.821517944335938,
+              25.823699951171875,
+              24.10797691345215
+            ],
+            "unsafe_force_N": 25.823699951171875,
+            "tcp_clearance_mm": 89.02669697999954,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 67560,
+          "step": 68160,
           "episode": 7,
           "stage": "loading",
-          "route": 4,
+          "route": 10,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333330302
@@ -256,9 +272,9 @@
         "seed": 7251042,
         "name": "full_holdout_7251042",
         "run_id": "f3227271d77949a792d5d983a499090a",
-        "episodes": 7,
-        "successes": 7,
-        "completed": false,
+        "episodes": 8,
+        "successes": 8,
+        "completed": true,
         "checks": [
           {
             "success": true,
@@ -371,24 +387,112 @@
             "unsafe_force_N": 25.843734741210938,
             "tcp_clearance_mm": 89.33070302009583,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 7,
+            "error_mm": 1.3423932250589132,
+            "axis_error_deg": 0.041105199213165654,
+            "jaw_forces_N": [
+              24.359451293945312,
+              25.572710037231445,
+              25.606582641601562,
+              24.397483825683594
+            ],
+            "unsafe_force_N": 25.9609375,
+            "tcp_clearance_mm": 89.82133120298386,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 67110,
+          "step": 73470,
           "episode": 7,
-          "stage": "tray_release",
+          "stage": "loading",
+          "route": 10,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333330302
+        }
+      },
+      {
+        "seed": 7261042,
+        "name": "full_holdout_7261042",
+        "run_id": "917f573597aa4d46b5a3296ef04a2512",
+        "episodes": 1,
+        "successes": 1,
+        "completed": false,
+        "checks": [
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 0,
+            "error_mm": 1.2372910277917981,
+            "axis_error_deg": 0.0404911896033837,
+            "jaw_forces_N": [
+              25.838258743286133,
+              24.094928741455078,
+              24.095760345458984,
+              25.83807373046875
+            ],
+            "unsafe_force_N": 25.838258743286133,
+            "tcp_clearance_mm": 89.89135175943375,
+            "all_strict_clamp_physics_passed": true
+          }
+        ],
+        "trace": {
+          "step": 14520,
+          "episode": 1,
+          "stage": "navigate",
           "route": 4,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333330302
         }
+      },
+      {
+        "seed": 7271042,
+        "name": "full_holdout_7271042",
+        "run_id": "ba38ddd86331453691caf449c574b84a",
+        "episodes": 1,
+        "successes": 0,
+        "completed": false,
+        "checks": [
+          {
+            "success": false,
+            "episode": 0,
+            "failure": "stage timeout: pickup",
+            "timeout": false,
+            "stage": "pickup",
+            "last_perception_error": "Visual update exceeds the bounded pose prior",
+            "unsafe_force_N": 41.79854202270508,
+            "finger_positions": [
+              9.952745131158736e-06,
+              4.103966055879482e-09
+            ],
+            "raw_finger_forces_N": [
+              0.0,
+              0.0
+            ],
+            "all_strict_clamp_physics_passed": false
+          }
+        ],
+        "trace": {
+          "step": 8700,
+          "episode": 1,
+          "stage": "navigate",
+          "route": 4,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333335986
+        }
       }
     ],
-    "episodes": 14,
-    "successes": 13,
-    "failures": 1,
+    "episodes": 18,
+    "successes": 16,
+    "failures": 2,
     "independent_full_gate_passed": false,
-    "formal_full_episodes": 0,
+    "formal_full_episodes": 16,
     "requested_full_episodes": 64,
     "qualified": false
   },
@@ -417,8 +521,8 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "{\"shanghai_time\": \"2026-10-22T13:54:50.254483+08:00\", \"full_completed_rows\": 14, \"successes\": 13, \"failures\": 1, \"new_rows\": 1, \"fully_completed_native_group_rows\": 0, \"qualified\": false, \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"snapshot\": \"full_holdouts_snapshot_20261022_135450\", \"sha_verified_files\": 51, \"new_physics_checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 6, \"error_mm\": 1.0728228371590376, \"axis_error_deg\": 0.03997055728674713, \"jaw_forces_N\": [25.843734741210938, 24.092836380004883, 24.090686798095703, 25.841516494750977], \"unsafe_force_N\": 25.843734741210938, \"tcp_clearance_mm\": 89.33070302009583, \"all_strict_clamp_physics_passed\": true}], \"groups\": [{\"seed\": 7241042, \"name\": \"full_holdout_7241042\", \"run_id\": \"a710e29cc1ee4785b15024aa52b2fe57\", \"episodes\": 7, \"successes\": 6, \"completed\": false, \"checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.114375307224691, \"axis_error_deg\": 0.040243625138614236, \"jaw_forces_N\": [24.115081787109375, 25.824697494506836, 25.820592880249023, 24.11128044128418], \"unsafe_force_N\": 25.824697494506836, \"tcp_clearance_mm\": 89.44138884544373, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.096139196306467, \"axis_error_deg\": 0.04014963996662507, \"jaw_forces_N\": [25.852046966552734, 24.08210563659668, 24.08237075805664, 25.8514461517334], \"unsafe_force_N\": 25.852046966552734, \"tcp_clearance_mm\": 89.4801914691925, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2370655313134193, \"axis_error_deg\": 0.03984187842428986, \"jaw_forces_N\": [24.115434646606445, 25.823179244995117, 25.826282501220703, 24.11939811706543], \"unsafe_force_N\": 25.826282501220703, \"tcp_clearance_mm\": 89.68202769756317, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 3, \"error_mm\": 1.098204986192286, \"axis_error_deg\": 0.0394326560219965, \"jaw_forces_N\": [25.840749740600586, 24.081207275390625, 24.080028533935547, 25.83891487121582], \"unsafe_force_N\": 25.86188507080078, \"tcp_clearance_mm\": 86.06517314910889, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 4, \"error_mm\": 1.0770303197205067, \"axis_error_deg\": 0.039724672253411523, \"jaw_forces_N\": [25.831218719482422, 24.102495193481445, 24.10256004333496, 25.83016586303711], \"unsafe_force_N\": 25.839263916015625, \"tcp_clearance_mm\": 86.20867133140564, \"all_strict_clamp_physics_passed\": true}, {\"success\": false, \"episode\": 5, \"failure\": \"stage timeout: pickup\", \"timeout\": false, \"stage\": \"pickup\", \"last_perception_error\": \"Insufficient visible steel length\", \"unsafe_force_N\": 41.66632080078125, \"finger_positions\": [1.0929267773462925e-05, 4.345055426568933e-09], \"raw_finger_forces_N\": [0.0, 0.0], \"all_strict_clamp_physics_passed\": false}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 6, \"error_mm\": 1.0173433693125844, \"axis_error_deg\": 0.03964617977830002, \"jaw_forces_N\": [25.828842163085938, 24.108911514282227, 24.105480194091797, 25.826215744018555], \"unsafe_force_N\": 25.834392547607422, \"tcp_clearance_mm\": 89.3421322107315, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 67560, \"episode\": 7, \"stage\": \"loading\", \"route\": 4, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333330302}}, {\"seed\": 7251042, \"name\": \"full_holdout_7251042\", \"run_id\": \"f3227271d77949a792d5d983a499090a\", \"episodes\": 7, \"successes\": 7, \"completed\": false, \"checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.1342812795192003, \"axis_error_deg\": 0.04002145717271096, \"jaw_forces_N\": [24.11974334716797, 25.820194244384766, 25.816967010498047, 24.11646842956543], \"unsafe_force_N\": 25.832740783691406, \"tcp_clearance_mm\": 89.53092992305756, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.159358536824584, \"axis_error_deg\": 0.041229175644850145, \"jaw_forces_N\": [25.83334732055664, 24.089923858642578, 24.09501075744629, 25.838035583496094], \"unsafe_force_N\": 25.838035583496094, \"tcp_clearance_mm\": 89.54612165689468, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2141171609982848, \"axis_error_deg\": 0.0397067291761432, \"jaw_forces_N\": [24.724573135375977, 25.184926986694336, 25.21954345703125, 24.77450942993164], \"unsafe_force_N\": 25.818374633789062, \"tcp_clearance_mm\": 89.61356431245804, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 3, \"error_mm\": 1.0922509245574474, \"axis_error_deg\": 0.03943638101088309, \"jaw_forces_N\": [25.814298629760742, 24.10843849182129, 24.113554000854492, 25.819368362426758], \"unsafe_force_N\": 25.833282470703125, \"tcp_clearance_mm\": 85.99493652582169, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 4, \"error_mm\": 1.0148031869903207, \"axis_error_deg\": 0.04031367491478682, \"jaw_forces_N\": [23.999858856201172, 25.950965881347656, 25.967971801757812, 24.013763427734375], \"unsafe_force_N\": 25.998804092407227, \"tcp_clearance_mm\": 89.308001101017, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 5, \"error_mm\": 1.0829989332705736, \"axis_error_deg\": 0.040498650916674504, \"jaw_forces_N\": [24.69668960571289, 25.196226119995117, 25.181554794311523, 24.674833297729492], \"unsafe_force_N\": 26.16854476928711, \"tcp_clearance_mm\": 89.32455629110336, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 6, \"error_mm\": 1.0728228371590376, \"axis_error_deg\": 0.03997055728674713, \"jaw_forces_N\": [25.843734741210938, 24.092836380004883, 24.090686798095703, 25.841516494750977], \"unsafe_force_N\": 25.843734741210938, \"tcp_clearance_mm\": 89.33070302009583, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 67110, \"episode\": 7, \"stage\": \"tray_release\", \"route\": 4, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333330302}}], \"action\": \"Keep original controller20756/jobs; no duplicate launch. Require complete native group reports and all64 strict same-fingerprint receipts before finalgate/video. Training and oldv8/v9 excluded.\", \"failure_analysis\": {\"at\": \"2026-10-22T05:18:46.987736+00:00\", \"course\": \"course_v10_4090_return\", \"seed\": 7241042, \"episode\": 5, \"run_id\": \"a710e29cc1ee4785b15024aa52b2fe57\", \"native_completed\": true, \"success\": false, \"failure\": \"stage timeout: pickup\", \"count_in_acceptance_denominator\": true, \"original_evidence_modified\": false, \"active_jobs_restarted\": false, \"source_sha256\": \"2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2\", \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"findings\": [\"The initial full-cap survey is fresh and stable; source pose is then tracked while the recorded empty-wrist observation return is replayed.\", \"At step47100, the accepted source estimate projects below the 615-pixel image: center v exceeds615 while side-edge observations are still accepted. The view therefore loses the center before the return finishes.\", \"At step47250 the observer rejects edges; the recorded return continues until ready, then the existing stale-image interlock holds all arm commands with fingers open and no load.\", \"At3601 steps the native pickup stage timeout records failure. There is no grasp, handoff, arm contact or force-limit violation; unsafe peak41.666N remains below250N.\", \"Bounded residual is inactive in route0. This failure occurs before the learned residual can move the arm; increasing PPO updates does not address this path/visibility defect.\"], \"projection_from_visual_estimate_only\": {\"step\": 47100, \"pixel\": [617.8371809635034, 680.4927648269961], \"image_size\": [1024, 615], \"last_error\": \"\", \"robot_and_camera_calibration_only\": true}, \"failed_receipt\": {\"steps\": 3601, \"unsafe_force_N\": 41.66632080078125, \"paused_steps\": 2305, \"fingers\": [1.0929267773462925e-05, 4.345055426568933e-09], \"finger_forces\": [0.0, 0.0], \"arm_contact_loads_N\": {\"shoulder_Link\": 0.0, \"upperArm_Link\": 0.0, \"foreArm_Link\": 0.0, \"wrist1_Link\": 0.0, \"wrist2_Link\": 0.0, \"wrist3_Link\": 0.0, \"gripper_adapter_link\": 0.0, \"gripper_motor_link\": 0.0, \"mono_camera_link\": 0.0}}, \"snapshot\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_131451\", \"diagnostic_snapshot\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/vision_stall_7241042_20261022_130934\", \"candidate\": {\"directory\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v1\", \"status\": {\"state\": \"cpu_passed_physical_unvalidated\", \"source_sha256\": \"142925af9a12852711ad40123daee6a4bc29e6af65082a440dc977e54ea7a67c\", \"parent_source_sha256\": \"2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2\", \"deployed\": false, \"physical_regression_required\": true, \"scope\": \"source pickup only; no change to tray recovery, estimator or physical acceptance\", \"risk\": \"Intermediate return handoff may change the subsequent elbow/visual trajectory; must pass collision, visibility and continuous-reset physical regressions before promotion\", \"cpu\": {\"platform\": \"macOS\", \"passed\": 245, \"skipped\": 3, \"new_guard_tests\": 12, \"command\": \"REBAR_REPO_ROOT=workspace PYTHONPATH=candidate/src pytest -q -o pythonpath= tests candidate/tests\", \"limitations\": \"Three existing platform-dependent tests skipped; physical trajectory/collision/visibility remains unvalidated.\"}, \"node_cpu\": {\"passed\": 251, \"skipped\": 0, \"new_guard_tests\": 12, \"physical_regression_passed\": false}}, \"deployed\": false, \"physical_passed\": false, \"next\": \"Run new-directory development reproduction and multi-reset/collision/strict-physics regressions once a simulation slot is free; never splice source candidate results into393b/source2c final64. Keep current frozen jobs and all failed receipts.\"}, \"formal_full_gate_passed\": false}, \"candidate_physics\": {\"path\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/source_return_regression_plan_20261022.json\", \"sha256\": \"0ff150711b04dbf27a0ac747dee4dcce5a25b923b12ab340709ede5ec3f3b935\", \"state\": \"prepared_not_launched\", \"development_episodes\": 9, \"formal_acceptance_episodes\": 0, \"capacity\": \"Two original simulations running; no third simulation launched.\"}, \"simulation_capacity\": {\"running\": 2, \"maximum\": 2, \"regression_started\": false}, \"native_group_review_tool\": \"course_v10_4090_return/review_tools/verify_completed_full_groups_20261022.py\"}",
-  "independent_full_evaluation_new_episodes_since_last_check": 1,
+  "last_heartbeat_result": "{\"shanghai_time\": \"2026-10-22T14:29:42.171466+08:00\", \"full_completed_rows\": 18, \"successes\": 16, \"failures\": 2, \"new_rows\": 4, \"fully_completed_native_group_rows\": 16, \"qualified\": false, \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"snapshot\": \"full_holdouts_snapshot_20261022_142942\", \"sha_verified_files\": 73, \"new_physics_checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 7, \"error_mm\": 1.059033558703959, \"axis_error_deg\": 0.039319595986768895, \"jaw_forces_N\": [24.10580062866211, 25.821517944335938, 25.823699951171875, 24.10797691345215], \"unsafe_force_N\": 25.823699951171875, \"tcp_clearance_mm\": 89.02669697999954, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 7, \"error_mm\": 1.3423932250589132, \"axis_error_deg\": 0.041105199213165654, \"jaw_forces_N\": [24.359451293945312, 25.572710037231445, 25.606582641601562, 24.397483825683594], \"unsafe_force_N\": 25.9609375, \"tcp_clearance_mm\": 89.82133120298386, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.2372910277917981, \"axis_error_deg\": 0.0404911896033837, \"jaw_forces_N\": [25.838258743286133, 24.094928741455078, 24.095760345458984, 25.83807373046875], \"unsafe_force_N\": 25.838258743286133, \"tcp_clearance_mm\": 89.89135175943375, \"all_strict_clamp_physics_passed\": true}], \"groups\": [{\"seed\": 7241042, \"name\": \"full_holdout_7241042\", \"run_id\": \"a710e29cc1ee4785b15024aa52b2fe57\", \"episodes\": 8, \"successes\": 7, \"completed\": true, \"checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.114375307224691, \"axis_error_deg\": 0.040243625138614236, \"jaw_forces_N\": [24.115081787109375, 25.824697494506836, 25.820592880249023, 24.11128044128418], \"unsafe_force_N\": 25.824697494506836, \"tcp_clearance_mm\": 89.44138884544373, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.096139196306467, \"axis_error_deg\": 0.04014963996662507, \"jaw_forces_N\": [25.852046966552734, 24.08210563659668, 24.08237075805664, 25.8514461517334], \"unsafe_force_N\": 25.852046966552734, \"tcp_clearance_mm\": 89.4801914691925, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2370655313134193, \"axis_error_deg\": 0.03984187842428986, \"jaw_forces_N\": [24.115434646606445, 25.823179244995117, 25.826282501220703, 24.11939811706543], \"unsafe_force_N\": 25.826282501220703, \"tcp_clearance_mm\": 89.68202769756317, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 3, \"error_mm\": 1.098204986192286, \"axis_error_deg\": 0.0394326560219965, \"jaw_forces_N\": [25.840749740600586, 24.081207275390625, 24.080028533935547, 25.83891487121582], \"unsafe_force_N\": 25.86188507080078, \"tcp_clearance_mm\": 86.06517314910889, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 4, \"error_mm\": 1.0770303197205067, \"axis_error_deg\": 0.039724672253411523, \"jaw_forces_N\": [25.831218719482422, 24.102495193481445, 24.10256004333496, 25.83016586303711], \"unsafe_force_N\": 25.839263916015625, \"tcp_clearance_mm\": 86.20867133140564, \"all_strict_clamp_physics_passed\": true}, {\"success\": false, \"episode\": 5, \"failure\": \"stage timeout: pickup\", \"timeout\": false, \"stage\": \"pickup\", \"last_perception_error\": \"Insufficient visible steel length\", \"unsafe_force_N\": 41.66632080078125, \"finger_positions\": [1.0929267773462925e-05, 4.345055426568933e-09], \"raw_finger_forces_N\": [0.0, 0.0], \"all_strict_clamp_physics_passed\": false}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 6, \"error_mm\": 1.0173433693125844, \"axis_error_deg\": 0.03964617977830002, \"jaw_forces_N\": [25.828842163085938, 24.108911514282227, 24.105480194091797, 25.826215744018555], \"unsafe_force_N\": 25.834392547607422, \"tcp_clearance_mm\": 89.3421322107315, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 7, \"error_mm\": 1.059033558703959, \"axis_error_deg\": 0.039319595986768895, \"jaw_forces_N\": [24.10580062866211, 25.821517944335938, 25.823699951171875, 24.10797691345215], \"unsafe_force_N\": 25.823699951171875, \"tcp_clearance_mm\": 89.02669697999954, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 68160, \"episode\": 7, \"stage\": \"loading\", \"route\": 10, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333330302}}, {\"seed\": 7251042, \"name\": \"full_holdout_7251042\", \"run_id\": \"f3227271d77949a792d5d983a499090a\", \"episodes\": 8, \"successes\": 8, \"completed\": true, \"checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.1342812795192003, \"axis_error_deg\": 0.04002145717271096, \"jaw_forces_N\": [24.11974334716797, 25.820194244384766, 25.816967010498047, 24.11646842956543], \"unsafe_force_N\": 25.832740783691406, \"tcp_clearance_mm\": 89.53092992305756, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.159358536824584, \"axis_error_deg\": 0.041229175644850145, \"jaw_forces_N\": [25.83334732055664, 24.089923858642578, 24.09501075744629, 25.838035583496094], \"unsafe_force_N\": 25.838035583496094, \"tcp_clearance_mm\": 89.54612165689468, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2141171609982848, \"axis_error_deg\": 0.0397067291761432, \"jaw_forces_N\": [24.724573135375977, 25.184926986694336, 25.21954345703125, 24.77450942993164], \"unsafe_force_N\": 25.818374633789062, \"tcp_clearance_mm\": 89.61356431245804, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 3, \"error_mm\": 1.0922509245574474, \"axis_error_deg\": 0.03943638101088309, \"jaw_forces_N\": [25.814298629760742, 24.10843849182129, 24.113554000854492, 25.819368362426758], \"unsafe_force_N\": 25.833282470703125, \"tcp_clearance_mm\": 85.99493652582169, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 4, \"error_mm\": 1.0148031869903207, \"axis_error_deg\": 0.04031367491478682, \"jaw_forces_N\": [23.999858856201172, 25.950965881347656, 25.967971801757812, 24.013763427734375], \"unsafe_force_N\": 25.998804092407227, \"tcp_clearance_mm\": 89.308001101017, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 5, \"error_mm\": 1.0829989332705736, \"axis_error_deg\": 0.040498650916674504, \"jaw_forces_N\": [24.69668960571289, 25.196226119995117, 25.181554794311523, 24.674833297729492], \"unsafe_force_N\": 26.16854476928711, \"tcp_clearance_mm\": 89.32455629110336, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 6, \"error_mm\": 1.0728228371590376, \"axis_error_deg\": 0.03997055728674713, \"jaw_forces_N\": [25.843734741210938, 24.092836380004883, 24.090686798095703, 25.841516494750977], \"unsafe_force_N\": 25.843734741210938, \"tcp_clearance_mm\": 89.33070302009583, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 7, \"error_mm\": 1.3423932250589132, \"axis_error_deg\": 0.041105199213165654, \"jaw_forces_N\": [24.359451293945312, 25.572710037231445, 25.606582641601562, 24.397483825683594], \"unsafe_force_N\": 25.9609375, \"tcp_clearance_mm\": 89.82133120298386, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 73470, \"episode\": 7, \"stage\": \"loading\", \"route\": 10, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333330302}}, {\"seed\": 7261042, \"name\": \"full_holdout_7261042\", \"run_id\": \"917f573597aa4d46b5a3296ef04a2512\", \"episodes\": 1, \"successes\": 1, \"completed\": false, \"checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.2372910277917981, \"axis_error_deg\": 0.0404911896033837, \"jaw_forces_N\": [25.838258743286133, 24.094928741455078, 24.095760345458984, 25.83807373046875], \"unsafe_force_N\": 25.838258743286133, \"tcp_clearance_mm\": 89.89135175943375, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 14520, \"episode\": 1, \"stage\": \"navigate\", \"route\": 4, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333330302}}, {\"seed\": 7271042, \"name\": \"full_holdout_7271042\", \"run_id\": \"ba38ddd86331453691caf449c574b84a\", \"episodes\": 1, \"successes\": 0, \"completed\": false, \"checks\": [{\"success\": false, \"episode\": 0, \"failure\": \"stage timeout: pickup\", \"timeout\": false, \"stage\": \"pickup\", \"last_perception_error\": \"Visual update exceeds the bounded pose prior\", \"unsafe_force_N\": 41.79854202270508, \"finger_positions\": [9.952745131158736e-06, 4.103966055879482e-09], \"raw_finger_forces_N\": [0.0, 0.0], \"all_strict_clamp_physics_passed\": false}], \"trace\": {\"step\": 8700, \"episode\": 1, \"stage\": \"navigate\", \"route\": 4, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333335986}}], \"action\": \"Do not SIGCONT/restart worker20758 or launch728+. Keep native726/727 jobs running and collect all receipts. Actual native job statuses/GPU determine capacity because curriculum.active_jobs is stale while dispatcher stopped. Run candidatev2 source8a24 all11 labeled development regressions in fresh output once capacity<2; no adoption until physical passes, then new course/all gates/fresh seed audit.\", \"failure_analysis\": {\"at\": \"2026-10-22T06:24:23.036857+00:00\", \"failure_cases\": [{\"seed\": 7241042, \"episode\": 5, \"failure\": \"stage timeout: pickup\", \"evidence\": \"reports/v10_pickup_visual_failure_20261022.json\"}, {\"seed\": 7271042, \"episode\": 0, \"failure\": \"stage timeout: pickup\", \"steps\": 3601, \"paused_steps\": 2302, \"unsafe_force_N\": 41.79854202270508, \"finger_forces\": [0.0, 0.0], \"arm_contact_loads_N\": {\"shoulder_Link\": 0.0, \"upperArm_Link\": 0.0, \"foreArm_Link\": 0.0, \"wrist1_Link\": 0.0, \"wrist2_Link\": 0.0, \"wrist3_Link\": 0.0, \"gripper_adapter_link\": 0.0, \"gripper_motor_link\": 0.0, \"mono_camera_link\": 0.0}, \"last_perception_error\": \"Visual update exceeds the bounded pose prior\", \"source_center_pixel_from_visual_estimate_only\": [602.1709386405547, 1037.6496427791997], \"packet\": \"wrist_step3300\", \"diagnostics\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/vision_stall_7271042_20261022_141826\", \"both_hosts_verified_files\": 37}], \"diagnosis\": \"Both source-return paths lose the surveyed source from the wrist image at the low nominal return pose. Source center projects below image615px and edge fits become insufficient or inconsistent with the fixed support prior. Route0 residual is inactive; robot safely holds open unloaded until the native stage timeout.\", \"no_threshold_relaxation\": true, \"failures_retained_in_denominator\": true, \"source_or_policy_changed_in_current_jobs\": false, \"dispatch\": {\"at\": \"2026-10-22T06:20:05.906363+00:00\", \"reason\": \"Second failed receipt makes original prespecified64 gate unattainable; retain active jobs and prevent further dispatch\", \"worker_pid\": 20758, \"launcher_pid\": 20756, \"command\": \"/home/arnold/Develop/rebar-training-runtime/bin/python -m rebar_training.mobile_curriculum --worker --plan /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/plan.json --output /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return --initial-checkpoint /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/initial_policy.pt \", \"state_before\": \"S (sleeping)\", \"signal\": \"SIGSTOP_worker_only\", \"active_simulations_preserved\": [{\"name\": \"full_holdout_7261042\", \"pid\": 38758, \"runner_pid\": 38757, \"state_before\": \"S (sleeping)\", \"state_after\": \"S (sleeping)\"}, {\"name\": \"full_holdout_7271042\", \"pid\": 39557, \"runner_pid\": 39556, \"state_before\": \"S (sleeping)\", \"state_after\": \"S (sleeping)\"}], \"failed_receipts\": 2, \"best_case_successes_in_fixed64\": 62, \"best_case_wilson95_lower\": 0.8930270822904168, \"required_lower\": 0.9, \"source_changed\": false, \"policy_changed\": false, \"old_evidence_modified\": false, \"user_task_paused\": false, \"automation_remains_active\": true, \"resume_old_dispatcher\": false, \"state_after\": \"T (stopped)\"}, \"old_fixed_plan_qualified\": false, \"best_case_fixed64_successes\": 62, \"best_case_fixed64_wilson95_lower\": 0.8930270822904168, \"required_lower\": 0.9, \"next\": \"Keep existing two native jobs; never resume dispatcher20758. Validate isolated candidatev2 source8a24 with all11 development regressions when a real simulation slot is free. Adoption needs new course/all gates/fresh predeclared seeds.\", \"candidate\": {\"directory\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v2\", \"source_sha256\": \"8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58\", \"deployed\": false, \"physical_passed\": false, \"regression_plan\": \"reports/source_return_regression_plan_v2_20261022.json\", \"required_development_episodes\": 11, \"cpu_passed\": 251, \"plan_sha256\": \"42c6b3f1001d70dc148e13d273dedf5eecc92ffb396ab4324778e33ff867f4ea\"}}, \"candidate_physics\": {\"path\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/source_return_regression_plan_v2_20261022.json\", \"sha256\": \"42c6b3f1001d70dc148e13d273dedf5eecc92ffb396ab4324778e33ff867f4ea\", \"required_episodes\": 11, \"state\": \"prepared_not_launched\", \"formal_acceptance_episodes\": 0, \"supersedes\": \"source_return_regression_plan_20261022.json (9, never launched)\", \"candidate_cpu_passed\": 251}, \"completed_native_groups\": {\"verification_dir\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/completed_full_groups_verified_20261022_141045\", \"proof\": {\"at\": \"2026-10-22T14:10:45.488738+08:00\", \"complete_groups\": 2, \"episodes\": 16, \"successes\": 15, \"failures\": 1, \"partial_gate\": {\"passed\": false, \"phase\": \"full\", \"randomization\": \"expanded\", \"episodes\": 16, \"successes\": 15, \"success_rate\": 0.9375, \"wilson_95_lower\": 0.7167126242970107, \"minimum_episodes\": 64, \"minimum_distinct_seeds\": 2, \"distinct_seeds\": [7241042, 7251042], \"required_wilson_95_lower\": 0.9, \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"evidence_errors\": [], \"sample_requirement_met\": false, \"failures\": [{\"episode\": 5, \"stage\": \"pickup\", \"reason\": \"stage timeout: pickup\", \"timeout\": false}], \"scope\": \"bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL\"}, \"all_failed_receipts_retained\": true, \"checks\": [{\"seed\": 7241042, \"episode\": 0, \"success\": true, \"failure\": null, \"error_mm\": 1.114375307224691, \"axis_error_deg\": 0.040243625138614236, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7241042, \"episode\": 1, \"success\": true, \"failure\": null, \"error_mm\": 1.096139196306467, \"axis_error_deg\": 0.04014963996662507, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7241042, \"episode\": 2, \"success\": true, \"failure\": null, \"error_mm\": 1.2370655313134193, \"axis_error_deg\": 0.03984187842428986, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7241042, \"episode\": 3, \"success\": true, \"failure\": null, \"error_mm\": 1.098204986192286, \"axis_error_deg\": 0.0394326560219965, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7241042, \"episode\": 4, \"success\": true, \"failure\": null, \"error_mm\": 1.0770303197205067, \"axis_error_deg\": 0.039724672253411523, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7241042, \"episode\": 5, \"success\": false, \"failure\": \"stage timeout: pickup\", \"error_mm\": 8276.537895202637, \"axis_error_deg\": 89.9999999882677, \"strict_success_physics_passed\": false, \"retained_in_denominator\": true}, {\"seed\": 7241042, \"episode\": 6, \"success\": true, \"failure\": null, \"error_mm\": 1.0173433693125844, \"axis_error_deg\": 0.03964617977830002, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7241042, \"episode\": 7, \"success\": true, \"failure\": null, \"error_mm\": 1.059033558703959, \"axis_error_deg\": 0.039319595986768895, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7251042, \"episode\": 0, \"success\": true, \"failure\": null, \"error_mm\": 1.1342812795192003, \"axis_error_deg\": 0.04002145717271096, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7251042, \"episode\": 1, \"success\": true, \"failure\": null, \"error_mm\": 1.159358536824584, \"axis_error_deg\": 0.041229175644850145, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7251042, \"episode\": 2, \"success\": true, \"failure\": null, \"error_mm\": 1.2141171609982848, \"axis_error_deg\": 0.0397067291761432, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7251042, \"episode\": 3, \"success\": true, \"failure\": null, \"error_mm\": 1.0922509245574474, \"axis_error_deg\": 0.03943638101088309, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7251042, \"episode\": 4, \"success\": true, \"failure\": null, \"error_mm\": 1.0148031869903207, \"axis_error_deg\": 0.04031367491478682, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7251042, \"episode\": 5, \"success\": true, \"failure\": null, \"error_mm\": 1.0829989332705736, \"axis_error_deg\": 0.040498650916674504, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7251042, \"episode\": 6, \"success\": true, \"failure\": null, \"error_mm\": 1.0728228371590376, \"axis_error_deg\": 0.03997055728674713, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}, {\"seed\": 7251042, \"episode\": 7, \"success\": true, \"failure\": null, \"error_mm\": 1.3423932250589132, \"axis_error_deg\": 0.041105199213165654, \"strict_success_physics_passed\": true, \"retained_in_denominator\": true}], \"report_sha256\": {\"7241042\": \"6864b969703b67201df0b53f300ae74e354b231725503767d2c7e98da19fd431\", \"7251042\": \"a323b55de2a0423a2b80b6339daf604052325fa04068b9a920580add8ba098b8\"}, \"qualified\": false, \"formal_scope\": \"Only complete native eight-episode reports; running group rows excluded. At least64 are still required.\"}, \"both_hosts\": {\"at\": \"2026-10-22T06:12:34.148267+00:00\", \"files\": 1819, \"mismatches\": [], \"mac_recomputed_gate\": {\"passed\": false, \"phase\": \"full\", \"randomization\": \"expanded\", \"episodes\": 16, \"successes\": 15, \"success_rate\": 0.9375, \"wilson_95_lower\": 0.7167126242970107, \"minimum_episodes\": 64, \"minimum_distinct_seeds\": 2, \"distinct_seeds\": [7241042, 7251042], \"required_wilson_95_lower\": 0.9, \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"evidence_errors\": [], \"sample_requirement_met\": false, \"failures\": [{\"episode\": 5, \"stage\": \"pickup\", \"reason\": \"stage timeout: pickup\", \"timeout\": false}], \"scope\": \"bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL\"}, \"node_gate_identical\": true, \"report_sha256\": {\"7241042\": \"6864b969703b67201df0b53f300ae74e354b231725503767d2c7e98da19fd431\", \"7251042\": \"a323b55de2a0423a2b80b6339daf604052325fa04068b9a920580add8ba098b8\"}, \"qualified\": false}}, \"current_live_jobs\": [{\"name\": \"full_holdout_7261042\", \"runner_pid\": 38757}, {\"name\": \"full_holdout_7271042\", \"runner_pid\": 39556}], \"dispatch_pause_proof\": {\"at\": \"2026-10-22T06:20:05.906363+00:00\", \"reason\": \"Second failed receipt makes original prespecified64 gate unattainable; retain active jobs and prevent further dispatch\", \"worker_pid\": 20758, \"launcher_pid\": 20756, \"command\": \"/home/arnold/Develop/rebar-training-runtime/bin/python -m rebar_training.mobile_curriculum --worker --plan /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/plan.json --output /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return --initial-checkpoint /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/initial_policy.pt \", \"state_before\": \"S (sleeping)\", \"signal\": \"SIGSTOP_worker_only\", \"active_simulations_preserved\": [{\"name\": \"full_holdout_7261042\", \"pid\": 38758, \"runner_pid\": 38757, \"state_before\": \"S (sleeping)\", \"state_after\": \"S (sleeping)\"}, {\"name\": \"full_holdout_7271042\", \"pid\": 39557, \"runner_pid\": 39556, \"state_before\": \"S (sleeping)\", \"state_after\": \"S (sleeping)\"}], \"failed_receipts\": 2, \"best_case_successes_in_fixed64\": 62, \"best_case_wilson95_lower\": 0.8930270822904168, \"required_lower\": 0.9, \"source_changed\": false, \"policy_changed\": false, \"old_evidence_modified\": false, \"user_task_paused\": false, \"automation_remains_active\": true, \"resume_old_dispatcher\": false, \"state_after\": \"T (stopped)\"}, \"current_fixed64_gate_unattainable\": true, \"recovery_archive\": {\"archive\": \"/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_second_failure_repair.tar.gz\", \"node_archive\": \"/home/arnold/Develop/rebar-migration-back4090-20261022/rebar_training_recovery_20261022_v10_second_failure_repair.tar.gz\", \"files\": 192, \"bytes\": 73151644, \"sha256\": \"5af601cf1133c02fb3f92b66fd29b4bf7aeaf80dd5d9a40a5e792b7da792f498\", \"requires\": [\"20f941f76575826c928f7bd85aee46cb83887c9bf455db153437549b48722ef0\", \"fe0a57df9fbf3394c42c417af0752296bc681c1c0eafe42dfbd8c7e7ffc27b7d\"], \"both_hosts_verified\": true, \"qualified\": false}}",
+  "independent_full_evaluation_new_episodes_since_last_check": 4,
   "latest_local_recovery_backup": {
     "at": "2026-10-22T03:26:43.384854+00:00",
     "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_full_training_pass.tar.gz",
@@ -732,7 +836,7 @@
     "full_holdout_7241042",
     "full_holdout_7251042"
   ],
-  "last_successful_node_check_at": "2026-10-22T05:54:50.254483+00:00",
+  "last_successful_node_check_at": "2026-10-22T06:29:42.171466+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -2313,17 +2417,17 @@
     "qualified": false
   },
   "latest_full_independent_partial_verified": {
-    "at": "2026-10-22T05:54:50.254483+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_135450",
+    "at": "2026-10-22T06:29:42.171466+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_142942",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
         "seed": 7241042,
         "name": "full_holdout_7241042",
         "run_id": "a710e29cc1ee4785b15024aa52b2fe57",
-        "episodes": 7,
-        "successes": 6,
-        "completed": false,
+        "episodes": 8,
+        "successes": 7,
+        "completed": true,
         "checks": [
           {
             "success": true,
@@ -2438,13 +2542,29 @@
             "unsafe_force_N": 25.834392547607422,
             "tcp_clearance_mm": 89.3421322107315,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 7,
+            "error_mm": 1.059033558703959,
+            "axis_error_deg": 0.039319595986768895,
+            "jaw_forces_N": [
+              24.10580062866211,
+              25.821517944335938,
+              25.823699951171875,
+              24.10797691345215
+            ],
+            "unsafe_force_N": 25.823699951171875,
+            "tcp_clearance_mm": 89.02669697999954,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 67560,
+          "step": 68160,
           "episode": 7,
           "stage": "loading",
-          "route": 4,
+          "route": 10,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333330302
@@ -2454,9 +2574,9 @@
         "seed": 7251042,
         "name": "full_holdout_7251042",
         "run_id": "f3227271d77949a792d5d983a499090a",
-        "episodes": 7,
-        "successes": 7,
-        "completed": false,
+        "episodes": 8,
+        "successes": 8,
+        "completed": true,
         "checks": [
           {
             "success": true,
@@ -2569,36 +2689,124 @@
             "unsafe_force_N": 25.843734741210938,
             "tcp_clearance_mm": 89.33070302009583,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 7,
+            "error_mm": 1.3423932250589132,
+            "axis_error_deg": 0.041105199213165654,
+            "jaw_forces_N": [
+              24.359451293945312,
+              25.572710037231445,
+              25.606582641601562,
+              24.397483825683594
+            ],
+            "unsafe_force_N": 25.9609375,
+            "tcp_clearance_mm": 89.82133120298386,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 67110,
+          "step": 73470,
           "episode": 7,
-          "stage": "tray_release",
+          "stage": "loading",
+          "route": 10,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333330302
+        }
+      },
+      {
+        "seed": 7261042,
+        "name": "full_holdout_7261042",
+        "run_id": "917f573597aa4d46b5a3296ef04a2512",
+        "episodes": 1,
+        "successes": 1,
+        "completed": false,
+        "checks": [
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 0,
+            "error_mm": 1.2372910277917981,
+            "axis_error_deg": 0.0404911896033837,
+            "jaw_forces_N": [
+              25.838258743286133,
+              24.094928741455078,
+              24.095760345458984,
+              25.83807373046875
+            ],
+            "unsafe_force_N": 25.838258743286133,
+            "tcp_clearance_mm": 89.89135175943375,
+            "all_strict_clamp_physics_passed": true
+          }
+        ],
+        "trace": {
+          "step": 14520,
+          "episode": 1,
+          "stage": "navigate",
           "route": 4,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333330302
         }
+      },
+      {
+        "seed": 7271042,
+        "name": "full_holdout_7271042",
+        "run_id": "ba38ddd86331453691caf449c574b84a",
+        "episodes": 1,
+        "successes": 0,
+        "completed": false,
+        "checks": [
+          {
+            "success": false,
+            "episode": 0,
+            "failure": "stage timeout: pickup",
+            "timeout": false,
+            "stage": "pickup",
+            "last_perception_error": "Visual update exceeds the bounded pose prior",
+            "unsafe_force_N": 41.79854202270508,
+            "finger_positions": [
+              9.952745131158736e-06,
+              4.103966055879482e-09
+            ],
+            "raw_finger_forces_N": [
+              0.0,
+              0.0
+            ],
+            "all_strict_clamp_physics_passed": false
+          }
+        ],
+        "trace": {
+          "step": 8700,
+          "episode": 1,
+          "stage": "navigate",
+          "route": 4,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333335986
+        }
       }
     ],
-    "episodes": 14,
-    "successes": 13,
-    "failures": 1,
+    "episodes": 18,
+    "successes": 16,
+    "failures": 2,
     "independent_full_gate_passed": false,
-    "formal_full_episodes": 0,
+    "formal_full_episodes": 16,
     "requested_full_episodes": 64,
     "qualified": false
   },
   "latest_full_partial_both_hosts_verified": {
-    "at": "2026-10-22T05:54:52.026647+00:00",
-    "files": 51,
+    "at": "2026-10-22T06:29:44.693060+00:00",
+    "files": 73,
     "mismatches": [],
-    "node_path": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_135450",
-    "mac_path": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_135450",
+    "node_path": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_142942",
+    "mac_path": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_142942",
     "sha256_verified_both_hosts": true
   },
-  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_135450",
+  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_142942",
   "final_full_frozen_fingerprints": {
     "recorded_at": "2026-10-22T03:26:23.316910+00:00",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
@@ -2627,105 +2835,422 @@
     "qualified": false
   },
   "independent_full_evaluation_started": true,
-  "independent_full_native_completed_group_rows": 0,
+  "independent_full_native_completed_group_rows": 16,
   "latest_failure_analysis": {
-    "at": "2026-10-22T05:18:46.987736+00:00",
-    "course": "course_v10_4090_return",
-    "seed": 7241042,
-    "episode": 5,
-    "run_id": "a710e29cc1ee4785b15024aa52b2fe57",
-    "native_completed": true,
-    "success": false,
-    "failure": "stage timeout: pickup",
-    "count_in_acceptance_denominator": true,
-    "original_evidence_modified": false,
-    "active_jobs_restarted": false,
-    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
-    "findings": [
-      "The initial full-cap survey is fresh and stable; source pose is then tracked while the recorded empty-wrist observation return is replayed.",
-      "At step47100, the accepted source estimate projects below the 615-pixel image: center v exceeds615 while side-edge observations are still accepted. The view therefore loses the center before the return finishes.",
-      "At step47250 the observer rejects edges; the recorded return continues until ready, then the existing stale-image interlock holds all arm commands with fingers open and no load.",
-      "At3601 steps the native pickup stage timeout records failure. There is no grasp, handoff, arm contact or force-limit violation; unsafe peak41.666N remains below250N.",
-      "Bounded residual is inactive in route0. This failure occurs before the learned residual can move the arm; increasing PPO updates does not address this path/visibility defect."
-    ],
-    "projection_from_visual_estimate_only": {
-      "step": 47100,
-      "pixel": [
-        617.8371809635034,
-        680.4927648269961
-      ],
-      "image_size": [
-        1024,
-        615
-      ],
-      "last_error": "",
-      "robot_and_camera_calibration_only": true
-    },
-    "failed_receipt": {
-      "steps": 3601,
-      "unsafe_force_N": 41.66632080078125,
-      "paused_steps": 2305,
-      "fingers": [
-        1.0929267773462925e-05,
-        4.345055426568933e-09
-      ],
-      "finger_forces": [
-        0.0,
-        0.0
-      ],
-      "arm_contact_loads_N": {
-        "shoulder_Link": 0.0,
-        "upperArm_Link": 0.0,
-        "foreArm_Link": 0.0,
-        "wrist1_Link": 0.0,
-        "wrist2_Link": 0.0,
-        "wrist3_Link": 0.0,
-        "gripper_adapter_link": 0.0,
-        "gripper_motor_link": 0.0,
-        "mono_camera_link": 0.0
-      }
-    },
-    "snapshot": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_131451",
-    "diagnostic_snapshot": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/vision_stall_7241042_20261022_130934",
-    "candidate": {
-      "directory": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v1",
-      "status": {
-        "state": "cpu_passed_physical_unvalidated",
-        "source_sha256": "142925af9a12852711ad40123daee6a4bc29e6af65082a440dc977e54ea7a67c",
-        "parent_source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-        "deployed": false,
-        "physical_regression_required": true,
-        "scope": "source pickup only; no change to tray recovery, estimator or physical acceptance",
-        "risk": "Intermediate return handoff may change the subsequent elbow/visual trajectory; must pass collision, visibility and continuous-reset physical regressions before promotion",
-        "cpu": {
-          "platform": "macOS",
-          "passed": 245,
-          "skipped": 3,
-          "new_guard_tests": 12,
-          "command": "REBAR_REPO_ROOT=workspace PYTHONPATH=candidate/src pytest -q -o pythonpath= tests candidate/tests",
-          "limitations": "Three existing platform-dependent tests skipped; physical trajectory/collision/visibility remains unvalidated."
-        },
-        "node_cpu": {
-          "passed": 251,
-          "skipped": 0,
-          "new_guard_tests": 12,
-          "physical_regression_passed": false
-        }
+    "at": "2026-10-22T06:24:23.036857+00:00",
+    "failure_cases": [
+      {
+        "seed": 7241042,
+        "episode": 5,
+        "failure": "stage timeout: pickup",
+        "evidence": "reports/v10_pickup_visual_failure_20261022.json"
       },
+      {
+        "seed": 7271042,
+        "episode": 0,
+        "failure": "stage timeout: pickup",
+        "steps": 3601,
+        "paused_steps": 2302,
+        "unsafe_force_N": 41.79854202270508,
+        "finger_forces": [
+          0.0,
+          0.0
+        ],
+        "arm_contact_loads_N": {
+          "shoulder_Link": 0.0,
+          "upperArm_Link": 0.0,
+          "foreArm_Link": 0.0,
+          "wrist1_Link": 0.0,
+          "wrist2_Link": 0.0,
+          "wrist3_Link": 0.0,
+          "gripper_adapter_link": 0.0,
+          "gripper_motor_link": 0.0,
+          "mono_camera_link": 0.0
+        },
+        "last_perception_error": "Visual update exceeds the bounded pose prior",
+        "source_center_pixel_from_visual_estimate_only": [
+          602.1709386405547,
+          1037.6496427791997
+        ],
+        "packet": "wrist_step3300",
+        "diagnostics": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/vision_stall_7271042_20261022_141826",
+        "both_hosts_verified_files": 37
+      }
+    ],
+    "diagnosis": "Both source-return paths lose the surveyed source from the wrist image at the low nominal return pose. Source center projects below image615px and edge fits become insufficient or inconsistent with the fixed support prior. Route0 residual is inactive; robot safely holds open unloaded until the native stage timeout.",
+    "no_threshold_relaxation": true,
+    "failures_retained_in_denominator": true,
+    "source_or_policy_changed_in_current_jobs": false,
+    "dispatch": {
+      "at": "2026-10-22T06:20:05.906363+00:00",
+      "reason": "Second failed receipt makes original prespecified64 gate unattainable; retain active jobs and prevent further dispatch",
+      "worker_pid": 20758,
+      "launcher_pid": 20756,
+      "command": "/home/arnold/Develop/rebar-training-runtime/bin/python -m rebar_training.mobile_curriculum --worker --plan /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/plan.json --output /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return --initial-checkpoint /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/initial_policy.pt ",
+      "state_before": "S (sleeping)",
+      "signal": "SIGSTOP_worker_only",
+      "active_simulations_preserved": [
+        {
+          "name": "full_holdout_7261042",
+          "pid": 38758,
+          "runner_pid": 38757,
+          "state_before": "S (sleeping)",
+          "state_after": "S (sleeping)"
+        },
+        {
+          "name": "full_holdout_7271042",
+          "pid": 39557,
+          "runner_pid": 39556,
+          "state_before": "S (sleeping)",
+          "state_after": "S (sleeping)"
+        }
+      ],
+      "failed_receipts": 2,
+      "best_case_successes_in_fixed64": 62,
+      "best_case_wilson95_lower": 0.8930270822904168,
+      "required_lower": 0.9,
+      "source_changed": false,
+      "policy_changed": false,
+      "old_evidence_modified": false,
+      "user_task_paused": false,
+      "automation_remains_active": true,
+      "resume_old_dispatcher": false,
+      "state_after": "T (stopped)"
+    },
+    "old_fixed_plan_qualified": false,
+    "best_case_fixed64_successes": 62,
+    "best_case_fixed64_wilson95_lower": 0.8930270822904168,
+    "required_lower": 0.9,
+    "next": "Keep existing two native jobs; never resume dispatcher20758. Validate isolated candidatev2 source8a24 with all11 development regressions when a real simulation slot is free. Adoption needs new course/all gates/fresh predeclared seeds.",
+    "candidate": {
+      "directory": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v2",
+      "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
       "deployed": false,
       "physical_passed": false,
-      "next": "Run new-directory development reproduction and multi-reset/collision/strict-physics regressions once a simulation slot is free; never splice source candidate results into393b/source2c final64. Keep current frozen jobs and all failed receipts."
-    },
-    "formal_full_gate_passed": false
+      "regression_plan": "reports/source_return_regression_plan_v2_20261022.json",
+      "required_development_episodes": 11,
+      "cpu_passed": 251,
+      "plan_sha256": "42c6b3f1001d70dc148e13d273dedf5eecc92ffb396ab4324778e33ff867f4ea"
+    }
   },
   "needs_repair_analysis": true,
   "candidate_physical_regression_plan": {
-    "path": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/source_return_regression_plan_20261022.json",
-    "sha256": "0ff150711b04dbf27a0ac747dee4dcce5a25b923b12ab340709ede5ec3f3b935",
+    "path": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/source_return_regression_plan_v2_20261022.json",
+    "sha256": "42c6b3f1001d70dc148e13d273dedf5eecc92ffb396ab4324778e33ff867f4ea",
+    "required_episodes": 11,
     "state": "prepared_not_launched",
-    "development_episodes": 9,
     "formal_acceptance_episodes": 0,
-    "capacity": "Two original simulations running; no third simulation launched."
-  }
+    "supersedes": "source_return_regression_plan_20261022.json (9, never launched)",
+    "candidate_cpu_passed": 251
+  },
+  "latest_full_completed_native_groups_verified": {
+    "verification_dir": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/completed_full_groups_verified_20261022_141045",
+    "proof": {
+      "at": "2026-10-22T14:10:45.488738+08:00",
+      "complete_groups": 2,
+      "episodes": 16,
+      "successes": 15,
+      "failures": 1,
+      "partial_gate": {
+        "passed": false,
+        "phase": "full",
+        "randomization": "expanded",
+        "episodes": 16,
+        "successes": 15,
+        "success_rate": 0.9375,
+        "wilson_95_lower": 0.7167126242970107,
+        "minimum_episodes": 64,
+        "minimum_distinct_seeds": 2,
+        "distinct_seeds": [
+          7241042,
+          7251042
+        ],
+        "required_wilson_95_lower": 0.9,
+        "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+        "evidence_errors": [],
+        "sample_requirement_met": false,
+        "failures": [
+          {
+            "episode": 5,
+            "stage": "pickup",
+            "reason": "stage timeout: pickup",
+            "timeout": false
+          }
+        ],
+        "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+      },
+      "all_failed_receipts_retained": true,
+      "checks": [
+        {
+          "seed": 7241042,
+          "episode": 0,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.114375307224691,
+          "axis_error_deg": 0.040243625138614236,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7241042,
+          "episode": 1,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.096139196306467,
+          "axis_error_deg": 0.04014963996662507,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7241042,
+          "episode": 2,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.2370655313134193,
+          "axis_error_deg": 0.03984187842428986,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7241042,
+          "episode": 3,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.098204986192286,
+          "axis_error_deg": 0.0394326560219965,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7241042,
+          "episode": 4,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.0770303197205067,
+          "axis_error_deg": 0.039724672253411523,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7241042,
+          "episode": 5,
+          "success": false,
+          "failure": "stage timeout: pickup",
+          "error_mm": 8276.537895202637,
+          "axis_error_deg": 89.9999999882677,
+          "strict_success_physics_passed": false,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7241042,
+          "episode": 6,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.0173433693125844,
+          "axis_error_deg": 0.03964617977830002,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7241042,
+          "episode": 7,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.059033558703959,
+          "axis_error_deg": 0.039319595986768895,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7251042,
+          "episode": 0,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.1342812795192003,
+          "axis_error_deg": 0.04002145717271096,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7251042,
+          "episode": 1,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.159358536824584,
+          "axis_error_deg": 0.041229175644850145,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7251042,
+          "episode": 2,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.2141171609982848,
+          "axis_error_deg": 0.0397067291761432,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7251042,
+          "episode": 3,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.0922509245574474,
+          "axis_error_deg": 0.03943638101088309,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7251042,
+          "episode": 4,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.0148031869903207,
+          "axis_error_deg": 0.04031367491478682,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7251042,
+          "episode": 5,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.0829989332705736,
+          "axis_error_deg": 0.040498650916674504,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7251042,
+          "episode": 6,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.0728228371590376,
+          "axis_error_deg": 0.03997055728674713,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        },
+        {
+          "seed": 7251042,
+          "episode": 7,
+          "success": true,
+          "failure": null,
+          "error_mm": 1.3423932250589132,
+          "axis_error_deg": 0.041105199213165654,
+          "strict_success_physics_passed": true,
+          "retained_in_denominator": true
+        }
+      ],
+      "report_sha256": {
+        "7241042": "6864b969703b67201df0b53f300ae74e354b231725503767d2c7e98da19fd431",
+        "7251042": "a323b55de2a0423a2b80b6339daf604052325fa04068b9a920580add8ba098b8"
+      },
+      "qualified": false,
+      "formal_scope": "Only complete native eight-episode reports; running group rows excluded. At least64 are still required."
+    },
+    "both_hosts": {
+      "at": "2026-10-22T06:12:34.148267+00:00",
+      "files": 1819,
+      "mismatches": [],
+      "mac_recomputed_gate": {
+        "passed": false,
+        "phase": "full",
+        "randomization": "expanded",
+        "episodes": 16,
+        "successes": 15,
+        "success_rate": 0.9375,
+        "wilson_95_lower": 0.7167126242970107,
+        "minimum_episodes": 64,
+        "minimum_distinct_seeds": 2,
+        "distinct_seeds": [
+          7241042,
+          7251042
+        ],
+        "required_wilson_95_lower": 0.9,
+        "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+        "evidence_errors": [],
+        "sample_requirement_met": false,
+        "failures": [
+          {
+            "episode": 5,
+            "stage": "pickup",
+            "reason": "stage timeout: pickup",
+            "timeout": false
+          }
+        ],
+        "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+      },
+      "node_gate_identical": true,
+      "report_sha256": {
+        "7241042": "6864b969703b67201df0b53f300ae74e354b231725503767d2c7e98da19fd431",
+        "7251042": "a323b55de2a0423a2b80b6339daf604052325fa04068b9a920580add8ba098b8"
+      },
+      "qualified": false
+    }
+  },
+  "current_live_full_jobs": [
+    {
+      "name": "full_holdout_7261042",
+      "runner_pid": 38757
+    },
+    {
+      "name": "full_holdout_7271042",
+      "runner_pid": 39556
+    }
+  ],
+  "latest_recovery_archive": {
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_second_failure_repair.tar.gz",
+    "node_archive": "/home/arnold/Develop/rebar-migration-back4090-20261022/rebar_training_recovery_20261022_v10_second_failure_repair.tar.gz",
+    "files": 192,
+    "bytes": 73151644,
+    "sha256": "5af601cf1133c02fb3f92b66fd29b4bf7aeaf80dd5d9a40a5e792b7da792f498",
+    "requires": [
+      "20f941f76575826c928f7bd85aee46cb83887c9bf455db153437549b48722ef0",
+      "fe0a57df9fbf3394c42c417af0752296bc681c1c0eafe42dfbd8c7e7ffc27b7d"
+    ],
+    "both_hosts_verified": true,
+    "qualified": false
+  },
+  "current_phase": "source_return_repair_with_preserved_native_jobs",
+  "controller_dispatch_paused_for_analysis": true,
+  "dispatch_pause_proof": {
+    "at": "2026-10-22T06:20:05.906363+00:00",
+    "reason": "Second failed receipt makes original prespecified64 gate unattainable; retain active jobs and prevent further dispatch",
+    "worker_pid": 20758,
+    "launcher_pid": 20756,
+    "command": "/home/arnold/Develop/rebar-training-runtime/bin/python -m rebar_training.mobile_curriculum --worker --plan /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/plan.json --output /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return --initial-checkpoint /home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/initial_policy.pt ",
+    "state_before": "S (sleeping)",
+    "signal": "SIGSTOP_worker_only",
+    "active_simulations_preserved": [
+      {
+        "name": "full_holdout_7261042",
+        "pid": 38758,
+        "runner_pid": 38757,
+        "state_before": "S (sleeping)",
+        "state_after": "S (sleeping)"
+      },
+      {
+        "name": "full_holdout_7271042",
+        "pid": 39557,
+        "runner_pid": 39556,
+        "state_before": "S (sleeping)",
+        "state_after": "S (sleeping)"
+      }
+    ],
+    "failed_receipts": 2,
+    "best_case_successes_in_fixed64": 62,
+    "best_case_wilson95_lower": 0.8930270822904168,
+    "required_lower": 0.9,
+    "source_changed": false,
+    "policy_changed": false,
+    "old_evidence_modified": false,
+    "user_task_paused": false,
+    "automation_remains_active": true,
+    "resume_old_dispatcher": false,
+    "state_after": "T (stopped)"
+  },
+  "current_fixed64_gate_unattainable": true,
+  "user_task_paused": false,
+  "autonomous_repair_authorized": true
 }
