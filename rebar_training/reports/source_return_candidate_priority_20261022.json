@@ -171,5 +171,95 @@
   "candidate_completed_development_episodes": 0,
   "candidate_required_development_episodes": 11,
   "candidate_verified_pass": false,
-  "hardware_migration_policy": "Hardware change alone does not require policy retraining or a new acceptance denominator. Preserve frozen source/policy/detector/assets, validate runtime/physics, then continue existing predeclared remaining episodes; new learning or control changes require separate evidence and frozen identity."
+  "hardware_migration_policy": "Hardware change alone does not require policy retraining or a new acceptance denominator. Preserve frozen source/policy/detector/assets, validate runtime/physics, then continue existing predeclared remaining episodes; new learning or control changes require separate evidence and frozen identity.",
+  "updated_at": "2026-10-22T08:03:53.598271+00:00",
+  "latest_candidate_snapshot": "artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/snapshot_20261022_160353",
+  "latest_candidate_summary": {
+    "at": "2026-10-22T08:03:53.598271+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/snapshot_20261022_160353",
+    "candidate_source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "groups": [
+      {
+        "name": "source_return_reset8_7241042",
+        "seed": 7241042,
+        "requested_episodes": 8,
+        "state": "running",
+        "runner_pid": 46837,
+        "pid": 46838,
+        "run_id": null,
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false,
+        "trace": {
+          "step": 3540,
+          "episode": 0,
+          "stage": "observe_tray",
+          "route": 4,
+          "valid": false,
+          "last_error": "Move to the surveyed observation view first",
+          "camera_age_ms": 118033.33333433334
+        },
+        "checks": [],
+        "saved_handoff_packets": [
+          "source_return_handoff_tick1041"
+        ]
+      },
+      {
+        "name": "source_return_reset2_7271042",
+        "seed": 7271042,
+        "requested_episodes": 2,
+        "state": "running",
+        "runner_pid": 46911,
+        "pid": 46912,
+        "run_id": null,
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false,
+        "trace": {
+          "step": 3510,
+          "episode": 0,
+          "stage": "observe_tray",
+          "route": 4,
+          "valid": false,
+          "last_error": "Move to the surveyed observation view first",
+          "camera_age_ms": 117033.33333433334
+        },
+        "checks": [],
+        "saved_handoff_packets": [
+          "source_return_handoff_tick1041"
+        ]
+      },
+      {
+        "name": "supported_partial_outage_241042",
+        "seed": 241042,
+        "requested_episodes": 1,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0
+      }
+    ],
+    "episodes": 0,
+    "successes": 0,
+    "failures": 0,
+    "required_episodes": 11,
+    "verified_passed": false,
+    "formal_acceptance_episodes": 0,
+    "gpu": "46848, 6382 MiB\n46922, 6382 MiB\n",
+    "worker_state": "T (stopped)"
+  },
+  "latest_candidate_sha_proof": {
+    "at": "2026-10-22T08:05:07.995658+00:00",
+    "files": 13,
+    "mismatches": [],
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/snapshot_20261022_160353",
+    "episodes": 0,
+    "successes": 0,
+    "failures": 0,
+    "guard_packet_evidence_present": true,
+    "full_guard_conditions_pending_native_receipts": true
+  }
 }
