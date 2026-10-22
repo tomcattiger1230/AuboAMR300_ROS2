@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T13:59:21.044976+00:00",
+  "updated_at": "2026-10-22T14:20:46.589987+00:00",
   "status": "frozen_evaluation_running",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
@@ -205,72 +205,96 @@
     "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
   },
   "latest_snapshot": {
-    "at": "2026-10-22T13:59:21.044976+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_215921",
+    "at": "2026-10-22T14:20:46.589987+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_222046",
     "groups": [
       {
         "name": "tray_holdout_9131042",
         "phase": "tray",
         "seed": 9131042,
-        "state": "running",
+        "state": "completed",
         "runner_pid": 26088,
-        "pid": 26091,
+        "pid": null,
         "run_id": "2c85de8f6dcb4666ad393183fcf046ed",
-        "episodes": 2,
-        "successes": 2,
+        "episodes": 4,
+        "successes": 4,
         "failures": 0,
-        "native_complete": false,
+        "native_complete": true,
         "trace": {
-          "step": 5310,
-          "episode": 2,
-          "stage": "pickup",
-          "route": 0,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 177033.33333433332
+          "step": 10260,
+          "episode": 3,
+          "stage": "tray_retreat",
+          "route": 4,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333335986
         }
       },
       {
         "name": "tray_holdout_9141042",
         "phase": "tray",
         "seed": 9141042,
-        "state": "running",
+        "state": "completed",
         "runner_pid": 26107,
-        "pid": 26111,
+        "pid": null,
         "run_id": "2f9a1efd15ed425aa1238438e6d49a64",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 4,
+        "successes": 4,
         "failures": 0,
-        "native_complete": false,
+        "native_complete": true,
         "trace": {
-          "step": 5310,
-          "episode": 1,
-          "stage": "tray_via_front",
+          "step": 12150,
+          "episode": 3,
+          "stage": "tray_retreat",
           "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333333144
+          "camera_age_ms": 33.33333333335986
         }
       },
       {
         "name": "dock_clamp_holdout_9151042",
         "phase": "dock_clamp",
         "seed": 9151042,
-        "state": "not_launched",
+        "state": "running",
+        "runner_pid": 29118,
+        "pid": 29121,
+        "run_id": null,
         "episodes": 0,
         "successes": 0,
         "failures": 0,
-        "native_complete": false
+        "native_complete": false,
+        "trace": {
+          "step": 1560,
+          "episode": 0,
+          "stage": "pickup_tray",
+          "route": 0,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333333144
+        }
       },
       {
         "name": "dock_clamp_holdout_9161042",
         "phase": "dock_clamp",
         "seed": 9161042,
-        "state": "not_launched",
+        "state": "running",
+        "runner_pid": 29136,
+        "pid": 29140,
+        "run_id": null,
         "episodes": 0,
         "successes": 0,
         "failures": 0,
-        "native_complete": false
+        "native_complete": false,
+        "trace": {
+          "step": 1560,
+          "episode": 0,
+          "stage": "pickup_tray",
+          "route": 0,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333333144
+        }
       },
       {
         "name": "full_holdout_9241042",
@@ -365,10 +389,10 @@
     ],
     "phases": {
       "tray": {
-        "episodes": 3,
-        "successes": 3,
+        "episodes": 8,
+        "successes": 8,
         "failures": 0,
-        "native_group_rows": 0
+        "native_group_rows": 8
       },
       "dock_clamp": {
         "episodes": 0,
@@ -393,10 +417,10 @@
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "new_learning_updates": 0,
     "formal_full_gate_passed": false,
-    "gpu": "26108, 4798 MiB\n26136, 4798 MiB\n"
+    "gpu": "29137, 5390 MiB\n29165, 4798 MiB\n"
   },
   "phase_gates_passed": {
-    "tray": false,
+    "tray": true,
     "dock_clamp": false,
     "full": false
   },
@@ -420,18 +444,18 @@
     "node": "6passed"
   },
   "next": "Keep existing jobs. Complete phase native reports, all-original-file SHA backup and independent strict physics plus official acceptance; then write matching phase review receipt before next phase. No PPO training.",
-  "phase": "tray",
+  "phase": "dock_clamp",
   "latest_snapshot_sha_and_physics": {
-    "at": "2026-10-22T13:59:25.087064+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_215921",
-    "files": 47,
+    "at": "2026-10-22T14:21:10.949844+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_222046",
+    "files": 115,
     "mismatches": [],
     "phases": {
       "tray": {
-        "episodes": 3,
-        "successes": 3,
+        "episodes": 8,
+        "successes": 8,
         "failures": 0,
-        "native_group_rows": 0
+        "native_group_rows": 8
       },
       "dock_clamp": {
         "episodes": 0,
@@ -496,6 +520,48 @@
         ]
       },
       {
+        "name": "tray_holdout_9131042",
+        "phase": "tray",
+        "episode": 2,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 0.8716513300987825,
+        "axis_base_y": 0.999999999976086,
+        "retreat_mm": 179.10532653331757,
+        "unsafe_force_N": 22.642549514770508,
+        "handoffs": [
+          {
+            "tick": 6144,
+            "pixel": [
+              588.1987168848997,
+              519.8480970145757
+            ],
+            "guards_verified": true
+          }
+        ]
+      },
+      {
+        "name": "tray_holdout_9131042",
+        "phase": "tray",
+        "episode": 3,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 0.8355517461625203,
+        "axis_base_y": 0.9999999999800596,
+        "retreat_mm": 179.08088862895966,
+        "unsafe_force_N": 23.30171775817871,
+        "handoffs": [
+          {
+            "tick": 8739,
+            "pixel": [
+              541.3910549871474,
+              520.9618619665898
+            ],
+            "guards_verified": true
+          }
+        ]
+      },
+      {
         "name": "tray_holdout_9141042",
         "phase": "tray",
         "episode": 0,
@@ -511,6 +577,60 @@
             "pixel": [
               486.36570301400025,
               519.6624056409368
+            ],
+            "guards_verified": true
+          }
+        ]
+      },
+      {
+        "name": "tray_holdout_9141042",
+        "phase": "tray",
+        "episode": 1,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 0.8392356932707763,
+        "axis_base_y": 0.999999999981454,
+        "retreat_mm": 179.13579940795898,
+        "unsafe_force_N": 23.66286277770996,
+        "handoffs": [
+          {
+            "tick": 4464,
+            "pixel": [
+              545.984434087444,
+              521.6380579406141
+            ],
+            "guards_verified": true
+          }
+        ]
+      },
+      {
+        "name": "tray_holdout_9141042",
+        "phase": "tray",
+        "episode": 2,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 0.3548868478183275,
+        "axis_base_y": 0.9999999999862257,
+        "retreat_mm": 179.98795211315155,
+        "unsafe_force_N": 20.8071231842041,
+        "handoffs": []
+      },
+      {
+        "name": "tray_holdout_9141042",
+        "phase": "tray",
+        "episode": 3,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 0.40197939231373264,
+        "axis_base_y": 0.9999999999656116,
+        "retreat_mm": 179.1221797466278,
+        "unsafe_force_N": 23.33795166015625,
+        "handoffs": [
+          {
+            "tick": 10623,
+            "pixel": [
+              649.5932985255495,
+              522.0951122100324
             ],
             "guards_verified": true
           }
