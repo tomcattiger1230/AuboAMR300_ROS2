@@ -150,8 +150,9 @@
     "no_relaunch": true
   },
   "full_archive_target_transfer": {
-    "state": "resumed_in_progress_remote_sha_pending",
-    "exec_session": 38333
+    "state": "interrupted_ssh_timeout_partial_retained_remote_sha_pending",
+    "exec_session": 38333,
+    "exit_code": 255
   },
   "pending": [
     "Preserve two healthy candidate jobs and verify all 11 native episodes including original724episode5 and actual controlled outage.",
