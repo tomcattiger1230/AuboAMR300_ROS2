@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T00:55:47.309838+00:00",
+  "updated_at": "2026-10-22T01:12:21.177204+00:00",
   "status": "resume4090_migration_validation_running",
   "stable": false,
   "user_authorized_resume": true,
@@ -34,11 +34,12 @@
   "current_full_gate": null,
   "current_development_regressions": {
     "required_episodes": 3,
-    "episodes": 3,
-    "successes": 3,
+    "episodes": 1,
+    "successes": 1,
     "failures": 0,
-    "native_completed_jobs_episodes": 3,
-    "all_prerequisite_jobs_completed": true
+    "native_completed_jobs_episodes": 0,
+    "all_prerequisite_jobs_completed": false,
+    "regression_only": true
   },
   "historical_4090": {
     "course": "course_v8_precision_envelope",
@@ -74,39 +75,52 @@
   "training_still_active": false,
   "simulation_validation_active": true,
   "last_live_progress": {
-    "at": "2026-10-22T00:55:47.309838+00:00",
-    "state": "regression_running",
-    "runner_pid": 16884,
-    "active_jobs": [
-      "full_reset_regression_5241042"
-    ],
-    "results": [],
-    "cpu_suite_summary": "239 passed, 3 warnings in 19.52s",
-    "jobs": [
+    "at": "2026-10-22T01:11:56.617104+00:00",
+    "run_id": "ad7324b77a3741449453f18fbc9ca34f",
+    "episodes": 1,
+    "successes": 1,
+    "failures": 0,
+    "requested_episodes": 2,
+    "completed": false,
+    "checks": [
       {
-        "name": "full_reset_regression_5241042",
-        "job_state": "running",
-        "runner_pid": 17536,
-        "pid": 17537,
-        "completed": false,
-        "episodes": 0,
-        "successes": 0,
-        "log_age_seconds": 1.54,
-        "last_trace": {
-          "step": 900,
-          "episode": 0,
-          "stage": "pickup",
-          "route": 0,
-          "valid": true,
-          "last_error": "",
-          "camera_age_ms": 33.33333333333144,
-          "residual_active": false
-        }
+        "episode": 0,
+        "error_mm": 1.3038498582318425,
+        "axis_error_deg": 0.03416519830736696,
+        "jaw_forces_N": [
+          24.67387580871582,
+          25.309465408325195,
+          25.29204750061035,
+          24.64547348022461
+        ],
+        "unsafe_force_N": 25.948537826538086,
+        "tcp_clearance_mm": 85.86778491735458,
+        "unloaded": true,
+        "steel_linear_speed_m_s": 0.0011099564144387841,
+        "steel_angular_speed_rad_s": 0.0031014878768473864,
+        "continuous_mission_phases_verified": true,
+        "all_strict_physics_passed": true
       }
-    ]
+    ],
+    "last_trace": {
+      "step": 13500,
+      "episode": 1,
+      "stage": "navigate",
+      "route": 4,
+      "valid": true,
+      "last_error": "",
+      "camera_age_ms": 33.33333333335986
+    },
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "controller_sha256": "a29eeedf2b3690a169fd8e7490410f2d1b17eb9dcb915e39f263c78c1557760c",
+    "gate_passed": false,
+    "full_qualified": false,
+    "regression_only": true,
+    "formal_independent_episodes": 0
   },
-  "node_migration_regression_successes": 3,
-  "node_migration_regression_complete_episodes": 3,
+  "node_migration_regression_successes": 1,
+  "node_migration_regression_complete_episodes": 1,
   "migration_required_directories": [
     "course_v9_5090_resume",
     "review_20261020/resume_5090_20261021",
@@ -130,7 +144,7 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "08:55 Shanghai: migration validator16884 running, original newjob17536 fullreset regression step900, camera valid/33ms/no error, GPUonly1simulation.239CPUtests passed. Physicalregression0/3complete; no currentpolicy updates yet; newfull0/64. Historicaloldv8 16completegroups+2success andoldv9dockpartial4 separate.",
+  "last_heartbeat_result": "09:11 Shanghai: originalvalidator16884/job17536 healthy, firstcontinuousfullresetrow1/2success,error1.30385mm,strict4pad/unload/85.9mmretreat/speeds/continuousstages passed. Secondrowstep13500navigationroute4,validRGB33ms,noerror.8immutablefilesSHAverifiedbothhosts. Migrationoverall1/3success0fail,new1;gatepending. Newformal0/64 success0fail0 new0. Historicalv8complete16+2success andv9partial4 preserved separately. No duplicate launch or policy update.",
   "independent_full_evaluation_new_episodes_since_last_check": 0,
   "latest_local_recovery_backup": {
     "at": "2026-10-21T15:39:42.158204+00:00",
@@ -148,7 +162,7 @@
   "last_completed_validation": "review_20261020/return4090_20261022",
   "current_course_state": "pending_regressions",
   "course_runner_pid": 112563,
-  "physical_regressions_completed": 3,
+  "physical_regressions_completed": 1,
   "course_started": true,
   "latest_migration_full_verification": {
     "at": "2026-10-21T14:31:28.178800+00:00",
@@ -338,7 +352,7 @@
   "node_connection_state": "connected",
   "last_known_course_state": "running",
   "last_known_active_jobs": [],
-  "last_successful_node_check_at": "2026-10-22T00:55:47.309838+00:00",
+  "last_successful_node_check_at": "2026-10-22T01:11:56.617104+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -1127,5 +1141,59 @@
     "dock_failures": 0,
     "dock_gate_passed": false,
     "full_episodes": 0
-  }
+  },
+  "latest_migration_regression_partial_verified": {
+    "at": "2026-10-22T01:11:56.617104+00:00",
+    "run_id": "ad7324b77a3741449453f18fbc9ca34f",
+    "episodes": 1,
+    "successes": 1,
+    "failures": 0,
+    "requested_episodes": 2,
+    "completed": false,
+    "checks": [
+      {
+        "episode": 0,
+        "error_mm": 1.3038498582318425,
+        "axis_error_deg": 0.03416519830736696,
+        "jaw_forces_N": [
+          24.67387580871582,
+          25.309465408325195,
+          25.29204750061035,
+          24.64547348022461
+        ],
+        "unsafe_force_N": 25.948537826538086,
+        "tcp_clearance_mm": 85.86778491735458,
+        "unloaded": true,
+        "steel_linear_speed_m_s": 0.0011099564144387841,
+        "steel_angular_speed_rad_s": 0.0031014878768473864,
+        "continuous_mission_phases_verified": true,
+        "all_strict_physics_passed": true
+      }
+    ],
+    "last_trace": {
+      "step": 13500,
+      "episode": 1,
+      "stage": "navigate",
+      "route": 4,
+      "valid": true,
+      "last_error": "",
+      "camera_age_ms": 33.33333333335986
+    },
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "controller_sha256": "a29eeedf2b3690a169fd8e7490410f2d1b17eb9dcb915e39f263c78c1557760c",
+    "gate_passed": false,
+    "full_qualified": false,
+    "regression_only": true,
+    "formal_independent_episodes": 0
+  },
+  "latest_migration_partial_both_hosts_verified": {
+    "at": "2026-10-22T01:12:21.177204+00:00",
+    "files": 8,
+    "mismatches": [],
+    "all_listed_files_sha_verified_both_hosts": true,
+    "regression_only": true,
+    "formal_independent_episodes": 0
+  },
+  "latest_migration_partial_snapshot": "review_20261020/resume_4090_return_20261022/partial_snapshot_20261022_0911"
 }
