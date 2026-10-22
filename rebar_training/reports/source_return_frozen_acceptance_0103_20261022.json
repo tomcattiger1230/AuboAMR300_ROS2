@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T18:04:25.236530+00:00",
+  "updated_at": "2026-10-22T18:19:24.064217+00:00",
   "status": "frozen_evaluation_running",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
@@ -205,8 +205,8 @@
     "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
   },
   "latest_snapshot": {
-    "at": "2026-10-22T18:04:25.236530+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_020425",
+    "at": "2026-10-22T18:19:24.064217+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_021923",
     "groups": [
       {
         "name": "tray_holdout_9131042",
@@ -348,18 +348,18 @@
         "runner_pid": 51182,
         "pid": 51185,
         "run_id": "83dfa4c7e9d648bebe4c51de410b8e37",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 12510,
-          "episode": 1,
-          "stage": "observe_tray",
+          "step": 19260,
+          "episode": 2,
+          "stage": "tray_raise",
           "route": 4,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 417033.3333343333
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333330302
         }
       },
       {
@@ -370,18 +370,18 @@
         "runner_pid": 51200,
         "pid": 51204,
         "run_id": "8f13eed5d9ae48e3b9d4b3f9080e62bd",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 12450,
-          "episode": 1,
-          "stage": "observe_tray",
-          "route": 4,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 415033.3333343333
+          "step": 19320,
+          "episode": 2,
+          "stage": "pickup",
+          "route": 0,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333330302
         }
       },
       {
@@ -449,8 +449,8 @@
         "native_group_rows": 8
       },
       "full": {
-        "episodes": 18,
-        "successes": 18,
+        "episodes": 20,
+        "successes": 20,
         "failures": 0,
         "native_group_rows": 16
       },
@@ -473,8 +473,8 @@
     "full": false
   },
   "formal_full_evaluation": {
-    "complete": 18,
-    "successes": 18,
+    "complete": 20,
+    "successes": 20,
     "failures": 0,
     "required": 64,
     "native_completed_group_rows": 16
@@ -494,9 +494,9 @@
   "next": "Keep existing jobs. Complete phase native reports, all-original-file SHA backup and independent strict physics plus official acceptance; then write matching phase review receipt before next phase. No PPO training.",
   "phase": "full",
   "latest_snapshot_sha_and_physics": {
-    "at": "2026-10-22T18:06:49.274050+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_020425",
-    "files": 539,
+    "at": "2026-10-22T18:20:32.964943+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_021923",
+    "files": 569,
     "mismatches": [],
     "phases": {
       "tray": {
@@ -512,8 +512,8 @@
         "native_group_rows": 8
       },
       "full": {
-        "episodes": 18,
-        "successes": 18,
+        "episodes": 20,
+        "successes": 20,
         "failures": 0,
         "native_group_rows": 16
       },
@@ -1129,6 +1129,27 @@
         ]
       },
       {
+        "name": "full_holdout_9261042",
+        "phase": "full",
+        "episode": 1,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 1.1264955392107368,
+        "axis_base_y": null,
+        "retreat_mm": 89.56298977136612,
+        "unsafe_force_N": 25.82703971862793,
+        "handoffs": [
+          {
+            "tick": 10026,
+            "pixel": [
+              320.79759800298297,
+              519.262983097168
+            ],
+            "guards_verified": true
+          }
+        ]
+      },
+      {
         "name": "full_holdout_9271042",
         "phase": "full",
         "episode": 0,
@@ -1139,6 +1160,27 @@
         "retreat_mm": 86.03405207395554,
         "unsafe_force_N": 26.07140350341797,
         "handoffs": []
+      },
+      {
+        "name": "full_holdout_9271042",
+        "phase": "full",
+        "episode": 1,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 1.366297365166247,
+        "axis_base_y": null,
+        "retreat_mm": 89.76054936647415,
+        "unsafe_force_N": 25.82402801513672,
+        "handoffs": [
+          {
+            "tick": 10857,
+            "pixel": [
+              563.7063794267347,
+              522.7759886568138
+            ],
+            "guards_verified": true
+          }
+        ]
       }
     ],
     "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
@@ -1352,8 +1394,9 @@
     }
   },
   "latest_connectivity_check": {
-    "checked_at": "2026-10-22T18:07:22.158744+00:00",
-    "connection": "connected"
+    "checked_at": "2026-10-22T18:19:24.064217+00:00",
+    "connection": "connected",
+    "snapshot_sha_and_physics_verified": true
   },
   "remote_live_state_fresh": true
 }
