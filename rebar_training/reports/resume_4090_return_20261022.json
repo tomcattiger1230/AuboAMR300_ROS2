@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-22T02:12:21.840311+00:00",
-  "status": "v10_dock_training_running",
+  "updated_at": "2026-10-22T02:27:04.133064+00:00",
+  "status": "v10_dock_holdouts_running",
   "stable": false,
   "user_authorized_resume": true,
   "requires_explicit_resume": false,
@@ -9,7 +9,7 @@
   "current_course": "course_v10_4090_return",
   "pending_course": null,
   "pending_validation": null,
-  "active_phase": "dock_clamp_training",
+  "active_phase": "dock_clamp_independent_holdouts",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
   "warm_start_counters": {
@@ -22,7 +22,8 @@
   "validation_launcher_pgid": 16882,
   "validation_state": "course_started",
   "active_jobs": [
-    "dock_clamp_train"
+    "dock_clamp_holdout_7151042",
+    "dock_clamp_holdout_7161042"
   ],
   "independent_full_evaluation_episodes_required": 64,
   "independent_full_evaluation_complete_episodes": 0,
@@ -87,56 +88,60 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Keep original controller20756 and docktrain24799. Verify complete2/2, actual newactor and finite finalcheckpoint/optimizer, then7151042/7161042 each4 independent gates; full training7051043 and final64 only after every stage passes. Never restart old tray jobs or mix old policy rows.",
+  "next_action": "Keep original controller20756 and dockholdouts26207/26208. Require complete4+4 fresh native reports, frozena1124cf1/source2c/detector/assets, strict4pad/openunload/retreat/speeds and independent gate exact recomputation before fulltrain7051043 and final64. No duplicate launch or premature stability claim.",
   "validation_runner_pid": 16884,
   "cpu_suite_passed": true,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
-  "training_still_active": true,
+  "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-22T02:12:21.840311+00:00",
-    "checkpoint_sha256": "709a1abd5b9e71c209d109c22c091d95a401f868d52a9d281493232be9ad5a50",
-    "initial_checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
-    "updates": 374,
-    "actor_updates": 141,
-    "policy_steps": 30577,
-    "new_updates": 20,
-    "new_actor_updates": 5,
-    "new_policy_steps": 1050,
-    "actor_weight_max_abs_change": 0.0036281347274780273,
-    "model_and_optimizer_finite": true,
-    "actual_new_actor_update_verified": true,
-    "training_completed": false,
-    "qualified": false,
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_learning_snapshot_20261022_101221",
-    "run_id": "73592280ec244f90aa89a3e51eb10756",
-    "episodes": 1,
-    "successes": 1,
-    "checks": [
+    "at": "2026-10-22T02:27:04.133064+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_holdouts_snapshot_20261022_102704",
+    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+    "reports": [
       {
-        "episode": 0,
-        "error_mm": 1.5522948233410716,
-        "axis_error_deg": 0.006744050935165453,
-        "jaw_forces_N": [
-          25.29115104675293,
-          24.547962188720703,
-          24.593994140625,
-          25.362457275390625
-        ],
-        "unsafe_force_N": 26.022552490234375,
-        "tcp_clearance_mm": 94.67504173517227,
-        "all_strict_clamp_physics_passed": true
+        "seed": 7151042,
+        "name": "dock_clamp_holdout_7151042",
+        "run_id": null,
+        "episodes": 0,
+        "successes": 0,
+        "completed": false,
+        "checks": [],
+        "trace": {
+          "step": 2790,
+          "episode": 0,
+          "stage": "loading",
+          "route": 6,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333333144
+        }
+      },
+      {
+        "seed": 7161042,
+        "name": "dock_clamp_holdout_7161042",
+        "run_id": null,
+        "episodes": 0,
+        "successes": 0,
+        "completed": false,
+        "checks": [],
+        "trace": {
+          "step": 2760,
+          "episode": 0,
+          "stage": "loading",
+          "route": 6,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333333144
+        }
       }
     ],
-    "trace": {
-      "step": 5280,
-      "episode": 1,
-      "stage": "pickup_tray",
-      "route": 0,
-      "valid": true,
-      "last_error": "",
-      "camera_age_ms": 33.33333333333144
-    }
+    "episodes": 0,
+    "successes": 0,
+    "failures": 0,
+    "independent_skill_gate_passed": false,
+    "formal_full_episodes": 0,
+    "qualified": false
   },
   "node_migration_regression_successes": 3,
   "node_migration_regression_complete_episodes": 3,
@@ -163,22 +168,22 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "10:12 Shanghai: tray independent complete8/8success0fail,+4since previous; node and local gate exact match, Wilson lower0.675592435>=skill0.60, zero evidence errors; tray errors0.265519..0.582210mm, strict unload/retreat/speeds passed;412completefiles both-hostsSHA. Original controller20756 advanced docktrain24799/GPU24810; partial1/2success0fail, error1.552295mm,4jaw/openunload/94.675mmretreat/speeds verified. Snapshot709a1abd374updates/141actor/30577steps,+20PPO/+5actor/+1050steps,finite modeloptimizer and realactorchange0.00362813;10snapshotfilesSHA. Secondrowstep5280pickup_tray,validRGB33ms,noerror. Formal full0/64success0fail,new0; historiesv8complete16+2success and v9dock4success kept separate. No manual launch/stop this check.",
+  "last_heartbeat_result": "10:27 Shanghai: docktraining complete2/2success0fail, errors1.552295/1.392619mm, strict4pad/openunload/94.675and81.374mmretreat/speeds verified;192completefiles both-hostsSHA. Actual+41PPO/+11actor/+2154steps,final395/147/31681,a1124cf1policyoptimizer finite,actorchange0.00571588. Originalcontroller20756 advanced dockholdouts7151042/7161042 runners26207/26208,partial0/8completed0success0fail,new0;step2790/2760 loadingroute6,validRGB33ms,noerror.7immutablefilesSHA. Traygate8/8passed; dockgate/fullgate still pending. Formalfull0/64success0fail,new0. v8complete16+2 and v9dock4 histories separate. No manual simulation launch/stop.",
   "independent_full_evaluation_new_episodes_since_last_check": 0,
   "latest_local_recovery_backup": {
-    "at": "2026-10-22T02:14:46.818929+00:00",
-    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_tray_gate_dock_learning.tar.gz",
-    "bytes": 239743905,
-    "files": 433,
-    "sha256": "772a7fd08e69721640c735dd21bff54c2a3c34b69ba70f0a3800874a63be946d",
+    "at": "2026-10-22T02:29:02.720131+00:00",
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_dock_training_pass.tar.gz",
+    "bytes": 107129462,
+    "files": 210,
+    "sha256": "0347948253cfba5874c5a1b247b5c1d6d343ec2984ca4bcb2928efbb1f6132bb",
     "mismatches": [],
     "requires": [
-      "79160d92190c66c8c82ea54af2265041f53fdd13992af06e47f538be18b57a2b"
+      "772a7fd08e69721640c735dd21bff54c2a3c34b69ba70f0a3800874a63be946d"
     ],
-    "scope": "Complete tray8/8 gate receipts and full raw evidence/source plus immutable ongoing dock1/2 learning snapshot; full64 still pending.",
+    "scope": "Complete docktraining2/2 raw evidence/source/finalpolicyoptimizer and immutable two active holdout startup snapshots; dock8 gate and full64 pending.",
     "qualified": false,
     "archive_sha_verified_both_hosts": true,
-    "remote_archive": "/home/arnold/Develop/rebar-migration-back4090-20261022/rebar_training_recovery_20261022_v10_tray_gate_dock_learning.tar.gz"
+    "remote_archive": "/home/arnold/Develop/rebar-migration-back4090-20261022/rebar_training_recovery_20261022_v10_dock_training_pass.tar.gz"
   },
   "last_completed_validation": "review_20261020/resume_4090_return_20261022",
   "current_course_state": "running",
@@ -344,24 +349,15 @@
   },
   "current_course_source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "latest_training_live": {
-    "at": "2026-10-22T02:12:21.840311+00:00",
-    "checkpoint_sha256": "709a1abd5b9e71c209d109c22c091d95a401f868d52a9d281493232be9ad5a50",
+    "at": "2026-10-22T02:26:30.376438+00:00",
+    "completed": true,
+    "episodes": 2,
+    "successes": 2,
+    "failures": 0,
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
     "initial_checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
-    "updates": 374,
-    "actor_updates": 141,
-    "policy_steps": 30577,
-    "new_updates": 20,
-    "new_actor_updates": 5,
-    "new_policy_steps": 1050,
-    "actor_weight_max_abs_change": 0.0036281347274780273,
-    "model_and_optimizer_finite": true,
-    "actual_new_actor_update_verified": true,
-    "training_completed": false,
-    "qualified": false,
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_learning_snapshot_20261022_101221",
-    "run_id": "73592280ec244f90aa89a3e51eb10756",
-    "episodes": 1,
-    "successes": 1,
+    "report_sha256": "a18ab5197177c05bdcda47485f6b7cea7125511cb0cdda31b5820b63b8db6ad6",
     "checks": [
       {
         "episode": 0,
@@ -375,38 +371,47 @@
         ],
         "unsafe_force_N": 26.022552490234375,
         "tcp_clearance_mm": 94.67504173517227,
+        "steel_linear_speed_m_s": 0.0025996663607656956,
+        "steel_angular_speed_rad_s": 0.018030758947134018,
+        "all_strict_clamp_physics_passed": true
+      },
+      {
+        "episode": 1,
+        "error_mm": 1.3926193350926042,
+        "axis_error_deg": 0.02783523485451976,
+        "jaw_forces_N": [
+          25.16905403137207,
+          24.776302337646484,
+          24.708675384521484,
+          25.056676864624023
+        ],
+        "unsafe_force_N": 25.955652236938477,
+        "tcp_clearance_mm": 81.37403428554535,
+        "steel_linear_speed_m_s": 0.0011677818838506937,
+        "steel_angular_speed_rad_s": 0.010058442130684853,
         "all_strict_clamp_physics_passed": true
       }
     ],
-    "trace": {
-      "step": 5280,
-      "episode": 1,
-      "stage": "pickup_tray",
-      "route": 0,
-      "valid": true,
-      "last_error": "",
-      "camera_age_ms": 33.33333333333144
-    }
+    "updates": 395,
+    "actor_updates": 147,
+    "policy_steps": 31681,
+    "new_updates": 41,
+    "new_actor_updates": 11,
+    "new_policy_steps": 2154,
+    "actor_weight_max_abs_change": 0.005715876817703247,
+    "model_and_optimizer_finite": true,
+    "qualified": false
   },
   "last_observed_learning": {
-    "at": "2026-10-22T02:12:21.840311+00:00",
-    "checkpoint_sha256": "709a1abd5b9e71c209d109c22c091d95a401f868d52a9d281493232be9ad5a50",
+    "at": "2026-10-22T02:26:30.376438+00:00",
+    "completed": true,
+    "episodes": 2,
+    "successes": 2,
+    "failures": 0,
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
     "initial_checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
-    "updates": 374,
-    "actor_updates": 141,
-    "policy_steps": 30577,
-    "new_updates": 20,
-    "new_actor_updates": 5,
-    "new_policy_steps": 1050,
-    "actor_weight_max_abs_change": 0.0036281347274780273,
-    "model_and_optimizer_finite": true,
-    "actual_new_actor_update_verified": true,
-    "training_completed": false,
-    "qualified": false,
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_learning_snapshot_20261022_101221",
-    "run_id": "73592280ec244f90aa89a3e51eb10756",
-    "episodes": 1,
-    "successes": 1,
+    "report_sha256": "a18ab5197177c05bdcda47485f6b7cea7125511cb0cdda31b5820b63b8db6ad6",
     "checks": [
       {
         "episode": 0,
@@ -420,42 +425,61 @@
         ],
         "unsafe_force_N": 26.022552490234375,
         "tcp_clearance_mm": 94.67504173517227,
+        "steel_linear_speed_m_s": 0.0025996663607656956,
+        "steel_angular_speed_rad_s": 0.018030758947134018,
+        "all_strict_clamp_physics_passed": true
+      },
+      {
+        "episode": 1,
+        "error_mm": 1.3926193350926042,
+        "axis_error_deg": 0.02783523485451976,
+        "jaw_forces_N": [
+          25.16905403137207,
+          24.776302337646484,
+          24.708675384521484,
+          25.056676864624023
+        ],
+        "unsafe_force_N": 25.955652236938477,
+        "tcp_clearance_mm": 81.37403428554535,
+        "steel_linear_speed_m_s": 0.0011677818838506937,
+        "steel_angular_speed_rad_s": 0.010058442130684853,
         "all_strict_clamp_physics_passed": true
       }
     ],
-    "trace": {
-      "step": 5280,
-      "episode": 1,
-      "stage": "pickup_tray",
-      "route": 0,
-      "valid": true,
-      "last_error": "",
-      "camera_age_ms": 33.33333333333144
-    }
+    "updates": 395,
+    "actor_updates": 147,
+    "policy_steps": 31681,
+    "new_updates": 41,
+    "new_actor_updates": 11,
+    "new_policy_steps": 2154,
+    "actor_weight_max_abs_change": 0.005715876817703247,
+    "model_and_optimizer_finite": true,
+    "qualified": false
   },
   "resumed_learning_verified": true,
-  "new_actor_updates": 5,
-  "new_effective_policy_steps": 1050,
-  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_learning_snapshot_20261022_101221/dock_clamp_policy.pt",
+  "new_actor_updates": 11,
+  "new_effective_policy_steps": 2154,
+  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_clamp_policy.pt",
   "latest_training_native_progress": {
-    "as_of": "2026-10-22T02:12:21.840311+00:00",
+    "as_of": "2026-10-22T02:26:30.376438+00:00",
     "phase": "dock_clamp",
-    "complete": false,
-    "episodes": 1,
-    "successes": 1,
-    "updates": 374,
-    "actor_updates": 141,
-    "policy_steps": 30577,
-    "new_updates": 20,
-    "new_actor_updates": 5,
-    "new_policy_steps": 1050
+    "complete": true,
+    "episodes": 2,
+    "successes": 2,
+    "updates": 395,
+    "actor_updates": 147,
+    "policy_steps": 31681,
+    "new_updates": 41,
+    "new_actor_updates": 11,
+    "new_policy_steps": 2154
   },
   "node_connection_state": "connected",
   "last_known_course_state": "running",
   "last_known_active_jobs": [
-    "dock_clamp_train"
+    "dock_clamp_holdout_7151042",
+    "dock_clamp_holdout_7161042"
   ],
-  "last_successful_node_check_at": "2026-10-22T02:12:21.840311+00:00",
+  "last_successful_node_check_at": "2026-10-22T02:27:04.133064+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -493,7 +517,7 @@
   },
   "user_reported_node_awake": true,
   "waiting_for": null,
-  "evaluation_still_active": false,
+  "evaluation_still_active": true,
   "latest_tray_training_verified": {
     "at": "2026-10-22T01:42:13.532381+00:00",
     "completed": true,
@@ -699,65 +723,64 @@
   "current_dock_independent_successes": 0,
   "current_dock_independent_failures": 0,
   "latest_dock_training_verified": {
-    "at": "2026-10-21T15:16:29.484451+00:00",
+    "at": "2026-10-22T02:26:30.376438+00:00",
     "completed": true,
     "episodes": 2,
     "successes": 2,
-    "report_sha256": "586063f04b3594ab608afcabac120a1d2a393dd1b1189f22770fbc1f2f9c515b",
-    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
-    "input_checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
+    "failures": 0,
     "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
-    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
+    "initial_checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
+    "report_sha256": "a18ab5197177c05bdcda47485f6b7cea7125511cb0cdda31b5820b63b8db6ad6",
     "checks": [
       {
         "episode": 0,
-        "error_mm": 1.6188073204830289,
-        "axis_error_deg": 0.03238169976154305,
+        "error_mm": 1.5522948233410716,
+        "axis_error_deg": 0.006744050935165453,
         "jaw_forces_N": [
-          26.106151580810547,
-          23.89033317565918,
-          23.859283447265625,
-          26.070100784301758
+          25.29115104675293,
+          24.547962188720703,
+          24.593994140625,
+          25.362457275390625
         ],
-        "tcp_clearance_mm": 96.73547744750977,
-        "unloaded": true,
+        "unsafe_force_N": 26.022552490234375,
+        "tcp_clearance_mm": 94.67504173517227,
+        "steel_linear_speed_m_s": 0.0025996663607656956,
+        "steel_angular_speed_rad_s": 0.018030758947134018,
         "all_strict_clamp_physics_passed": true
       },
       {
         "episode": 1,
-        "error_mm": 1.8555610440671444,
-        "axis_error_deg": 0.07286452910662779,
+        "error_mm": 1.3926193350926042,
+        "axis_error_deg": 0.02783523485451976,
         "jaw_forces_N": [
-          24.41220474243164,
-          25.483753204345703,
-          25.52713394165039,
-          24.4746150970459
+          25.16905403137207,
+          24.776302337646484,
+          24.708675384521484,
+          25.056676864624023
         ],
-        "tcp_clearance_mm": 88.71418982744217,
-        "unloaded": true,
+        "unsafe_force_N": 25.955652236938477,
+        "tcp_clearance_mm": 81.37403428554535,
+        "steel_linear_speed_m_s": 0.0011677818838506937,
+        "steel_angular_speed_rad_s": 0.010058442130684853,
         "all_strict_clamp_physics_passed": true
       }
     ],
-    "updates": 329,
-    "actor_updates": 122,
-    "policy_steps": 26712,
-    "new_updates": 26,
-    "new_actor_updates": 10,
-    "new_policy_steps": 2089,
-    "actor_weight_max_abs_change": 0.007040524855256081,
+    "updates": 395,
+    "actor_updates": 147,
+    "policy_steps": 31681,
+    "new_updates": 41,
+    "new_actor_updates": 11,
+    "new_policy_steps": 2154,
+    "actor_weight_max_abs_change": 0.005715876817703247,
     "model_and_optimizer_finite": true,
     "qualified": false
   },
   "latest_dock_training_both_hosts_verified": {
-    "at": "2026-10-21T15:16:29.484451+00:00",
-    "files": 156,
+    "at": "2026-10-22T02:27:47.347646+00:00",
+    "files": 192,
     "mismatches": [],
-    "all_files_sha_verified_both_hosts": true,
-    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
-    "model_and_optimizer_finite": true,
-    "training_episodes": 2,
-    "training_successes": 2,
+    "all_listed_files_sha_verified_both_hosts": true,
     "qualified": false
   },
   "total_v9_learning_since_migration": {
@@ -814,7 +837,7 @@
     ],
     "no_manual_job_launch_or_restart": true
   },
-  "current_phase_checkpoint_sha256": "709a1abd5b9e71c209d109c22c091d95a401f868d52a9d281493232be9ad5a50",
+  "current_phase_checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
   "latest_dock_independent_partial": {
     "at": "2026-10-21T15:25:41.222087+00:00",
     "reports": [
@@ -860,64 +883,59 @@
     "mismatches": []
   },
   "latest_dock_independent_partial_verified": {
-    "at": "2026-10-21T15:31:04.831130+00:00",
+    "at": "2026-10-22T02:27:04.133064+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_holdouts_snapshot_20261022_102704",
+    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
     "reports": [
       {
-        "seed": 6151042,
-        "run_id": "9bd717bb2cee403bbfebf3a144f50e23",
-        "episodes": 2,
-        "successes": 2,
+        "seed": 7151042,
+        "name": "dock_clamp_holdout_7151042",
+        "run_id": null,
+        "episodes": 0,
+        "successes": 0,
         "completed": false,
-        "checks": [
-          {
-            "episode": 0,
-            "error_mm": 1.3549183495342731,
-            "axis_error_deg": 0.03280099522679416,
-            "all_strict_clamp_physics_passed": true
-          },
-          {
-            "episode": 1,
-            "error_mm": 1.3707109028473496,
-            "axis_error_deg": 0.035341556434958676,
-            "all_strict_clamp_physics_passed": true
-          }
-        ]
+        "checks": [],
+        "trace": {
+          "step": 2790,
+          "episode": 0,
+          "stage": "loading",
+          "route": 6,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333333144
+        }
       },
       {
-        "seed": 6161042,
-        "run_id": "3fbc7bf8feda4634befb4072eaafd654",
-        "episodes": 2,
-        "successes": 2,
+        "seed": 7161042,
+        "name": "dock_clamp_holdout_7161042",
+        "run_id": null,
+        "episodes": 0,
+        "successes": 0,
         "completed": false,
-        "checks": [
-          {
-            "episode": 0,
-            "error_mm": 1.2980342144146562,
-            "axis_error_deg": 0.03766274007925993,
-            "all_strict_clamp_physics_passed": true
-          },
-          {
-            "episode": 1,
-            "error_mm": 1.374230720102787,
-            "axis_error_deg": 0.03492410605996873,
-            "all_strict_clamp_physics_passed": true
-          }
-        ]
+        "checks": [],
+        "trace": {
+          "step": 2760,
+          "episode": 0,
+          "stage": "loading",
+          "route": 6,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333333144
+        }
       }
     ],
-    "episodes": 4,
-    "successes": 4,
-    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
-    "gate_passed": false,
-    "full_mission_qualified": false
+    "episodes": 0,
+    "successes": 0,
+    "failures": 0,
+    "independent_skill_gate_passed": false,
+    "formal_full_episodes": 0,
+    "qualified": false
   },
   "latest_dock_partial_both_hosts_verified": {
-    "at": "2026-10-21T15:31:52.339160+00:00",
-    "files": 21,
+    "at": "2026-10-22T02:27:47.349290+00:00",
+    "files": 7,
     "mismatches": [],
     "all_listed_files_sha_verified_both_hosts": true,
-    "partial_only": true,
-    "gate_passed": false,
     "qualified": false
   },
   "latest_dock_partial_snapshot": "course_v9_5090_resume/dock_first4_snapshot_20261021_2331",
@@ -929,24 +947,15 @@
   "target_repository_proposed": "/home/arnold/Develop/rebar-training-4090-return-20261021",
   "target_training_started": true,
   "current_checkpoint": {
-    "at": "2026-10-22T02:12:21.840311+00:00",
-    "checkpoint_sha256": "709a1abd5b9e71c209d109c22c091d95a401f868d52a9d281493232be9ad5a50",
+    "at": "2026-10-22T02:26:30.376438+00:00",
+    "completed": true,
+    "episodes": 2,
+    "successes": 2,
+    "failures": 0,
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha256": "a1124cf1bfbd53ab9763a74e70a25f072858500d4f68b32331fdb56e1003ab6d",
     "initial_checkpoint_sha256": "95863de3e9f92db33a9e112fef84c967621870ea7cc776c62cd2604f80104080",
-    "updates": 374,
-    "actor_updates": 141,
-    "policy_steps": 30577,
-    "new_updates": 20,
-    "new_actor_updates": 5,
-    "new_policy_steps": 1050,
-    "actor_weight_max_abs_change": 0.0036281347274780273,
-    "model_and_optimizer_finite": true,
-    "actual_new_actor_update_verified": true,
-    "training_completed": false,
-    "qualified": false,
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/dock_learning_snapshot_20261022_101221",
-    "run_id": "73592280ec244f90aa89a3e51eb10756",
-    "episodes": 1,
-    "successes": 1,
+    "report_sha256": "a18ab5197177c05bdcda47485f6b7cea7125511cb0cdda31b5820b63b8db6ad6",
     "checks": [
       {
         "episode": 0,
@@ -960,18 +969,36 @@
         ],
         "unsafe_force_N": 26.022552490234375,
         "tcp_clearance_mm": 94.67504173517227,
+        "steel_linear_speed_m_s": 0.0025996663607656956,
+        "steel_angular_speed_rad_s": 0.018030758947134018,
+        "all_strict_clamp_physics_passed": true
+      },
+      {
+        "episode": 1,
+        "error_mm": 1.3926193350926042,
+        "axis_error_deg": 0.02783523485451976,
+        "jaw_forces_N": [
+          25.16905403137207,
+          24.776302337646484,
+          24.708675384521484,
+          25.056676864624023
+        ],
+        "unsafe_force_N": 25.955652236938477,
+        "tcp_clearance_mm": 81.37403428554535,
+        "steel_linear_speed_m_s": 0.0011677818838506937,
+        "steel_angular_speed_rad_s": 0.010058442130684853,
         "all_strict_clamp_physics_passed": true
       }
     ],
-    "trace": {
-      "step": 5280,
-      "episode": 1,
-      "stage": "pickup_tray",
-      "route": 0,
-      "valid": true,
-      "last_error": "",
-      "camera_age_ms": 33.33333333333144
-    },
+    "updates": 395,
+    "actor_updates": 147,
+    "policy_steps": 31681,
+    "new_updates": 41,
+    "new_actor_updates": 11,
+    "new_policy_steps": 2154,
+    "actor_weight_max_abs_change": 0.005715876817703247,
+    "model_and_optimizer_finite": true,
+    "qualified": false,
     "phase": "dock_clamp",
     "training_paused": false
   },
@@ -1617,8 +1644,10 @@
     "all_listed_files_sha_verified_both_hosts": true,
     "qualified": false
   },
-  "current_dock_training_complete": false,
-  "current_dock_training_episodes": 1,
-  "current_dock_training_successes": 1,
-  "current_dock_training_failures": 0
+  "current_dock_training_complete": true,
+  "current_dock_training_episodes": 2,
+  "current_dock_training_successes": 2,
+  "current_dock_training_failures": 0,
+  "latest_dock_independent_snapshot": "course_v10_4090_return/dock_holdouts_snapshot_20261022_102704",
+  "current_dock_independent_new_episodes_since_last_check": 0
 }
