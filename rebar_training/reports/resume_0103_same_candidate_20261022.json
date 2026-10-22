@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-22T12:35:53.688572+00:00",
+  "updated_at": "2026-10-22T12:49:50.787358+00:00",
   "user_authorized_resume": true,
   "user_confirmed_target": "arnold@192.168.0.103",
   "hardware": "RTX5090 Laptop GPU",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
   "current_job_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
-  "state": "connected_original_candidate_jobs_progressing",
+  "state": "candidate_regression_running",
   "launch_receipt": {
     "directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
     "plan_sha256": "86fcfc2133cbbe77ae8a7fed38f70337a015235030ad4afb7e57da13b81b77c4",
@@ -98,8 +98,8 @@
       }
     }
   },
-  "latest_verified_native_episodes": 5,
-  "latest_verified_successes": 5,
+  "latest_verified_native_episodes": 7,
+  "latest_verified_successes": 7,
   "latest_verified_failures": 0,
   "first_startup_attempt": {
     "state": "asset_audit_failed_before_physics",
@@ -127,15 +127,8 @@
   },
   "continuous_group_replay_reason": "Simulator state not serialized; same frozen candidate, policy, seeds; replay interrupted continuous groups in fresh output; do not merge interrupted receipts.",
   "connectivity": {
-    "restored_at": "2026-10-22T12:33:53.925957+00:00",
-    "network_manager_event": "20:32:56 WiFi activated->unavailable; 20:33:01 reactivated; 20:33:06 renewed192.168.0.103",
-    "queried_suspend_hibernate_units": "no entries in queried last hour",
-    "existing_task_inhibitors": [
-      "8826 idle block",
-      "13643 idle block"
-    ],
-    "root_cause": "not established",
-    "no_global_power_or_network_change": true
+    "connected_at": "2026-10-22T12:47:16.340679+00:00",
+    "new_job_start_stop_restart": false
   },
   "outage_job": {
     "state": "running",
@@ -162,8 +155,8 @@
     "Finish full12.7GB transfer and remote outer SHA; never overwrite active repo."
   ],
   "latest_snapshot": {
-    "at": "2026-10-22T12:33:53.925957+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_203353",
+    "at": "2026-10-22T12:47:16.340679+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_204716",
     "candidate_source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "groups": [
@@ -175,14 +168,14 @@
         "runner_pid": 8825,
         "pid": 8826,
         "run_id": "34f10544ee3f4c349ef90e887fffc3c6",
-        "episodes": 3,
-        "successes": 3,
+        "episodes": 4,
+        "successes": 4,
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 37260,
-          "episode": 3,
-          "stage": "dock",
+          "step": 44070,
+          "episode": 4,
+          "stage": "navigate",
           "route": 4,
           "valid": true,
           "last_error": "",
@@ -356,12 +349,69 @@
                 "packet_tag": "source_return_handoff_tick18870"
               }
             ]
+          },
+          {
+            "episode": 3,
+            "success": true,
+            "failure": null,
+            "error_mm": 1.010900130495429,
+            "all_strict_physics_passed": true,
+            "handoffs": [
+              {
+                "tick": 31719,
+                "packet_tag": "source_return_handoff_tick31719",
+                "pixel": [
+                  596.8747660637213,
+                  524.1399172964547
+                ],
+                "source_clearance_m": 0.2511269476183292,
+                "safe_conditions_verified": true,
+                "frame": 587,
+                "timestamp_ns": 1057300000000
+              }
+            ],
+            "diagnostic_grasp_outage_triggered": false,
+            "source_return_handoffs": [
+              {
+                "tick": 31719,
+                "last_good_ns": 1057300000000,
+                "tcp_base": [
+                  -1.038677781384432,
+                  0.012825881869805239,
+                  0.7731274342981642
+                ],
+                "return_index": 60,
+                "history_length": 560,
+                "stage": "pickup",
+                "route": 0,
+                "source_center": [
+                  -1.114931937494303,
+                  -0.04084747839824751,
+                  0.522000486679835
+                ],
+                "source_clearance_m": 0.2511269476183292,
+                "fingers": [
+                  -6.430352783581839e-08,
+                  1.923944364534691e-05
+                ],
+                "finger_forces": [
+                  0.0,
+                  0.0
+                ],
+                "visible_edges": 52,
+                "residual_px": 0.1932682464327277,
+                "camera_timestamp_ns": 1057300000000,
+                "camera_frame": 587,
+                "packet_tag": "source_return_handoff_tick31719"
+              }
+            ]
           }
         ],
         "saved_handoff_packets": [
           "source_return_handoff_tick1041",
           "source_return_handoff_tick31719",
           "source_return_handoff_tick18870",
+          "source_return_handoff_tick40593",
           "source_return_handoff_tick9915"
         ]
       },
@@ -509,45 +559,102 @@
         "name": "supported_partial_outage_241042",
         "seed": 241042,
         "requested_episodes": 1,
-        "state": "running",
+        "state": "completed",
         "runner_pid": 13642,
-        "pid": 13643,
-        "run_id": null,
-        "episodes": 0,
-        "successes": 0,
+        "pid": null,
+        "run_id": "1fdb8dca4dbc4709b3c15075c0bb6ee8",
+        "episodes": 1,
+        "successes": 1,
         "failures": 0,
-        "native_complete": false,
+        "native_complete": true,
         "trace": {
-          "step": 7860,
+          "step": 12720,
           "episode": 0,
-          "stage": "pickup_tray",
-          "route": 0,
+          "stage": "loading",
+          "route": 10,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333335986
         },
-        "checks": [],
+        "checks": [
+          {
+            "episode": 0,
+            "success": true,
+            "failure": null,
+            "error_mm": 1.1380547657608986,
+            "all_strict_physics_passed": true,
+            "handoffs": [
+              {
+                "tick": 1017,
+                "packet_tag": "source_return_handoff_tick1017",
+                "pixel": [
+                  561.1599059689346,
+                  523.9077092711206
+                ],
+                "source_clearance_m": 0.30075895119248597,
+                "safe_conditions_verified": true,
+                "frame": 339,
+                "timestamp_ns": 33900000000
+              }
+            ],
+            "diagnostic_grasp_outage_triggered": true,
+            "source_return_handoffs": [
+              {
+                "tick": 1017,
+                "last_good_ns": 33900000000,
+                "tcp_base": [
+                  -1.0153443239767708,
+                  -0.010525973697293398,
+                  0.8227595931147791
+                ],
+                "return_index": 76,
+                "history_length": 342,
+                "stage": "pickup",
+                "route": 0,
+                "source_center": [
+                  -1.1904173944015228,
+                  -0.06511382875301266,
+                  0.5220006419222931
+                ],
+                "source_clearance_m": 0.30075895119248597,
+                "fingers": [
+                  -7.410089608583803e-08,
+                  1.6468195099150762e-05
+                ],
+                "finger_forces": [
+                  0.0,
+                  0.0
+                ],
+                "visible_edges": 97,
+                "residual_px": 0.49758338428001103,
+                "camera_timestamp_ns": 33900000000,
+                "camera_frame": 339,
+                "packet_tag": "source_return_handoff_tick1017"
+              }
+            ]
+          }
+        ],
         "saved_handoff_packets": [
           "source_return_handoff_tick1017"
         ]
       }
     ],
-    "episodes": 5,
-    "successes": 5,
+    "episodes": 7,
+    "successes": 7,
     "failures": 0,
     "required_episodes": 11,
     "verified_passed": false,
     "formal_acceptance_episodes": 0,
-    "gpu": "8838, 4798 MiB\n13655, 5390 MiB\n",
+    "gpu": "8838, 4798 MiB\n",
     "worker_state": "old_dispatchers_not_resumed"
   },
   "independent_physics_proof": {
-    "at": "2026-10-22T12:33:56.519819+00:00",
-    "files": 53,
+    "at": "2026-10-22T12:47:20.310074+00:00",
+    "files": 64,
     "mismatches": [],
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_203353",
-    "episodes": 5,
-    "successes": 5,
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_204716",
+    "episodes": 7,
+    "successes": 7,
     "failures": 0,
     "independent_completed_row_checks": [
       {
@@ -635,6 +742,34 @@
         ]
       },
       {
+        "name": "source_return_reset8_7241042",
+        "episode": 3,
+        "success": true,
+        "error_mm": 1.010900130495429,
+        "axis_deg": 0.0397775758735039,
+        "jaws_N": [
+          25.828725814819336,
+          24.10670280456543,
+          24.097408294677734,
+          25.819355010986328
+        ],
+        "unsafe_N": 25.834218978881836,
+        "retreat_mm": 89.07174319028854,
+        "strict_physics_verified": true,
+        "handoffs": [
+          {
+            "tick": 31719,
+            "frame": 587,
+            "pixel": [
+              596.8747660637213,
+              524.1399172964547
+            ],
+            "clearance_m": 0.2511269476183292,
+            "guards_verified": true
+          }
+        ]
+      },
+      {
         "name": "source_return_reset2_7271042",
         "episode": 0,
         "success": true,
@@ -689,6 +824,34 @@
             "guards_verified": true
           }
         ]
+      },
+      {
+        "name": "supported_partial_outage_241042",
+        "episode": 0,
+        "success": true,
+        "error_mm": 1.1380547657608986,
+        "axis_deg": 0.04108069388693966,
+        "jaws_N": [
+          25.829730987548828,
+          24.10372543334961,
+          24.110151290893555,
+          25.835561752319336
+        ],
+        "unsafe_N": 25.843109130859375,
+        "retreat_mm": 83.74703675508499,
+        "strict_physics_verified": true,
+        "handoffs": [
+          {
+            "tick": 1017,
+            "frame": 339,
+            "pixel": [
+              561.1599059689346,
+              523.9077092711206
+            ],
+            "clearance_m": 0.30075895119248597,
+            "guards_verified": true
+          }
+        ]
       }
     ],
     "complete_development_gate_passed": false
@@ -726,5 +889,66 @@
     "sdk_OmniPBR_sha256": "d384fc800f120e3cad1b7ca8837f9c554f9c34343d194813fca27caa493001f2",
     "missing_task_dependencies": [],
     "sdk_changed": false
+  },
+  "controlled_outage_interim_note": "\u53d7\u63a730\u5e27\u5931\u89c6\u539f\u751f1/1\u5b8c\u6574\u6210\u529f\uff1atick7945\u4e2d\u6b62\uff0c7958\u5b9e\u6d4b\u6253\u5f00\u65e0\u8f7d/\u6258\u69fd22.937N\u652f\u6491/\u5df2\u8fd4\u56de\uff0c\u534a\u901f\u91cd\u89c2\u5bdf\u81f39093\u6062\u590d\uff1b\u5939\u7d271.138055mm\u300183.747mm\u9000\u8ba9\u3001\u771f\u5b9e\u56db\u722a\u53ca\u901f\u5ea6/\u65e0\u81c2\u63a5\u89e6\u4e25\u683c\u590d\u6838\u901a\u8fc7\u3002257\u5b8c\u6574\u539f\u59cb/\u6e90\u7801/\u65e5\u5fd7\u6587\u4ef6\u4e24\u7aefSHA\u4e00\u81f4\u3002",
+  "controlled_outage_gate": {
+    "at": "2026-10-22T12:48:20.254086+00:00",
+    "passed": true,
+    "episodes": 1,
+    "successes": 1,
+    "failures": 0,
+    "actual_30_frame_partial_grasp_outage": true,
+    "recovery_witnesses": [
+      {
+        "abort_tick": 7945,
+        "open_unloaded_tick": 7958,
+        "open_fingers": [
+          0.0012758875964209437,
+          0.0012311735190451145
+        ],
+        "open_forces": [
+          0.0,
+          0.0
+        ],
+        "supported_tray_load_N": 22.937339782714844,
+        "returned": true,
+        "return_speed_scale": 0.5,
+        "reacquired_tick": 9093,
+        "fresh_packet": "wrist_step9300.json",
+        "fresh_packet_timestamp_ns": 310000000000,
+        "previous_good_ns": 264300000000
+      }
+    ],
+    "strict_physics": {
+      "name": "supported_partial_outage_241042",
+      "episode": 0,
+      "success": true,
+      "error_mm": 1.1380547657608986,
+      "axis_deg": 0.04108069388693966,
+      "jaws_N": [
+        25.829730987548828,
+        24.10372543334961,
+        24.110151290893555,
+        25.835561752319336
+      ],
+      "unsafe_N": 25.843109130859375,
+      "retreat_mm": 83.74703675508499,
+      "strict_physics_verified": true,
+      "handoffs": [
+        {
+          "tick": 1017,
+          "frame": 339,
+          "pixel": [
+            561.1599059689346,
+            523.9077092711206
+          ],
+          "clearance_m": 0.30075895119248597,
+          "guards_verified": true
+        }
+      ]
+    },
+    "original_files_both_hosts_sha": 257,
+    "formal_acceptance_episodes": 0,
+    "complete_candidate_11_gate_passed": false
   }
 }

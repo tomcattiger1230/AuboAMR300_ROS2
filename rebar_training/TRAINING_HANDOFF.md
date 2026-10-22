@@ -1,10 +1,16 @@
 # 钢筋视觉移动操作训练：接力指导
 
-## 当前核查：103已重连，原两组继续（2026-10-22 上海20:34）
+## 当前候选物理回归（2026-10-22 上海20:47）
 
-已连接hostname arnold-NUC16JNK9XX11，核查原runner8825/native8826/GPU8838与runner13642/native13643/GPU13655仍运行，无重复启动或重启。最新仍为 **5/11完成、5成功0失败，较20:21新增0**：724连续8已3/8、第四回合dock/route4；727连续2原生完整2/2；受控失视job在pickup_tray/route0。两组有效RGB33ms、last_error空且原run_id未变，阶段持续前进。53个不可变快照文件两端SHA及Mac全部5行物理/handoff守卫独立复算通过；11回合gate尚未通过。
+同一8a24源码/393b策略+optimizer，466updates/170actor/36602steps未变，无新学习。最新 **7/11完成、7成功0失败**；完整原生组3行，未完成组部分4行，尚未通过11回合独立复核。64个不可变快照文件两端SHA和Mac真实物理/handoff守卫复算通过。
 
-只读日志显示Wi-Fi于20:32:56变为unavailable，20:33:01重连、20:33:06重新取得192.168.0.103；所查近1小时suspend/hibernate单元无记录，两个仿真已有idle inhibitor。掉线根因尚未确认，没有修改全局网络、电源或SSH身份。完整历史归档已在确认无其他传输后限速8MiB/s断点续传（本机parent82922/rsync82924），传完自动只读核验远端SHA；当前仍未全量校验通过。既有策略393b+optimizer/source8a24和466/170/36602计数保持，不增加PPO训练。
+source_return_reset8_7241042：4/8，running，step44070 navigate/route4。
+source_return_reset2_7271042：2/2，completed，step17760 loading/route10。
+supported_partial_outage_241042：1/1，completed，step12720 loading/route10。
+
+原作业run_id/PID未变，未启动/停止/重启任何仿真，最多2并行。受控30帧失视原生1/1完整成功：tick7945中止，7958实测打开无载/托槽22.937N支撑/已返回，半速重观察至9093恢复；夹紧1.138055mm、83.747mm退让、真实四爪及速度/无臂接触严格复核通过。257完整原始/源码/日志文件两端SHA一致。724原失败episode5尚未到达，不能宣称两例均修复。旧v10封存26/64（24成功2失败），v8完整16另2成功，v9到站4成功/full0，全部保留分列。
+
+完整12.7GB归档由parent82922/rsync82924单独限速8MiB/s续传，完成后自动验证远端SHA；当前远端全量SHA仍未通过。Wi-Fi重连/续租日志已留存，根因未确认；不改全局电源/网络/SDK。恢复入口为主status/current_job_root及reports/resume_0103_same_candidate_20261022.json。
 
 ## 最新：103已恢复连接，同一候选继续物理回归（2026-10-22 上海20:21）
 
