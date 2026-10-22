@@ -1,12 +1,12 @@
 # 钢筋抓取与试验机上料训练
 
-## 当前：同一冻结策略的独立验收（2026-10-23 上海05:04）
+## 当前：同一冻结策略的独立验收（2026-10-23 上海05:19）
 
 修复开发回归已 **11/11完整成功、0失败、零证据错误**；1557个完整原始文件两端SHA一致，两个旧失败案例与真实30帧失视安全恢复均独立复核通过。保持source8a24、393b策略+optimizer及466updates/170actor/36602steps，不PPO重训、不重置策略或optimizer。
 
 阶段门槛：抓取8/8独立通过；到站8/8独立通过。技能与开发回归均不计正式64。
 
-当前阶段`full`：完成36、成功36、失败0，其中完整原生组32行；该阶段gate尚未独立复核通过。879个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
+当前阶段`full`：完成36、成功36、失败0，其中完整原生组32行；该阶段gate尚未独立复核通过。921个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
 tray_holdout_9131042：4完成/4成功/0失败，completed，tray_retreat/route4。
 tray_holdout_9141042：4完成/4成功/0失败，completed，tray_retreat/route4。
 dock_clamp_holdout_9151042：4完成/4成功/0失败，completed，loading/route10。
@@ -15,8 +15,8 @@ full_holdout_9241042：8完成/8成功/0失败，completed，loading/route10。
 full_holdout_9251042：8完成/8成功/0失败，completed，loading/route10。
 full_holdout_9261042：8完成/8成功/0失败，completed，loading/route10。
 full_holdout_9271042：8完成/8成功/0失败，completed，loading/route10。
-full_holdout_9281042：2完成/2成功/0失败，running，tray_via_side/route4。
-full_holdout_9291042：2完成/2成功/0失败，running，tray_via_side/route4。
+full_holdout_9281042：2完成/2成功/0失败，running，loading/route6。
+full_holdout_9291042：2完成/2成功/0失败，running，loading/route6。
 
 正式整链为 **36/64完成，成功36、失败0**，不与技能/开发或历史混算。冻结计划e7381e2f…：抓取9131042/9141042各4，到站9151042/9161042各4，最终9241042..9311042间隔10000各8；演示9321042。仅到站技能gate允许托槽/到站复位、无录制视觉hint，不计64；正式64均从源抓取开始，无初始化/hint。阶段完整报告、全原始备份及Mac严格物理/官方gate独立复算通过并写review凭据后才晋级，当前原作业保留，最多2仿真。调度器是一次性工具，不会后台自行派发后续阶段。
 
