@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T19:34:26.308672+00:00",
+  "updated_at": "2026-10-22T19:49:24.962818+00:00",
   "status": "frozen_evaluation_running",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
@@ -205,8 +205,8 @@
     "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
   },
   "latest_snapshot": {
-    "at": "2026-10-22T19:34:26.308672+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_033426",
+    "at": "2026-10-22T19:49:24.962818+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_034924",
     "groups": [
       {
         "name": "tray_holdout_9131042",
@@ -353,13 +353,13 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 53850,
+          "step": 60930,
           "episode": 6,
-          "stage": "pickup",
-          "route": 0,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 1795033.3333343333
+          "stage": "navigate",
+          "route": 4,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333307564
         }
       },
       {
@@ -370,18 +370,18 @@
         "runner_pid": 51200,
         "pid": 51204,
         "run_id": "8f13eed5d9ae48e3b9d4b3f9080e62bd",
-        "episodes": 5,
-        "successes": 5,
+        "episodes": 6,
+        "successes": 6,
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 53970,
-          "episode": 5,
-          "stage": "pickup_tray",
-          "route": 0,
+          "step": 60990,
+          "episode": 6,
+          "stage": "navigate",
+          "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333330302
+          "camera_age_ms": 33.33333333307564
         }
       },
       {
@@ -449,8 +449,8 @@
         "native_group_rows": 8
       },
       "full": {
-        "episodes": 27,
-        "successes": 27,
+        "episodes": 28,
+        "successes": 28,
         "failures": 0,
         "native_group_rows": 16
       },
@@ -473,8 +473,8 @@
     "full": false
   },
   "formal_full_evaluation": {
-    "complete": 27,
-    "successes": 27,
+    "complete": 28,
+    "successes": 28,
     "failures": 0,
     "required": 64,
     "native_completed_group_rows": 16
@@ -494,9 +494,9 @@
   "next": "Keep existing jobs. Complete phase native reports, all-original-file SHA backup and independent strict physics plus official acceptance; then write matching phase review receipt before next phase. No PPO training.",
   "phase": "full",
   "latest_snapshot_sha_and_physics": {
-    "at": "2026-10-22T19:35:06.764206+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_033426",
-    "files": 719,
+    "at": "2026-10-22T19:50:08.261811+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_034924",
+    "files": 746,
     "mismatches": [],
     "phases": {
       "tray": {
@@ -512,8 +512,8 @@
         "native_group_rows": 8
       },
       "full": {
-        "episodes": 27,
-        "successes": 27,
+        "episodes": 28,
+        "successes": 28,
         "failures": 0,
         "native_group_rows": 16
       },
@@ -1319,6 +1319,27 @@
             "guards_verified": true
           }
         ]
+      },
+      {
+        "name": "full_holdout_9271042",
+        "phase": "full",
+        "episode": 5,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 1.1931051267310977,
+        "axis_base_y": null,
+        "retreat_mm": 89.64252471923828,
+        "unsafe_force_N": 25.84246063232422,
+        "handoffs": [
+          {
+            "tick": 47463,
+            "pixel": [
+              524.9403428186357,
+              521.6254468887481
+            ],
+            "guards_verified": true
+          }
+        ]
       }
     ],
     "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
@@ -1532,7 +1553,7 @@
     }
   },
   "latest_connectivity_check": {
-    "checked_at": "2026-10-22T19:34:26.308672+00:00",
+    "checked_at": "2026-10-22T19:49:24.962818+00:00",
     "connection": "connected",
     "snapshot_sha_and_physics_verified": true
   },
