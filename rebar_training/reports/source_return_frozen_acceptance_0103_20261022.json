@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:09:25.092708+00:00",
+  "updated_at": "2026-10-22T15:24:20.021599+00:00",
   "status": "frozen_evaluation_running",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
@@ -205,8 +205,8 @@
     "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
   },
   "latest_snapshot": {
-    "at": "2026-10-22T15:09:25.092708+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_230925",
+    "at": "2026-10-22T15:24:20.021599+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_232419",
     "groups": [
       {
         "name": "tray_holdout_9131042",
@@ -309,13 +309,13 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 9360,
+          "step": 16350,
           "episode": 1,
-          "stage": "pickup",
+          "stage": "pickup_tray",
           "route": 0,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 312033.3333343333
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333330302
         }
       },
       {
@@ -331,13 +331,13 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 9330,
+          "step": 16230,
           "episode": 1,
-          "stage": "pickup",
+          "stage": "pickup_tray",
           "route": 0,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333335986
+          "camera_age_ms": 33.33333333330302
         }
       },
       {
@@ -470,9 +470,9 @@
   "next": "Keep existing jobs. Complete phase native reports, all-original-file SHA backup and independent strict physics plus official acceptance; then write matching phase review receipt before next phase. No PPO training.",
   "phase": "full",
   "latest_snapshot_sha_and_physics": {
-    "at": "2026-10-22T15:09:56.074031+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_230925",
-    "files": 211,
+    "at": "2026-10-22T15:24:48.289796+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_232419",
+    "files": 238,
     "mismatches": [],
     "phases": {
       "tray": {
