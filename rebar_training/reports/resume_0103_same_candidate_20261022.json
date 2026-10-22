@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-22T12:21:30.662175+00:00",
+  "updated_at": "2026-10-22T12:23:24.887715+00:00",
   "user_authorized_resume": true,
   "user_confirmed_target": "arnold@192.168.0.103",
   "hardware": "RTX5090 Laptop GPU",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
   "current_job_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
-  "state": "connected_same_candidate_regression_running",
+  "state": "candidate_regression_connection_intermittent",
   "launch_receipt": {
     "directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
     "plan_sha256": "86fcfc2133cbbe77ae8a7fed38f70337a015235030ad4afb7e57da13b81b77c4",
@@ -127,8 +127,16 @@
   },
   "continuous_group_replay_reason": "Simulator state not serialized; same frozen candidate, policy, seeds; replay interrupted continuous groups in fresh output; do not merge interrupted receipts.",
   "connectivity": {
-    "restored": true,
-    "last_live_at": "2026-10-22T12:17:51.287569+00:00"
+    "at": "2026-10-22T12:23:24.887715+00:00",
+    "state": "intermittent_ssh_timeout_after_verified_progress",
+    "last_trusted_at": "2026-10-22T12:21:30.662175+00:00",
+    "last_trusted_episodes": 5,
+    "last_trusted_successes": 5,
+    "last_trusted_failures": 0,
+    "current_native_progress": "unknown",
+    "no_restart": true,
+    "remote_document_sync": "newest sync interrupted; local records and GitHub current",
+    "cause": "unknown"
   },
   "outage_job": {
     "state": "running",
