@@ -203,6 +203,11 @@ def main():
                             if len(e.mobile_receipts)>=args.episodes and (not args.learn_residual
                                     or learner.updates-initial_updates>=args.rl_iterations):break
                             continue
+                        handoffs=e.visual.source_return_handoffs
+                        if handoffs and handoffs[-1]['tick']==e.visual.tick:
+                            # Save the actual accepted RGB/probability/K/TF packet
+                            # at the motion handoff, rather than a later image.
+                            save_packet(handoffs[-1]['packet_tag'])
                         if writer and (step+1)%3==0:
                             view=('machine' if args.start_at_dock else 'travel' if e.visual.stage in ('navigate','dock') else 'machine'
                                   if e.visual.stage in ('pickup_tray','tray_lift_high','loading') else 'pickup')

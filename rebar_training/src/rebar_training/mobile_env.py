@@ -25,6 +25,7 @@ from .vision.recovery import TrayGraspRecovery
 from .vision.servo import RobotServo
 from .vision.blind import blinded_control
 from .vision.recovery import tray_reobservation_allowed
+from .vision.source_return import source_return_handoff
 
 
 class BaseServo(RobotServo):
@@ -63,6 +64,7 @@ class MobileControl(VisualControl):
         self.grasp_recovery=TrayGraspRecovery();self.tray_grasp_aborts=[]
         self.grasp_outage_triggered=False
         self.initial_views=[]
+        self.source_return_handoffs=[]
         self.initial_view_ready_tick=None
         self.view_search=False;self.view_good_images=0
         self.logic.initial_height[:]=.522
@@ -186,6 +188,23 @@ class MobileControl(VisualControl):
             survey_allowed=bool(self.motion.motion.ready[0]),
             grasp_allowed=picking and bool(e.route.stage[0]>=2),
             release_requested=self.stage=='loading' and bool(e.route.stage[0]>=9))
+        if (self.stage=='pickup' and e.route.stage[0]==0 and not o.anchored
+                and not self.motion.ready[0] and self.motion.motion.ready[0]
+                and source_return_handoff(valid=bool(self.valid[0]),last_good_ns=o.last_good_ns,
+                    last_error=o.last_error,camera=camera,center=o.initial_position if o.acquired else np.full(3,np.nan),
+                    tcp=self.packets[0].tcp,fingers=self.packets[0].fingers,
+                    finger_forces=self.packets[0].finger_forces,
+                    visible_edges=o.quality.get('visible_edges',0),residual_px=o.quality.get('residual_px',np.inf),
+                    return_index=self.motion.index[0],history_length=len(self.motion.history[0]))):
+            self.motion.ready[0]=True
+            self.source_return_handoffs.append(dict(tick=self.tick,last_good_ns=o.last_good_ns,
+                tcp_base=self.packets[0].tcp.tolist(),return_index=self.motion.index[0],
+                history_length=len(self.motion.history[0]),stage=self.stage,route=int(e.route.stage[0]),
+                source_center=o.initial_position.tolist(),source_clearance_m=float(self.packets[0].tcp[2]-o.initial_position[2]),
+                fingers=self.packets[0].fingers.tolist(),finger_forces=self.packets[0].finger_forces.tolist(),
+                visible_edges=o.quality.get('visible_edges',0),residual_px=o.quality.get('residual_px'),
+                camera_timestamp_ns=camera.timestamp_ns,camera_frame=camera.frame,
+                packet_tag='source_return_handoff_tick'+str(self.tick)))
         if self.view_search and camera is not None:
             self.view_good_images=self.view_good_images+1 if self.valid[0] and not o.last_error else 0
             if self.view_good_images>=3:
@@ -577,6 +596,7 @@ class MobileVisualEnv(VisualRebarEnv):
                 for name,loads in self._contact_peaks.items()}
             self.mobile_receipts[-1]['finger_positions']=v.packets[0].fingers.tolist()
             self.mobile_receipts[-1]['raw_finger_forces_N']=v.packets[0].finger_forces.tolist()
+            self.mobile_receipts[-1]['source_return_handoffs']=v.source_return_handoffs
             self.mobile_receipts[-1]['tcp_quaternion_xyzw']=v.packets[0].quaternion_xyzw.tolist()
             self.mobile_receipts[-1]['grasp_goal_quaternion_xyzw']=self.route.quaternion[0].tolist()
             self.mobile_receipts[-1]['grasp_alignment_error_deg']=float(self.route.grasp_alignment_error_deg[0])

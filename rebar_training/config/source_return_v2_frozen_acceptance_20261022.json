@@ -1,0 +1,101 @@
+{
+  "schema_version": "frozen_policy_acceptance_v1",
+  "declared_at": "2026-10-22T13:45:44.483597+00:00",
+  "campaign_name": "source_return_v2_frozen_acceptance_20261022",
+  "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
+  "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+  "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
+  "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+  "vision_runtime_sha256": "cd2f72ff73c0e7713d3a3c10881cf11c3ddb83091f255d36472120eef64a3903",
+  "retained_counters": {
+    "updates": 466,
+    "actor_updates": 170,
+    "policy_steps": 36602
+  },
+  "new_training": false,
+  "optimizer_reset": false,
+  "new_policy_version": false,
+  "control_source_repair": true,
+  "max_simulations": 2,
+  "seed_audit_sha256": "1e01107788bb13f60e5458426736fa05cb54736d01701cc0b5c429e066e37f30",
+  "prerequisite_11_gate_sha256": "cbc4135366d205179b03915483d3016b65c46d23252c535317eb53f4c5141d16",
+  "source_input": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v2/src",
+  "checkpoint_input": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_policy.pt",
+  "gate_input": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/candidate_11_gate_independently_verified.json",
+  "phases": [
+    {
+      "name": "tray",
+      "until": "tray",
+      "seeds": [
+        9131042,
+        9141042
+      ],
+      "episodes_per_seed": 4,
+      "start_on_tray": false,
+      "start_at_dock": false,
+      "visual_hint": null
+    },
+    {
+      "name": "dock_clamp",
+      "until": "clamp",
+      "seeds": [
+        9151042,
+        9161042
+      ],
+      "episodes_per_seed": 4,
+      "start_on_tray": true,
+      "start_at_dock": true,
+      "initial_joints": [
+        3.46970205934,
+        -0.16910621026,
+        1.59933403306,
+        0.1976438227,
+        1.57079641828,
+        -1.24268689272
+      ],
+      "visual_hint": null,
+      "scope": "Explicit reset-only dock skill gate; excluded from full64. Actual RGB survey, no recorded visual hint."
+    },
+    {
+      "name": "full",
+      "until": "clamp",
+      "seeds": [
+        9241042,
+        9251042,
+        9261042,
+        9271042,
+        9281042,
+        9291042,
+        9301042,
+        9311042
+      ],
+      "episodes_per_seed": 8,
+      "start_on_tray": false,
+      "start_at_dock": false,
+      "visual_hint": null
+    },
+    {
+      "name": "demo",
+      "until": "clamp",
+      "seeds": [
+        9321042
+      ],
+      "episodes_per_seed": 1,
+      "start_on_tray": false,
+      "start_at_dock": false,
+      "visual_hint": null,
+      "regression": true,
+      "formal_denominator": false
+    }
+  ],
+  "promotion": "Prior independent phase gate must be reviewed against complete native reports and matching SHA before next phase; no training stages.",
+  "final_criteria": {
+    "episodes": 64,
+    "minimum_distinct_seeds": 2,
+    "success_rate": 0.95,
+    "wilson_95_lower": 0.9,
+    "evidence_errors": 0
+  },
+  "hold_idle_between_gates": true
+}

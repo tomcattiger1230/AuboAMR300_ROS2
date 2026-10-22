@@ -1,0 +1,83 @@
+{
+  "at": "2026-10-22T13:33:08.612240+00:00",
+  "passed": true,
+  "scope": "source_return_handoff_v2 complete development physical regression only; not final independent stability acceptance",
+  "episodes": 11,
+  "successes": 11,
+  "failures": 0,
+  "native_completed_jobs": [
+    {
+      "name": "source_return_reset8_7241042",
+      "episodes": 8,
+      "run_id": "34f10544ee3f4c349ef90e887fffc3c6",
+      "source": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+      "checkpoint": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "original_files": 980
+    },
+    {
+      "name": "source_return_reset2_7271042",
+      "episodes": 2,
+      "run_id": "0bb8c28855694468a493aa3af4b8a7f7",
+      "source": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+      "checkpoint": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "original_files": 320
+    },
+    {
+      "name": "supported_partial_outage_241042",
+      "episodes": 1,
+      "run_id": "1fdb8dca4dbc4709b3c15075c0bb6ee8",
+      "source": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+      "checkpoint": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "original_files": 257
+    }
+  ],
+  "full_original_files_both_hosts_sha": 1557,
+  "independent_snapshot_files": 86,
+  "evidence_errors": [],
+  "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+  "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "identity": {
+    "at": "2026-10-22T13:30:08.133808+00:00",
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "keys": [
+      "observation_contract",
+      "fields",
+      "residual_scale",
+      "reward_contract",
+      "gamma",
+      "actor_updates",
+      "model",
+      "optimizer",
+      "updates",
+      "policy_steps",
+      "history",
+      "training_contexts",
+      "controller",
+      "standalone_full_mission_policy",
+      "steel_truth_policy_input"
+    ],
+    "scalar_fields": {
+      "observation_contract": "mobile_visual_manipulation_residual_v1",
+      "residual_scale": 0.08,
+      "reward_contract": "mobile_residual_potential_v2",
+      "gamma": 0.9995,
+      "actor_updates": 170,
+      "updates": 466,
+      "policy_steps": 36602,
+      "controller": "bounded arm residual PPO over camera-only servo; scripted observation/gripper/odometry",
+      "standalone_full_mission_policy": false,
+      "steel_truth_policy_input": false
+    },
+    "finite_tensors": 52,
+    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
+    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+    "vision_runtime_sha256": "cd2f72ff73c0e7713d3a3c10881cf11c3ddb83091f255d36472120eef64a3903",
+    "original_asset_files_verified": 12
+  },
+  "known_failure_replays_passed": true,
+  "supported_partial_outage_passed": true,
+  "formal_acceptance_episodes": 0,
+  "new_learning_updates": 0,
+  "policy_or_optimizer_reset": false,
+  "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
+}

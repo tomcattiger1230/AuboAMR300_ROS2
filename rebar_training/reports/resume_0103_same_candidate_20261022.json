@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-22T13:15:44.881099+00:00",
+  "updated_at": "2026-10-22T13:55:34.110354+00:00",
   "user_authorized_resume": true,
   "user_confirmed_target": "arnold@192.168.0.103",
   "hardware": "RTX5090 Laptop GPU",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
   "current_job_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
-  "state": "candidate_regression_running",
+  "state": "candidate_11_passed_same_policy_frozen_acceptance_started",
   "launch_receipt": {
     "directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
     "plan_sha256": "86fcfc2133cbbe77ae8a7fed38f70337a015235030ad4afb7e57da13b81b77c4",
@@ -98,8 +98,8 @@
       }
     }
   },
-  "latest_verified_native_episodes": 9,
-  "latest_verified_successes": 9,
+  "latest_verified_native_episodes": 11,
+  "latest_verified_successes": 11,
   "latest_verified_failures": 0,
   "first_startup_attempt": {
     "state": "asset_audit_failed_before_physics",
@@ -127,7 +127,7 @@
   },
   "continuous_group_replay_reason": "Simulator state not serialized; same frozen candidate, policy, seeds; replay interrupted continuous groups in fresh output; do not merge interrupted receipts.",
   "connectivity": {
-    "connected_at": "2026-10-22T13:13:31.145184+00:00",
+    "connected_at": "2026-10-22T13:28:53.801013+00:00",
     "new_job_start_stop_restart": false
   },
   "outage_job": {
@@ -160,8 +160,8 @@
     "Finish full12.7GB transfer and remote outer SHA; never overwrite active repo."
   ],
   "latest_snapshot": {
-    "at": "2026-10-22T13:13:31.145184+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_211331",
+    "at": "2026-10-22T13:28:53.801013+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_212853",
     "candidate_source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "groups": [
@@ -169,19 +169,19 @@
         "name": "source_return_reset8_7241042",
         "seed": 7241042,
         "requested_episodes": 8,
-        "state": "running",
+        "state": "completed",
         "runner_pid": 8825,
-        "pid": 8826,
+        "pid": null,
         "run_id": "34f10544ee3f4c349ef90e887fffc3c6",
-        "episodes": 6,
-        "successes": 6,
+        "episodes": 8,
+        "successes": 8,
         "failures": 0,
-        "native_complete": false,
+        "native_complete": true,
         "trace": {
-          "step": 64230,
-          "episode": 6,
-          "stage": "pickup_tray",
-          "route": 0,
+          "step": 74970,
+          "episode": 7,
+          "stage": "loading",
+          "route": 10,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333330302
@@ -522,6 +522,118 @@
                 "packet_tag": "source_return_handoff_tick49452"
               }
             ]
+          },
+          {
+            "episode": 6,
+            "success": true,
+            "failure": null,
+            "error_mm": 1.1302639031782746,
+            "all_strict_physics_passed": true,
+            "handoffs": [
+              {
+                "tick": 58311,
+                "packet_tag": "source_return_handoff_tick58311",
+                "pixel": [
+                  412.4616316555857,
+                  521.7059936523319
+                ],
+                "source_clearance_m": 0.26083902698494954,
+                "safe_conditions_verified": true,
+                "frame": 358,
+                "timestamp_ns": 1943700000000
+              }
+            ],
+            "diagnostic_grasp_outage_triggered": false,
+            "source_return_handoffs": [
+              {
+                "tick": 58311,
+                "last_good_ns": 1943700000000,
+                "tcp_base": [
+                  -1.044129224600524,
+                  0.020742287248123773,
+                  0.7828402231434465
+                ],
+                "return_index": 60,
+                "history_length": 346,
+                "stage": "pickup",
+                "route": 0,
+                "source_center": [
+                  -1.1676245003736008,
+                  0.04601136914905907,
+                  0.5220011961584969
+                ],
+                "source_clearance_m": 0.26083902698494954,
+                "fingers": [
+                  -6.106121475113468e-08,
+                  1.9932138457079418e-05
+                ],
+                "finger_forces": [
+                  0.0,
+                  0.0
+                ],
+                "visible_edges": 97,
+                "residual_px": 2.00729258907486,
+                "camera_timestamp_ns": 1943700000000,
+                "camera_frame": 358,
+                "packet_tag": "source_return_handoff_tick58311"
+              }
+            ]
+          },
+          {
+            "episode": 7,
+            "success": true,
+            "failure": null,
+            "error_mm": 1.2840800918638706,
+            "all_strict_physics_passed": true,
+            "handoffs": [
+              {
+                "tick": 67206,
+                "packet_tag": "source_return_handoff_tick67206",
+                "pixel": [
+                  608.3019975767659,
+                  528.9071820533674
+                ],
+                "source_clearance_m": 0.2833318957751265,
+                "safe_conditions_verified": true,
+                "frame": 350,
+                "timestamp_ns": 2240200000000
+              }
+            ],
+            "diagnostic_grasp_outage_triggered": false,
+            "source_return_handoffs": [
+              {
+                "tick": 67206,
+                "last_good_ns": 2240200000000,
+                "tcp_base": [
+                  -0.980434814095345,
+                  0.00982602706629529,
+                  0.8053326328015823
+                ],
+                "return_index": 91,
+                "history_length": 364,
+                "stage": "pickup",
+                "route": 0,
+                "source_center": [
+                  -1.1617187875042723,
+                  -0.0649364274315856,
+                  0.5220007370264558
+                ],
+                "source_clearance_m": 0.2833318957751265,
+                "fingers": [
+                  -6.607345426346001e-08,
+                  1.1143600204377435e-05
+                ],
+                "finger_forces": [
+                  0.0,
+                  0.0
+                ],
+                "visible_edges": 97,
+                "residual_px": 0.5662353084053362,
+                "camera_timestamp_ns": 2240200000000,
+                "camera_frame": 350,
+                "packet_tag": "source_return_handoff_tick67206"
+              }
+            ]
           }
         ],
         "saved_handoff_packets": [
@@ -530,6 +642,7 @@
           "source_return_handoff_tick31719",
           "source_return_handoff_tick18870",
           "source_return_handoff_tick40593",
+          "source_return_handoff_tick67206",
           "source_return_handoff_tick58311",
           "source_return_handoff_tick9915"
         ]
@@ -758,22 +871,22 @@
         ]
       }
     ],
-    "episodes": 9,
-    "successes": 9,
+    "episodes": 11,
+    "successes": 11,
     "failures": 0,
     "required_episodes": 11,
     "verified_passed": false,
     "formal_acceptance_episodes": 0,
-    "gpu": "8838, 4798 MiB\n",
+    "gpu": "",
     "worker_state": "old_dispatchers_not_resumed"
   },
   "independent_physics_proof": {
-    "at": "2026-10-22T13:13:34.361850+00:00",
-    "files": 76,
+    "at": "2026-10-22T13:28:56.991746+00:00",
+    "files": 86,
     "mismatches": [],
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_211331",
-    "episodes": 9,
-    "successes": 9,
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_212853",
+    "episodes": 11,
+    "successes": 11,
     "failures": 0,
     "independent_completed_row_checks": [
       {
@@ -940,6 +1053,62 @@
               519.1431586951013
             ],
             "clearance_m": 0.28023232220773997,
+            "guards_verified": true
+          }
+        ]
+      },
+      {
+        "name": "source_return_reset8_7241042",
+        "episode": 6,
+        "success": true,
+        "error_mm": 1.1302639031782746,
+        "axis_deg": 0.04118126239305416,
+        "jaws_N": [
+          25.24373435974121,
+          24.753856658935547,
+          24.731401443481445,
+          25.209943771362305
+        ],
+        "unsafe_N": 25.294742584228516,
+        "retreat_mm": 89.56118673086166,
+        "strict_physics_verified": true,
+        "handoffs": [
+          {
+            "tick": 58311,
+            "frame": 358,
+            "pixel": [
+              412.4616316555857,
+              521.7059936523319
+            ],
+            "clearance_m": 0.26083902698494954,
+            "guards_verified": true
+          }
+        ]
+      },
+      {
+        "name": "source_return_reset8_7241042",
+        "episode": 7,
+        "success": true,
+        "error_mm": 1.2840800918638706,
+        "axis_deg": 0.040668534935556326,
+        "jaws_N": [
+          24.11945343017578,
+          25.819095611572266,
+          25.82224464416504,
+          24.123958587646484
+        ],
+        "unsafe_N": 25.82573127746582,
+        "retreat_mm": 89.81465548276901,
+        "strict_physics_verified": true,
+        "handoffs": [
+          {
+            "tick": 67206,
+            "frame": 350,
+            "pixel": [
+              608.3019975767659,
+              528.9071820533674
+            ],
+            "clearance_m": 0.2833318957751265,
             "guards_verified": true
           }
         ]
@@ -1138,5 +1307,7 @@
     "known_case_count": 2,
     "report": "reports/source_return_known_cases_replayed_0103_20261022.json",
     "complete_candidate_gate_passed": false
-  }
+  },
+  "complete_candidate_gate_passed": true,
+  "current_acceptance_directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022"
 }

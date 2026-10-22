@@ -1,0 +1,527 @@
+{
+  "updated_at": "2026-10-22T13:59:21.044976+00:00",
+  "status": "frozen_evaluation_running",
+  "host": "arnold@192.168.0.103",
+  "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
+  "current_directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022",
+  "plan": {
+    "schema_version": "frozen_policy_acceptance_v1",
+    "declared_at": "2026-10-22T13:45:44.483597+00:00",
+    "campaign_name": "source_return_v2_frozen_acceptance_20261022",
+    "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
+    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+    "vision_runtime_sha256": "cd2f72ff73c0e7713d3a3c10881cf11c3ddb83091f255d36472120eef64a3903",
+    "retained_counters": {
+      "updates": 466,
+      "actor_updates": 170,
+      "policy_steps": 36602
+    },
+    "new_training": false,
+    "optimizer_reset": false,
+    "new_policy_version": false,
+    "control_source_repair": true,
+    "max_simulations": 2,
+    "seed_audit_sha256": "1e01107788bb13f60e5458426736fa05cb54736d01701cc0b5c429e066e37f30",
+    "prerequisite_11_gate_sha256": "cbc4135366d205179b03915483d3016b65c46d23252c535317eb53f4c5141d16",
+    "source_input": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v2/src",
+    "checkpoint_input": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_policy.pt",
+    "gate_input": "rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/candidate_11_gate_independently_verified.json",
+    "phases": [
+      {
+        "name": "tray",
+        "until": "tray",
+        "seeds": [
+          9131042,
+          9141042
+        ],
+        "episodes_per_seed": 4,
+        "start_on_tray": false,
+        "start_at_dock": false,
+        "visual_hint": null
+      },
+      {
+        "name": "dock_clamp",
+        "until": "clamp",
+        "seeds": [
+          9151042,
+          9161042
+        ],
+        "episodes_per_seed": 4,
+        "start_on_tray": true,
+        "start_at_dock": true,
+        "initial_joints": [
+          3.46970205934,
+          -0.16910621026,
+          1.59933403306,
+          0.1976438227,
+          1.57079641828,
+          -1.24268689272
+        ],
+        "visual_hint": null,
+        "scope": "Explicit reset-only dock skill gate; excluded from full64. Actual RGB survey, no recorded visual hint."
+      },
+      {
+        "name": "full",
+        "until": "clamp",
+        "seeds": [
+          9241042,
+          9251042,
+          9261042,
+          9271042,
+          9281042,
+          9291042,
+          9301042,
+          9311042
+        ],
+        "episodes_per_seed": 8,
+        "start_on_tray": false,
+        "start_at_dock": false,
+        "visual_hint": null
+      },
+      {
+        "name": "demo",
+        "until": "clamp",
+        "seeds": [
+          9321042
+        ],
+        "episodes_per_seed": 1,
+        "start_on_tray": false,
+        "start_at_dock": false,
+        "visual_hint": null,
+        "regression": true,
+        "formal_denominator": false
+      }
+    ],
+    "promotion": "Prior independent phase gate must be reviewed against complete native reports and matching SHA before next phase; no training stages.",
+    "final_criteria": {
+      "episodes": 64,
+      "minimum_distinct_seeds": 2,
+      "success_rate": 0.95,
+      "wilson_95_lower": 0.9,
+      "evidence_errors": 0
+    },
+    "hold_idle_between_gates": true
+  },
+  "provenance": {
+    "created_at": "2026-10-22T13:47:31.964663+00:00",
+    "plan_sha256": "e7381e2f5849f89dba4e54ae7904aa3b8f5b7b032e5b0677d44ba056688ade4f",
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "counters": {
+      "updates": 466,
+      "actor_updates": 170,
+      "policy_steps": 36602
+    },
+    "candidate_11_gate_sha256": "cbc4135366d205179b03915483d3016b65c46d23252c535317eb53f4c5141d16",
+    "seed_audit_sha256": "1e01107788bb13f60e5458426736fa05cb54736d01701cc0b5c429e066e37f30",
+    "launcher_sha256": "abc840aa01dc719b02396a88bfa199f8e295ebeb178f6a244e1ea5509303928d",
+    "new_learning_updates": 0,
+    "formal_full_gate_passed": false
+  },
+  "candidate_11_passed": {
+    "at": "2026-10-22T13:33:08.612240+00:00",
+    "passed": true,
+    "scope": "source_return_handoff_v2 complete development physical regression only; not final independent stability acceptance",
+    "episodes": 11,
+    "successes": 11,
+    "failures": 0,
+    "native_completed_jobs": [
+      {
+        "name": "source_return_reset8_7241042",
+        "episodes": 8,
+        "run_id": "34f10544ee3f4c349ef90e887fffc3c6",
+        "source": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+        "checkpoint": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+        "original_files": 980
+      },
+      {
+        "name": "source_return_reset2_7271042",
+        "episodes": 2,
+        "run_id": "0bb8c28855694468a493aa3af4b8a7f7",
+        "source": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+        "checkpoint": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+        "original_files": 320
+      },
+      {
+        "name": "supported_partial_outage_241042",
+        "episodes": 1,
+        "run_id": "1fdb8dca4dbc4709b3c15075c0bb6ee8",
+        "source": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+        "checkpoint": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+        "original_files": 257
+      }
+    ],
+    "full_original_files_both_hosts_sha": 1557,
+    "independent_snapshot_files": 86,
+    "evidence_errors": [],
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "identity": {
+      "at": "2026-10-22T13:30:08.133808+00:00",
+      "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "keys": [
+        "observation_contract",
+        "fields",
+        "residual_scale",
+        "reward_contract",
+        "gamma",
+        "actor_updates",
+        "model",
+        "optimizer",
+        "updates",
+        "policy_steps",
+        "history",
+        "training_contexts",
+        "controller",
+        "standalone_full_mission_policy",
+        "steel_truth_policy_input"
+      ],
+      "scalar_fields": {
+        "observation_contract": "mobile_visual_manipulation_residual_v1",
+        "residual_scale": 0.08,
+        "reward_contract": "mobile_residual_potential_v2",
+        "gamma": 0.9995,
+        "actor_updates": 170,
+        "updates": 466,
+        "policy_steps": 36602,
+        "controller": "bounded arm residual PPO over camera-only servo; scripted observation/gripper/odometry",
+        "standalone_full_mission_policy": false,
+        "steel_truth_policy_input": false
+      },
+      "finite_tensors": 52,
+      "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
+      "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
+      "vision_runtime_sha256": "cd2f72ff73c0e7713d3a3c10881cf11c3ddb83091f255d36472120eef64a3903",
+      "original_asset_files_verified": 12
+    },
+    "known_failure_replays_passed": true,
+    "supported_partial_outage_passed": true,
+    "formal_acceptance_episodes": 0,
+    "new_learning_updates": 0,
+    "policy_or_optimizer_reset": false,
+    "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
+  },
+  "latest_snapshot": {
+    "at": "2026-10-22T13:59:21.044976+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_215921",
+    "groups": [
+      {
+        "name": "tray_holdout_9131042",
+        "phase": "tray",
+        "seed": 9131042,
+        "state": "running",
+        "runner_pid": 26088,
+        "pid": 26091,
+        "run_id": "2c85de8f6dcb4666ad393183fcf046ed",
+        "episodes": 2,
+        "successes": 2,
+        "failures": 0,
+        "native_complete": false,
+        "trace": {
+          "step": 5310,
+          "episode": 2,
+          "stage": "pickup",
+          "route": 0,
+          "valid": false,
+          "last_error": "Move to the surveyed observation view first",
+          "camera_age_ms": 177033.33333433332
+        }
+      },
+      {
+        "name": "tray_holdout_9141042",
+        "phase": "tray",
+        "seed": 9141042,
+        "state": "running",
+        "runner_pid": 26107,
+        "pid": 26111,
+        "run_id": "2f9a1efd15ed425aa1238438e6d49a64",
+        "episodes": 1,
+        "successes": 1,
+        "failures": 0,
+        "native_complete": false,
+        "trace": {
+          "step": 5310,
+          "episode": 1,
+          "stage": "tray_via_front",
+          "route": 4,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333333144
+        }
+      },
+      {
+        "name": "dock_clamp_holdout_9151042",
+        "phase": "dock_clamp",
+        "seed": 9151042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "dock_clamp_holdout_9161042",
+        "phase": "dock_clamp",
+        "seed": 9161042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "full_holdout_9241042",
+        "phase": "full",
+        "seed": 9241042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "full_holdout_9251042",
+        "phase": "full",
+        "seed": 9251042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "full_holdout_9261042",
+        "phase": "full",
+        "seed": 9261042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "full_holdout_9271042",
+        "phase": "full",
+        "seed": 9271042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "full_holdout_9281042",
+        "phase": "full",
+        "seed": 9281042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "full_holdout_9291042",
+        "phase": "full",
+        "seed": 9291042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "full_holdout_9301042",
+        "phase": "full",
+        "seed": 9301042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "full_holdout_9311042",
+        "phase": "full",
+        "seed": 9311042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      },
+      {
+        "name": "demo_holdout_9321042",
+        "phase": "demo",
+        "seed": 9321042,
+        "state": "not_launched",
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_complete": false
+      }
+    ],
+    "phases": {
+      "tray": {
+        "episodes": 3,
+        "successes": 3,
+        "failures": 0,
+        "native_group_rows": 0
+      },
+      "dock_clamp": {
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_group_rows": 0
+      },
+      "full": {
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_group_rows": 0
+      },
+      "demo": {
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_group_rows": 0
+      }
+    },
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "new_learning_updates": 0,
+    "formal_full_gate_passed": false,
+    "gpu": "26108, 4798 MiB\n26136, 4798 MiB\n"
+  },
+  "phase_gates_passed": {
+    "tray": false,
+    "dock_clamp": false,
+    "full": false
+  },
+  "formal_full_evaluation": {
+    "complete": 0,
+    "successes": 0,
+    "failures": 0,
+    "required": 64,
+    "native_completed_group_rows": 0
+  },
+  "new_learning_updates": 0,
+  "policy_version_changed": false,
+  "optimizer_reset": false,
+  "idle_inhibitor": {
+    "pid": 26082,
+    "pgid": 26082,
+    "script": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_tools/hold_campaign_idle.py"
+  },
+  "scheduler_tests": {
+    "mac": "6passed",
+    "node": "6passed"
+  },
+  "next": "Keep existing jobs. Complete phase native reports, all-original-file SHA backup and independent strict physics plus official acceptance; then write matching phase review receipt before next phase. No PPO training.",
+  "phase": "tray",
+  "latest_snapshot_sha_and_physics": {
+    "at": "2026-10-22T13:59:25.087064+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261022_215921",
+    "files": 47,
+    "mismatches": [],
+    "phases": {
+      "tray": {
+        "episodes": 3,
+        "successes": 3,
+        "failures": 0,
+        "native_group_rows": 0
+      },
+      "dock_clamp": {
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_group_rows": 0
+      },
+      "full": {
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_group_rows": 0
+      },
+      "demo": {
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "native_group_rows": 0
+      }
+    },
+    "checks": [
+      {
+        "name": "tray_holdout_9131042",
+        "phase": "tray",
+        "episode": 0,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 1.1992983443693381,
+        "axis_base_y": 0.9999999999591505,
+        "retreat_mm": 179.14879322052002,
+        "unsafe_force_N": 22.360857009887695,
+        "handoffs": [
+          {
+            "tick": 1101,
+            "pixel": [
+              502.07295531325155,
+              519.9107317060154
+            ],
+            "guards_verified": true
+          }
+        ]
+      },
+      {
+        "name": "tray_holdout_9131042",
+        "phase": "tray",
+        "episode": 1,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 0.9616104144548772,
+        "axis_base_y": 0.999999999997151,
+        "retreat_mm": 179.11246418952942,
+        "unsafe_force_N": 23.261837005615234,
+        "handoffs": [
+          {
+            "tick": 3585,
+            "pixel": [
+              564.83554985851,
+              521.4788200877288
+            ],
+            "guards_verified": true
+          }
+        ]
+      },
+      {
+        "name": "tray_holdout_9141042",
+        "phase": "tray",
+        "episode": 0,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 0.36973359481356627,
+        "axis_base_y": 0.9999999999811086,
+        "retreat_mm": 179.07705903053284,
+        "unsafe_force_N": 19.983009338378906,
+        "handoffs": [
+          {
+            "tick": 1890,
+            "pixel": [
+              486.36570301400025,
+              519.6624056409368
+            ],
+            "guards_verified": true
+          }
+        ]
+      }
+    ],
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "stage_gate_passed": false,
+    "scope": "Independent SHA and strict receipt recomputation; complete native reports and full raw backups required separately for gate promotion."
+  },
+  "tracked_git_source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+  "node_canonical_source_kept": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2"
+}

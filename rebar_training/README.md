@@ -1,16 +1,16 @@
 # 钢筋抓取与试验机上料训练
 
-## 当前候选物理回归（2026-10-22 上海21:13）
+## 当前：同一冻结策略的独立验收（2026-10-22 上海21:59）
 
-同一8a24源码/393b策略+optimizer，466updates/170actor/36602steps未变，无新学习。最新 **9/11完成、9成功0失败**；完整原生组3行，未完成组部分6行，尚未通过11回合独立复核。76个不可变快照文件两端SHA和Mac真实物理/handoff守卫复算通过。
+修复开发回归已 **11/11完整成功、0失败、零证据错误**；1557个完整原始文件两端SHA一致，两个旧失败案例与真实30帧失视安全恢复均独立复核通过。保持source8a24、393b策略+optimizer及466updates/170actor/36602steps，不PPO重训、不重置策略或optimizer。
 
-source_return_reset8_7241042：6/8，running，step64230 pickup_tray/route0。
-source_return_reset2_7271042：2/2，completed，step17760 loading/route10。
-supported_partial_outage_241042：1/1，completed，step12720 loading/route10。
+当前阶段`tray`：完成3、成功3、失败0，其中完整原生组0行；该阶段gate尚未独立复核通过。47个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
+tray_holdout_9131042：2完成/2成功/0失败，running，pickup/route0。
+tray_holdout_9141042：1完成/1成功/0失败，running，tray_via_front/route4。
 
-原作业run_id/PID未变，未启动/停止/重启任何仿真，最多2并行。受控30帧失视原生1/1完整成功：tick7945中止，7958实测打开无载/托槽22.937N支撑/已返回，半速重观察至9093恢复；夹紧1.138055mm、83.747mm退让、真实四爪及速度/无臂接触严格复核通过。257完整原始/源码/日志文件两端SHA一致。724原失败第六回合已完整成功且有实际安全handoff，仍须全组及11回合完整复核。旧v10封存26/64（24成功2失败），v8完整16另2成功，v9到站4成功/full0，全部保留分列。
+正式整链为 **0/64完成，成功0、失败0**，不与技能/开发或历史混算。冻结计划e7381e2f…：抓取9131042/9141042各4，到站9151042/9161042各4，最终9241042..9311042间隔10000各8；演示9321042。仅到站技能gate允许托槽/到站复位、无录制视觉hint，不计64；正式64均从源抓取开始，无初始化/hint。阶段完整报告、全原始备份及Mac严格物理/官方gate独立复算通过并写review凭据后才晋级，当前原作业保留，最多2仿真。调度器是一次性工具，不会后台自行派发后续阶段。
 
-完整12.7GB历史归档已于20:53完成传输及103外层SHA核验，和Mac已逐条目核验的12000数据文件归档一致（d8f0a992…）。目标inbox独立保管，没有解压覆盖运行目录。Wi-Fi重连/续租日志已留存，根因未确认；不改全局电源/网络/SDK。恢复入口为主status/current_job_root及reports/resume_0103_same_candidate_20261022.json。
+目录`/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022`，inhibitor PID/PG26082仅在有限评估生命周期阻止idle，暂停时也须停止；不改全局网络、电源或SDK。12.7GB历史归档已两端SHA通过，未解压覆盖运行目录。旧v10封存26/64（24成功2失败）、v8完整16另2成功、v9到站4成功/full0保留分列。仅仿真，不ROS硬件/飞书，不动原模型/共享SDK或无关GUI地图。入口`reports/source_return_frozen_acceptance_0103_20261022.json`和主status.current_job_root；旧候选记录助手已禁止覆盖新阶段状态。
 
 ## 最新：103已恢复连接，同一候选继续物理回归（2026-10-22 上海20:21）
 
