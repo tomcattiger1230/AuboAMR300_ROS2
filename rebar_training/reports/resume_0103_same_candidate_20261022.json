@@ -1,0 +1,145 @@
+{
+  "updated_at": "2026-10-22T12:11:25.818927+00:00",
+  "user_authorized_resume": true,
+  "user_confirmed_target": "arnold@192.168.0.103",
+  "hardware": "RTX5090 Laptop GPU",
+  "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
+  "current_job_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
+  "state": "connection_lost_after_launch_current_native_progress_unknown",
+  "launch_receipt": {
+    "directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
+    "plan_sha256": "86fcfc2133cbbe77ae8a7fed38f70337a015235030ad4afb7e57da13b81b77c4",
+    "status": {
+      "at": "2026-10-22T11:22:57.600859+00:00",
+      "new_learning_updates": 0,
+      "policy_reinitialized": false,
+      "same_candidate_source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+      "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "initial_counters": {
+        "updates": 466,
+        "actor_updates": 170,
+        "policy_steps": 36602
+      },
+      "cpu_passed": 251,
+      "original_evidence_retained": true,
+      "formal_acceptance_episodes": 0,
+      "launched": [
+        {
+          "name": "source_return_reset8_7241042",
+          "result": {
+            "job": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/source_return_reset8_7241042.job.json",
+            "runner_pid": 8825,
+            "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58"
+          }
+        },
+        {
+          "name": "source_return_reset2_7271042",
+          "result": {
+            "job": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/source_return_reset2_7271042.job.json",
+            "runner_pid": 8879,
+            "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58"
+          }
+        }
+      ],
+      "inventory_before": {
+        "groups": [],
+        "processes": [],
+        "gpu": ""
+      },
+      "state": "continuing_candidate_physics_two_jobs_running_third_pending",
+      "inventory_after": {
+        "groups": [
+          8825,
+          8879
+        ],
+        "processes": [
+          {
+            "pid": 8825,
+            "pgid": 8825
+          },
+          {
+            "pid": 8826,
+            "pgid": 8825
+          },
+          {
+            "pid": 8828,
+            "pgid": 8825
+          },
+          {
+            "pid": 8835,
+            "pgid": 8825
+          },
+          {
+            "pid": 8838,
+            "pgid": 8825
+          },
+          {
+            "pid": 8879,
+            "pgid": 8879
+          },
+          {
+            "pid": 8880,
+            "pgid": 8879
+          },
+          {
+            "pid": 8882,
+            "pgid": 8879
+          },
+          {
+            "pid": 8889,
+            "pgid": 8879
+          },
+          {
+            "pid": 8892,
+            "pgid": 8879
+          }
+        ],
+        "gpu": ""
+      }
+    }
+  },
+  "latest_verified_native_episodes": null,
+  "latest_verified_successes": null,
+  "latest_verified_failures": null,
+  "first_startup_attempt": {
+    "state": "asset_audit_failed_before_physics",
+    "physical_episodes": 0,
+    "missing_original_dependency": "assets_full_v2_precision",
+    "action": "Copied all twelve original USD asset files and verified hashes; preserved failed output; launched new run2 output"
+  },
+  "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "candidate_source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+  "retained_counters": {
+    "updates": 466,
+    "actor_updates": 170,
+    "policy_steps": 36602
+  },
+  "cuda_tensors_finite": 52,
+  "cpu_passed": 251,
+  "hardware_only_new_policy": false,
+  "new_learning_updates": 0,
+  "optimizer_reset": false,
+  "historical_candidate": {
+    "episodes": 2,
+    "successes": 2,
+    "failures": 0,
+    "retained": true
+  },
+  "continuous_group_replay_reason": "Simulator state not serialized; same frozen candidate, policy, seeds; replay interrupted continuous groups in fresh output; do not merge interrupted receipts.",
+  "connectivity": {
+    "ssh_timeouts": 3,
+    "target_ping": "0/2",
+    "gateway_ping": "2/2",
+    "cause": "unknown"
+  },
+  "outage_job": "not launched by this continuation",
+  "outage_dispatcher": "run2 not launched; prepare only until native status verified",
+  "full_archive_target_transfer": "in progress or stalled; remote SHA not yet verified",
+  "pending": [
+    "Reconnect read-only; check runner8825/8879 plus actual native/GPU and all queued/startup jobs, do not duplicate.",
+    "Find existing SDK OmniPBR.mdl path and save asset dependency audit; do not modify SDK/assets.",
+    "Read current complete native JSON/progress/log and verify source/checkpoint/physics/handoff.",
+    "Only after valid complete reset2 report and actual free slot launch predeclared supported_partial_outage_241042 once.",
+    "Finish full archive transfer and verify remote SHA d8f0a99269cad0a58a953ccdf03ee3118b21f8d4087d598c0ee8aa8d7fe4f753."
+  ]
+}
