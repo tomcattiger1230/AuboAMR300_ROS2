@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-22T12:28:42.342812+00:00",
+  "updated_at": "2026-10-22T12:35:53.688572+00:00",
   "user_authorized_resume": true,
   "user_confirmed_target": "arnold@192.168.0.103",
   "hardware": "RTX5090 Laptop GPU",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
   "current_job_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
-  "state": "candidate_regression_host_unreachable",
+  "state": "connected_original_candidate_jobs_progressing",
   "launch_receipt": {
     "directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2",
     "plan_sha256": "86fcfc2133cbbe77ae8a7fed38f70337a015235030ad4afb7e57da13b81b77c4",
@@ -127,22 +127,15 @@
   },
   "continuous_group_replay_reason": "Simulator state not serialized; same frozen candidate, policy, seeds; replay interrupted continuous groups in fresh output; do not merge interrupted receipts.",
   "connectivity": {
-    "at": "2026-10-22T12:28:42.342812+00:00",
-    "state": "ssh_timeout_then_host_unreachable",
-    "local_ip": "192.168.0.160",
-    "target": "192.168.0.103",
-    "target_ping": "0/3",
-    "gateway_ping": "2/2",
-    "arp": "incomplete",
-    "cause": "unknown_no_remote_logs_available",
-    "last_trusted_at": "2026-10-22T12:21:30.662175+00:00",
-    "last_trusted_episodes": 5,
-    "last_trusted_successes": 5,
-    "last_trusted_failures": 0,
-    "current_native_progress": "unknown",
-    "new_completed_rows_since_last_check": "unknown",
-    "no_simulation_mutation": true,
-    "archive_transfer": "previous transfer exited255; not restarted while unreachable"
+    "restored_at": "2026-10-22T12:33:53.925957+00:00",
+    "network_manager_event": "20:32:56 WiFi activated->unavailable; 20:33:01 reactivated; 20:33:06 renewed192.168.0.103",
+    "queried_suspend_hibernate_units": "no entries in queried last hour",
+    "existing_task_inhibitors": [
+      "8826 idle block",
+      "13643 idle block"
+    ],
+    "root_cause": "not established",
+    "no_global_power_or_network_change": true
   },
   "outage_job": {
     "state": "running",
@@ -156,9 +149,12 @@
     "no_relaunch": true
   },
   "full_archive_target_transfer": {
-    "state": "interrupted_ssh_timeout_partial_retained_remote_sha_pending",
-    "exec_session": 38333,
-    "exit_code": 255
+    "at": "2026-10-22T12:35:06.660219+00:00",
+    "pid": 82922,
+    "state": "transferring_with_partial_and_8MiB_limit",
+    "sha256_expected": "d8f0a99269cad0a58a953ccdf03ee3118b21f8d4087d598c0ee8aa8d7fe4f753",
+    "remote": "/home/arnold/Develop/rebar-migration-0103-20261022/rebar_training_migration_5090D_20261022.tar.gz",
+    "rsync_pid": 82924
   },
   "pending": [
     "Preserve two healthy candidate jobs and verify all 11 native episodes including original724episode5 and actual controlled outage.",
@@ -166,8 +162,8 @@
     "Finish full12.7GB transfer and remote outer SHA; never overwrite active repo."
   ],
   "latest_snapshot": {
-    "at": "2026-10-22T12:21:30.662175+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_202130",
+    "at": "2026-10-22T12:33:53.925957+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_203353",
     "candidate_source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "groups": [
@@ -184,10 +180,10 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 31530,
+          "step": 37260,
           "episode": 3,
-          "stage": "pickup",
-          "route": 0,
+          "stage": "dock",
+          "route": 4,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333330302
@@ -364,6 +360,7 @@
         ],
         "saved_handoff_packets": [
           "source_return_handoff_tick1041",
+          "source_return_handoff_tick31719",
           "source_return_handoff_tick18870",
           "source_return_handoff_tick9915"
         ]
@@ -521,13 +518,13 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 2280,
+          "step": 7860,
           "episode": 0,
-          "stage": "tray_above",
-          "route": 4,
+          "stage": "pickup_tray",
+          "route": 0,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333333144
+          "camera_age_ms": 33.33333333335986
         },
         "checks": [],
         "saved_handoff_packets": [
@@ -545,10 +542,10 @@
     "worker_state": "old_dispatchers_not_resumed"
   },
   "independent_physics_proof": {
-    "at": "2026-10-22T12:21:37.779624+00:00",
-    "files": 50,
+    "at": "2026-10-22T12:33:56.519819+00:00",
+    "files": 53,
     "mismatches": [],
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_202130",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_resume_0103_20261022_run2/snapshot_20261022_203353",
     "episodes": 5,
     "successes": 5,
     "failures": 0,
