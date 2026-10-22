@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-22T01:12:21.177204+00:00",
-  "status": "resume4090_migration_validation_running",
+  "updated_at": "2026-10-22T01:32:59.169206+00:00",
+  "status": "v10_tray_training_running",
   "stable": false,
   "user_authorized_resume": true,
   "requires_explicit_resume": false,
   "training_host": "arnold@192.168.3.133",
   "training_repository": "/home/arnold/Develop/rebar-training-4090-return-20261021",
-  "current_course": null,
-  "pending_course": "course_v10_4090_return",
-  "pending_validation": "review_20261020/resume_4090_return_20261022",
-  "active_phase": "migration_physical_regressions",
+  "current_course": "course_v10_4090_return",
+  "pending_course": null,
+  "pending_validation": null,
+  "active_phase": "tray_training",
   "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
   "warm_start_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
   "warm_start_counters": {
@@ -20,9 +20,9 @@
   "pending_plan": "config/mobile_curriculum_recovery_v10_4090_return.json",
   "pending_plan_sha256": "ef6828b0c3b034cc735312df77261fe9b9cc57b774a6582573e8e379739c3590",
   "validation_launcher_pgid": 16882,
-  "validation_state": "regression_running",
+  "validation_state": "course_started",
   "active_jobs": [
-    "full_reset_regression_5241042"
+    "tray_train"
   ],
   "independent_full_evaluation_episodes_required": 64,
   "independent_full_evaluation_complete_episodes": 0,
@@ -34,12 +34,11 @@
   "current_full_gate": null,
   "current_development_regressions": {
     "required_episodes": 3,
-    "episodes": 1,
-    "successes": 1,
+    "episodes": 3,
+    "successes": 3,
     "failures": 0,
-    "native_completed_jobs_episodes": 0,
-    "all_prerequisite_jobs_completed": false,
-    "regression_only": true
+    "native_completed_jobs_episodes": 3,
+    "all_prerequisite_jobs_completed": true
   },
   "historical_4090": {
     "course": "course_v8_precision_envelope",
@@ -68,62 +67,61 @@
   "forensic_archive_remote": "/home/arnold/Develop/rebar_training_migration_platform_20261021.tar.gz",
   "forensic_archive_remote_sha_verified": true,
   "do_not_unpack_forensic_archive_over_live_runtime": true,
-  "next_action": "Follow only new validator16884, no duplicate launch. Require3/3 frozenf70/source2c migration physical regressions before automatic newcourse_v10_4090_return. Then rerun stage gates, actual new actor updates and64predeclared fullholdouts. Separate oldv8 16completegroups+2successfulrows andv9partial4 from newpolicy acceptance.",
+  "next_action": "Keep original course20756 and tray_train20760. Require complete successful training plus real new actor update before independent7131042/7141042. Then gate dock/full with new plan. No duplicate launches, no oldPID resume.",
   "validation_runner_pid": 16884,
   "cpu_suite_passed": true,
   "cpu_suite_summary": "239 passed, 3 deprecation warnings, 17.01s",
-  "training_still_active": false,
-  "simulation_validation_active": true,
+  "training_still_active": true,
+  "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-22T01:11:56.617104+00:00",
-    "run_id": "ad7324b77a3741449453f18fbc9ca34f",
-    "episodes": 1,
-    "successes": 1,
-    "failures": 0,
-    "requested_episodes": 2,
-    "completed": false,
-    "checks": [
-      {
-        "episode": 0,
-        "error_mm": 1.3038498582318425,
-        "axis_error_deg": 0.03416519830736696,
-        "jaw_forces_N": [
-          24.67387580871582,
-          25.309465408325195,
-          25.29204750061035,
-          24.64547348022461
-        ],
-        "unsafe_force_N": 25.948537826538086,
-        "tcp_clearance_mm": 85.86778491735458,
-        "unloaded": true,
-        "steel_linear_speed_m_s": 0.0011099564144387841,
-        "steel_angular_speed_rad_s": 0.0031014878768473864,
-        "continuous_mission_phases_verified": true,
-        "all_strict_physics_passed": true
-      }
+    "at": "2026-10-22T01:32:59.169206+00:00",
+    "current_course": "course_v10_4090_return",
+    "state": "running",
+    "phase": "tray",
+    "active_jobs": [
+      "tray_train"
     ],
-    "last_trace": {
-      "step": 13500,
-      "episode": 1,
-      "stage": "navigate",
-      "route": 4,
-      "valid": true,
-      "last_error": "",
-      "camera_age_ms": 33.33333333335986
-    },
-    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
-    "controller_sha256": "a29eeedf2b3690a169fd8e7490410f2d1b17eb9dcb915e39f263c78c1557760c",
-    "gate_passed": false,
-    "full_qualified": false,
-    "regression_only": true,
-    "formal_independent_episodes": 0
+    "jobs": [
+      {
+        "name": "tray_train",
+        "runner_pid": 20760,
+        "pid": 20761,
+        "state": "running",
+        "log_age_seconds": 0.38,
+        "trace": {
+          "step": 3150,
+          "episode": 1,
+          "stage": "pickup",
+          "route": 0,
+          "valid": false,
+          "last_error": "Move to the surveyed observation view first",
+          "camera_age_ms": 105033.33333433334,
+          "residual_active": false
+        },
+        "training": {
+          "updates": 341,
+          "new_updates": 12,
+          "steps": 3072,
+          "policy_steps": 28138,
+          "episodes": 1,
+          "checkpoint": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/tray_policy.pt",
+          "latest_update": {
+            "update": 341,
+            "active_steps": 2,
+            "policy_steps": 28138,
+            "actor_updates": 129,
+            "loss": 1.6414545774459839,
+            "approx_kl": 0.0008734166622161865
+          }
+        }
+      }
+    ]
   },
-  "node_migration_regression_successes": 1,
-  "node_migration_regression_complete_episodes": 1,
+  "node_migration_regression_successes": 3,
+  "node_migration_regression_complete_episodes": 3,
   "migration_required_directories": [
     "course_v9_5090_resume",
-    "review_20261020/resume_5090_20261021",
+    "course_v10_4090_return",
     "review_20261020/resume_4090_return_20261022"
   ],
   "migration_start_receipts_backup": {
@@ -144,198 +142,215 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "09:11 Shanghai: originalvalidator16884/job17536 healthy, firstcontinuousfullresetrow1/2success,error1.30385mm,strict4pad/unload/85.9mmretreat/speeds/continuousstages passed. Secondrowstep13500navigationroute4,validRGB33ms,noerror.8immutablefilesSHAverifiedbothhosts. Migrationoverall1/3success0fail,new1;gatepending. Newformal0/64 success0fail0 new0. Historicalv8complete16+2success andv9partial4 preserved separately. No duplicate launch or policy update.",
+  "last_heartbeat_result": "09:32 Shanghai: migration regressionscomplete3/3success0failure,new2sincepriorcheck;strict reset errors1.304/1.520mm,outage1.330mm,recoverymeasured openunloaded/support19.58N/returned/halfspeedfreshobservation verified.776completefilesSHAverifiedbothhosts. Originalvalidatorfinishedcourse_started; newcourse20756/tray20760running. Verified+8PPO/+3actor/+656steps,337/125/27368,actorchange0.00252745,modeloptimizerfinite. Newformal0/64success0fail0new0; oldv8/v9separate.",
   "independent_full_evaluation_new_episodes_since_last_check": 0,
   "latest_local_recovery_backup": {
-    "at": "2026-10-21T15:39:42.158204+00:00",
-    "archive": "rebar_training/artifacts/rebar_training_migration_back4090_20261021.tar.gz",
-    "bytes": 1439210328,
-    "sha256": "766c0d05c86bf3c5864b918ce064282f0272dc2a2323d2d469c23e481f320e26",
-    "verified_files": 2573,
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_4090_migration_pass_v10_started.tar.gz",
+    "bytes": 343044991,
+    "files": 625,
+    "sha256": "f4816f041ddd730cc01ec269463829b5ead3280c77fb7a71734c6bf0b82825de",
     "mismatches": [],
-    "training_state": "paused_user",
-    "requires_explicit_resume": true,
-    "training_resumed": false,
-    "current_runtime_standalone": true,
-    "historical_older_courses_separate": true
+    "qualified": false
   },
-  "last_completed_validation": "review_20261020/return4090_20261022",
-  "current_course_state": "pending_regressions",
-  "course_runner_pid": 112563,
-  "physical_regressions_completed": 1,
+  "last_completed_validation": "review_20261020/resume_4090_return_20261022",
+  "current_course_state": "running",
+  "course_runner_pid": 20756,
+  "physical_regressions_completed": 3,
   "course_started": true,
   "latest_migration_full_verification": {
-    "at": "2026-10-21T14:31:28.178800+00:00",
+    "at": "2026-10-22T01:29:59.570796+00:00",
     "complete": true,
-    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-    "checkpoint_sha256": "fe48b74da455c7562ff079d9990cd0a8b534d064d9217029a48431cea5bc235b",
-    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
-    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
     "episodes": 3,
     "successes": 3,
     "failures": 0,
-    "jobs": [
+    "regression_only": true,
+    "formal_independent_episodes": 0,
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "reports": [
       {
-        "name": "full_reset_regression_5241042",
-        "run_id": "6954b78d1c5347be9b78f5ef4ffa027f",
+        "at": "2026-10-22T01:26:58.529172+00:00",
+        "completed": true,
+        "run_id": "ad7324b77a3741449453f18fbc9ca34f",
         "episodes": 2,
         "successes": 2,
+        "failures": 0,
+        "report_sha256": "39e106fc40f490be55b00986e97759b73d35900e0a334f31b9740c74afb985a7",
+        "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+        "frozen_counters": [
+          329,
+          122,
+          26712
+        ],
         "checks": [
           {
             "episode": 0,
-            "error_mm": 1.5478938585147262,
-            "axis_error_deg": 0.03711979043541847,
-            "all_strict_physics_passed": true
+            "error_mm": 1.3038498582318425,
+            "axis_error_deg": 0.03416519830736696,
+            "jaw_forces_N": [
+              24.67387580871582,
+              25.309465408325195,
+              25.29204750061035,
+              24.64547348022461
+            ],
+            "tcp_clearance_mm": 85.86778491735458,
+            "unsafe_force_N": 25.948537826538086,
+            "all_strict_physics_passed": true,
+            "continuous_mission_verified": true
           },
           {
             "episode": 1,
-            "error_mm": 1.6125243855640292,
-            "axis_error_deg": 0.037480069165242526,
-            "all_strict_physics_passed": true
+            "error_mm": 1.520287012681365,
+            "axis_error_deg": 0.03515259973712067,
+            "jaw_forces_N": [
+              24.64461326599121,
+              25.33770179748535,
+              25.344079971313477,
+              24.65558624267578
+            ],
+            "tcp_clearance_mm": 89.33787047863007,
+            "unsafe_force_N": 25.617088317871094,
+            "all_strict_physics_passed": true,
+            "continuous_mission_verified": true
           }
         ],
-        "report_sha256": "6324e514556aca966f08e3bc6b4eb19a1743be5d80d65a75c118246df2773a60",
-        "grasp_aborts": [],
-        "reacquisitions": [],
-        "frozen_updates": 278,
-        "frozen_actor_updates": 100,
-        "frozen_policy_steps": 21833
+        "regression_only": true,
+        "formal_independent_episodes": 0,
+        "full_qualified": false
       },
       {
-        "name": "partial_grasp_outage_241042",
-        "run_id": "800edb1e015342829f69621186754e4e",
+        "at": "2026-10-22T01:29:28.189484+00:00",
+        "completed": true,
+        "run_id": "194ccdc9d3ba4100b43ddcb64b1d1b99",
         "episodes": 1,
         "successes": 1,
+        "failures": 0,
+        "report_sha256": "9f9a9b8833681f83db6ec85708198aa4b4b9fb116aa53850467f4f99044ca2a7",
+        "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+        "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+        "frozen_counters": [
+          329,
+          122,
+          26712
+        ],
         "checks": [
           {
             "episode": 0,
-            "error_mm": 1.5023754676803946,
-            "axis_error_deg": 0.03727167101777934,
-            "all_strict_physics_passed": true
-          }
-        ],
-        "report_sha256": "2c8eb70610f9157d3e3840394dca34454b057692a432e0571065654bb0de300c",
-        "grasp_aborts": [
-          {
-            "tick": 2332,
-            "reason": "No detected steel component",
-            "tcp_base": [
-              0.2926057193745679,
-              -0.0009295626710237315,
-              0.7231857563894308
+            "error_mm": 1.329819904640317,
+            "axis_error_deg": 0.03417820589348076,
+            "jaw_forces_N": [
+              24.105165481567383,
+              25.835391998291016,
+              25.830970764160156,
+              24.10112190246582
             ],
-            "finger_forces": [
-              61.32453155517578,
-              53.33127212524414
+            "tcp_clearance_mm": 74.2005780339241,
+            "unsafe_force_N": 25.838594436645508,
+            "all_strict_physics_passed": true,
+            "safe_partial_grasp_recovery_verified": true,
+            "aborts": [
+              {
+                "tick": 2314,
+                "reason": "No detected steel component",
+                "tcp_base": [
+                  0.29262571867699716,
+                  -0.0006801032351928527,
+                  0.7231986167360768
+                ],
+                "finger_forces": [
+                  57.97854232788086,
+                  50.91228485107422
+                ],
+                "tray_load_N": 25.303054809570312,
+                "last_good_ns": 76600000000,
+                "arm_joints": [
+                  3.4685380458831787,
+                  -0.32724571228027344,
+                  1.9173592329025269,
+                  0.6741442084312439,
+                  1.5709205865859985,
+                  -1.2439274787902832
+                ],
+                "open_unloaded_tick": 2327,
+                "open_fingers": [
+                  0.00123952841386199,
+                  0.0012708996655419469
+                ],
+                "open_forces": [
+                  0.0,
+                  0.0
+                ],
+                "supported_tray_load_N": 19.578306198120117,
+                "returned": true,
+                "open_arm_joints": [
+                  3.4683172702789307,
+                  -0.32654792070388794,
+                  1.9179679155349731,
+                  0.6733736991882324,
+                  1.5713082551956177,
+                  -1.2435208559036255
+                ]
+              }
             ],
-            "tray_load_N": 18.575593948364258,
-            "last_good_ns": 77200000000,
-            "arm_joints": [
-              3.468120574951172,
-              -0.3272216022014618,
-              1.917453646659851,
-              0.6742466688156128,
-              1.570940613746643,
-              -1.244764804840088
-            ],
-            "open_unloaded_tick": 2345,
-            "open_fingers": [
-              0.0012354262871667743,
-              0.0012424655724316835
-            ],
-            "open_forces": [
-              0.0,
-              0.0
-            ],
-            "supported_tray_load_N": 21.79046630859375,
-            "returned": true,
-            "open_arm_joints": [
-              3.4682674407958984,
-              -0.32659533619880676,
-              1.918287992477417,
-              0.6731018424034119,
-              1.5701003074645996,
-              -1.245507836341858
+            "reacquisitions": [
+              {
+                "tick": 2327,
+                "reason": "No detected steel component",
+                "last_good_ns": 76600000000,
+                "return_speed_scale": 0.5,
+                "trigger": "supported_partial_grasp_abort",
+                "reacquired_tick": 3453
+              }
             ]
           }
         ],
-        "reacquisitions": [
-          {
-            "tick": 2345,
-            "reason": "No detected steel component",
-            "last_good_ns": 77200000000,
-            "return_speed_scale": 0.5,
-            "trigger": "supported_partial_grasp_abort",
-            "reacquired_tick": 3492
-          }
-        ],
-        "frozen_updates": 278,
-        "frozen_actor_updates": 100,
-        "frozen_policy_steps": 21833
+        "regression_only": true,
+        "formal_independent_episodes": 0,
+        "full_qualified": false
       }
     ],
-    "regression_only": true,
-    "qualified": false,
-    "independent_episodes": 0
+    "raw_files_verified": 776,
+    "all_files_sha_verified_both_hosts": true,
+    "full_qualified": false
   },
   "current_course_source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-  "latest_training_live": null,
-  "last_observed_learning": {
-    "at": "2026-10-21T15:16:29.484451+00:00",
-    "completed": true,
-    "episodes": 2,
-    "successes": 2,
-    "report_sha256": "586063f04b3594ab608afcabac120a1d2a393dd1b1189f22770fbc1f2f9c515b",
-    "checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
-    "input_checkpoint_sha256": "d1e26e7bb23d43d6d111af24180d10e284120055fe9d0104f512f95a06b3d851",
-    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
-    "detector_sha256": "845f5aecda01e6d64073a1a9ded2866092ea82661136cc0b32b4752ecf46cf59",
-    "asset_manifest_sha256": "d543044f0ae40008db86733dd0cbba520c508b3bc19cc1cea654b28cf73792eb",
-    "checks": [
-      {
-        "episode": 0,
-        "error_mm": 1.6188073204830289,
-        "axis_error_deg": 0.03238169976154305,
-        "jaw_forces_N": [
-          26.106151580810547,
-          23.89033317565918,
-          23.859283447265625,
-          26.070100784301758
-        ],
-        "tcp_clearance_mm": 96.73547744750977,
-        "unloaded": true,
-        "all_strict_clamp_physics_passed": true
-      },
-      {
-        "episode": 1,
-        "error_mm": 1.8555610440671444,
-        "axis_error_deg": 0.07286452910662779,
-        "jaw_forces_N": [
-          24.41220474243164,
-          25.483753204345703,
-          25.52713394165039,
-          24.4746150970459
-        ],
-        "tcp_clearance_mm": 88.71418982744217,
-        "unloaded": true,
-        "all_strict_clamp_physics_passed": true
-      }
-    ],
-    "updates": 329,
-    "actor_updates": 122,
-    "policy_steps": 26712,
-    "new_updates": 26,
-    "new_actor_updates": 10,
-    "new_policy_steps": 2089,
-    "actor_weight_max_abs_change": 0.007040524855256081,
+  "latest_training_live": {
+    "at": "2026-10-22T01:31:42.333493+00:00",
+    "checkpoint_sha256": "53243a1417beb6587e3a839802628287ff5bdcede3db66fc667ba501386e6905",
+    "initial_checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "updates": 337,
+    "actor_updates": 125,
+    "policy_steps": 27368,
+    "new_updates": 8,
+    "new_actor_updates": 3,
+    "new_policy_steps": 656,
+    "actor_weight_max_abs_change": 0.002527451142668724,
     "model_and_optimizer_finite": true,
-    "qualified": false,
-    "checkpoint_sha_verified_on_node_and_mac": true
+    "actual_new_actor_update_verified": true,
+    "training_completed": false,
+    "qualified": false
   },
-  "resumed_learning_verified": false,
-  "new_actor_updates": 10,
-  "new_effective_policy_steps": 2089,
-  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v9_5090_resume/dock_clamp_policy.pt",
+  "last_observed_learning": {
+    "at": "2026-10-22T01:31:42.333493+00:00",
+    "checkpoint_sha256": "53243a1417beb6587e3a839802628287ff5bdcede3db66fc667ba501386e6905",
+    "initial_checkpoint_sha256": "f70f6115c984357a305f10b13eb3a1a6536740e0ea1e98545d093b517a5cd831",
+    "updates": 337,
+    "actor_updates": 125,
+    "policy_steps": 27368,
+    "new_updates": 8,
+    "new_actor_updates": 3,
+    "new_policy_steps": 656,
+    "actor_weight_max_abs_change": 0.002527451142668724,
+    "model_and_optimizer_finite": true,
+    "actual_new_actor_update_verified": true,
+    "training_completed": false,
+    "qualified": false
+  },
+  "resumed_learning_verified": true,
+  "new_actor_updates": 3,
+  "new_effective_policy_steps": 656,
+  "local_checkpoint_snapshot": "rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/learning_snapshot_20261022_0932/tray_policy.pt",
   "latest_training_native_progress": {
     "as_of": "2026-10-21T15:16:29.484451+00:00",
     "phase": "dock_clamp",
@@ -352,7 +367,7 @@
   "node_connection_state": "connected",
   "last_known_course_state": "running",
   "last_known_active_jobs": [],
-  "last_successful_node_check_at": "2026-10-22T01:11:56.617104+00:00",
+  "last_successful_node_check_at": "2026-10-22T01:32:59.169206+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -384,9 +399,9 @@
     "suspend_hibernate_unit_journal_last45min": "no entries, returncode0, no stderr; no cause inferred or power settings changed"
   },
   "display_progress": {
-    "historical_4090_v8": "16/64 complete group rows plus2 successful rows in interrupted groups;18success0fail, not lost.",
-    "historical_5090_v9": "Traygate8/8,dockpartial4success0fail,full0/64.",
-    "current_4090_v10": "Pending3/3migrationregressions, then newcourse. Finalfull0/64 success0fail0 new0."
+    "historical_4090_v8": "16/64completegroupsplus2success,total18success0fail;preserved.",
+    "historical_5090_v9": "traygate8/8,dockpartial4success0fail,full0/64.",
+    "current_4090_v10": "Migration3/3passed,newactorupdates3verified,traytraininginprogress;noformalstagegateyet;full0/64success0fail0new0."
   },
   "user_reported_node_awake": true,
   "waiting_for": null,
@@ -1057,7 +1072,7 @@
     "source_repository": "/home/arnold/Develop/rebar-training-5090-resume-20261021",
     "scope": "Archive/file integrity, CPU tests, read-only CUDA inference/checkpoint/optimizer and USD dependency checks only. No simulation or curriculum was launched."
   },
-  "new_training_course_created": false,
+  "new_training_course_created": true,
   "latest_resume_predeclaration": {
     "created_at": "2026-10-22T00:53:46.351388+00:00",
     "user_authorized_resume": true,
@@ -1195,5 +1210,21 @@
     "regression_only": true,
     "formal_independent_episodes": 0
   },
-  "latest_migration_partial_snapshot": "review_20261020/resume_4090_return_20261022/partial_snapshot_20261022_0911"
+  "latest_migration_partial_snapshot": "review_20261020/resume_4090_return_20261022/partial_snapshot_20261022_0911",
+  "latest_learning_both_hosts_verified": {
+    "at": "2026-10-22T01:32:03.093494+00:00",
+    "files": 6,
+    "mismatches": [],
+    "all_listed_files_sha_verified_both_hosts": true,
+    "learning_snapshot_only": true,
+    "qualified": false
+  },
+  "required_completed_reset_backup": {
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_4090_reset2_pass.tar.gz",
+    "bytes": 186993071,
+    "sha256": "218d42db15c3202c2a72f1638c7c78686e051103211028cc3275f0bf4f063743",
+    "files": 296,
+    "mismatches": [],
+    "qualified": false
+  }
 }
