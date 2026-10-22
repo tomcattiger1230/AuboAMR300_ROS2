@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T05:25:08.143417+00:00",
+  "updated_at": "2026-10-22T05:39:04.085914+00:00",
   "status": "v10_full_holdouts_running",
   "stable": false,
   "user_authorized_resume": true,
@@ -26,8 +26,8 @@
     "full_holdout_7251042"
   ],
   "independent_full_evaluation_episodes_required": 64,
-  "independent_full_evaluation_complete_episodes": 11,
-  "independent_full_evaluation_successes": 10,
+  "independent_full_evaluation_complete_episodes": 13,
+  "independent_full_evaluation_successes": 12,
   "independent_full_evaluation_failures": 1,
   "independent_full_evaluation_passed": false,
   "current_tray_gate": {
@@ -115,16 +115,16 @@
   "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-22T05:25:08.143417+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_132508",
+    "at": "2026-10-22T05:39:04.085914+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_133904",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
         "seed": 7241042,
         "name": "full_holdout_7241042",
         "run_id": "a710e29cc1ee4785b15024aa52b2fe57",
-        "episodes": 6,
-        "successes": 5,
+        "episodes": 7,
+        "successes": 6,
         "completed": false,
         "checks": [
           {
@@ -224,12 +224,28 @@
               0.0
             ],
             "all_strict_clamp_physics_passed": false
+          },
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 6,
+            "error_mm": 1.0173433693125844,
+            "axis_error_deg": 0.03964617977830002,
+            "jaw_forces_N": [
+              25.828842163085938,
+              24.108911514282227,
+              24.105480194091797,
+              25.826215744018555
+            ],
+            "unsafe_force_N": 25.834392547607422,
+            "tcp_clearance_mm": 89.3421322107315,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 54900,
-          "episode": 6,
-          "stage": "navigate",
+          "step": 60750,
+          "episode": 7,
+          "stage": "tray_rotate",
           "route": 4,
           "valid": true,
           "last_error": "",
@@ -240,8 +256,8 @@
         "seed": 7251042,
         "name": "full_holdout_7251042",
         "run_id": "f3227271d77949a792d5d983a499090a",
-        "episodes": 5,
-        "successes": 5,
+        "episodes": 6,
+        "successes": 6,
         "completed": false,
         "checks": [
           {
@@ -323,21 +339,37 @@
             "unsafe_force_N": 25.998804092407227,
             "tcp_clearance_mm": 89.308001101017,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 5,
+            "error_mm": 1.0829989332705736,
+            "axis_error_deg": 0.040498650916674504,
+            "jaw_forces_N": [
+              24.69668960571289,
+              25.196226119995117,
+              25.181554794311523,
+              24.674833297729492
+            ],
+            "unsafe_force_N": 26.16854476928711,
+            "tcp_clearance_mm": 89.32455629110336,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 54390,
-          "episode": 5,
-          "stage": "tray_lift_high",
+          "step": 60540,
+          "episode": 6,
+          "stage": "navigate",
           "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333330302
+          "camera_age_ms": 33.33333333307564
         }
       }
     ],
-    "episodes": 11,
-    "successes": 10,
+    "episodes": 13,
+    "successes": 12,
     "failures": 1,
     "independent_full_gate_passed": false,
     "formal_full_episodes": 0,
@@ -369,8 +401,8 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "{\"shanghai_time\": \"2026-10-22T13:25:08.143417+08:00\", \"full_completed_rows\": 11, \"successes\": 10, \"failures\": 1, \"new_rows\": 0, \"fully_completed_native_group_rows\": 0, \"qualified\": false, \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"snapshot\": \"full_holdouts_snapshot_20261022_132508\", \"sha_verified_files\": 42, \"new_physics_checks\": [], \"groups\": [{\"seed\": 7241042, \"name\": \"full_holdout_7241042\", \"run_id\": \"a710e29cc1ee4785b15024aa52b2fe57\", \"episodes\": 6, \"successes\": 5, \"completed\": false, \"checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.114375307224691, \"axis_error_deg\": 0.040243625138614236, \"jaw_forces_N\": [24.115081787109375, 25.824697494506836, 25.820592880249023, 24.11128044128418], \"unsafe_force_N\": 25.824697494506836, \"tcp_clearance_mm\": 89.44138884544373, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.096139196306467, \"axis_error_deg\": 0.04014963996662507, \"jaw_forces_N\": [25.852046966552734, 24.08210563659668, 24.08237075805664, 25.8514461517334], \"unsafe_force_N\": 25.852046966552734, \"tcp_clearance_mm\": 89.4801914691925, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2370655313134193, \"axis_error_deg\": 0.03984187842428986, \"jaw_forces_N\": [24.115434646606445, 25.823179244995117, 25.826282501220703, 24.11939811706543], \"unsafe_force_N\": 25.826282501220703, \"tcp_clearance_mm\": 89.68202769756317, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 3, \"error_mm\": 1.098204986192286, \"axis_error_deg\": 0.0394326560219965, \"jaw_forces_N\": [25.840749740600586, 24.081207275390625, 24.080028533935547, 25.83891487121582], \"unsafe_force_N\": 25.86188507080078, \"tcp_clearance_mm\": 86.06517314910889, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 4, \"error_mm\": 1.0770303197205067, \"axis_error_deg\": 0.039724672253411523, \"jaw_forces_N\": [25.831218719482422, 24.102495193481445, 24.10256004333496, 25.83016586303711], \"unsafe_force_N\": 25.839263916015625, \"tcp_clearance_mm\": 86.20867133140564, \"all_strict_clamp_physics_passed\": true}, {\"success\": false, \"episode\": 5, \"failure\": \"stage timeout: pickup\", \"timeout\": false, \"stage\": \"pickup\", \"last_perception_error\": \"Insufficient visible steel length\", \"unsafe_force_N\": 41.66632080078125, \"finger_positions\": [1.0929267773462925e-05, 4.345055426568933e-09], \"raw_finger_forces_N\": [0.0, 0.0], \"all_strict_clamp_physics_passed\": false}], \"trace\": {\"step\": 54900, \"episode\": 6, \"stage\": \"navigate\", \"route\": 4, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333307564}}, {\"seed\": 7251042, \"name\": \"full_holdout_7251042\", \"run_id\": \"f3227271d77949a792d5d983a499090a\", \"episodes\": 5, \"successes\": 5, \"completed\": false, \"checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.1342812795192003, \"axis_error_deg\": 0.04002145717271096, \"jaw_forces_N\": [24.11974334716797, 25.820194244384766, 25.816967010498047, 24.11646842956543], \"unsafe_force_N\": 25.832740783691406, \"tcp_clearance_mm\": 89.53092992305756, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.159358536824584, \"axis_error_deg\": 0.041229175644850145, \"jaw_forces_N\": [25.83334732055664, 24.089923858642578, 24.09501075744629, 25.838035583496094], \"unsafe_force_N\": 25.838035583496094, \"tcp_clearance_mm\": 89.54612165689468, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2141171609982848, \"axis_error_deg\": 0.0397067291761432, \"jaw_forces_N\": [24.724573135375977, 25.184926986694336, 25.21954345703125, 24.77450942993164], \"unsafe_force_N\": 25.818374633789062, \"tcp_clearance_mm\": 89.61356431245804, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 3, \"error_mm\": 1.0922509245574474, \"axis_error_deg\": 0.03943638101088309, \"jaw_forces_N\": [25.814298629760742, 24.10843849182129, 24.113554000854492, 25.819368362426758], \"unsafe_force_N\": 25.833282470703125, \"tcp_clearance_mm\": 85.99493652582169, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 4, \"error_mm\": 1.0148031869903207, \"axis_error_deg\": 0.04031367491478682, \"jaw_forces_N\": [23.999858856201172, 25.950965881347656, 25.967971801757812, 24.013763427734375], \"unsafe_force_N\": 25.998804092407227, \"tcp_clearance_mm\": 89.308001101017, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 54390, \"episode\": 5, \"stage\": \"tray_lift_high\", \"route\": 4, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333330302}}], \"action\": \"Keep original controller20756/jobs; no duplicate launch. Require complete native group reports and all64 strict same-fingerprint receipts before finalgate/video. Training and oldv8/v9 excluded.\", \"failure_analysis\": {\"at\": \"2026-10-22T05:18:46.987736+00:00\", \"course\": \"course_v10_4090_return\", \"seed\": 7241042, \"episode\": 5, \"run_id\": \"a710e29cc1ee4785b15024aa52b2fe57\", \"native_completed\": true, \"success\": false, \"failure\": \"stage timeout: pickup\", \"count_in_acceptance_denominator\": true, \"original_evidence_modified\": false, \"active_jobs_restarted\": false, \"source_sha256\": \"2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2\", \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"findings\": [\"The initial full-cap survey is fresh and stable; source pose is then tracked while the recorded empty-wrist observation return is replayed.\", \"At step47100, the accepted source estimate projects below the 615-pixel image: center v exceeds615 while side-edge observations are still accepted. The view therefore loses the center before the return finishes.\", \"At step47250 the observer rejects edges; the recorded return continues until ready, then the existing stale-image interlock holds all arm commands with fingers open and no load.\", \"At3601 steps the native pickup stage timeout records failure. There is no grasp, handoff, arm contact or force-limit violation; unsafe peak41.666N remains below250N.\", \"Bounded residual is inactive in route0. This failure occurs before the learned residual can move the arm; increasing PPO updates does not address this path/visibility defect.\"], \"projection_from_visual_estimate_only\": {\"step\": 47100, \"pixel\": [617.8371809635034, 680.4927648269961], \"image_size\": [1024, 615], \"last_error\": \"\", \"robot_and_camera_calibration_only\": true}, \"failed_receipt\": {\"steps\": 3601, \"unsafe_force_N\": 41.66632080078125, \"paused_steps\": 2305, \"fingers\": [1.0929267773462925e-05, 4.345055426568933e-09], \"finger_forces\": [0.0, 0.0], \"arm_contact_loads_N\": {\"shoulder_Link\": 0.0, \"upperArm_Link\": 0.0, \"foreArm_Link\": 0.0, \"wrist1_Link\": 0.0, \"wrist2_Link\": 0.0, \"wrist3_Link\": 0.0, \"gripper_adapter_link\": 0.0, \"gripper_motor_link\": 0.0, \"mono_camera_link\": 0.0}}, \"snapshot\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_131451\", \"diagnostic_snapshot\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/vision_stall_7241042_20261022_130934\", \"candidate\": {\"directory\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v1\", \"status\": {\"state\": \"cpu_passed_physical_unvalidated\", \"source_sha256\": \"142925af9a12852711ad40123daee6a4bc29e6af65082a440dc977e54ea7a67c\", \"parent_source_sha256\": \"2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2\", \"deployed\": false, \"physical_regression_required\": true, \"scope\": \"source pickup only; no change to tray recovery, estimator or physical acceptance\", \"risk\": \"Intermediate return handoff may change the subsequent elbow/visual trajectory; must pass collision, visibility and continuous-reset physical regressions before promotion\", \"cpu\": {\"platform\": \"macOS\", \"passed\": 245, \"skipped\": 3, \"new_guard_tests\": 12, \"command\": \"REBAR_REPO_ROOT=workspace PYTHONPATH=candidate/src pytest -q -o pythonpath= tests candidate/tests\", \"limitations\": \"Three existing platform-dependent tests skipped; physical trajectory/collision/visibility remains unvalidated.\"}, \"node_cpu\": {\"passed\": 251, \"skipped\": 0, \"new_guard_tests\": 12, \"physical_regression_passed\": false}}, \"deployed\": false, \"physical_passed\": false, \"next\": \"Run new-directory development reproduction and multi-reset/collision/strict-physics regressions once a simulation slot is free; never splice source candidate results into393b/source2c final64. Keep current frozen jobs and all failed receipts.\"}, \"formal_full_gate_passed\": false}, \"candidate_physics\": {\"path\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/source_return_regression_plan_20261022.json\", \"sha256\": \"0ff150711b04dbf27a0ac747dee4dcce5a25b923b12ab340709ede5ec3f3b935\", \"state\": \"prepared_not_launched\", \"development_episodes\": 9, \"formal_acceptance_episodes\": 0, \"capacity\": \"Two original simulations running; no third simulation launched.\"}}",
-  "independent_full_evaluation_new_episodes_since_last_check": 0,
+  "last_heartbeat_result": "{\"shanghai_time\": \"2026-10-22T13:39:04.085914+08:00\", \"full_completed_rows\": 13, \"successes\": 12, \"failures\": 1, \"new_rows\": 2, \"fully_completed_native_group_rows\": 0, \"qualified\": false, \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"snapshot\": \"full_holdouts_snapshot_20261022_133904\", \"sha_verified_files\": 48, \"new_physics_checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 6, \"error_mm\": 1.0173433693125844, \"axis_error_deg\": 0.03964617977830002, \"jaw_forces_N\": [25.828842163085938, 24.108911514282227, 24.105480194091797, 25.826215744018555], \"unsafe_force_N\": 25.834392547607422, \"tcp_clearance_mm\": 89.3421322107315, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 5, \"error_mm\": 1.0829989332705736, \"axis_error_deg\": 0.040498650916674504, \"jaw_forces_N\": [24.69668960571289, 25.196226119995117, 25.181554794311523, 24.674833297729492], \"unsafe_force_N\": 26.16854476928711, \"tcp_clearance_mm\": 89.32455629110336, \"all_strict_clamp_physics_passed\": true}], \"groups\": [{\"seed\": 7241042, \"name\": \"full_holdout_7241042\", \"run_id\": \"a710e29cc1ee4785b15024aa52b2fe57\", \"episodes\": 7, \"successes\": 6, \"completed\": false, \"checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.114375307224691, \"axis_error_deg\": 0.040243625138614236, \"jaw_forces_N\": [24.115081787109375, 25.824697494506836, 25.820592880249023, 24.11128044128418], \"unsafe_force_N\": 25.824697494506836, \"tcp_clearance_mm\": 89.44138884544373, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.096139196306467, \"axis_error_deg\": 0.04014963996662507, \"jaw_forces_N\": [25.852046966552734, 24.08210563659668, 24.08237075805664, 25.8514461517334], \"unsafe_force_N\": 25.852046966552734, \"tcp_clearance_mm\": 89.4801914691925, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2370655313134193, \"axis_error_deg\": 0.03984187842428986, \"jaw_forces_N\": [24.115434646606445, 25.823179244995117, 25.826282501220703, 24.11939811706543], \"unsafe_force_N\": 25.826282501220703, \"tcp_clearance_mm\": 89.68202769756317, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 3, \"error_mm\": 1.098204986192286, \"axis_error_deg\": 0.0394326560219965, \"jaw_forces_N\": [25.840749740600586, 24.081207275390625, 24.080028533935547, 25.83891487121582], \"unsafe_force_N\": 25.86188507080078, \"tcp_clearance_mm\": 86.06517314910889, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 4, \"error_mm\": 1.0770303197205067, \"axis_error_deg\": 0.039724672253411523, \"jaw_forces_N\": [25.831218719482422, 24.102495193481445, 24.10256004333496, 25.83016586303711], \"unsafe_force_N\": 25.839263916015625, \"tcp_clearance_mm\": 86.20867133140564, \"all_strict_clamp_physics_passed\": true}, {\"success\": false, \"episode\": 5, \"failure\": \"stage timeout: pickup\", \"timeout\": false, \"stage\": \"pickup\", \"last_perception_error\": \"Insufficient visible steel length\", \"unsafe_force_N\": 41.66632080078125, \"finger_positions\": [1.0929267773462925e-05, 4.345055426568933e-09], \"raw_finger_forces_N\": [0.0, 0.0], \"all_strict_clamp_physics_passed\": false}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 6, \"error_mm\": 1.0173433693125844, \"axis_error_deg\": 0.03964617977830002, \"jaw_forces_N\": [25.828842163085938, 24.108911514282227, 24.105480194091797, 25.826215744018555], \"unsafe_force_N\": 25.834392547607422, \"tcp_clearance_mm\": 89.3421322107315, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 60750, \"episode\": 7, \"stage\": \"tray_rotate\", \"route\": 4, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333307564}}, {\"seed\": 7251042, \"name\": \"full_holdout_7251042\", \"run_id\": \"f3227271d77949a792d5d983a499090a\", \"episodes\": 6, \"successes\": 6, \"completed\": false, \"checks\": [{\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 0, \"error_mm\": 1.1342812795192003, \"axis_error_deg\": 0.04002145717271096, \"jaw_forces_N\": [24.11974334716797, 25.820194244384766, 25.816967010498047, 24.11646842956543], \"unsafe_force_N\": 25.832740783691406, \"tcp_clearance_mm\": 89.53092992305756, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 1, \"error_mm\": 1.159358536824584, \"axis_error_deg\": 0.041229175644850145, \"jaw_forces_N\": [25.83334732055664, 24.089923858642578, 24.09501075744629, 25.838035583496094], \"unsafe_force_N\": 25.838035583496094, \"tcp_clearance_mm\": 89.54612165689468, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 2, \"error_mm\": 1.2141171609982848, \"axis_error_deg\": 0.0397067291761432, \"jaw_forces_N\": [24.724573135375977, 25.184926986694336, 25.21954345703125, 24.77450942993164], \"unsafe_force_N\": 25.818374633789062, \"tcp_clearance_mm\": 89.61356431245804, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 3, \"error_mm\": 1.0922509245574474, \"axis_error_deg\": 0.03943638101088309, \"jaw_forces_N\": [25.814298629760742, 24.10843849182129, 24.113554000854492, 25.819368362426758], \"unsafe_force_N\": 25.833282470703125, \"tcp_clearance_mm\": 85.99493652582169, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 4, \"error_mm\": 1.0148031869903207, \"axis_error_deg\": 0.04031367491478682, \"jaw_forces_N\": [23.999858856201172, 25.950965881347656, 25.967971801757812, 24.013763427734375], \"unsafe_force_N\": 25.998804092407227, \"tcp_clearance_mm\": 89.308001101017, \"all_strict_clamp_physics_passed\": true}, {\"success\": true, \"continuous_mission_phases_verified\": true, \"episode\": 5, \"error_mm\": 1.0829989332705736, \"axis_error_deg\": 0.040498650916674504, \"jaw_forces_N\": [24.69668960571289, 25.196226119995117, 25.181554794311523, 24.674833297729492], \"unsafe_force_N\": 26.16854476928711, \"tcp_clearance_mm\": 89.32455629110336, \"all_strict_clamp_physics_passed\": true}], \"trace\": {\"step\": 60540, \"episode\": 6, \"stage\": \"navigate\", \"route\": 4, \"valid\": true, \"last_error\": \"\", \"camera_age_ms\": 33.33333333307564}}], \"action\": \"Keep original controller20756/jobs; no duplicate launch. Require complete native group reports and all64 strict same-fingerprint receipts before finalgate/video. Training and oldv8/v9 excluded.\", \"failure_analysis\": {\"at\": \"2026-10-22T05:18:46.987736+00:00\", \"course\": \"course_v10_4090_return\", \"seed\": 7241042, \"episode\": 5, \"run_id\": \"a710e29cc1ee4785b15024aa52b2fe57\", \"native_completed\": true, \"success\": false, \"failure\": \"stage timeout: pickup\", \"count_in_acceptance_denominator\": true, \"original_evidence_modified\": false, \"active_jobs_restarted\": false, \"source_sha256\": \"2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2\", \"checkpoint_sha256\": \"393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82\", \"findings\": [\"The initial full-cap survey is fresh and stable; source pose is then tracked while the recorded empty-wrist observation return is replayed.\", \"At step47100, the accepted source estimate projects below the 615-pixel image: center v exceeds615 while side-edge observations are still accepted. The view therefore loses the center before the return finishes.\", \"At step47250 the observer rejects edges; the recorded return continues until ready, then the existing stale-image interlock holds all arm commands with fingers open and no load.\", \"At3601 steps the native pickup stage timeout records failure. There is no grasp, handoff, arm contact or force-limit violation; unsafe peak41.666N remains below250N.\", \"Bounded residual is inactive in route0. This failure occurs before the learned residual can move the arm; increasing PPO updates does not address this path/visibility defect.\"], \"projection_from_visual_estimate_only\": {\"step\": 47100, \"pixel\": [617.8371809635034, 680.4927648269961], \"image_size\": [1024, 615], \"last_error\": \"\", \"robot_and_camera_calibration_only\": true}, \"failed_receipt\": {\"steps\": 3601, \"unsafe_force_N\": 41.66632080078125, \"paused_steps\": 2305, \"fingers\": [1.0929267773462925e-05, 4.345055426568933e-09], \"finger_forces\": [0.0, 0.0], \"arm_contact_loads_N\": {\"shoulder_Link\": 0.0, \"upperArm_Link\": 0.0, \"foreArm_Link\": 0.0, \"wrist1_Link\": 0.0, \"wrist2_Link\": 0.0, \"wrist3_Link\": 0.0, \"gripper_adapter_link\": 0.0, \"gripper_motor_link\": 0.0, \"mono_camera_link\": 0.0}}, \"snapshot\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_131451\", \"diagnostic_snapshot\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/vision_stall_7241042_20261022_130934\", \"candidate\": {\"directory\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v1\", \"status\": {\"state\": \"cpu_passed_physical_unvalidated\", \"source_sha256\": \"142925af9a12852711ad40123daee6a4bc29e6af65082a440dc977e54ea7a67c\", \"parent_source_sha256\": \"2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2\", \"deployed\": false, \"physical_regression_required\": true, \"scope\": \"source pickup only; no change to tray recovery, estimator or physical acceptance\", \"risk\": \"Intermediate return handoff may change the subsequent elbow/visual trajectory; must pass collision, visibility and continuous-reset physical regressions before promotion\", \"cpu\": {\"platform\": \"macOS\", \"passed\": 245, \"skipped\": 3, \"new_guard_tests\": 12, \"command\": \"REBAR_REPO_ROOT=workspace PYTHONPATH=candidate/src pytest -q -o pythonpath= tests candidate/tests\", \"limitations\": \"Three existing platform-dependent tests skipped; physical trajectory/collision/visibility remains unvalidated.\"}, \"node_cpu\": {\"passed\": 251, \"skipped\": 0, \"new_guard_tests\": 12, \"physical_regression_passed\": false}}, \"deployed\": false, \"physical_passed\": false, \"next\": \"Run new-directory development reproduction and multi-reset/collision/strict-physics regressions once a simulation slot is free; never splice source candidate results into393b/source2c final64. Keep current frozen jobs and all failed receipts.\"}, \"formal_full_gate_passed\": false}, \"candidate_physics\": {\"path\": \"artifacts/mobile_curriculum_20261020/course_v10_4090_return/source_return_regression_plan_20261022.json\", \"sha256\": \"0ff150711b04dbf27a0ac747dee4dcce5a25b923b12ab340709ede5ec3f3b935\", \"state\": \"prepared_not_launched\", \"development_episodes\": 9, \"formal_acceptance_episodes\": 0, \"capacity\": \"Two original simulations running; no third simulation launched.\"}, \"frozen_identity_reverified\": true, \"simulation_capacity\": {\"running\": 2, \"maximum\": 2, \"regression_started\": false}}",
+  "independent_full_evaluation_new_episodes_since_last_check": 2,
   "latest_local_recovery_backup": {
     "at": "2026-10-22T03:26:43.384854+00:00",
     "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_full_training_pass.tar.gz",
@@ -684,7 +716,7 @@
     "full_holdout_7241042",
     "full_holdout_7251042"
   ],
-  "last_successful_node_check_at": "2026-10-22T05:25:08.143417+00:00",
+  "last_successful_node_check_at": "2026-10-22T05:39:04.085914+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -2265,16 +2297,16 @@
     "qualified": false
   },
   "latest_full_independent_partial_verified": {
-    "at": "2026-10-22T05:25:08.143417+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_132508",
+    "at": "2026-10-22T05:39:04.085914+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_133904",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
         "seed": 7241042,
         "name": "full_holdout_7241042",
         "run_id": "a710e29cc1ee4785b15024aa52b2fe57",
-        "episodes": 6,
-        "successes": 5,
+        "episodes": 7,
+        "successes": 6,
         "completed": false,
         "checks": [
           {
@@ -2374,12 +2406,28 @@
               0.0
             ],
             "all_strict_clamp_physics_passed": false
+          },
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 6,
+            "error_mm": 1.0173433693125844,
+            "axis_error_deg": 0.03964617977830002,
+            "jaw_forces_N": [
+              25.828842163085938,
+              24.108911514282227,
+              24.105480194091797,
+              25.826215744018555
+            ],
+            "unsafe_force_N": 25.834392547607422,
+            "tcp_clearance_mm": 89.3421322107315,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 54900,
-          "episode": 6,
-          "stage": "navigate",
+          "step": 60750,
+          "episode": 7,
+          "stage": "tray_rotate",
           "route": 4,
           "valid": true,
           "last_error": "",
@@ -2390,8 +2438,8 @@
         "seed": 7251042,
         "name": "full_holdout_7251042",
         "run_id": "f3227271d77949a792d5d983a499090a",
-        "episodes": 5,
-        "successes": 5,
+        "episodes": 6,
+        "successes": 6,
         "completed": false,
         "checks": [
           {
@@ -2473,21 +2521,37 @@
             "unsafe_force_N": 25.998804092407227,
             "tcp_clearance_mm": 89.308001101017,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "success": true,
+            "continuous_mission_phases_verified": true,
+            "episode": 5,
+            "error_mm": 1.0829989332705736,
+            "axis_error_deg": 0.040498650916674504,
+            "jaw_forces_N": [
+              24.69668960571289,
+              25.196226119995117,
+              25.181554794311523,
+              24.674833297729492
+            ],
+            "unsafe_force_N": 26.16854476928711,
+            "tcp_clearance_mm": 89.32455629110336,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 54390,
-          "episode": 5,
-          "stage": "tray_lift_high",
+          "step": 60540,
+          "episode": 6,
+          "stage": "navigate",
           "route": 4,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333330302
+          "camera_age_ms": 33.33333333307564
         }
       }
     ],
-    "episodes": 11,
-    "successes": 10,
+    "episodes": 13,
+    "successes": 12,
     "failures": 1,
     "independent_full_gate_passed": false,
     "formal_full_episodes": 0,
@@ -2495,14 +2559,14 @@
     "qualified": false
   },
   "latest_full_partial_both_hosts_verified": {
-    "at": "2026-10-22T05:25:09.671805+00:00",
-    "files": 42,
+    "at": "2026-10-22T05:39:05.790930+00:00",
+    "files": 48,
     "mismatches": [],
-    "node_path": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_132508",
-    "mac_path": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_132508",
+    "node_path": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_133904",
+    "mac_path": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_133904",
     "sha256_verified_both_hosts": true
   },
-  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_132508",
+  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_133904",
   "final_full_frozen_fingerprints": {
     "recorded_at": "2026-10-22T03:26:23.316910+00:00",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
