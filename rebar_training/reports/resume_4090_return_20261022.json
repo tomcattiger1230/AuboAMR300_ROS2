@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T03:53:47.022579+00:00",
+  "updated_at": "2026-10-22T04:08:43.783462+00:00",
   "status": "v10_full_holdouts_running",
   "stable": false,
   "user_authorized_resume": true,
@@ -26,8 +26,8 @@
     "full_holdout_7251042"
   ],
   "independent_full_evaluation_episodes_required": 64,
-  "independent_full_evaluation_complete_episodes": 2,
-  "independent_full_evaluation_successes": 2,
+  "independent_full_evaluation_complete_episodes": 4,
+  "independent_full_evaluation_successes": 4,
   "independent_full_evaluation_failures": 0,
   "independent_full_evaluation_passed": false,
   "current_tray_gate": {
@@ -115,16 +115,16 @@
   "training_still_active": false,
   "simulation_validation_active": false,
   "last_live_progress": {
-    "at": "2026-10-22T03:53:47.022579+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_115347",
+    "at": "2026-10-22T04:08:43.783462+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_120843",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
         "seed": 7241042,
         "name": "full_holdout_7241042",
         "run_id": "a710e29cc1ee4785b15024aa52b2fe57",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "completed": false,
         "checks": [
           {
@@ -141,11 +141,26 @@
             "unsafe_force_N": 25.824697494506836,
             "tcp_clearance_mm": 89.44138884544373,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "continuous_mission_phases_verified": true,
+            "episode": 1,
+            "error_mm": 1.096139196306467,
+            "axis_error_deg": 0.04014963996662507,
+            "jaw_forces_N": [
+              25.852046966552734,
+              24.08210563659668,
+              24.08237075805664,
+              25.8514461517334
+            ],
+            "unsafe_force_N": 25.852046966552734,
+            "tcp_clearance_mm": 89.4801914691925,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 15570,
-          "episode": 1,
+          "step": 22020,
+          "episode": 2,
           "stage": "navigate",
           "route": 4,
           "valid": true,
@@ -157,8 +172,8 @@
         "seed": 7251042,
         "name": "full_holdout_7251042",
         "run_id": "f3227271d77949a792d5d983a499090a",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "completed": false,
         "checks": [
           {
@@ -175,21 +190,36 @@
             "unsafe_force_N": 25.832740783691406,
             "tcp_clearance_mm": 89.53092992305756,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "continuous_mission_phases_verified": true,
+            "episode": 1,
+            "error_mm": 1.159358536824584,
+            "axis_error_deg": 0.041229175644850145,
+            "jaw_forces_N": [
+              25.83334732055664,
+              24.089923858642578,
+              24.09501075744629,
+              25.838035583496094
+            ],
+            "unsafe_force_N": 25.838035583496094,
+            "tcp_clearance_mm": 89.54612165689468,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 15450,
-          "episode": 1,
-          "stage": "navigate",
+          "step": 21810,
+          "episode": 2,
+          "stage": "observe_tray",
           "route": 4,
-          "valid": true,
-          "last_error": "",
-          "camera_age_ms": 33.33333333330302
+          "valid": false,
+          "last_error": "Move to the surveyed observation view first",
+          "camera_age_ms": 727033.3333343333
         }
       }
     ],
-    "episodes": 2,
-    "successes": 2,
+    "episodes": 4,
+    "successes": 4,
     "failures": 0,
     "independent_full_gate_passed": false,
     "formal_full_episodes": 0,
@@ -221,7 +251,7 @@
     "qualified": false
   },
   "latest_migration_heartbeat_snapshot": "review_20261020/resume_5090_20261021/heartbeat_20261021_221528",
-  "last_heartbeat_result": "11:53 Shanghai: finalindependentfull partial2/64complete2success0fail,+2since last;7241042/7251042 each1/8, strict firstrow errors1.114375/1.134281mm,4pad/openunload/89.441and89.531mmretreat/speeds and all continuous phases verified.15immutablepartialfiles SHA bothhosts. Both groups incomplete8,nativecompletedgroupeligible rows0; final64 gate not passed, no stability claim. Originalcontroller20756/runners30122/30121 continue secondrow navigate route4,steps15570/15450,validRGB33ms,noerror; same393b47f8 SHA. No anomaly/fix or relaunch needed. Training2/2 and historicalv8complete16+2success/v9dock4 excluded from current acceptance. Keep all future groups and failures.",
+  "last_heartbeat_result": "12:08 Shanghai: finalindependentfull partial4/64complete4success0fail,+2since last;7241042/7251042 each2/8, new secondrow errors1.096139/1.159359mm,strict4pad/openunload/89.480and89.546mmretreat/speeds and all continuous phases verified;21immutablepartialfiles both-hostsSHA. Originalcontroller20756/runners30122/30121 continue thirdrow,724step22020navigate route4 validRGB33ms/noerror,725step21810observe_tray route4 pending view (initial oldage/Move to view not physicalfailure). Keep original jobs; no confirmed anomaly or relaunch. Same393b47f8 SHA unchanged. Complete8 group reports still pending,native group eligible0; final64gate not passed. Training2/2 and historiesv8complete16+2/v9dock4 excluded.",
   "independent_full_evaluation_new_episodes_since_last_check": 2,
   "latest_local_recovery_backup": {
     "at": "2026-10-22T03:26:43.384854+00:00",
@@ -536,7 +566,7 @@
     "full_holdout_7241042",
     "full_holdout_7251042"
   ],
-  "last_successful_node_check_at": "2026-10-22T03:53:47.022579+00:00",
+  "last_successful_node_check_at": "2026-10-22T04:08:43.783462+00:00",
   "remote_live_state_fresh": true,
   "last_known_independent_full_evaluation": {
     "as_of": "2026-10-21T15:17:28.608522+00:00",
@@ -2117,16 +2147,16 @@
     "qualified": false
   },
   "latest_full_independent_partial_verified": {
-    "at": "2026-10-22T03:53:47.022579+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_115347",
+    "at": "2026-10-22T04:08:43.783462+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_120843",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "reports": [
       {
         "seed": 7241042,
         "name": "full_holdout_7241042",
         "run_id": "a710e29cc1ee4785b15024aa52b2fe57",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "completed": false,
         "checks": [
           {
@@ -2143,11 +2173,26 @@
             "unsafe_force_N": 25.824697494506836,
             "tcp_clearance_mm": 89.44138884544373,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "continuous_mission_phases_verified": true,
+            "episode": 1,
+            "error_mm": 1.096139196306467,
+            "axis_error_deg": 0.04014963996662507,
+            "jaw_forces_N": [
+              25.852046966552734,
+              24.08210563659668,
+              24.08237075805664,
+              25.8514461517334
+            ],
+            "unsafe_force_N": 25.852046966552734,
+            "tcp_clearance_mm": 89.4801914691925,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 15570,
-          "episode": 1,
+          "step": 22020,
+          "episode": 2,
           "stage": "navigate",
           "route": 4,
           "valid": true,
@@ -2159,8 +2204,8 @@
         "seed": 7251042,
         "name": "full_holdout_7251042",
         "run_id": "f3227271d77949a792d5d983a499090a",
-        "episodes": 1,
-        "successes": 1,
+        "episodes": 2,
+        "successes": 2,
         "completed": false,
         "checks": [
           {
@@ -2177,21 +2222,36 @@
             "unsafe_force_N": 25.832740783691406,
             "tcp_clearance_mm": 89.53092992305756,
             "all_strict_clamp_physics_passed": true
+          },
+          {
+            "continuous_mission_phases_verified": true,
+            "episode": 1,
+            "error_mm": 1.159358536824584,
+            "axis_error_deg": 0.041229175644850145,
+            "jaw_forces_N": [
+              25.83334732055664,
+              24.089923858642578,
+              24.09501075744629,
+              25.838035583496094
+            ],
+            "unsafe_force_N": 25.838035583496094,
+            "tcp_clearance_mm": 89.54612165689468,
+            "all_strict_clamp_physics_passed": true
           }
         ],
         "trace": {
-          "step": 15450,
-          "episode": 1,
-          "stage": "navigate",
+          "step": 21810,
+          "episode": 2,
+          "stage": "observe_tray",
           "route": 4,
-          "valid": true,
-          "last_error": "",
-          "camera_age_ms": 33.33333333330302
+          "valid": false,
+          "last_error": "Move to the surveyed observation view first",
+          "camera_age_ms": 727033.3333343333
         }
       }
     ],
-    "episodes": 2,
-    "successes": 2,
+    "episodes": 4,
+    "successes": 4,
     "failures": 0,
     "independent_full_gate_passed": false,
     "formal_full_episodes": 0,
@@ -2199,14 +2259,14 @@
     "qualified": false
   },
   "latest_full_partial_both_hosts_verified": {
-    "at": "2026-10-22T03:54:14.245110+00:00",
-    "files": 15,
+    "at": "2026-10-22T04:09:13.470133+00:00",
+    "files": 21,
     "mismatches": [],
     "all_listed_files_sha_verified_both_hosts": true,
     "partial_full_only": true,
     "qualified": false
   },
-  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_115347",
+  "latest_full_independent_snapshot": "course_v10_4090_return/full_holdouts_snapshot_20261022_120843",
   "final_full_frozen_fingerprints": {
     "recorded_at": "2026-10-22T03:26:23.316910+00:00",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
