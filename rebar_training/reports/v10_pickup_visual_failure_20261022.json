@@ -1,0 +1,91 @@
+{
+  "at": "2026-10-22T05:18:46.987736+00:00",
+  "course": "course_v10_4090_return",
+  "seed": 7241042,
+  "episode": 5,
+  "run_id": "a710e29cc1ee4785b15024aa52b2fe57",
+  "native_completed": true,
+  "success": false,
+  "failure": "stage timeout: pickup",
+  "count_in_acceptance_denominator": true,
+  "original_evidence_modified": false,
+  "active_jobs_restarted": false,
+  "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+  "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "findings": [
+    "The initial full-cap survey is fresh and stable; source pose is then tracked while the recorded empty-wrist observation return is replayed.",
+    "At step47100, the accepted source estimate projects below the 615-pixel image: center v exceeds615 while side-edge observations are still accepted. The view therefore loses the center before the return finishes.",
+    "At step47250 the observer rejects edges; the recorded return continues until ready, then the existing stale-image interlock holds all arm commands with fingers open and no load.",
+    "At3601 steps the native pickup stage timeout records failure. There is no grasp, handoff, arm contact or force-limit violation; unsafe peak41.666N remains below250N.",
+    "Bounded residual is inactive in route0. This failure occurs before the learned residual can move the arm; increasing PPO updates does not address this path/visibility defect."
+  ],
+  "projection_from_visual_estimate_only": {
+    "step": 47100,
+    "pixel": [
+      617.8371809635034,
+      680.4927648269961
+    ],
+    "image_size": [
+      1024,
+      615
+    ],
+    "last_error": "",
+    "robot_and_camera_calibration_only": true
+  },
+  "failed_receipt": {
+    "steps": 3601,
+    "unsafe_force_N": 41.66632080078125,
+    "paused_steps": 2305,
+    "fingers": [
+      1.0929267773462925e-05,
+      4.345055426568933e-09
+    ],
+    "finger_forces": [
+      0.0,
+      0.0
+    ],
+    "arm_contact_loads_N": {
+      "shoulder_Link": 0.0,
+      "upperArm_Link": 0.0,
+      "foreArm_Link": 0.0,
+      "wrist1_Link": 0.0,
+      "wrist2_Link": 0.0,
+      "wrist3_Link": 0.0,
+      "gripper_adapter_link": 0.0,
+      "gripper_motor_link": 0.0,
+      "mono_camera_link": 0.0
+    }
+  },
+  "snapshot": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_holdouts_snapshot_20261022_131451",
+  "diagnostic_snapshot": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/vision_stall_7241042_20261022_130934",
+  "candidate": {
+    "directory": "artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v1",
+    "status": {
+      "state": "cpu_passed_physical_unvalidated",
+      "source_sha256": "142925af9a12852711ad40123daee6a4bc29e6af65082a440dc977e54ea7a67c",
+      "parent_source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+      "deployed": false,
+      "physical_regression_required": true,
+      "scope": "source pickup only; no change to tray recovery, estimator or physical acceptance",
+      "risk": "Intermediate return handoff may change the subsequent elbow/visual trajectory; must pass collision, visibility and continuous-reset physical regressions before promotion",
+      "cpu": {
+        "platform": "macOS",
+        "passed": 245,
+        "skipped": 3,
+        "new_guard_tests": 12,
+        "command": "REBAR_REPO_ROOT=workspace PYTHONPATH=candidate/src pytest -q -o pythonpath= tests candidate/tests",
+        "limitations": "Three existing platform-dependent tests skipped; physical trajectory/collision/visibility remains unvalidated."
+      },
+      "node_cpu": {
+        "passed": 251,
+        "skipped": 0,
+        "new_guard_tests": 12,
+        "physical_regression_passed": false
+      }
+    },
+    "deployed": false,
+    "physical_passed": false,
+    "next": "Run new-directory development reproduction and multi-reset/collision/strict-physics regressions once a simulation slot is free; never splice source candidate results into393b/source2c final64. Keep current frozen jobs and all failed receipts."
+  },
+  "formal_full_gate_passed": false
+}
