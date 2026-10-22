@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T18:19:24.064217+00:00",
+  "updated_at": "2026-10-22T18:34:26.519536+00:00",
   "status": "frozen_evaluation_running",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
@@ -205,8 +205,8 @@
     "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
   },
   "latest_snapshot": {
-    "at": "2026-10-22T18:19:24.064217+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_021923",
+    "at": "2026-10-22T18:34:26.519536+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_023426",
     "groups": [
       {
         "name": "tray_holdout_9131042",
@@ -353,9 +353,9 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 19260,
+          "step": 26160,
           "episode": 2,
-          "stage": "tray_raise",
+          "stage": "loading",
           "route": 4,
           "valid": true,
           "last_error": "",
@@ -375,9 +375,9 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 19320,
+          "step": 26250,
           "episode": 2,
-          "stage": "pickup",
+          "stage": "pickup_tray",
           "route": 0,
           "valid": true,
           "last_error": "",
@@ -494,9 +494,9 @@
   "next": "Keep existing jobs. Complete phase native reports, all-original-file SHA backup and independent strict physics plus official acceptance; then write matching phase review receipt before next phase. No PPO training.",
   "phase": "full",
   "latest_snapshot_sha_and_physics": {
-    "at": "2026-10-22T18:20:32.964943+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_021923",
-    "files": 569,
+    "at": "2026-10-22T18:35:06.524157+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_023426",
+    "files": 596,
     "mismatches": [],
     "phases": {
       "tray": {
@@ -1394,7 +1394,7 @@
     }
   },
   "latest_connectivity_check": {
-    "checked_at": "2026-10-22T18:19:24.064217+00:00",
+    "checked_at": "2026-10-22T18:34:26.519536+00:00",
     "connection": "connected",
     "snapshot_sha_and_physics_verified": true
   },
