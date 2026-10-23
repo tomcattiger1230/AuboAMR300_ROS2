@@ -1,16 +1,32 @@
 # 钢筋抓取与试验机上料训练
 
-## 当前：同一冻结策略已恢复启动（2026-10-23 上海20:44–20:45）
+## 当前：同一冻结策略的独立验收（2026-10-23 上海21:15）
 
-用户已明确“回到同一个网络 继续训练”，并确认仍为103。节点曾重新连通，已核查RTX5090 Laptop、旧作业均暂停、GPU空闲；两端重新逐SHA核对6447份原始文件，策略/源码完全一致，policy+optimizer52张量有限，466updates/170actor/36602steps保持，无PPO、optimizer重置或控制源码修改。
+修复开发回归已 **11/11完整成功、0失败、零证据错误**；1557个完整原始文件两端SHA一致，两个旧失败案例与真实30帧失视安全恢复均独立复核通过。保持source8a24、393b策略+optimizer及466updates/170actor/36602steps，不PPO重训、不重置策略或optimizer。
 
-暂停前六个完整原生组48/48成功直接保留。未完成的930/931旧输出已封存到 `interrupted_attempts/user_pause_20261023_002631`，883文件两端SHA一致；原931的6个成功回合完整保留在归档，不重复计入新完整组分母。原54成功的暂停记录没有删除。没有完整仿真状态序列化，本次只对最后两个原种子做新的连续8回合尝试，不假称跨进程物理状态续接。
+阶段门槛：抓取8/8独立通过；到站8/8独立通过。技能与开发回归均不计正式64。
 
-930于20:44:24启动一次（runner114178/native114184/GPU114200），已观察step360、pickup/route0、RGB33ms有效、observation_ready=true、last_error空；随后20:45:20启动931一次（runner114808）。启动后SSH再次出现No route to host，当前两组实时状态未知，不能宣称931已健康推进或新回合成功。保持现有作业，不重启、不重派。后续只重连核查原PID/原生JSON/GPU和证据。
+当前阶段`full`：完成50、成功50、失败0，其中完整原生组48行；该阶段gate尚未独立复核通过。1198个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
+tray_holdout_9131042：4完成/4成功/0失败，completed，tray_retreat/route4。
+tray_holdout_9141042：4完成/4成功/0失败，completed，tray_retreat/route4。
+dock_clamp_holdout_9151042：4完成/4成功/0失败，completed，loading/route10。
+dock_clamp_holdout_9161042：4完成/4成功/0失败，completed，loading/route10。
+full_holdout_9241042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9251042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9261042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9271042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9281042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9291042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9301042：1完成/1成功/0失败，running，navigate/route4。
+full_holdout_9311042：1完成/1成功/0失败，running，navigate/route4。
 
-恢复工具 `scripts/resume_paused_frozen_acceptance.py` 绑定用户授权、冻结身份与原任务命令，封存部分输出、保留完整组，拒绝学习/回归/初始化/视觉hint，禁止重复派发及第三仿真；第二组须等待第一组有效观测后才启动。6个CPU恢复安全测试通过。最新helper和恢复说明因再次断联待回传，不冒称两端已同步。
+恢复前931部分6回合已完整封存于`interrupted_attempts/user_pause_20261023_002631`，保留历史证据并排除新正式64分母；六个完整原生组48回合保留，新930/931使用原种子各做连续8回合。没有跨进程物理状态续接，无学习或策略变化。
 
-恢复启动凭据：`artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/resume_launches_0103_20261023.json`。当前官方64口径为48个已完成原生回合＋新930/931各8待验；旧6回合单列归档。最终64完整原生报告、全raw SHA与Mac独立full gate齐全前不启动demo9321042。开发11/11、抓取/到站各8/8及历史v8/v9/v10仍分列，不混入正式64。
+正式整链为 **50/64完成，成功50、失败0**，不与技能/开发或历史混算。冻结计划e7381e2f…：抓取9131042/9141042各4，到站9151042/9161042各4，最终9241042..9311042间隔10000各8；演示9321042。仅到站技能gate允许托槽/到站复位、无录制视觉hint，不计64；正式64均从源抓取开始，无初始化/hint。阶段完整报告、全原始备份及Mac严格物理/官方gate独立复算通过并写review凭据后才晋级，当前原作业保留，最多2仿真。调度器是一次性工具，不会后台自行派发后续阶段。
+
+目录`/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022`，inhibitor PID/PG114175仅在有限评估生命周期阻止idle，暂停时也须停止；不改全局网络、电源或SDK。12.7GB历史归档已两端SHA通过，未解压覆盖运行目录。旧v10封存26/64（24成功2失败）、v8完整16另2成功、v9到站4成功/full0保留分列。仅仿真，不ROS硬件/飞书，不动原模型/共享SDK或无关GUI地图。入口`reports/source_return_frozen_acceptance_0103_20261022.json`和主status.current_job_root；旧候选记录助手已禁止覆盖新阶段状态。
+
+本次重连确认原runner114178/114808与GPU114200/114824继续运行，两个新run_id分别f26a27aaaef8411ebdce069927221b1f、35f7d7e5e96844768bedb7e15d545443；各1/8成功，第二回合navigate，RGB33ms有效、last_error空。没有启动或重启任何仿真。当前防idle PID/PG114175。恢复helper实际启动版本已封存，最新版及6个安全测试已同步节点并全部通过。1198份不可变快照已双端SHA及严格物理/handoff复算通过。
 
 ## 暂停保存记录：已停止实验并保存结果（2026-10-23 上海08:26）
 
