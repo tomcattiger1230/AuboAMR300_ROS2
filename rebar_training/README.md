@@ -1,12 +1,12 @@
 # 钢筋抓取与试验机上料训练
 
-## 当前：同一冻结策略的独立验收（2026-10-23 上海22:50）
+## 当前：同一冻结策略的独立验收（2026-10-23 上海22:55）
 
 修复开发回归已 **11/11完整成功、0失败、零证据错误**；1557个完整原始文件两端SHA一致，两个旧失败案例与真实30帧失视安全恢复均独立复核通过。保持source8a24、393b策略+optimizer及466updates/170actor/36602steps，不PPO重训、不重置策略或optimizer。
 
 阶段门槛：抓取8/8独立通过；到站8/8独立通过。技能与开发回归均不计正式64。
 
-当前阶段`full`：完成60、成功60、失败0，其中完整原生组48行；该阶段gate尚未独立复核通过。1402个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
+当前阶段`full`：完成60、成功60、失败0，其中完整原生组48行；该阶段gate尚未独立复核通过。1405个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
 tray_holdout_9131042：4完成/4成功/0失败，completed，tray_retreat/route4。
 tray_holdout_9141042：4完成/4成功/0失败，completed，tray_retreat/route4。
 dock_clamp_holdout_9151042：4完成/4成功/0失败，completed，loading/route10。
@@ -17,8 +17,8 @@ full_holdout_9261042：8完成/8成功/0失败，completed，loading/route10。
 full_holdout_9271042：8完成/8成功/0失败，completed，loading/route10。
 full_holdout_9281042：8完成/8成功/0失败，completed，loading/route10。
 full_holdout_9291042：8完成/8成功/0失败，completed，loading/route10。
-full_holdout_9301042：6完成/6成功/0失败，running，pickup/route0。
-full_holdout_9311042：6完成/6成功/0失败，running，observe_tray/route4。
+full_holdout_9301042：6完成/6成功/0失败，running，observe_tray/route4。
+full_holdout_9311042：6完成/6成功/0失败，running，navigate/route4。
 
 恢复前931部分6回合已完整封存于`interrupted_attempts/user_pause_20261023_002631`，保留历史证据并排除新正式64分母；六个完整原生组48回合保留，新930/931使用原种子各做连续8回合。没有跨进程物理状态续接，无学习或策略变化。
 
@@ -26,7 +26,7 @@ full_holdout_9311042：6完成/6成功/0失败，running，observe_tray/route4�
 
 目录`/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022`，inhibitor PID/PG114175仅在有限评估生命周期阻止idle，暂停时也须停止；不改全局网络、电源或SDK。12.7GB历史归档已两端SHA通过，未解压覆盖运行目录。旧v10封存26/64（24成功2失败）、v8完整16另2成功、v9到站4成功/full0保留分列。仅仿真，不ROS硬件/飞书，不动原模型/共享SDK或无关GUI地图。入口`reports/source_return_frozen_acceptance_0103_20261022.json`和主status.current_job_root；旧候选记录助手已禁止覆盖新阶段状态。
 
-103本次恢复连接后，断联期间5个新增回合已全部补验，新增误差1.121–1.312mm、打开卸载后退让86.082–89.760mm，实际handoff同帧守卫全部通过。当前60为六完整组48＋新930/931各6/8部分12，旧中断6仍归档排除。原runner114178/114808、GPU114200/114824与run_id保持；第七回合后续step58260 tray_rotate /57960 navigate均RGB33ms有效、last_error空。首次证据传输55秒超时只结束本机传输，1386份文件SHA已到位；保留partial后增量传回余16份，最终1402全部SHA及严格物理通过，没有任何仿真启停命令。网络事件和旧待同步凭据完整保留，当前已恢复connected/fresh。
+本轮无新增完成回合，正式仍60/64、60成功0失败（48完整原生＋新部分12，旧归档6排除）。原runner/run_id/GPU保持；930快照观察等待后，原日志step60630与931 step60180均navigate/route4、RGB33ms有效、last_error空，观察恢复正常。无任何仿真进程启停命令。
 
 ## 上次独立复核：同一冻结策略的独立验收（2026-10-23 上海22:06）
 
