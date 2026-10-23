@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-10-23T00:27:46.706734+00:00",
-  "status": "paused_user_saved",
+  "status": "frozen_evaluation_resumed_live_verification_pending",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
   "current_directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022",
@@ -531,7 +531,7 @@
     "mac": "6passed",
     "node": "6passed"
   },
-  "next": "Wait for new explicit human resume authorization; no automatic jobs or training.",
+  "next": "Reconnect and inspect existing runner114178/114808 and actual native/GPU; never launch duplicates. Fresh collector then strict proof then record. Preserve interrupted archive. No PPO/optimizer reset.",
   "phase": "full",
   "latest_snapshot_sha_and_physics": {
     "at": "2026-10-23T00:29:43.083392+00:00",
@@ -2297,11 +2297,11 @@
     "revoked_by_later_user_pause": true,
     "restart_performed": false
   },
-  "user_task_paused": true,
-  "requires_explicit_resume": true,
-  "user_authorized_resume": false,
-  "evaluation_still_active": false,
-  "simulation_validation_active": false,
+  "user_task_paused": false,
+  "requires_explicit_resume": false,
+  "user_authorized_resume": true,
+  "evaluation_still_active": true,
+  "simulation_validation_active": true,
   "active_jobs": [],
   "pause": {
     "at": "2026-10-23T00:26:31.672307+00:00",
@@ -2369,10 +2369,79 @@
     "final_metadata_sync_error": "SSH network is unreachable; stopped node state and originals were already saved, Mac backups and SHA checks completed before leaving network"
   },
   "last_paused_results_sync_attempt_at": "2026-10-23T01:03:24.483709+00:00",
-  "node_connection_state": "offline_after_user_pause",
+  "node_connection_state": "unreachable_after_resume_launches",
   "latest_pause_metadata_sync": {
     "at": "2026-10-23T01:04:08.848761+00:00",
     "passed": false,
     "reason": "SSH network is unreachable; stopped node state and originals were already saved, Mac backups and SHA checks completed before leaving network"
+  },
+  "resume": {
+    "at": "2026-10-23T12:49:45.042609+00:00",
+    "authorization": "回到同一个网络 继续训练",
+    "authorization_at": "2026-10-23T12:39:42.831260+00:00",
+    "authorization_sha256": "fa63d33b41e341b5638322df101bd0646a388c6ac633db1f95f17542235b4a59",
+    "user_confirmed_same_ip": true,
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "finite_policy_optimizer_tensors": 52,
+    "retained_counters": [
+      466,
+      170,
+      36602
+    ],
+    "new_learning_updates": 0,
+    "optimizer_reset": false,
+    "control_source_change": false,
+    "prior_archive": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/interrupted_attempts/user_pause_20261023_002631",
+    "prior_archive_files": 883,
+    "prior_archive_both_hosts_sha_verified": true,
+    "retained_complete_native_episodes": 48,
+    "preserved_archived_partial_successes": 6,
+    "archived_partial_excluded_from_new_formal_denominator": true,
+    "new_continuous_attempt_seeds": [
+      9301042,
+      9311042
+    ],
+    "launches": [
+      {
+        "name": "full_holdout_9301042",
+        "runner_pid": 114178,
+        "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+        "at": "2026-10-23T12:44:24.100918+00:00",
+        "prior_attempt_archive": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/interrupted_attempts/user_pause_20261023_002631",
+        "physical_state_resumed": false
+      },
+      {
+        "name": "full_holdout_9311042",
+        "runner_pid": 114808,
+        "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+        "at": "2026-10-23T12:45:20.412164+00:00",
+        "prior_attempt_archive": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/interrupted_attempts/user_pause_20261023_002631",
+        "physical_state_resumed": false
+      }
+    ],
+    "930_first_ready_trace": {
+      "step": 360,
+      "episode": 0,
+      "stage": "pickup",
+      "route": 0,
+      "valid": true,
+      "observation_ready": true,
+      "last_error": "",
+      "camera_age_ms": 33.333333333333215
+    },
+    "post_launch_connection_state": "SSH lost route; current live state unknown, do not restart or duplicate jobs",
+    "node_last_confirmed_hostname": "arnold-NUC16JNK9XX11",
+    "node_last_confirmed_gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "network_changes_performed": false,
+    "metadata_sync_pending": true,
+    "resume_helper_guard_tests_mac": 6,
+    "resume_helper_latest_node_sync_pending": true
+  },
+  "formal_accounting_after_resume": {
+    "retained_complete_native_episodes": 48,
+    "archived_partial_successes": 6,
+    "new_attempt_progress": "unknown_until_fresh_verified_snapshot",
+    "required_complete_native_episodes": 64
   }
 }
