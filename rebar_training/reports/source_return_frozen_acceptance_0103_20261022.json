@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T16:07:20.382666+00:00",
+  "updated_at": "2026-10-23T16:15:54.819762+00:00",
   "status": "frozen_evaluation_running",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
@@ -205,8 +205,8 @@
     "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
   },
   "latest_snapshot": {
-    "at": "2026-10-23T16:07:20.382666+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_000719",
+    "at": "2026-10-23T16:15:54.819762+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_001554",
     "groups": [
       {
         "name": "tray_holdout_9131042",
@@ -485,13 +485,13 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 480,
+          "step": 5940,
           "episode": 0,
-          "stage": "pickup",
-          "route": 0,
-          "valid": false,
-          "last_error": "Move to the surveyed observation view first",
-          "camera_age_ms": 16033.333334333334
+          "stage": "navigate",
+          "route": 4,
+          "valid": true,
+          "last_error": "",
+          "camera_age_ms": 33.33333333333144
         }
       }
     ],
@@ -551,12 +551,12 @@
     "mac": "6passed",
     "node": "6passed"
   },
-  "next": "Keep existing demo139847. Verify native one-episode report, complete uncut video, all-original files and model/optimizer/source manifests before final delivery; do not relaunch full or demo.",
+  "next": "Keep existing jobs. Complete phase native reports, all-original-file SHA backup and independent strict physics plus official acceptance; then write matching phase review receipt before next phase. No PPO training.",
   "phase": "demo",
   "latest_snapshot_sha_and_physics": {
-    "at": "2026-10-23T16:09:01.025247+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_000719",
-    "files": 1485,
+    "at": "2026-10-23T16:18:24.024108+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_001554",
+    "files": 1491,
     "mismatches": [],
     "phases": {
       "tray": {
@@ -2383,7 +2383,7 @@
     "new_learning_updates": 0
   },
   "latest_connectivity_check": {
-    "checked_at": "2026-10-23T16:07:20.382666+00:00",
+    "checked_at": "2026-10-23T16:15:54.819762+00:00",
     "connection": "connected",
     "snapshot_sha_and_physics_verified": true
   },
@@ -3575,5 +3575,49 @@
     "complete_video_verified": false
   },
   "demo_excluded_from_formal_denominator": true,
-  "delivery_complete": false
+  "delivery_complete": false,
+  "final_model_optimizer_cpu_verification": {
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "tensors": 52,
+    "all_finite": true,
+    "keys": [
+      "observation_contract",
+      "fields",
+      "residual_scale",
+      "reward_contract",
+      "gamma",
+      "actor_updates",
+      "model",
+      "optimizer",
+      "updates",
+      "policy_steps",
+      "history",
+      "training_contexts",
+      "controller",
+      "standalone_full_mission_policy",
+      "steel_truth_policy_input"
+    ],
+    "root_scalars": {
+      "observation_contract": "mobile_visual_manipulation_residual_v1",
+      "residual_scale": 0.08,
+      "reward_contract": "mobile_residual_potential_v2",
+      "gamma": 0.9995,
+      "actor_updates": 170,
+      "updates": 466,
+      "policy_steps": 36602,
+      "controller": "bounded arm residual PPO over camera-only servo; scripted observation/gripper/odometry",
+      "standalone_full_mission_policy": false,
+      "steel_truth_policy_input": false
+    },
+    "policy_saved_or_updated": false,
+    "at": "2026-10-23T16:17:49.441811+00:00",
+    "counters_match": [
+      466,
+      170,
+      36602
+    ],
+    "mac_same_checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "model_optimizer_included": true
+  },
+  "controller_scope": "bounded camera-only arm residual PPO plus visual servo; scripted observation/gripper and surveyed-route odometry navigation, not standalone full-mission RL"
 }

@@ -1,12 +1,12 @@
 # 钢筋抓取与试验机上料训练
 
-## 当前：同一冻结策略的独立验收（2026-10-24 上海00:07）
+## 当前：同一冻结策略的独立验收（2026-10-24 上海00:15）
 
 修复开发回归已 **11/11完整成功、0失败、零证据错误**；1557个完整原始文件两端SHA一致，两个旧失败案例与真实30帧失视安全恢复均独立复核通过。保持source8a24、393b策略+optimizer及466updates/170actor/36602steps，不PPO重训、不重置策略或optimizer。
 
 阶段门槛：抓取8/8独立通过；到站8/8独立通过；正式整链64/64独立通过。技能与开发回归均不计正式64。
 
-当前阶段`demo`：完成0、成功0、失败0，其中完整原生组0行；演示物理核验与完整视频备份进行中，不计正式64。1485个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
+当前阶段`demo`：完成0、成功0、失败0，其中完整原生组0行；演示物理核验与完整视频备份进行中，不计正式64。1491个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
 tray_holdout_9131042：4完成/4成功/0失败，completed，tray_retreat/route4。
 tray_holdout_9141042：4完成/4成功/0失败，completed，tray_retreat/route4。
 dock_clamp_holdout_9151042：4完成/4成功/0失败，completed，loading/route10。
@@ -19,7 +19,7 @@ full_holdout_9281042：8完成/8成功/0失败，completed，loading/route10。
 full_holdout_9291042：8完成/8成功/0失败，completed，loading/route10。
 full_holdout_9301042：8完成/8成功/0失败，completed，loading/route10。
 full_holdout_9311042：8完成/8成功/0失败，completed，loading/route10。
-demo_holdout_9321042：0完成/0成功/0失败，running，pickup/route0。
+demo_holdout_9321042：0完成/0成功/0失败，running，navigate/route4。
 
 恢复前931部分6回合已完整封存于`interrupted_attempts/user_pause_20261023_002631`，保留历史证据并排除新正式64分母；六个完整原生组48回合保留，新930/931使用原种子各做连续8回合。没有跨进程物理状态续接，无学习或策略变化。
 
@@ -27,7 +27,7 @@ demo_holdout_9321042：0完成/0成功/0失败，running，pickup/route0。
 
 目录`/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022`，inhibitor PID/PG114175仅在有限评估生命周期阻止idle，暂停时也须停止；不改全局网络、电源或SDK。12.7GB历史归档已两端SHA通过，未解压覆盖运行目录。旧v10封存26/64（24成功2失败）、v8完整16另2成功、v9到站4成功/full0保留分列。仅仿真，不ROS硬件/飞书，不动原模型/共享SDK或无关GUI地图。入口`reports/source_return_frozen_acceptance_0103_20261022.json`和主status.current_job_root；旧候选记录助手已禁止覆盖新阶段状态。
 
-正式full gate已通过：64/64成功、0失败、零证据错误，Wilson95下界0.943375940，八完整组7542原始/源码/日志文件两端SHA。最后930/931各8/8与exit0，自然退出，原64组不再启动。唯一演示9321042于上海10月24日00:06:26启动（runner139847/native139850/GPU139863），保持同source8a/393b策略optimizer、466/170/36602，无学习/初始化/hint；仅演示允许regression，不计64。00:09原日志step1590 pickup、RGB33ms有效、last_error空，录像14,155,824字节仍在写，尚未完整验证视频或最终交付。未拼接片段；等待演示完整成功、全部原始/视频/模型备份SHA后才结束自动跟进。
+本轮演示仍0/1、原runner139847/GPU139863保持，step5940 navigate/route4、RGB33ms有效、last_error空，无新增失败/完成，完整视频仍待结束后核验。冻结checkpoint+optimizer已再次CPU复核52张量全部有限，466/170/36602及两端393b SHA不变，未写入模型。验收对象是视觉残差策略加固定观察/夹爪/里程计导航控制的完整仿真链，不是独立全任务神经策略；视频按10fps连续记录renderer总览和实际腕部mono画面，完成后需与原生video_frames/video_views核对。
 
 ## 上次独立复核：同一冻结策略的独立验收（2026-10-23 上海22:06）
 
