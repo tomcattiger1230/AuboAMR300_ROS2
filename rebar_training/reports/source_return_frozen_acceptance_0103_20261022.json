@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T15:10:22.927353+00:00",
+  "updated_at": "2026-10-23T16:07:20.382666+00:00",
   "status": "frozen_evaluation_running",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
@@ -205,8 +205,8 @@
     "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
   },
   "latest_snapshot": {
-    "at": "2026-10-23T15:10:22.927353+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_231022",
+    "at": "2026-10-23T16:07:20.382666+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_000719",
     "groups": [
       {
         "name": "tray_holdout_9131042",
@@ -432,19 +432,19 @@
         "name": "full_holdout_9301042",
         "phase": "full",
         "seed": 9301042,
-        "state": "running",
+        "state": "completed",
         "runner_pid": 114178,
-        "pid": 114184,
+        "pid": null,
         "run_id": "f26a27aaaef8411ebdce069927221b1f",
-        "episodes": 7,
-        "successes": 7,
+        "episodes": 8,
+        "successes": 8,
         "failures": 0,
-        "native_complete": false,
+        "native_complete": true,
         "trace": {
-          "step": 67050,
+          "step": 75330,
           "episode": 7,
-          "stage": "pickup",
-          "route": 0,
+          "stage": "loading",
+          "route": 10,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333330302
@@ -454,19 +454,19 @@
         "name": "full_holdout_9311042",
         "phase": "full",
         "seed": 9311042,
-        "state": "running",
+        "state": "completed",
         "runner_pid": 114808,
-        "pid": 114811,
+        "pid": null,
         "run_id": "35f7d7e5e96844768bedb7e15d545443",
-        "episodes": 7,
-        "successes": 7,
+        "episodes": 8,
+        "successes": 8,
         "failures": 0,
-        "native_complete": false,
+        "native_complete": true,
         "trace": {
-          "step": 66780,
+          "step": 71940,
           "episode": 7,
-          "stage": "navigate",
-          "route": 4,
+          "stage": "loading",
+          "route": 10,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333330302
@@ -476,11 +476,23 @@
         "name": "demo_holdout_9321042",
         "phase": "demo",
         "seed": 9321042,
-        "state": "not_launched",
+        "state": "running",
+        "runner_pid": 139847,
+        "pid": 139850,
+        "run_id": null,
         "episodes": 0,
         "successes": 0,
         "failures": 0,
-        "native_complete": false
+        "native_complete": false,
+        "trace": {
+          "step": 480,
+          "episode": 0,
+          "stage": "pickup",
+          "route": 0,
+          "valid": false,
+          "last_error": "Move to the surveyed observation view first",
+          "camera_age_ms": 16033.333334333334
+        }
       }
     ],
     "phases": {
@@ -497,10 +509,10 @@
         "native_group_rows": 8
       },
       "full": {
-        "episodes": 62,
-        "successes": 62,
+        "episodes": 64,
+        "successes": 64,
         "failures": 0,
-        "native_group_rows": 48
+        "native_group_rows": 64
       },
       "demo": {
         "episodes": 0,
@@ -513,19 +525,19 @@
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "new_learning_updates": 0,
     "formal_full_gate_passed": false,
-    "gpu": "114200, 5390 MiB\n114824, 4798 MiB\n"
+    "gpu": "139863, 5676 MiB\n"
   },
   "phase_gates_passed": {
     "tray": true,
     "dock_clamp": true,
-    "full": false
+    "full": true
   },
   "formal_full_evaluation": {
-    "complete": 62,
-    "successes": 62,
+    "complete": 64,
+    "successes": 64,
     "failures": 0,
     "required": 64,
-    "native_completed_group_rows": 48
+    "native_completed_group_rows": 64
   },
   "new_learning_updates": 0,
   "policy_version_changed": false,
@@ -539,12 +551,12 @@
     "mac": "6passed",
     "node": "6passed"
   },
-  "next": "Keep existing jobs. Complete phase native reports, all-original-file SHA backup and independent strict physics plus official acceptance; then write matching phase review receipt before next phase. No PPO training.",
-  "phase": "full",
+  "next": "Keep existing demo139847. Verify native one-episode report, complete uncut video, all-original files and model/optimizer/source manifests before final delivery; do not relaunch full or demo.",
+  "phase": "demo",
   "latest_snapshot_sha_and_physics": {
-    "at": "2026-10-23T15:12:25.705854+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_231022",
-    "files": 1435,
+    "at": "2026-10-23T16:09:01.025247+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_000719",
+    "files": 1485,
     "mismatches": [],
     "phases": {
       "tray": {
@@ -560,10 +572,10 @@
         "native_group_rows": 8
       },
       "full": {
-        "episodes": 62,
-        "successes": 62,
+        "episodes": 64,
+        "successes": 64,
         "failures": 0,
-        "native_group_rows": 48
+        "native_group_rows": 64
       },
       "demo": {
         "episodes": 0,
@@ -1948,6 +1960,18 @@
         ]
       },
       {
+        "name": "full_holdout_9301042",
+        "phase": "full",
+        "episode": 7,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 1.0799552546814084,
+        "axis_base_y": null,
+        "retreat_mm": 89.3729105591774,
+        "unsafe_force_N": 25.898778915405273,
+        "handoffs": []
+      },
+      {
         "name": "full_holdout_9311042",
         "phase": "full",
         "episode": 0,
@@ -2089,6 +2113,27 @@
             "pixel": [
               474.89936709120843,
               521.0252009873761
+            ],
+            "guards_verified": true
+          }
+        ]
+      },
+      {
+        "name": "full_holdout_9311042",
+        "phase": "full",
+        "episode": 7,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 1.093394821509719,
+        "axis_base_y": null,
+        "retreat_mm": 89.4927904009819,
+        "unsafe_force_N": 25.821178436279297,
+        "handoffs": [
+          {
+            "tick": 64197,
+            "pixel": [
+              530.7311545037134,
+              521.6491152056459
             ],
             "guards_verified": true
           }
@@ -2338,7 +2383,7 @@
     "new_learning_updates": 0
   },
   "latest_connectivity_check": {
-    "checked_at": "2026-10-23T15:10:22.927353+00:00",
+    "checked_at": "2026-10-23T16:07:20.382666+00:00",
     "connection": "connected",
     "snapshot_sha_and_physics_verified": true
   },
@@ -2622,13 +2667,13 @@
   },
   "formal_accounting_after_resume": {
     "retained_complete_native_episodes": 48,
-    "new_attempt_partial_episodes": 14,
-    "current_formal_episodes": 62,
+    "new_attempt_partial_episodes": 0,
+    "current_formal_episodes": 64,
     "historical_interrupted_partial_episodes": 6,
     "historical_partial_in_current_denominator": false,
     "no_cross_process_physical_state_claim": true,
-    "new_attempt_episodes": 14,
-    "all_complete_native_episodes": 48
+    "new_attempt_episodes": 16,
+    "all_complete_native_episodes": 64
   },
   "latest_resume_reconnect": {
     "at": "2026-10-23T13:17:43.976183+00:00",
@@ -3437,5 +3482,98 @@
     "rsync_partial_preserved": true,
     "simulation_process_commands_issued": 0,
     "completed_job_backup_transport_also_preserves_partial": true
-  }
+  },
+  "final_full_gate_passed": true,
+  "formal_full_acceptance": {
+    "formal_full_passed": true,
+    "formal_episodes": 64,
+    "successes": 64,
+    "failures": 0,
+    "wilson_95_lower": 0.9433759402071946,
+    "evidence_errors": [],
+    "node_mac_gate_identical": true,
+    "raw_files_verified_both_hosts": 7542,
+    "full_gate_sha256": "0c742281f56d4fa797cfb332f71fa8ffa946f902d0e42f39093fc2e79db4c31b",
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "frozen_counters": [
+      466,
+      170,
+      36602
+    ],
+    "error_mm_range": [
+      0.9243757813237607,
+      1.4366524992510676
+    ],
+    "retreat_mm_range": [
+      85.91227233409882,
+      89.9045541882515
+    ],
+    "unsafe_force_N_peak": 26.16085433959961,
+    "prior_interrupted_6_excluded": true,
+    "demo_seed": 9321042,
+    "demo_formal_denominator_contribution": 0,
+    "demo_launch_receipt": "full_policy_demo.launch_20261024.receipt.json",
+    "demo_complete": false,
+    "video_complete_verified": false,
+    "delivery_complete": false,
+    "remaining": [
+      "demo native 1/1 exit0 and strict physics",
+      "demo all-raw backup and video decode/SHA inspection",
+      "final model optimizer/report/source/video manifest and documentation",
+      "delete automation only after final delivery"
+    ]
+  },
+  "current_demo_launch": {
+    "at": "2026-10-23T16:06:26.403243+00:00",
+    "full_gate_sha256": "0c742281f56d4fa797cfb332f71fa8ffa946f902d0e42f39093fc2e79db4c31b",
+    "formal_episodes": 64,
+    "demo_excluded_from_formal_denominator": true,
+    "launch_result": {
+      "phase": "demo",
+      "launched": [
+        {
+          "name": "demo_holdout_9321042",
+          "job": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/demo_holdout_9321042.job.json",
+          "runner_pid": 139847,
+          "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58"
+        }
+      ],
+      "active_jobs": [
+        {
+          "name": "demo_holdout_9321042",
+          "state": "queued",
+          "job": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/demo_holdout_9321042.job.json",
+          "updated": 1792771586.3492785
+        }
+      ],
+      "inventory": {
+        "groups": [
+          139847
+        ],
+        "gpu": []
+      }
+    },
+    "same_source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "same_policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "launcher_formal_flag_before_reconciliation": false
+  },
+  "latest_demo_followup": {
+    "trace": {
+      "step": 1590,
+      "episode": 0,
+      "stage": "pickup",
+      "route": 0,
+      "valid": true,
+      "last_error": "",
+      "camera_age_ms": 33.33333333333144,
+      "observation_ready": true
+    },
+    "video_exists": true,
+    "video_current_bytes": 14155824,
+    "at": "2026-10-23T16:09:01.309572+00:00",
+    "complete_video_verified": false
+  },
+  "demo_excluded_from_formal_denominator": true,
+  "delivery_complete": false
 }
