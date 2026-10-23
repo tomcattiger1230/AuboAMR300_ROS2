@@ -1,30 +1,20 @@
 # 钢筋视觉移动操作训练：接力指导
 
-## 当前：同一冻结策略的独立验收（2026-10-23 上海07:36）
+## 当前暂停：已停止实验并保存结果（2026-10-23 上海08:26）
 
-修复开发回归已 **11/11完整成功、0失败、零证据错误**；1557个完整原始文件两端SHA一致，两个旧失败案例与真实30帧失视安全恢复均独立复核通过。保持source8a24、393b策略+optimizer及466updates/170actor/36602steps，不PPO重训、不重置策略或optimizer。
+最终交接说明已在Mac保存；用户离开本地网络后SSH显示network unreachable，最后这批说明与proof待回网同步。节点暂停状态和原始结果已先保存，Mac原始备份及两端SHA已在断网前完成；不影响已确认的停止结果。
 
-阶段门槛：抓取8/8独立通过；到站8/8独立通过。技能与开发回归均不计正式64。
+用户离开本地网络，已明确要求停止并保存。实验进程组75721/75739和防休眠进程组26082均仅用SIGTERM退出；复查无本任务残留进程，GPU空闲。自动跟进已PAUSED。等待用户新的明确恢复授权，不定时自动恢复。
 
-当前阶段`full`：完成50、成功50、失败0，其中完整原生组48行；该阶段gate尚未独立复核通过。1182个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
-连接已于07:36恢复：原runner75721/75739保持，931新增2成功（部分组2/8），正式50/64、50成功0失败；完整原生组仍48行。1182快照文件双端SHA及Mac全部50回合严格物理/handoff复核通过。930原PID75740仍在Isaac startup等待、0物理回合；63份零回合启动证据已封存双端SHA。此前用户要求不重复启动现有作业，已请求仅重启930的例外授权，答复前不停止或重启；健康931继续。07:34断联原始诊断保留，根因未定。
+正式整链保存 **54/64完成、54成功0失败**：9241042..9291042六个原生完整组共48回合，9311042保存6/8部分进度；9301042零物理回合。停止时正在进行的回合属于用户中断，不计成功或物理失败。最终64回合门槛未通过，不启动demo。
 
-tray_holdout_9131042：4完成/4成功/0失败，completed，tray_retreat/route4。
-tray_holdout_9141042：4完成/4成功/0失败，completed，tray_retreat/route4。
-dock_clamp_holdout_9151042：4完成/4成功/0失败，completed，loading/route10。
-dock_clamp_holdout_9161042：4完成/4成功/0失败，completed，loading/route10。
-full_holdout_9241042：8完成/8成功/0失败，completed，loading/route10。
-full_holdout_9251042：8完成/8成功/0失败，completed，loading/route10。
-full_holdout_9261042：8完成/8成功/0失败，completed，loading/route10。
-full_holdout_9271042：8完成/8成功/0失败，completed，loading/route10。
-full_holdout_9281042：8完成/8成功/0失败，completed，loading/route10。
-full_holdout_9291042：8完成/8成功/0失败，completed，loading/route10。
-full_holdout_9301042：0完成/0成功/0失败，running，-/route-。
-full_holdout_9311042：2完成/2成功/0失败，running，observe_tray/route4。
+1254份暂停后快照文件两端SHA及Mac全部54回合严格物理/handoff复算通过。六个完整组5618份原始文件、两个暂停作业829份原始/源码/日志文件，以及15份暂停证据包文件均两端SHA一致。暂停保存入口为 `artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/pause_user_20261023.saved_results.json` 与 `pause_user_20261023_002631/pause.stopped.json`。
 
-正式整链为 **50/64完成，成功50、失败0**，不与技能/开发或历史混算。冻结计划e7381e2f…：抓取9131042/9141042各4，到站9151042/9161042各4，最终9241042..9311042间隔10000各8；演示9321042。仅到站技能gate允许托槽/到站复位、无录制视觉hint，不计64；正式64均从源抓取开始，无初始化/hint。阶段完整报告、全原始备份及Mac严格物理/官方gate独立复算通过并写review凭据后才晋级，当前原作业保留，最多2仿真。调度器是一次性工具，不会后台自行派发后续阶段。
+保持source8a24、393b策略+optimizer及466updates/170actor/36602steps；没有PPO训练、策略或optimizer重置。930仅重启的例外授权被随后暂停指令撤销，实际未执行重启。没有序列化完整仿真状态，不假称跨进程物理状态连续；以后恢复须保留部分进度与全部证据，不重复计数。
 
-目录`/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022`，inhibitor PID/PG26082仅在有限评估生命周期阻止idle，暂停时也须停止；不改全局网络、电源或SDK。12.7GB历史归档已两端SHA通过，未解压覆盖运行目录。旧v10封存26/64（24成功2失败）、v8完整16另2成功、v9到站4成功/full0保留分列。仅仿真，不ROS硬件/飞书，不动原模型/共享SDK或无关GUI地图。入口`reports/source_return_frozen_acceptance_0103_20261022.json`和主status.current_job_root；旧候选记录助手已禁止覆盖新阶段状态。
+开发回归11/11、抓取8/8、到站8/8均已独立通过，排除在正式64分母外。完整组官方Mac/节点一致、零证据错误，48完整组Wilson95下界.925899870；54中另6是部分组，不冒充完整原生组gate。历史v10封存26/64（24成功2失败）、v8完整16另2成功、v9到站4/full0仍分列保存。
+
+仅仿真，不ROS硬件/飞书；原模型、共享SDK/Lab、网络电源设置及无关GUI地图未改。恢复入口为主status.current_job_root和 `reports/source_return_frozen_acceptance_0103_20261022.json`，当前必须遵守paused_user及requires_explicit_resume。
 
 ## 最新：103已恢复连接，同一候选继续物理回归（2026-10-22 上海20:21）
 
