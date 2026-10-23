@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-23T16:15:54.819762+00:00",
-  "status": "full64_passed_demo_live_unknown",
+  "updated_at": "2026-10-23T23:40:54.442552+00:00",
+  "status": "completed_full64_demo_and_backup_verified",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
   "current_directory": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022",
@@ -205,8 +205,8 @@
     "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
   },
   "latest_snapshot": {
-    "at": "2026-10-23T16:15:54.819762+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_001554",
+    "at": "2026-10-23T23:36:42.075634+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_073641",
     "groups": [
       {
         "name": "tray_holdout_9131042",
@@ -476,22 +476,22 @@
         "name": "demo_holdout_9321042",
         "phase": "demo",
         "seed": 9321042,
-        "state": "running",
+        "state": "completed",
         "runner_pid": 139847,
-        "pid": 139850,
-        "run_id": null,
-        "episodes": 0,
-        "successes": 0,
+        "pid": null,
+        "run_id": "6b18e9584425480aa16ae684573bd1bc",
+        "episodes": 1,
+        "successes": 1,
         "failures": 0,
-        "native_complete": false,
+        "native_complete": true,
         "trace": {
-          "step": 5940,
+          "step": 9480,
           "episode": 0,
-          "stage": "navigate",
-          "route": 4,
+          "stage": "loading",
+          "route": 10,
           "valid": true,
           "last_error": "",
-          "camera_age_ms": 33.33333333333144
+          "camera_age_ms": 33.33333333335986
         }
       }
     ],
@@ -515,17 +515,17 @@
         "native_group_rows": 64
       },
       "demo": {
-        "episodes": 0,
-        "successes": 0,
+        "episodes": 1,
+        "successes": 1,
         "failures": 0,
-        "native_group_rows": 0
+        "native_group_rows": 1
       }
     },
     "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "new_learning_updates": 0,
     "formal_full_gate_passed": false,
-    "gpu": "139863, 5676 MiB\n"
+    "gpu": ""
   },
   "phase_gates_passed": {
     "tray": true,
@@ -551,12 +551,12 @@
     "mac": "6passed",
     "node": "6passed"
   },
-  "next": "Reconnect only to inspect original demo139847 and new native result/video; preserve full64 passed gate and all evidence, no restart or duplicate launch.",
+  "next": "Delivered frozen simulation evidence and continuous original demo video. No further simulation jobs or training scheduled.",
   "phase": "demo",
   "latest_snapshot_sha_and_physics": {
-    "at": "2026-10-23T16:18:24.024108+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_001554",
-    "files": 1491,
+    "at": "2026-10-23T23:37:49.478647+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_073641",
+    "files": 1505,
     "mismatches": [],
     "phases": {
       "tray": {
@@ -578,10 +578,10 @@
         "native_group_rows": 64
       },
       "demo": {
-        "episodes": 0,
-        "successes": 0,
+        "episodes": 1,
+        "successes": 1,
         "failures": 0,
-        "native_group_rows": 0
+        "native_group_rows": 1
       }
     },
     "checks": [
@@ -2138,6 +2138,27 @@
             "guards_verified": true
           }
         ]
+      },
+      {
+        "name": "demo_holdout_9321042",
+        "phase": "demo",
+        "episode": 0,
+        "success": true,
+        "strict_physics_verified": true,
+        "error_mm": 1.253457274287939,
+        "axis_base_y": null,
+        "retreat_mm": 89.67285603284836,
+        "unsafe_force_N": 25.999685287475586,
+        "handoffs": [
+          {
+            "tick": 1746,
+            "pixel": [
+              632.0375085140796,
+              519.2205894727646
+            ],
+            "guards_verified": true
+          }
+        ]
       }
     ],
     "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
@@ -2383,11 +2404,11 @@
     "new_learning_updates": 0
   },
   "latest_connectivity_check": {
-    "checked_at": "2026-10-23T16:15:54.819762+00:00",
+    "checked_at": "2026-10-23T23:36:42.075634+00:00",
     "connection": "connected",
     "snapshot_sha_and_physics_verified": true
   },
-  "remote_live_state_fresh": false,
+  "remote_live_state_fresh": true,
   "latest_observation_followup": {
     "at": "2026-10-23T14:56:11.290065+00:00",
     "raw_log_traces": {
@@ -2513,7 +2534,7 @@
     "additional_dispatch_performed": false
   },
   "realtime_progress_state": "verified_at_2026-10-22T23:36:49.476888+00:00",
-  "metadata_sync_pending": true,
+  "metadata_sync_pending": false,
   "startup_restart_exception_requested": {
     "requested": false,
     "reason": "User explicitly prohibited repeated/restarted existing jobs; 930 remains zero-episode startup stall",
@@ -2596,7 +2617,7 @@
     "final_metadata_sync_error": "SSH network is unreachable; stopped node state and originals were already saved, Mac backups and SHA checks completed before leaving network"
   },
   "last_paused_results_sync_attempt_at": "2026-10-23T01:03:24.483709+00:00",
-  "node_connection_state": "ssh_timeout_during_demo_followup",
+  "node_connection_state": "connected",
   "latest_pause_metadata_sync": {
     "at": "2026-10-23T01:04:08.848761+00:00",
     "passed": false,
@@ -3282,7 +3303,7 @@
     "complete_video_verified": false
   },
   "demo_excluded_from_formal_denominator": true,
-  "delivery_complete": false,
+  "delivery_complete": true,
   "final_model_optimizer_cpu_verification": {
     "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "tensors": 52,
@@ -3326,5 +3347,208 @@
     "mac_same_checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
     "model_optimizer_included": true
   },
-  "controller_scope": "bounded camera-only arm residual PPO plus visual servo; scripted observation/gripper and surveyed-route odometry navigation, not standalone full-mission RL"
+  "controller_scope": "bounded camera-only arm residual PPO plus visual servo; scripted observation/gripper and surveyed-route odometry navigation, not standalone full-mission RL",
+  "demo_independent_review": {
+    "at": "2026-10-23T23:38:49.878437+00:00",
+    "passed": true,
+    "scope": "One continuous complete simulation demonstration; excluded from formal 64. Bounded visual residual PPO + visual servo, fixed observation/gripper/odometry; not standalone full-mission RL or hardware acceptance.",
+    "run_id": "6b18e9584425480aa16ae684573bd1bc",
+    "seed": 9321042,
+    "episodes": 1,
+    "successes": 1,
+    "failures": 0,
+    "native_report_sha256": "db5068eb874b8c869c43d56604a48bafb0820e9b5329cf1d575f0bbfb2ab1bbf",
+    "native_progress_results_identical": true,
+    "native_exit_code": 0,
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "counters": [
+      466,
+      170,
+      36602
+    ],
+    "new_learning_updates": 0,
+    "flags_verified": true,
+    "strict_physics_snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261024_073641",
+    "strict_physics": {
+      "name": "demo_holdout_9321042",
+      "phase": "demo",
+      "episode": 0,
+      "success": true,
+      "strict_physics_verified": true,
+      "error_mm": 1.253457274287939,
+      "axis_base_y": null,
+      "retreat_mm": 89.67285603284836,
+      "unsafe_force_N": 25.999685287475586,
+      "handoffs": [
+        {
+          "tick": 1746,
+          "pixel": [
+            632.0375085140796,
+            519.2205894727646
+          ],
+          "guards_verified": true
+        }
+      ]
+    },
+    "raw_backup_files": 172,
+    "video": {
+      "sha256": "7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef",
+      "bytes": 90063975,
+      "node_mac_sha_identical": true,
+      "duration_seconds": 316.4,
+      "frames": 3164,
+      "fps": 10,
+      "complete_decode_exit_code": 0,
+      "decode_errors": [],
+      "all_frame_pts_continuous_10fps": true,
+      "native_video_frames_match": true,
+      "native_video_views": [
+        {
+          "step": 2,
+          "view": "pickup",
+          "eye": [
+            -3.0,
+            2.4,
+            2.6
+          ],
+          "target": [
+            -0.55,
+            -0.3,
+            1.05
+          ]
+        },
+        {
+          "step": 4268,
+          "view": "travel",
+          "eye": [
+            10.0,
+            -7.0,
+            7.0
+          ],
+          "target": [
+            3.0,
+            2.2,
+            0.8
+          ]
+        },
+        {
+          "step": 7259,
+          "view": "machine",
+          "eye": [
+            3.2,
+            6.8,
+            3.1
+          ],
+          "target": [
+            6.0,
+            4.35,
+            1.0
+          ]
+        }
+      ],
+      "single_native_recording": true,
+      "edited_reencoded_or_spliced": false,
+      "visual_inspection": {
+        "start": "0.1s pickup at source station",
+        "tray": "110.1s observe_tray, bar supported on vehicle tray",
+        "travel": "180.1s navigate, vehicle between source and machine",
+        "machine": "270.1s pickup_tray at machine",
+        "end": "316.4s loading, vertical bar between machine clamps, arm withdrawn",
+        "actual_wrist_mono_inset_visible": true
+      },
+      "overview_used_for_control": false
+    },
+    "full_gate_remains_passed": true,
+    "delivery_complete": false
+  },
+  "final_delivery": {
+    "at": "2026-10-23T23:40:54.442552+00:00",
+    "delivery_complete": true,
+    "formal_full": {
+      "passed": true,
+      "phase": "full",
+      "randomization": "expanded",
+      "episodes": 64,
+      "successes": 64,
+      "success_rate": 1.0,
+      "wilson_95_lower": 0.9433759402071946,
+      "minimum_episodes": 64,
+      "minimum_distinct_seeds": 2,
+      "distinct_seeds": [
+        9241042,
+        9251042,
+        9261042,
+        9271042,
+        9281042,
+        9291042,
+        9301042,
+        9311042
+      ],
+      "required_wilson_95_lower": 0.9,
+      "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "evidence_errors": [],
+      "sample_requirement_met": true,
+      "failures": [],
+      "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+    },
+    "formal_full_gate_receipt": "full_gate.independently_verified.json",
+    "formal_full_gate_sha256": "0c742281f56d4fa797cfb332f71fa8ffa946f902d0e42f39093fc2e79db4c31b",
+    "development": {
+      "episodes": 11,
+      "successes": 11,
+      "formal_denominator": false
+    },
+    "skills": {
+      "tray": 8,
+      "dock_clamp": 8,
+      "all_success": true,
+      "formal_denominator": false
+    },
+    "demo": {
+      "episodes": 1,
+      "successes": 1,
+      "run_id": "6b18e9584425480aa16ae684573bd1bc",
+      "seed": 9321042,
+      "formal_denominator": false,
+      "review": "demo_independently_verified_20261024.json",
+      "video": "full_policy_demo.mp4",
+      "video_frames": 3164,
+      "video_seconds": 316.4,
+      "video_sha256": "7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef"
+    },
+    "core_artifacts_audit": "delivery_core_artifacts.both_hosts_verified.json",
+    "core_artifacts_files": 11123,
+    "raw_counts": {
+      "tray": 419,
+      "dock_clamp": 419,
+      "full": 7542,
+      "demo": 172,
+      "development": 1557,
+      "interrupted_archive": 883
+    },
+    "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+    "optimizer_included": true,
+    "finite_tensors": 52,
+    "counters": [
+      466,
+      170,
+      36602
+    ],
+    "new_learning_updates": 0,
+    "process_inventory": "campaign_completed_process_inventory_20261024.json",
+    "campaign_state": "completed",
+    "simulation_processes_remaining": 0,
+    "idle_inhibitor_naturally_exited": true,
+    "scope": "Simulation chain: bounded visual residual PPO with visual servo, fixed observation/gripper/odometry. No hardware validation; not standalone whole-mission RL.",
+    "historical_versions": {
+      "v8": "16 native complete + 2 partial successes",
+      "v9": "dock 4 successes / full 0",
+      "v10": "26 progress rows: 24 successes, 2 failures"
+    },
+    "old_interrupted_6_excluded_from_current_64": true,
+    "final_documents_manifest": "final_delivery_manifest.both_hosts_verified.json",
+    "automation_followup": "delete after final document SHA and Git/PR synchronization"
+  }
 }

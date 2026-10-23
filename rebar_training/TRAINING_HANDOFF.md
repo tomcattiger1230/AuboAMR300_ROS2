@@ -1,10 +1,47 @@
 # 钢筋视觉移动操作训练：接力指导
 
-## 当前：正式64已通过，演示连接待核查（2026-10-24 上海00:30）
+## 已完成：正式64通过、原演示视频与备份验收完成（2026-10-24 上海07:40）
 
-本轮两次原子采集均SSH超时，最后可信snapshot_20261024_001554及proof完整保留，没有使用旧summary运行verify/record。正式full64/64成功、0失败、零证据错误、Wilson95下界.943375940及7542原始文件SHA验收保持通过，不因传输失败改成物理失败。
+正式整链 **64/64成功、0失败**，8个完整原生组全部exit0，Mac与103官方评分一致，零证据错误，Wilson95下界 **0.9433759402**。开发回归11/11、抓取8/8、到站8/8分别通过，均排除正式64分母；旧中断931六行仅归档，不重复计分。
 
-唯一演示原runner139847/native139850/GPU139863未收到任何启停命令；最新实时进度、原生是否完成与最终视频状态未知。上次00:15记录是demo0/1、step5940导航且视觉有效，不能当作本轮新进度或完整录像。当前保存network_unavailable_20261024_0030.json与metadata待同步记录，待下轮有界重连后核查原任务并补验/备份，不重新启动。模型+optimizer52张量有限、393b与466/170/36602已独立保存；最终交付和automation结束仍等待演示及完整视频/备份实际核验。
+原演示9321042自然完成 **1/1成功**，run_id `6b18e9584425480aa16ae684573bd1bc`，无重复启动。完整原始录像 `artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/full_policy_demo.mp4`：**316.4秒、3164帧、10fps、1280×720**；Mac/103 SHA均为 `7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef`，完整解码无错误、所有帧时间戳连续，原生video_frames/video_views及起始、托槽、行驶、到站、结束画面独立核查。录像保持原文件，未重编码、未拼接成功片段，演示不计正式64。
+
+总计 **11,123个核心工件**重新逐项计算Mac/103 SHA，零差异：正式7542原始文件、技能419+419、演示172、开发1557、中断归档883，以及模型+optimizer、detector、USD资产、计划/种子审计、运行配置、实际冻结源码、日志、拒绝图像、视频/抽帧及审核凭据。最终文档与关闭状态另由 `final_delivery_manifest.both_hosts_verified.json` 核对；完成凭据 `delivery_complete_20261024.json`，演示审核 `demo_independently_verified_20261024.json`。12.7GB历史包沿用已验证双端SHA凭据，无重传或覆盖live目录。
+
+同一source8a24、policy+optimizer393b保持，52张量有限，466updates/170actor/36602steps；本轮零学习更新、未重置optimizer。范围是**视觉残差PPO + 视觉伺服 + 固定观察/夹爪/里程计导航的完整仿真链**，不表示独立全任务神经策略或真实机器人硬件验收。旧v8：完整16另2成功；旧v9：到站4/full0；旧v10：26行24成功2失败，全部保留分列。
+
+campaign已标记completed，演示父子进程自然退出，防空闲114175自然退出并复查无残留，GPU空闲；未修改全局电源/网络/SSH。最终交付完成后删除自动跟进，不再派发作业。以下旧时间段仅为历史记录。
+
+## 当前：原演示完整成功，视频已验证，最终备份审计进行中（2026-10-24 上海07:36）
+
+已重连103，原demo9321042自然完成1/1成功、exit0，run_id 6b18e9584425480aa16ae684573bd1bc；未重复启动。正式64/64成功、0失败及独立full gate保持通过。新snapshot_20261024_073641共1505文件两端SHA及全部技能8+8、full64、demo1严格物理/handoff复核通过。演示172份原始文件两端SHA，视频90063975字节、SHA7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef，两端一致；316.4秒/3164帧/10fps，完整解码无错误，所有帧PTS连续，真实开始/托槽/行驶/到站/结束抽帧核对完成。演示不计正式64；同8a/393b/466-170-36602、无学习、无策略重置。当前只剩全套工件及最终文档SHA收尾，delivery_complete仍false。
+
+## 当前：同一冻结策略的独立验收（2026-10-24 上海07:36）
+
+修复开发回归已 **11/11完整成功、0失败、零证据错误**；1557个完整原始文件两端SHA一致，两个旧失败案例与真实30帧失视安全恢复均独立复核通过。保持source8a24、393b策略+optimizer及466updates/170actor/36602steps，不PPO重训、不重置策略或optimizer。
+
+阶段门槛：抓取8/8独立通过；到站8/8独立通过；正式整链64/64独立通过。技能与开发回归均不计正式64。
+
+当前阶段`demo`：完成1、成功1、失败0，其中完整原生组1行；演示物理核验与完整视频备份进行中，不计正式64。1505个不可变快照文件两端SHA及Mac逐行真实物理/handoff复算通过。
+tray_holdout_9131042：4完成/4成功/0失败，completed，tray_retreat/route4。
+tray_holdout_9141042：4完成/4成功/0失败，completed，tray_retreat/route4。
+dock_clamp_holdout_9151042：4完成/4成功/0失败，completed，loading/route10。
+dock_clamp_holdout_9161042：4完成/4成功/0失败，completed，loading/route10。
+full_holdout_9241042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9251042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9261042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9271042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9281042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9291042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9301042：8完成/8成功/0失败，completed，loading/route10。
+full_holdout_9311042：8完成/8成功/0失败，completed，loading/route10。
+demo_holdout_9321042：1完成/1成功/0失败，completed，loading/route10。
+
+恢复前931部分6回合已完整封存于`interrupted_attempts/user_pause_20261023_002631`，保留历史证据并排除新正式64分母；六个完整原生组48回合保留，新930/931使用原种子各做连续8回合。没有跨进程物理状态续接，无学习或策略变化。
+
+正式整链为 **64/64完成，成功64、失败0**，不与技能/开发或历史混算。冻结计划e7381e2f…：抓取9131042/9141042各4，到站9151042/9161042各4，最终9241042..9311042间隔10000各8；演示9321042。仅到站技能gate允许托槽/到站复位、无录制视觉hint，不计64；正式64均从源抓取开始，无初始化/hint。阶段完整报告、全原始备份及Mac严格物理/官方gate独立复算通过并写review凭据后才晋级，当前原作业保留，最多2仿真。调度器是一次性工具，不会后台自行派发后续阶段。
+
+目录`/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022`，inhibitor PID/PG114175仅在有限评估生命周期阻止idle，暂停时也须停止；不改全局网络、电源或SDK。12.7GB历史归档已两端SHA通过，未解压覆盖运行目录。旧v10封存26/64（24成功2失败）、v8完整16另2成功、v9到站4成功/full0保留分列。仅仿真，不ROS硬件/飞书，不动原模型/共享SDK或无关GUI地图。入口`reports/source_return_frozen_acceptance_0103_20261022.json`和主status.current_job_root；旧候选记录助手已禁止覆盖新阶段状态。
 
 ## 上次已核验：同一冻结策略的独立验收（2026-10-24 上海00:15）
 
