@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T13:15:53.204815+00:00",
+  "updated_at": "2026-10-23T13:21:17.816095+00:00",
   "status": "frozen_evaluation_running",
   "host": "arnold@192.168.0.103",
   "repository": "/home/arnold/Develop/rebar-training-resume-0103-20261022",
@@ -205,8 +205,8 @@
     "next": "Freeze same source8a+policy393b and predeclare audited unused skill/final evaluation seeds. No hardware-induced retraining."
   },
   "latest_snapshot": {
-    "at": "2026-10-23T13:15:53.204815+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_211552",
+    "at": "2026-10-23T13:21:17.816095+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_212117",
     "groups": [
       {
         "name": "tray_holdout_9131042",
@@ -441,13 +441,13 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 14850,
+          "step": 17190,
           "episode": 1,
-          "stage": "navigate",
-          "route": 4,
-          "valid": true,
-          "last_error": "",
-          "camera_age_ms": 33.33333333330302
+          "stage": "observe_tray",
+          "route": 0,
+          "valid": false,
+          "last_error": "Move to the surveyed observation view first",
+          "camera_age_ms": 573033.3333343333
         }
       },
       {
@@ -463,10 +463,10 @@
         "failures": 0,
         "native_complete": false,
         "trace": {
-          "step": 14070,
+          "step": 16410,
           "episode": 1,
-          "stage": "navigate",
-          "route": 4,
+          "stage": "pickup_tray",
+          "route": 0,
           "valid": true,
           "last_error": "",
           "camera_age_ms": 33.33333333330302
@@ -542,9 +542,9 @@
   "next": "Keep existing jobs. Complete phase native reports, all-original-file SHA backup and independent strict physics plus official acceptance; then write matching phase review receipt before next phase. No PPO training.",
   "phase": "full",
   "latest_snapshot_sha_and_physics": {
-    "at": "2026-10-23T13:17:15.412236+00:00",
-    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_211552",
-    "files": 1198,
+    "at": "2026-10-23T13:22:31.820378+00:00",
+    "snapshot": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/review_snapshots/snapshot_20261023_212117",
+    "files": 1225,
     "mismatches": [],
     "phases": {
       "tray": {
@@ -2086,36 +2086,67 @@
     "new_learning_updates": 0
   },
   "latest_connectivity_check": {
-    "checked_at": "2026-10-23T13:15:53.204815+00:00",
+    "checked_at": "2026-10-23T13:21:17.816095+00:00",
     "connection": "connected",
     "snapshot_sha_and_physics_verified": true
   },
   "remote_live_state_fresh": true,
   "latest_observation_followup": {
-    "at": "2026-10-22T22:08:08.685169+00:00",
-    "trace": {
-      "full_holdout_9281042": {
-        "step": 48780,
-        "episode": 5,
-        "stage": "navigate",
-        "route": 4,
-        "valid": true,
-        "observation_ready": true,
-        "last_error": "",
-        "camera_age_ms": 33.33333333330302
+    "at": "2026-10-23T13:22:06.026363+00:00",
+    "raw_log_traces": {
+      "full_holdout_9301042": {
+        "step": 17610,
+        "episode": 1,
+        "stage": "observe_tray",
+        "route": 0,
+        "valid": false,
+        "last_error": "Move to the surveyed observation view first",
+        "camera_age_ms": 587033.3333343333,
+        "observation_ready": false
       },
-      "full_holdout_9291042": {
-        "step": 48788,
-        "episode": 5,
-        "stage": "navigate",
-        "route": 4,
+      "full_holdout_9311042": {
+        "step": 16710,
+        "episode": 1,
+        "stage": "pickup_tray",
+        "route": 0,
         "valid": true,
-        "observation_ready": true,
         "last_error": "",
-        "camera_age_ms": -2.2737367544323206e-10
+        "camera_age_ms": 33.33333333330302,
+        "observation_ready": true
       }
     },
-    "source": "read-only native logs after snapshot; observation acquisition complete without restart"
+    "simulation_process_commands_issued": 0,
+    "later_at": "2026-10-23T13:22:37.143431+00:00",
+    "later_raw_log_traces": {
+      "full_holdout_9301042": {
+        "step": 17850,
+        "episode": 1,
+        "stage": "pickup_tray",
+        "route": 0,
+        "valid": true,
+        "last_error": "",
+        "camera_age_ms": 33.33333333330302,
+        "observation_ready": true,
+        "observation_error_m": [
+          0.055926363915205
+        ],
+        "tray_reacquisition_count": 1
+      },
+      "full_holdout_9311042": {
+        "step": 16920,
+        "episode": 1,
+        "stage": "pickup_tray",
+        "route": 3,
+        "valid": true,
+        "last_error": "",
+        "camera_age_ms": 33.33333333330302,
+        "observation_ready": true,
+        "observation_error_m": [
+          0.874305248260498
+        ],
+        "tray_reacquisition_count": 0
+      }
+    }
   },
   "latest_full_pair_launch": {
     "at": "2026-10-22T23:09:08.798288+00:00",
