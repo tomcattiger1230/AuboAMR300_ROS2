@@ -1,0 +1,52 @@
+{
+  "schema": "workcell_frozen_validation_progress_v1",
+  "phase": "physical_candidate_baseline_running",
+  "created_unix": 1792859368.224087,
+  "layout": "rebar_training/config/multi_workcell_offline.json",
+  "layout_is_synthetic": true,
+  "old_formal_full_gate_unchanged": true,
+  "old_formal_denominator": 64,
+  "new_layout_completed_episodes": 0,
+  "new_layout_passed_episodes": 0,
+  "new_layout_task_acceptance": false,
+  "simulation_started": true,
+  "training_started": false,
+  "optimizer_instantiated": false,
+  "new_learning_updates": 0,
+  "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "baseline_candidates": 6,
+  "current": "baseline_source_A_machine_1_v4",
+  "manager_pid": 58359,
+  "runner_pid": 56953,
+  "native_pid": 56963,
+  "run_id": "6e7fd3bdeea241b280e49c2dc50089cf",
+  "source_archive_sha256": "ec473691ab049f3299d069f951d012f236fe1d260372adb856e3cf657b96859d",
+  "offline_targeted_tests": 65,
+  "earlier_broad_tests": {
+    "passed": 425,
+    "skipped": 8,
+    "subtests_passed": 6
+  },
+  "first_probe": {
+    "bounded_steps": 2400,
+    "seconds": 80,
+    "full_episode_completed": false,
+    "summary_written": false,
+    "raw_both_hosts_proof": {
+      "all_files_verified": true,
+      "files": 89,
+      "manifest_sha256": "7ad8505f34f5879d38ceef2f272faa0c9eaee3b1b7533e4fda2a83f6b3863464",
+      "physical_acceptance": false,
+      "report_summary_missing": true,
+      "verified_unix": 1792859224.4478989
+    }
+  },
+  "missing_acceptance": [
+    "Machine visual identity/pose/ready binding",
+    "Full MissionFlow simulation session and receipt binding"
+  ],
+  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025",
+  "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025",
+  "stop_on_failure": true,
+  "automatic_retry": false
+}
