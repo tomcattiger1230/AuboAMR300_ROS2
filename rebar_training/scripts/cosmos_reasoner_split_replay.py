@@ -6,6 +6,7 @@ import json
 import time
 
 from cosmos_reasoner_replay import MODEL_ID, MODEL_REVISION, VIDEO_SHA, POLICY_SHA, sha256, save, now, intervals
+from cosmos_generation_audit import GenerationScoreAudit, GenerationNumericsError, generation_receipt, validate_local_prefill
 
 # Original recorder pixels: wrist pasted at (876,118), size 384x231.
 # Use 230 rows for a legal even-sized H.264 frame; no wrist upsampling.
@@ -221,7 +222,9 @@ def infer(args):
     processor=transformers.AutoProcessor.from_pretrained(str(mp),local_files_only=True)
     device='cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else None
     assert device, 'A local GPU backend is required'
-    dtype=torch.bfloat16
+    # Local MPS BF16+SDPA produced all-NaN decode logits in the controlled replay.
+    # Preserve CUDA's existing dtype; MPS uses the independently checked FP32 path.
+    dtype=torch.float32 if device=='mps' else torch.bfloat16
     model=transformers.AutoModelForImageTextToText.from_pretrained(str(mp),dtype=dtype,
         attn_implementation='sdpa',local_files_only=True).to(device).eval()
     torch.set_grad_enabled(False);torch.manual_seed(0)
@@ -230,6 +233,7 @@ def infer(args):
         'model_revision':MODEL_REVISION,'thinking':False,'max_new_tokens':args.max_tokens,
         'input_strategy':'three_overview_frames_and_original_highres_wrist_snapshots','format_enforcer':'lm-format-enforcer==0.11.3',
         'device':device,'dtype':str(dtype),'attention':'sdpa','sampling':False,'manifest_sha256':sha256(r/'manifest.json'),
+        'generation_audit_sha256':sha256(Path(__file__).with_name('cosmos_generation_audit.py')),
         'visual_motion_manifest_sha256':sha256(r/'visual_motion_manifest.json'),
         'execution_order':'focus_first_then_remaining'}
     identity=hashlib.sha256(json.dumps(config,sort_keys=True).encode()).hexdigest()
@@ -259,17 +263,27 @@ def infer(args):
             continue
         started=time.monotonic();x,keyframes=model_inputs(processor,p,prompt,clip,r)
         grid=x['image_grid_thw'].tolist();tokens=x['input_ids'].shape[-1]
+        if device=='mps':validate_local_prefill(grid,tokens)
         assert tokens+args.max_tokens<model.config.text_config.max_position_embeddings
         x=x.to(model.device);x={k:(v.to(dtype) if torch.is_tensor(v) and v.is_floating_point() else v) for k,v in x.items()}
         if device=='cuda':torch.cuda.reset_peak_memory_stats()
         schema=schema_for(clip['view'])
         prefix=constraint_prefix(token_data,schema)
-        with torch.inference_mode():g=model.generate(**x,do_sample=False,max_new_tokens=args.max_tokens,
-            prefix_allowed_tokens_fn=prefix)
-        suffix=g[:,tokens:];raw=processor.batch_decode(suffix,skip_special_tokens=True)[0].strip()
-        final=raw
+        audit=GenerationScoreAudit(tokens,allow_masked=True)
+        numerical_error=None;g=None;ids=[]
+        try:
+            with torch.inference_mode():g=model.generate(**x,do_sample=False,max_new_tokens=args.max_tokens,
+                prefix_allowed_tokens_fn=prefix,logits_processor=[audit])
+            ids=g[0,tokens:].tolist()
+        except GenerationNumericsError as exc:numerical_error=str(exc)
+        generation=generation_receipt(ids,processor.tokenizer,False,args.max_tokens,time.monotonic()-started,float('inf'))
+        if numerical_error:generation['generation_status']='runtime_error'
+        raw=generation['decoded'].strip();final=generation['final_answer']
         answer,error=None,None
-        try:answer=validate_answer(json.loads(final),clip['view'])
+        try:
+            if numerical_error:raise ValueError(numerical_error)
+            if not generation['answer_complete']:raise ValueError('Generation incomplete; not semantic uncertainty')
+            answer=validate_answer(json.loads(final),clip['view'])
         except (ValueError,TypeError,KeyError) as exc:error=str(exc)
         out={'at':now(),'id':clip['id'],'index':clip['index'],'view':clip['view'],
             'source_start_s':clip['source_start_s'],'source_end_s':clip['source_end_s'],
@@ -277,12 +291,13 @@ def infer(args):
             'raw_output':raw,'final_output':final,'answer':answer,'schema_valid':error is None,
             'image_derived_motion_evidence':motion_ref,'native_pose_or_result_given_to_model':False,
             'validation_error':error,'image_grid_thw':grid,'keyframes':keyframes,'output_schema':schema,'processed_frame_pixels':[[v[1]*16,v[2]*16] for v in grid],
-            'input_tokens':tokens,'output_tokens':suffix.shape[-1],'latency_s':time.monotonic()-started,
+            'input_tokens':tokens,'output_tokens':len(ids),'latency_s':time.monotonic()-started,
+            'generation':generation,'score_audit':audit.steps,'numerical_error':numerical_error,
             'peak_cuda_memory_bytes':torch.cuda.max_memory_allocated() if device=='cuda' else None,
             'device_allocated_after_generate_bytes':torch.mps.current_allocated_memory() if device=='mps' else torch.cuda.memory_allocated(),'advisory_only':True,'physical_acceptance':False}
         save(target,out);baseline(r)
         print(json.dumps({k:out[k] for k in ['id','schema_valid','latency_s','input_tokens','output_tokens','processed_frame_pixels','peak_cuda_memory_bytes']}),flush=True)
-        del x,g,suffix
+        del x,g
     out=[json.loads(p.read_text()) for p in (r/'responses').glob('*.json')]
     save(r/'progress.json',{'at':now(),'expected':len(m['clips']),'completed':len(out),
         'schema_valid':sum(v['schema_valid'] for v in out),'complete':len(out)==len(m['clips']),

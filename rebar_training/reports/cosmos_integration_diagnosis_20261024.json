@@ -1,0 +1,374 @@
+{
+  "at": "2026-10-24T06:17:52.757139+00:00",
+  "status": "diagnosis_complete_with_semantic_limitations",
+  "recorded_cases": 33,
+  "resource_aborts": 1,
+  "model_id": "nvidia/Cosmos3-Edge",
+  "revision": "344d602b128d1bbdacb43b08d0a3626f46343e29",
+  "model_files_sha_verified": 16,
+  "loading_info": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "confirmed_runtime_issue": "MPS BF16+SDPA all-NaN decode logits reproduced with explicit prefill probe; ordinary generate 3 BF16 calls did not reproduce",
+  "confirmed_prompt_issue": "Default uncertainty template changes classification; object-presupposing questions hallucinate on blank input",
+  "enforcer_forces_uncertain": false,
+  "enforcer_scope": "Short single-field free/constrained outputs are token-identical; does not prove semantic correctness for complex schemas",
+  "fp32_audited_completed_cases": 9,
+  "mps_fp32_reference_repeats_token_identical_to_cpu_fp32": true,
+  "temporal_pixel_input_exactly_equal": true,
+  "moving_window_200_220_final_modes": {
+    "three_roi_images": "translation detected",
+    "twelve_roi_images": "translation detected",
+    "twelve_roi_video_frames": "translation detected; no-rotation claim wrong",
+    "two_panel_montage": "incorrect stationary"
+  },
+  "semantic_acceptance_passed": false,
+  "grasp_or_motion_control_authorized": false,
+  "independent_tracking_or_native_labels_given_to_model": false,
+  "simulation_started": false,
+  "policy_loaded": false,
+  "optimizer_loaded": false,
+  "unit_tests_passed": 28,
+  "node_connection_state": "ssh_port_22_timeout",
+  "metadata_sync_pending": true,
+  "records": [
+    {
+      "group": "initial_ablation",
+      "id": "overview_duplicate_control",
+      "path": "responses/overview_duplicate_control.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 50,
+      "final_answer": "The white mobile robot chassis carrying the arm is positioned slightly to the left of the gray machine pedestal. Its orientation is facing towards the right side of the image. The white mobile robot chassis carrying the arm does not exhibit any noticeable movement or rotation.",
+      "latency_s": 10.917687208973803
+    },
+    {
+      "group": "initial_ablation",
+      "id": "overview_moving_free",
+      "path": "responses/overview_moving_free.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 53,
+      "final_answer": "The white mobile robot chassis carrying the arm is positioned slightly to the left of the gray machine pedestal in all three images. Its orientation remains consistent, with the arm extending upwards and slightly to the right, maintaining a stable position relative to the pedestal throughout the sequence.",
+      "latency_s": 11.756499291979708
+    },
+    {
+      "group": "initial_ablation",
+      "id": "overview_moving_roi",
+      "path": "responses/overview_moving_roi.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 124,
+      "final_answer": "In Image 1, the white mobile robot chassis carrying the arm is positioned to the left of the gray machine pedestal, with the arm extended upwards and slightly forward. In Image 2, the white mobile robot chassis carrying the arm is still to the left of the gray machine pedestal, but the arm is now in a more retracted position. In Image 3, the white mobile robot chassis carrying the arm is again to the left of the gray machine pedestal, with the arm in a retracted position. Thus, the white mobile robot chassis carrying the arm does not translate or rotate relative to the fixed gray machine pedestal.",
+      "latency_s": 6.1118181250058115
+    },
+    {
+      "group": "initial_ablation",
+      "id": "overview_moving_thinking",
+      "path": "responses/overview_moving_thinking.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 505,
+      "final_answer": "The white mobile robot chassis with the arm is stationary relative to the fixed gray machine pedestal in all three images. There is no visible translation (movement left/right/up/down) or rotation (spinning) observed between the images. Thus, the final result is No translation or rotation (stationary).",
+      "latency_s": 42.886380917043425
+    },
+    {
+      "group": "initial_ablation",
+      "id": "overview_static_free",
+      "path": "responses/overview_static_free.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 99,
+      "final_answer": "In the first image, the white mobile robot chassis carrying the arm is positioned on the left side of the frame, facing towards the right. In the second image, the chassis has moved to the center of the frame, still facing right. In the third image, the chassis is again positioned on the left side of the frame, facing right. The movement of the white mobile robot chassis carrying the arm from left to center and back to left suggests that it is rotating rather than simply translating.",
+      "latency_s": 15.390504707931541
+    },
+    {
+      "group": "initial_ablation",
+      "id": "wrist_blank_control",
+      "path": "responses/wrist_blank_control.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 29,
+      "final_answer": "The two large white gripper fingers in the foreground are separated from the dark vertical rod, with a noticeable gap between them and the rod.",
+      "latency_s": 6.601300749927759
+    },
+    {
+      "group": "initial_ablation",
+      "id": "wrist_old_constrained",
+      "path": "responses/wrist_old_constrained.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 128,
+      "final_answer": "{\"base_motion\": \"not_observable\", \"base_motion_evidence\": \"Unclear\", \"rod_support\": \"vehicle_tray\", \"rod_support_evidence\": \"Rod is supported by the vehicle tray structure, visible on the left side of the image, resting on a horizontal surface with a textured vertical bar in the mid-段\", \"gripper_contact\": \"not_clear\", \"view_change\": false, \"summary\": \"The rod is supported by the vehicle tray structure, which is visible on the left side of the image, resting on a horizontal surface with a textured vertical bar\"}",
+      "latency_s": 15.958352708024904
+    },
+    {
+      "group": "initial_ablation",
+      "id": "wrist_old_free",
+      "path": "responses/wrist_old_free.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 140,
+      "final_answer": "{\"base_motion\": \"uncertain\", \"base_motion_evidence\": \"The base of the robotic arm is not visible, so its motion cannot be confirmed.\", \"rod_support\": \"The rod is supported by a vertical fixture on the wall, not by a vehicle tray or machine jaws.\", \"gripper_contact\": \"The gripper is not visible in the frame, so contact with the rod cannot be confirmed.\", \"view_change\": \"The camera view is a static side perspective of the robotic arm and the mounted rod.\", \"summary\": \"The robotic arm's base is not visible, and the rod is mounted on the wall, making the base motion uncertain.\"}",
+      "latency_s": 12.916335958056152
+    },
+    {
+      "group": "initial_ablation",
+      "id": "wrist_short_free",
+      "path": "responses/wrist_short_free.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 15,
+      "final_answer": "The two large white gripper fingers are not visible in this image.",
+      "latency_s": 5.535051375045441
+    },
+    {
+      "group": "initial_ablation",
+      "id": "wrist_short_json_constrained",
+      "path": "responses/wrist_short_json_constrained.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 9,
+      "final_answer": "{\"contact\": \"uncertain\"}",
+      "latency_s": 6.123134542023763
+    },
+    {
+      "group": "initial_ablation",
+      "id": "wrist_short_json_free",
+      "path": "responses/wrist_short_json_free.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 9,
+      "final_answer": "{\"contact\": \"uncertain\"}",
+      "latency_s": 5.673909166944213
+    },
+    {
+      "group": "initial_ablation",
+      "id": "wrist_short_thinking",
+      "path": "responses/wrist_short_thinking.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 103,
+      "final_answer": "The two large white gripper fingers in the foreground are separated from the dark vertical rod, with a visible gap between them and the rod.",
+      "latency_s": 10.940344833070412
+    },
+    {
+      "group": "backend_comparison",
+      "id": "cpu_fp32",
+      "path": "backend_comparison/cpu_fp32.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 9,
+      "final_answer": "{\"contact\": \"uncertain\"}",
+      "latency_s": 18.415181000018492
+    },
+    {
+      "group": "backend_comparison",
+      "id": "mps_bf16",
+      "path": "backend_comparison/mps_bf16.json",
+      "answer_complete": false,
+      "numerical_error": null,
+      "generated_tokens": 32,
+      "final_answer": null,
+      "latency_s": 11.1330804170575
+    },
+    {
+      "group": "numerical_audit",
+      "id": "bf16_eager",
+      "path": "numerical_audit/bf16_eager.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 9,
+      "final_answer": "{\"contact\": \"uncertain\"}",
+      "latency_s": 12.933413958060555
+    },
+    {
+      "group": "numerical_audit",
+      "id": "bf16_no_cache",
+      "path": "numerical_audit/bf16_no_cache.json",
+      "answer_complete": false,
+      "numerical_error": null,
+      "generated_tokens": 32,
+      "final_answer": null,
+      "latency_s": 72.70878766593523
+    },
+    {
+      "group": "numerical_audit",
+      "id": "bf16_sdpa_1",
+      "path": "numerical_audit/bf16_sdpa_1.json",
+      "answer_complete": false,
+      "numerical_error": "Non-finite raw generation scores; inference rejected",
+      "generated_tokens": 0,
+      "final_answer": null,
+      "latency_s": 9.741568375029601
+    },
+    {
+      "group": "numerical_audit",
+      "id": "bf16_sdpa_2",
+      "path": "numerical_audit/bf16_sdpa_2.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 8,
+      "final_answer": "{\"contact\": \"separated\"}",
+      "latency_s": 10.297785250004381
+    },
+    {
+      "group": "numerical_audit",
+      "id": "fp32_sdpa_1",
+      "path": "numerical_audit/fp32_sdpa_1.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 9,
+      "final_answer": "{\"contact\": \"uncertain\"}",
+      "latency_s": 9.443439291091636
+    },
+    {
+      "group": "numerical_audit",
+      "id": "fp32_sdpa_2",
+      "path": "numerical_audit/fp32_sdpa_2.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 9,
+      "final_answer": "{\"contact\": \"uncertain\"}",
+      "latency_s": 9.816743582952768
+    },
+    {
+      "group": "focus_fp32",
+      "id": "legacy_exact",
+      "path": "focus_fp32/responses/legacy_exact.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 66,
+      "final_answer": "{\"base_motion\": \"not_observable\", \"base_motion_evidence\": \"Uncertain\", \"rod_support\": \"uncertain\", \"rod_support_evidence\": \"Vehicle tray\", \"gripper_contact\": \"not_clear\", \"view_change\": false, \"summary\": \"Uncertain\"}",
+      "latency_s": 10.252994749927893
+    },
+    {
+      "group": "focus_fp32",
+      "id": "legacy_no_template",
+      "path": "focus_fp32/responses/legacy_no_template.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 120,
+      "final_answer": "{\"base_motion\": \"not_observable\", \"rod_support\": \"machine\", \"gripper_contact\": \"not_clear\", \"view_change\": false, \"summary\": \"The image shows a static view of a robotic arm's wrist frame with a mounted rod. No motion or interaction is visible.\",\"base_motion_evidence\": \"not_observable\", \"rod_support_evidence\": \"The rod is mounted on the wrist frame, likely attached to a base not fully visible in the frame. No gripper is seen interacting with it.\"}",
+      "latency_s": 15.519547167001292
+    },
+    {
+      "group": "focus_fp32",
+      "id": "neutral_blank",
+      "path": "focus_fp32/responses/neutral_blank.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 97,
+      "final_answer": "The image is a solid gray square with no visible objects, patterns, or details. There are no two objects to determine if they touch. The image is a plain gray square.",
+      "latency_s": 11.94069854193367
+    },
+    {
+      "group": "focus_fp32",
+      "id": "neutral_real",
+      "path": "focus_fp32/responses/neutral_real.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 220,
+      "final_answer": "The image shows a white structure with a curved edge and a vertical pole (or rod) attached to it. The visible objects are the white structure and the vertical pole. The vertical pole is attached to the white structure, so they do touch. Therefore, the final result is Yes, two objects (the white structure and the vertical pole) are visible and they touch.",
+      "latency_s": 20.617381666903384
+    },
+    {
+      "group": "focus_fp32",
+      "id": "wrist_blank_thinking",
+      "path": "focus_fp32/responses/wrist_blank_thinking.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 122,
+      "final_answer": "The two large white gripper fingers in the foreground are not visibly closed around the dark vertical rod, as there is no visible gap or contact between them and the rod in the image.",
+      "latency_s": 13.238511500065215
+    },
+    {
+      "group": "bounded_fp32",
+      "id": "motion_montage",
+      "path": "bounded_fp32/responses/motion_montage.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 313,
+      "final_answer": "In both panels, the white wheeled chassis (the base with wheels) carrying the arm does not change position or orientation relative to the gray fixed machine. The gray fixed machine (with the black top) remains stationary, and the white chassis stays in the same location relative to it, while only the arm's position changes between the two panels.",
+      "latency_s": 19.142774167004973
+    },
+    {
+      "group": "bounded_fp32",
+      "id": "motion_video_12_frames",
+      "path": "bounded_fp32/responses/motion_video_12_frames.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 604,
+      "final_answer": "To determine the movement type, we analyze the white mobile robot chassis relative to the fixed gray machine pedestal. At the beginning, the robot is positioned near the pedestal, and as the video progresses, it moves while maintaining its orientation relative to the pedestal. Since the pedestal is stationary and the robot’s movement is lateral (sideways) without rotation, the movement is translation. Thus, the white mobile robot chassis is translating relative to the fixed gray machine pedestal.",
+      "latency_s": 56.96420725004282
+    },
+    {
+      "group": "temporal_fp32",
+      "id": "same_12_frames_as_images",
+      "path": "temporal_fp32/responses/same_12_frames_as_images.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 168,
+      "final_answer": "The white mobile robot chassis carrying the arm translates relative to the fixed gray machine pedestal.",
+      "latency_s": 18.172693291911855
+    },
+    {
+      "group": "temporal_fp32",
+      "id": "three_frames_fp32",
+      "path": "temporal_fp32/responses/three_frames_fp32.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 674,
+      "final_answer": "To determine if the white mobile robot chassis carrying the arm translates or rotates relative to the fixed gray machine pedestal, we analyze the position and orientation changes across the images:  \n\n1. **Position and Orientation Analysis**: The robot chassis (including the arm) moves relative to the fixed gray machine pedestal. In the initial frames, the robot is positioned to the left of the pedestal, and as the sequence progresses, the robot shifts forward or backward relative to the pedestal. This indicates a **translation** (linear movement) of the chassis.  \n\nThus, the white mobile robot chassis carrying the arm translates relative to the fixed gray machine pedestal.",
+      "latency_s": 43.03724550001789
+    },
+    {
+      "group": "numerical_generation_only",
+      "id": "bf16_generate_1",
+      "path": "numerical_generation_only/bf16_generate_1.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 8,
+      "final_answer": "{\"contact\": \"separated\"}",
+      "latency_s": 5.4323169169947505
+    },
+    {
+      "group": "numerical_generation_only",
+      "id": "bf16_generate_2",
+      "path": "numerical_generation_only/bf16_generate_2.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 8,
+      "final_answer": "{\"contact\": \"separated\"}",
+      "latency_s": 5.169935582904145
+    },
+    {
+      "group": "numerical_generation_only",
+      "id": "bf16_generate_3",
+      "path": "numerical_generation_only/bf16_generate_3.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 8,
+      "final_answer": "{\"contact\": \"separated\"}",
+      "latency_s": 5.194416958023794
+    },
+    {
+      "group": "numerical_generation_only",
+      "id": "fp32_generate",
+      "path": "numerical_generation_only/fp32_generate.json",
+      "answer_complete": true,
+      "numerical_error": null,
+      "generated_tokens": 9,
+      "final_answer": "{\"contact\": \"uncertain\"}",
+      "latency_s": 5.357461250037886
+    }
+  ],
+  "standard_generate_bf16_completed_without_nan": 3,
+  "standard_generate_bf16_answer": "separated",
+  "standard_generate_fp32_answer": "uncertain",
+  "uncertain_main_explanation": "Prompt template/presupposition and weak scene grounding; exact old prompt remains uncertain on finite FP32",
+  "universal_numerical_failure_claim": false
+}

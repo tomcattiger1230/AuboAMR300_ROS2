@@ -28,7 +28,7 @@
   --model-path .cosmos_reasoner_replay/models/344d602b128d1bbdacb43b08d0a3626f46343e29
 ```
 
-支持CUDA或Mac MPS BF16独立推理（本机BF16矩阵预检通过），实际硬件/精度写入每次执行凭据，不能当作严格相同后端的消融试验。环境仅位于`.cosmos_reasoner_replay/venv`，不改原Isaac环境。
+上面的命令保留上一轮参数，不能用新客户端覆盖旧响应目录。后续诊断确认Mac MPS BF16+SDPA带前置探针的解码路径出现全NaN，标准生成3次未复现，简单矩阵预检不足以确认可用；当前客户端在MPS使用FP32，并记录逐token分数有效性、原始特殊token和EOS，数值异常或未完成输出直接拒收。CUDA配置保持原样，本轮没有重新核验CUDA后端。诊断与独立复测见`COSMOS_INTEGRATION_DIAGNOSIS_20261024.md`。环境仅位于`.cosmos_reasoner_replay/venv`，不改原Isaac环境。
 
 ## 对照与边界
 
