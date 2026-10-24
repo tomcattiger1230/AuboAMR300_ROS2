@@ -1,0 +1,80 @@
+{
+  "schema": "multi_workcell_offline_candidate_report_v1",
+  "status": "code_and_offline_validation_complete",
+  "scope": "two_source_three_same_type_machines_intent_flow_and_geometry_only",
+  "map_geometry_status": "synthetic",
+  "sources": [
+    "source_A",
+    "source_B"
+  ],
+  "machines": [
+    "machine_1",
+    "machine_2",
+    "machine_3"
+  ],
+  "same_machine_profile": "test_machine_v1",
+  "synthetic_combinations_passed": 6,
+  "synthetic_combinations_total": 6,
+  "rejected_counterexamples_passed": 20,
+  "rejected_counterexamples_total": 20,
+  "unit_and_regression_tests": {
+    "tests": 158,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "immutable_inputs_unchanged": {
+    "rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/frozen_policy.pt": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/full_policy_demo.mp4": "7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef",
+    "rebar_training/src/rebar_training/mobile_residual.py": "4562c45afbf3f91d12c054545065606f36f852762568e3fb143488265f16f9a3",
+    "rebar_training/src/rebar_training/mobile_env.py": "d2985ce3200eea0529bd3963c933683faefed41d836e7293b0da0fe60a82c3af"
+  },
+  "policy_optimizer_loaded": false,
+  "policy_inference_executed": false,
+  "simulation_started": false,
+  "training_started": false,
+  "hardware_or_ros_started": false,
+  "actuator_dispatch": false,
+  "original_formal64_and_demo_evidence_unchanged": true,
+  "new_layout_physical_acceptance": false,
+  "policy_compatibility": "unvalidated_new_layout_execution_blocked",
+  "navigation_backend_connected": false,
+  "legacy_math_adapters_tested": true,
+  "legacy_runtime_orchestrator_connected": false,
+  "limitations": [
+    "Example map, visual IDs and navigation station IDs are synthetic, not surveyed",
+    "Offline sensor receipts do not demonstrate actual perception, navigation, reachability or collision-free operation",
+    "Frozen policy input includes absolute base_xy and legacy route semantics; compatibility validation remains required",
+    "No pile picking, new steel sizes or different fixture structure validated"
+  ],
+  "artifact_directory": "rebar_training/artifacts/multi_workcell_offline_20261024",
+  "artifact_sha256": {
+    "validation_final.json": "78f3118248449991aa3974624e3282a6a0a2bd9ee651577a1145b701b4c037a5",
+    "example_delivery.final.plan.json": "1397cc21f39fd61e4341df80a70d649b2297941093a865cf462e39d1b7d91c37",
+    "before.json": "39b14349f54e9e8f2da872d9eddac048fe29318992341698da207645afa211c1",
+    "after.json": "62b7480ac7142694c46fb2b4951266322cb28a7c174d4027ce6eb1b5f085c975",
+    "tests.junit.xml": "4d7cceee3d25c1a88f8fded5b9c6c431b828f312f3adee4cead2a301f990815a",
+    "tests.log": "f43d1b890c57fab68b55875b3ac6fe2276ed8ec2824db54f0b0d6f5c6478ec22",
+    "candidate_files.sha256.json": "05f18b725466f345dcb075ac27357262b3ee8391086bc89aeb18b7b3fef4a3a9"
+  },
+  "candidate_files_sha256": {
+    "config/multi_workcell_offline.json": "fa38011520c99ed1e375886786f147553cc6c267c97150fc10492e3282e36d3d",
+    "src/rebar_training/workcells.py": "95e21adb1eb55138c46c37876b33c8f7bf521a13a5de1e6f7c8daccfdf731345",
+    "src/rebar_training/workcell_mission.py": "ae571f45aa3af503789adfb5568d75a25306cbbf186f452dded505f6749b6f3e",
+    "src/rebar_training/workcell_check.py": "c27267d4be658e03faf5c46871519b56aafd120cdf328ab0fcf5fb973dead8ca",
+    "src/rebar_training/station_skill_adapter.py": "e1481ba73a6d99173e17bf1900aee720a3c1ba513c089a25d86a0e7f25674e78",
+    "src/rebar_training/route.py": "edb41b942f9f91a34d81852a3c868450923aebf53da917fa8b82f82e94c3e493",
+    "src/rebar_training/vision/servo.py": "f078b914d18ec4afd0daf05fe9b104495c1e977c7bdd987ac3e092fccdb12d5f",
+    "tests/test_workcells.py": "78c8c6e3128e4a0ca3f0fb19bfc28d1932ed70d21a32e74829339029e0930432",
+    "tests/test_workcell_mission.py": "fc230142ad10ecf1121ff687f1cd1775e03de4cd5f4f314fcc148f982fd6f096",
+    "tests/test_station_skill_adapter.py": "09092bdde22403e8133192be4b190d255f7bd262f59f2663dc37a03be7befaab",
+    "docs/MULTI_WORKCELL_OFFLINE_20261024.md": "bf8dc6fdf1055dfc2f664c1f98c46c756de3cd4a014f076be116b9f9d82bf012",
+    "README.md": "ade93e07a51a810170647f0d19700f136fc81c7fb760ec73b96a2be97b4c1fa3",
+    "TRAINING_HANDOFF.md": "c38e8c0e03a9f8df71485a3b765513afa15af38a326c57e17015005ac95ec131"
+  },
+  "base_commit": "44cea170ae15f51e8efe985c6273a061c70cf806",
+  "created_unix": 1792855027.371938,
+  "validation_artifact": "validation_final.json",
+  "example_plan_artifact": "example_delivery.final.plan.json"
+}

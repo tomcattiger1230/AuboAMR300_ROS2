@@ -1,5 +1,10 @@
 # 钢筋视觉移动操作训练：接力指导
 
+## 两料区、三台同型测试机：离线代码候选（2026-10-24）
+
+已增加参数化工位注册表、六步任务流程和现有观察/停靠/上料技能的显式适配接口。示例布局为synthetic，真实导航与任务执行后端尚未接通；新布局PPO兼容性未验证，策略执行保持阻断。未启动仿真、训练或ROS，393b策略及optimizer只读SHA不变。说明见[多工位离线改造](docs/MULTI_WORKCELL_OFFLINE_20261024.md)，汇总见`reports/multi_workcell_offline_20261024.json`。原正式64/64及演示1/1保留原场景范围，不视为本轮泛化验收。
+
+
 本Mac迁移备份入口：`/Users/weiluo/Develop/backups/rebar_migration_20261024_142019/README_RESTORE.md`；完整校验状态以同目录`backup.verify.json`为准。说明见[迁移备份与恢复](docs/MIGRATION_READY_BACKUP_20261024.md)，恢复只写入新目录，不启动仿真或训练。
 
 ## Cosmos回放诊断完成（2026-10-24）

@@ -38,7 +38,32 @@ class LoadingRoute:
         nominal = torch.tensor([math.sqrt(.5), math.sqrt(.5), 0., 0.], device=self.device).expand(len(ids), -1)
         self.quaternion[ids] = quat_multiply(bar_pose[:, 3:], nominal)
 
-    def advance(self, state, logic, joints, goal, *, grasp_quaternion=None):
+    def _loading_geometry(self, goal, geometry):
+        """Explicit station-frame adapter; legacy calls retain their exact targets."""
+        if geometry is None:
+            return None
+        if not isinstance(geometry, dict) or len(self.stage) != 1 or geometry.get('frame') != 'base' or geometry.get('refined') is not True:
+            raise ValueError('Station loading requires one robot and refined base-frame geometry')
+        values = {}
+        for key, width in (('goal', 3), ('standoff', 3), ('retreat_vector', 3), ('tcp_quaternion_xyzw', 4)):
+            try:
+                v = torch.as_tensor(geometry.get(key, ()), dtype=self.quaternion.dtype, device=self.device)
+            except (TypeError, ValueError) as ex:
+                raise ValueError('Invalid station loading geometry: '+key) from ex
+            if v.shape != (width,) or not torch.isfinite(v).all():
+                raise ValueError('Invalid station loading geometry: '+key)
+            values[key] = v
+        wanted = torch.as_tensor(goal, dtype=self.quaternion.dtype, device=self.device)
+        if wanted.shape != (3,) or not torch.allclose(values['goal'], wanted, atol=1e-6, rtol=0):
+            raise ValueError('Station geometry and loading goal disagree')
+        if (abs(torch.linalg.vector_norm(values['tcp_quaternion_xyzw']).item()-1) > 1e-5
+                or torch.linalg.vector_norm(values['standoff']-wanted).item() < .059999
+                or torch.linalg.vector_norm(values['retreat_vector']).item() < .059999):
+            raise ValueError('Invalid station orientation or clearance')
+        return values
+
+    def advance(self, state, logic, joints, goal, *, grasp_quaternion=None, loading_geometry=None):
+        geometry = self._loading_geometry(goal, loading_geometry)
         s = state
         ready = (self.stage == 0) & (torch.linalg.vector_norm(s.bar + s.bar.new_tensor([0, 0, .10]) - s.tcp, dim=-1) < .006)
         self.grasp_alignment_blocked_contact.zero_()
@@ -72,8 +97,14 @@ class LoadingRoute:
         self.stage[(self.stage == 3) & logic.pick_complete] = 4
         ready = (self.stage == 4) & ((joints - joints.new_tensor(CARRY_JOINTS)).abs().amax(-1) < .025)
         self.stage[ready] = 6
-        stand_off = s.tcp.new_tensor(goal) + s.tcp.new_tensor([0., .06, 0.])
+        stand_off = geometry['standoff'] if geometry is not None else s.tcp.new_tensor(goal) + s.tcp.new_tensor([0., .06, 0.])
         ready = (self.stage == 6) & (torch.linalg.vector_norm(stand_off - s.tcp, dim=-1) < .012)
+        if geometry is not None:
+            # Position alone must not permit insertion into a rotated fixture.
+            if grasp_quaternion is None:
+                ready &= False
+            else:
+                ready &= (q * geometry['tcp_quaternion_xyzw']).sum(-1).abs() >= math.cos(math.radians(2)/2)
         self.stage[ready] = 7
         ready = (self.stage == 7) & (logic.phase == 2)
         self.stage[ready] = 8
@@ -92,7 +123,8 @@ class LoadingRoute:
             opened &= self.release_dwell>=3
         self.stage[(self.stage == 9) & opened] = 10
 
-    def targets(self, state, goal):
+    def targets(self, state, goal, *, loading_geometry=None):
+        geometry = self._loading_geometry(goal, loading_geometry)
         s = state
         desired = s.bar.clone()
         desired[:, 2] += .10
@@ -100,11 +132,16 @@ class LoadingRoute:
         desired[self.stage == 2] = self.anchor[self.stage == 2]
         desired[self.stage == 3] = self.initial_bar[self.stage == 3] + s.bar.new_tensor([0., 0., .16])
         desired[self.stage == 4] = s.bar.new_tensor([-.80, 0., 1.25])
-        desired[self.stage == 6] = s.bar.new_tensor(goal) + s.bar.new_tensor([0., .06, 0.])
+        desired[self.stage == 6] = geometry['standoff'] if geometry is not None else s.bar.new_tensor(goal) + s.bar.new_tensor([0., .06, 0.])
         desired[self.stage == 7] = s.tcp[self.stage == 7] + s.bar.new_tensor(goal) - s.bar[self.stage == 7]
         desired[self.stage >= 8] = self.anchor[self.stage >= 8]
-        desired[self.stage >= 10, 2] += .10
+        if geometry is None:
+            desired[self.stage >= 10, 2] += .10
+        else:
+            desired[self.stage >= 10] += geometry['retreat_vector']
         quaternion = self.quaternion.clone()
         quaternion[self.stage >= 4] = s.bar.new_tensor([math.sqrt(.5), 0., 0., math.sqrt(.5)])
+        if geometry is not None:
+            quaternion[self.stage >= 6] = geometry['tcp_quaternion_xyzw']
         grip = torch.where((self.stage < 2) | (self.stage >= 9), -1., 1.)
         return desired, quaternion, grip

@@ -1,0 +1,123 @@
+{
+  "schema": "multi_workcell_layout_v1",
+  "map_id": "offline_demo_map_v1",
+  "revision": "two_sources_three_machines_v1",
+  "calibration_id": "wrist_mono_fixture_v1",
+  "geometry_status": "synthetic",
+  "steel": {
+    "id": "rebar_24x600",
+    "diameter_m": 0.024,
+    "length_m": 0.6
+  },
+  "profiles": [
+    {
+      "id": "source_table_v1",
+      "kind": "source",
+      "navigation_offset_xyz_yaw": [
+        1.2,
+        0,
+        0,
+        3.141592653589793
+      ],
+      "search_bounds_xy": [
+        -0.8,
+        -0.5,
+        0.8,
+        0.5
+      ],
+      "support_height_m": 0.522
+    },
+    {
+      "id": "test_machine_v1",
+      "kind": "machine",
+      "navigation_offset_xyz_yaw": [
+        0.3,
+        0.77,
+        0,
+        0
+      ],
+      "fixture_goal": [
+        0,
+        0,
+        1.508
+      ],
+      "bar_axis": [
+        0,
+        0,
+        1
+      ],
+      "standoff_offset": [
+        0,
+        0.06,
+        0
+      ],
+      "retreat_offset": [
+        0,
+        0,
+        0.1
+      ]
+    }
+  ],
+  "stations": [
+    {
+      "id": "source_A",
+      "profile_id": "source_table_v1",
+      "pose_map_xyz_yaw": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "navigation_id": "source_A_dock",
+      "visual_id": "source_A_visual"
+    },
+    {
+      "id": "source_B",
+      "profile_id": "source_table_v1",
+      "pose_map_xyz_yaw": [
+        0,
+        5,
+        0,
+        1.5707963267948966
+      ],
+      "navigation_id": "source_B_dock",
+      "visual_id": "source_B_visual"
+    },
+    {
+      "id": "machine_1",
+      "profile_id": "test_machine_v1",
+      "pose_map_xyz_yaw": [
+        6,
+        4,
+        0,
+        0
+      ],
+      "navigation_id": "machine_1_dock",
+      "visual_id": "machine_1_visual"
+    },
+    {
+      "id": "machine_2",
+      "profile_id": "test_machine_v1",
+      "pose_map_xyz_yaw": [
+        10,
+        4,
+        0,
+        1.5707963267948966
+      ],
+      "navigation_id": "machine_2_dock",
+      "visual_id": "machine_2_visual"
+    },
+    {
+      "id": "machine_3",
+      "profile_id": "test_machine_v1",
+      "pose_map_xyz_yaw": [
+        10,
+        -3,
+        0,
+        -1.5707963267948966
+      ],
+      "navigation_id": "machine_3_dock",
+      "visual_id": "machine_3_visual"
+    }
+  ]
+}

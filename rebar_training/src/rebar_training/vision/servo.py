@@ -12,9 +12,13 @@ class RobotServo:
     def __init__(self, env):
         self.env = env
 
-    def route_actions(self, state, route, goal=None):
+    def route_actions(self, state, route, goal=None, *, loading_geometry=None):
         e = self.env
-        desired, quaternion, grip = route.targets(state, e.task_spec.insert_goal if goal is None else goal)
+        target = e.task_spec.insert_goal if goal is None else goal
+        if loading_geometry is None:
+            desired, quaternion, grip = route.targets(state, target)
+        else:
+            desired, quaternion, grip = route.targets(state, target, loading_geometry=loading_geometry)
         actions = self.cartesian_actions(desired, quaternion, grip)
         measured = e.robot.data.joint_pos.torch[:, e.control_ids[:6]]
         velocity = 1.5*(measured.new_tensor(CARRY_JOINTS)-measured)
