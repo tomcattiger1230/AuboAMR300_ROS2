@@ -18,10 +18,10 @@
   "current": "baseline_source_A_machine_1_v7",
   "manager_pid": 72209,
   "runner_pid": 72208,
-  "native_pid": null,
-  "run_id": null,
+  "native_pid": 72222,
+  "run_id": "39d5dcb07ce94cbd9edc245fad5ea7fb",
   "source_archive_sha256": "5fdd7faa9c601043e3955259946ec8920c3f4873de905e565a74209c4630cfbc",
-  "offline_targeted_tests": 102,
+  "offline_targeted_tests": 103,
   "earlier_broad_tests": {
     "passed": 425,
     "skipped": 8,
@@ -49,7 +49,7 @@
   "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v7",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792863359.14319,
+  "updated_unix": 1792863892.974602,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -105,5 +105,72 @@
   },
   "results_are_version_separated": true,
   "current_campaign_completed_episodes": 0,
-  "current_campaign_successes": 0
+  "current_campaign_successes": 0,
+  "last_live_snapshot_unix": 1792863867.9054174,
+  "last_live_progress": {
+    "step": 8340,
+    "sim_time_s": 278.03333333333336,
+    "stage": "pickup_tray",
+    "source_navigation": false,
+    "route": 0,
+    "valid": true,
+    "base": [
+      6.2938761711120605,
+      4.769953727722168,
+      1.8976699323047796e-08
+    ],
+    "base_quaternion": [
+      -1.2202106347558583e-07,
+      1.1525450105409618e-07,
+      0.0005297479801811278,
+      0.9999998211860657
+    ],
+    "wheel_command": [
+      0.0,
+      0.0
+    ],
+    "robot_twist": [
+      0.0004735205147881061,
+      -0.0005647767102345824,
+      -0.0001754519616952166
+    ],
+    "last_error": "",
+    "estimated_bar": [
+      0.2922300596012205,
+      -0.0013512520783691539,
+      0.715
+    ],
+    "camera_age_ms": 33.33333333335986,
+    "arm_joints": [
+      4.34731388092041,
+      0.9990979433059692,
+      1.9094126224517822,
+      -0.3133578300476074,
+      0.8500124216079712,
+      -0.49795615673065186
+    ],
+    "finger_positions": [
+      0.0002469743776600808,
+      1.0687779905538264e-07
+    ],
+    "finger_forces": [
+      0.0,
+      0.0
+    ],
+    "tray_load_n": 20.688133239746094,
+    "policy_calls": 1432
+  },
+  "v7_mac_collector_pid": 62361,
+  "v5_raw_backup": {
+    "files": 253,
+    "all_files_both_hosts_verified": true,
+    "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792860645/workcell_results.tar.gz",
+    "sha256": "b6b636d09c3c87fad0df5b662cf68e3230fe821a073a98dd5a762cbc2c85521f"
+  },
+  "v6_raw_backup": {
+    "files": 325,
+    "all_files_both_hosts_verified": true,
+    "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792861952/workcell_results.tar.gz",
+    "sha256": "4155952f754431f72720ed404c566ba0da2f4ddbe5932f4ec6bfbdd19de6ad73"
+  }
 }

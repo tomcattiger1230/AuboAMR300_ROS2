@@ -39,6 +39,40 @@ def bounded(command,deadline=40,input=None):
 def remote(code):return json.loads(bounded(SSH+['python3 -'],40,code))
 
 
+def verify_archive_detached(verification_code,destination,expected_sha):
+    """Keep slow NAS verification outside a bounded SSH request, then poll SSD status."""
+    import re
+    if not re.fullmatch(r'[0-9a-f]{64}',expected_sha):raise ValueError('Invalid archive SHA')
+    if not destination.startswith('/mnt/zspace/rebar_migration_20261024_142019/supplements/'):raise ValueError('Unexpected archive destination')
+    work=REMOTE_REPO+'/rebar_training/artifacts/workcell_archive_verifiers/'+expected_sha
+    home_status=work+'/status.json'
+    # Successful prior checks are recovered by full content-addressed archive identity.
+    sidecar=str(Path(destination).with_suffix('.both_hosts_verified.json'))
+    worker=("from pathlib import Path\nimport json,time,traceback\ns=Path("+repr(home_status)+")\n"
+        +"try:\n p=Path("+repr(sidecar)+"); old=json.loads(p.read_text()) if p.exists() else {}\n"
+        +" if old.get('sha256')=="+repr(expected_sha)+" and old.get('all_files_verified') is True:\n  result=old\n else:\n"
+        +"  exec(compile("+repr(verification_code)+",'<archive-verification>','exec'))\n  result=json.loads(Path("+repr(sidecar)+").read_text())\n"
+        +" s.write_text(json.dumps(dict(state='complete',proof=result,updated_unix=time.time()))+'\\n')\n"
+        +"except BaseException as e:\n s.write_text(json.dumps(dict(state='failed',error=type(e).__name__+': '+str(e),updated_unix=time.time()))+'\\n');raise\n")
+    starter=("from pathlib import Path\nimport subprocess,json,os,time,socket\nassert socket.gethostname()=='arnold-NUC16JNK9XX11'\n"
+        +"r=Path("+repr(work)+");r.mkdir(parents=True,exist_ok=True);s=r/'status.json';receipt=r/'launch.json'\n"
+        +"if not receipt.exists():\n script=r/'verify.py';script.write_text("+repr(worker)+")\n"
+        +" with receipt.open('x') as f:f.write(json.dumps(dict(state='launching',created_unix=time.time())))\n"
+        +" log=(r/'worker.log').open('a');p=subprocess.Popen(['python3',str(script)],stdin=subprocess.DEVNULL,stdout=log,stderr=log,start_new_session=True)\n"
+        +" receipt.write_text(json.dumps(dict(pid=p.pid,created_unix=time.time())))\n"
+        +"print(json.dumps(dict(state='started_or_existing',status=str(s))))\n")
+    remote(starter)
+    for _ in range(180):
+        reply=remote("from pathlib import Path\nimport json\np=Path("+repr(home_status)+");print(p.read_text() if p.exists() else json.dumps(dict(state='running')))\n")
+        if reply['state']=='complete':
+            proof=reply['proof']
+            if proof.get('sha256')!=expected_sha or proof.get('all_files_verified') is not True:raise RuntimeError('Detached verification identity mismatch')
+            return proof
+        if reply['state']=='failed':raise RuntimeError('Detached archive verification failed: '+reply.get('error','unknown'))
+        time.sleep(10)
+    raise RuntimeError('Detached archive verification pending after bounded polling')
+
+
 def main():
     global RELATIVE
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--repo',type=Path,required=True);p.add_argument('--max-hours',type=float,default=6);p.add_argument('--artifact-name',default='workcell_frozen_validation_20261025');args=p.parse_args()
@@ -100,13 +134,22 @@ m=dict(schema='workcell_final_raw_manifest_v1',files=files,campaign=json.loads((
             try:bounded(['rsync','-l','--append','--partial','-e',SSH_COMMAND,str(archive),'arnold@192.168.0.103:'+dest],55);break
             except Exception as ex:state.update(nas_transfer_attempt=attempt+1,last_transport_error=str(ex));persist();time.sleep(2)
         else:raise RuntimeError('NAS archive transfer pending')
-        verified=remote("from pathlib import Path\nimport json,hashlib,tarfile,time,socket\nassert socket.gethostname()=='arnold-NUC16JNK9XX11'\np=Path("+repr(dest)+");sha=hashlib.sha256(p.read_bytes()).hexdigest();assert sha=="+repr(sha)+"\n"+'''with tarfile.open(p,'r:gz') as t:
- m=json.load(t.extractfile('manifest.json'))
- for rel,d in m['files'].items():
-  data=t.extractfile('evidence/'+rel).read();assert len(data)==d['bytes'] and hashlib.sha256(data).hexdigest()==d['sha256'],rel
-proof=dict(archive=str(p),sha256=sha,files=len(m['files']),all_files_verified=True,verified_unix=time.time(),campaign_state=m['remote_proof']['campaign']['state'],new_layout_task_acceptance=False)
+        verification_code=("from pathlib import Path\nimport json,hashlib,tarfile,time,socket\nassert socket.gethostname()=='arnold-NUC16JNK9XX11'\np=Path("+repr(dest)+")\n"
+            +"digest=hashlib.sha256()\nwith p.open('rb') as handle:\n for block in iter(lambda:handle.read(8*1024*1024),b''):digest.update(block)\nsha=digest.hexdigest();assert sha=="+repr(sha)+"\n"+'''records={};metadata=None
+with tarfile.open(p,'r|gz',bufsize=8*1024*1024) as stream:
+ for member in stream:
+  if not member.isfile():continue
+  handle=stream.extractfile(member)
+  if member.name=='manifest.json':metadata=json.load(handle);continue
+  assert member.name.startswith('evidence/'),member.name
+  digest=hashlib.sha256();size=0
+  for block in iter(lambda:handle.read(8*1024*1024),b''):digest.update(block);size+=len(block)
+  records[member.name[len('evidence/'):]]=dict(sha256=digest.hexdigest(),bytes=size)
+assert metadata is not None and records==metadata['files'],'Archive file inventory mismatch'
+proof=dict(archive=str(p),sha256=sha,files=len(records),all_files_verified=True,verified_unix=time.time(),campaign_state=metadata['remote_proof']['campaign']['state'],new_layout_task_acceptance=False,verification='streamed complete archive plus every file SHA')
 p.with_suffix('.both_hosts_verified.json').write_text(json.dumps(proof,indent=2)+'\\n');print(json.dumps(proof))
 ''')
+        verified=verify_archive_detached(verification_code,dest,sha)
         atomic(backup/'BOTH_HOSTS_VERIFIED.json',verified);atomic(root/'campaign.final_backup.json',dict(local=archive_proof,nas=verified))
         state.update(phase='complete',backup=str(backup),all_raw_files_both_hosts_verified=True,nas_archive_verified=True);persist()
     except Exception as ex:state.update(phase='sync_pending',metadata_sync_pending=True,error=type(ex).__name__+': '+str(ex));persist();raise
