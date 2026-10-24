@@ -122,3 +122,11 @@ def test_unused_source_profile_does_not_replace_an_actual_source_station(data):
     data['stations'] = [s for s in data['stations'] if s['profile_id'] == 'test_machine_v1']
     with pytest.raises(ValueError, match='Both source and machine'):
         WorkcellLayout(data)
+
+
+def test_source_docking_retains_the_existing_rear_observation_and_grasp_workspace(layout):
+    for source in ('source_A', 'source_B'):
+        station = layout.station(source, 'source');base = layout.navigation_goal(source)
+        centre_map = station.pose_map.point([0, 0, .522])
+        assert base.inverse_point(centre_map) == pytest.approx([ -1.15, 0, .522])
+        assert base.inverse_vector(station.pose_map.vector([1, 0, 0])) == pytest.approx([1, 0, 0])
