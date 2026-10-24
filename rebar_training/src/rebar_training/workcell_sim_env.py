@@ -129,10 +129,9 @@ class WorkcellControl(VisualControl):
         return tuple(self.frame().point(self.env.machine_goal_map))
 
     def loading_geometry(self):
-        from .workcells import Pose
-        frame=self.frame().world_from_base
-        base=Pose(*map(float,frame[:3,3]),float(np.arctan2(frame[1,0],frame[0,0])))
-        return self.env.layout.machine_geometry(self.env.cfg.workcell_machine,base_pose=base)
+        from .workcell_physics import ideal_scene_loading_geometry
+        return ideal_scene_loading_geometry(self.env.layout,self.env.cfg.workcell_machine,self.frame(),
+            enabled=getattr(self.env.cfg,'workcell_ideal_machine_survey',False))
 
     def move_bar(self,target,quaternion,grip=1.):
         s=self.measured_state()

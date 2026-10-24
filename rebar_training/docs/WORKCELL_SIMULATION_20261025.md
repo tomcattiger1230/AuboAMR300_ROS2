@@ -27,3 +27,17 @@ CAD v1因最后停靠走廊采样不足被拒绝；v2因最近网格点没有转
 ## 证据位置
 
 Mac与103原repo相对目录均为`rebar_training/artifacts/workcell_frozen_validation_20261025`。`source_v1..v4`是节点不可变源码快照；Mac保存各版本源码包与逐文件SHA。`plan.json`是预声明任务清单，`campaign.status.json`是节点有限调度器状态；状态文件只代表其采集时刻，不以进程exit0替代真实完成回执。Mac下载原始工件后逐项比对SHA，再写双端验证凭据。
+
+## v4阻断与v5修正
+
+v4首条完整基线运行到307秒、完成运输和托槽重新抓取后，在进入loading时被原LoadingRoute拒绝：`Station loading requires one robot and refined base-frame geometry`。候选传入了只有base坐标、没有显式确认位姿的geometry；程序保存error和完整原始证据，独立review拒绝，调度器停止其余五条。不是一个已完成的物理失败回合，不记成功，也不推断PPO失效。退出前393b文件及52张量、466/170/36602均复核不变。
+
+v5只为本批理想定位物理探针增加显式`--ideal-machine-survey`。场景构造将各机器固定在注册表的确切位姿，控制器把这个**已知仿真测绘位姿**显式绑定为目标几何；没有从相机估计机器位姿，报告保留`visual_machine_pose_refinement=false`及任务级未验收。未提供该选项时入口拒绝执行，不允许默默使用未确认几何。三台机器均通过实际候选方法到原LoadingRoute的接口测试。
+
+v5所有源码/任务/日志位于独立`artifacts/workcell_frozen_validation_20261025_v5`，不覆盖v4。使用12502001..12502006六个新种子，继续逐回合审核、失败停派；与检查点13个训练种子无重合。Mac有限采集器只读取现有任务状态，终态后逐SHA下载原始文件并将结果包备份到Mac与`/mnt/zspace`；不具备启动仿真或训练的入口。采集器状态为各目录下`mac_followup.status.json`，传输失败保留pending与partial，不能当已备份。
+
+## 实测SE3一致性与v6
+
+从v4实际记录的底盘反馈回放还复现了另一个问题：原二维Pose投影忽略了约微弧度的底盘俯仰，使上料goal差1.477微米，超过原LoadingRoute的1微米一致性门槛。v6以完整实测`BaseFrame`同时变换goal、standoff、retreat及TCP四元数，真实反馈回放与原route检查通过，未放宽门槛，也未改策略输入维度/权重。
+
+v5派发器在当前回合运行中停止，当前原生回合继续自然退出，尚未派发第二条。独立的v6一次性交接器只会在v5原生退出、得到预期的坐标接口错误或独立物理成功、GPU空闲及393b/SHA全部匹配后启动v6；遇到其他失败继续needs_analysis。v6使用12503001..12503006和独立目录`artifacts/workcell_frozen_validation_20261025_v6`，仍为理想测绘定位下的冻结物理基线，任务级视觉定位验收保持未通过。新旧失败/未完成回合分开保留。

@@ -65,3 +65,42 @@ def test_independent_review_never_accepts_bounded_or_runtime_failure():
     assert not result['physical_candidate_passed']
     assert not result['task_interface_accepted']
     assert any('runtime error' in x for x in result['errors'])
+
+
+def test_actual_candidate_loading_geometry_requires_explicit_scene_survey():
+    # Execute the actual method without importing the Isaac-only environment.
+    import ast
+    from types import SimpleNamespace
+    from rebar_training.route import LoadingRoute
+    from rebar_training.vision.frames import BaseFrame
+    src=Path(__file__).parents[1]/'src/rebar_training/workcell_sim_env.py'
+    tree=ast.parse(src.read_text());cls=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='WorkcellControl')
+    method=next(n for n in cls.body if isinstance(n,ast.FunctionDef) and n.name=='loading_geometry')
+    namespace={'__package__':'rebar_training','np':np};exec(compile(ast.fix_missing_locations(ast.Module(body=[method],type_ignores=[])),str(src),'exec'),namespace)
+    layout=WorkcellLayout.load(LAYOUT)
+    for name in ('machine_1','machine_2','machine_3'):
+        base=layout.navigation_goal(name);c,s=math.cos(base.yaw),math.sin(base.yaw)
+        frame=BaseFrame((base.x,base.y,base.z),(0.,0.,math.sin(base.yaw/2),math.cos(base.yaw/2)))
+        controller=SimpleNamespace(env=SimpleNamespace(layout=layout,cfg=SimpleNamespace(workcell_machine=name,workcell_ideal_machine_survey=True)),frame=lambda:frame)
+        g=namespace['loading_geometry'](controller)
+        assert g['refined'] is True and g['frame']=='base'
+        assert g['goal']==pytest.approx((-.3,-.77,1.508))
+        # The unchanged route must accept these actual candidate targets.
+        checked=LoadingRoute(1,'cpu')._loading_geometry(g['goal'],g)
+        assert checked is not None
+        controller.env.cfg.workcell_ideal_machine_survey=False
+        with pytest.raises(ValueError,match='explicit exact-scene survey'):namespace['loading_geometry'](controller)
+
+
+def test_measured_physical_pitch_retains_exact_route_goal_guard():
+    from rebar_training.workcell_physics import ideal_scene_loading_geometry
+    from rebar_training.vision.frames import BaseFrame
+    from rebar_training.route import LoadingRoute
+    layout=WorkcellLayout.load(LAYOUT)
+    # Recorded v4 final base feedback: planar projection differs by 1.477 um.
+    frame=BaseFrame([6.295770168304443,4.770079612731934,-9.93837829810218e-8],
+        [-2.3684656014211214e-7,4.913092084279924e-7,-.00666304724290967,.9999777674674988])
+    geometry=ideal_scene_loading_geometry(layout,'machine_1',frame,enabled=True)
+    actual=frame.point(layout.machine_geometry('machine_1')['goal'])
+    assert geometry['goal']==pytest.approx(actual,abs=1e-12)
+    assert LoadingRoute(1,'cpu')._loading_geometry(actual,geometry) is not None

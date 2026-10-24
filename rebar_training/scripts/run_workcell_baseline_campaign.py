@@ -21,14 +21,15 @@ def atomic(path,value):
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--root',type=Path,required=True);args=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--root',type=Path,required=True);p.add_argument('--version',type=int,default=4);args=p.parse_args();version='v'+str(args.version)
+    if not 4<=args.version<=9:p.error('Unsupported bounded candidate version')
     if socket.gethostname()!='arnold-NUC16JNK9XX11':p.error('Only the authorized simulation node is supported')
-    root=args.root.resolve();template=json.loads((root/'baseline_source_A_machine_1_v4.job.json').read_text())
+    root=args.root.resolve();template=json.loads((root/('baseline_source_A_machine_1_'+version+'.job.json')).read_text())
     source=Path(template['source_snapshot']);sys.path.insert(0,str(source))
     from rebar_training.workcells import WorkcellLayout,FROZEN_POLICY_SHA256
     from rebar_training.workcell_sim_review import review
     layout=WorkcellLayout.load(source/'config/multi_workcell_offline.json')
-    manifest=json.loads((root/'candidate_source_v4.manifest.json').read_text())
+    manifest=json.loads((root/('candidate_source_'+version+'.manifest.json')).read_text())
     checkpoint=Path(template['command'][template['command'].index('--checkpoint')+1])
     state=dict(schema='workcell_physical_baseline_campaign_v1',manager_pid=os.getpid(),started_unix=time.time(),
         training_started=False,new_learning_updates=0,task_interface_accepted=False,physical_acceptance=False,
@@ -41,7 +42,7 @@ def main():
     try:
         for i,s in enumerate(('source_A','source_B')):
             for j,m in enumerate(('machine_1','machine_2','machine_3')):
-                name='baseline_'+s+'_'+m+'_v4';jobfile=root/(name+'.job.json');reportfile=root/(name+'.json')
+                name='baseline_'+s+'_'+m+'_'+version;jobfile=root/(name+'.job.json');reportfile=root/(name+'.json')
                 state['current']=name;persist()
                 for rel,digest in manifest.items():
                     if hashlib.sha256((source/rel).read_bytes()).hexdigest()!=digest:raise RuntimeError('Candidate source changed: '+rel)
@@ -50,7 +51,7 @@ def main():
                     inventory=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid,process_name,used_memory','--format=csv,noheader'],text=True).strip()
                     if inventory:raise RuntimeError('GPU not idle before new task: '+inventory)
                     command=list(template['command'])
-                    for option,value in (('--source',s),('--machine',m),('--seed',str(12501001+i*3+j)),('--report',str(reportfile))):
+                    for option,value in (('--source',s),('--machine',m),('--seed',str(12501001+(args.version-4)*1000+i*3+j)),('--report',str(reportfile))):
                         command[command.index(option)+1]=value
                     job=dict(template,command=command,log=str(root/(name+'.log')),created_unix=time.time())
                     with jobfile.open('x') as f:f.write(json.dumps(job,indent=2)+'\n')

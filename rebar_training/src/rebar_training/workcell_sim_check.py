@@ -22,6 +22,7 @@ def parser():
     p.add_argument('--report',type=Path,required=True)
     p.add_argument('--max-steps',type=int,default=18030)
     p.add_argument('--initial-offset',type=float,default=.15)
+    p.add_argument('--ideal-machine-survey',action='store_true',help='Explicit ideal localization probe: target pose is exact by scene construction; not visual refinement')
     p.add_argument('--randomization',choices=('baseline','expanded'),default='baseline')
     p.add_argument('--capture-stride',type=int,default=90)
     return p
@@ -36,6 +37,7 @@ def main():
     if early.report.exists() or early.report.with_suffix('').exists():p.error('Fresh output and raw directory required')
     if not 1<=early.max_steps<=24000:p.error('Bounded --max-steps 1..24000 required')
     if early.capture_stride<1:p.error('Positive capture stride required')
+    if not early.ideal_machine_survey:p.error('--ideal-machine-survey is required; camera-based machine localization is not implemented')
     if '--enable_cameras' not in sys.argv:p.error('--enable_cameras required')
     from .launcher import verify_checkout
     from .workcells import WorkcellLayout
@@ -68,7 +70,7 @@ def main():
         cfg.mobile_residual_control=True;cfg.observation_space=76
         cfg.mobile_start_on_tray=False;cfg.mobile_start_at_dock=False;cfg.mobile_visual_hint_packet=None
         cfg.workcell_layout=str(args.layout.resolve());cfg.workcell_source=args.source;cfg.workcell_machine=args.machine
-        cfg.workcell_initial_offset=args.initial_offset
+        cfg.workcell_initial_offset=args.initial_offset;cfg.workcell_ideal_machine_survey=True
         cfg.visual_detector=str(args.detector.resolve());cfg.camera_capture_config=str(args.camera_config.resolve())
         cfg.scene.env_spacing=15. # Sufficient physical floor for all three surveyed machines.
         cfg.robot.actuators['wheels']=ImplicitActuatorCfg(joint_names_expr=['.*wheel_joint'],effort_limit_sim=120.,velocity_limit_sim=3.,stiffness=0.,damping=1000.)
@@ -94,7 +96,8 @@ def main():
                 frozen_identity_before=identity_before,frozen_identity_after=unchanged,residual_training=False,new_learning_updates=0,
                 optimizer_instantiated=False,simulation_started=True,hardware_or_ros_started=False,policy_calls=decisions,
                 end_to_end=True,source_navigation_in_physics=True,navigation_backend='static CAD + measured odometry',
-                machine_visual_identity_verified=False,machine_pose_source='registered simulation geometry',
+                machine_visual_identity_verified=False,machine_pose_source='exact registered pose by scene construction; explicit ideal localization probe',
+                ideal_machine_survey=True,visual_machine_pose_refinement=False,
                 multi_workcell_task_executor_verified=False,physical_acceptance=False,
                 scope='physical candidate controller probe; task-level acceptance requires independent review and machine observation binding',
                 navigation_goals=navigation_goals,navigation_obstacles=navigation_obstacles,raw_directory=str(raw),

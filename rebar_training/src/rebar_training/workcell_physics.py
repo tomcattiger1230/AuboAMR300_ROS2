@@ -188,3 +188,28 @@ def simulation_navigation(layout,source_id,machine_id,assets):
     obstacles=all_machine_obstacles(layout,assets)
     a=layout.navigation_goal(source_id);b=layout.navigation_goal(machine_id)
     return plan_chassis_path((a.x,a.y,a.yaw),(b.x,b.y,b.yaw),obstacles),obstacles
+
+
+def ideal_scene_loading_geometry(layout,machine_id,base_frame,*,enabled):
+    """Exact configured scene survey, transformed by full measured base SE(3).
+
+    This is for the explicit ideal-localization physics probe. It provides no
+    camera-based machine pose or identity evidence for MissionFlow acceptance.
+    """
+    if enabled is not True:raise ValueError('Physical probe requires an explicit exact-scene survey')
+    from .vision.capture import optical_transform
+    from .vision.observation import matrix_quaternion
+    station=layout.station(machine_id,'machine')
+    world=layout.machine_geometry(machine_id,refined_pose=station.pose_map)
+    T=np.asarray(base_frame.base_from_world)
+    if T.shape!=(4,4) or not np.isfinite(T).all():raise ValueError('Invalid measured base rigid transform')
+    R=T[:3,:3]
+    if not np.allclose(R.T@R,np.eye(3),atol=1e-5) or np.linalg.det(R)<.99999:
+        raise ValueError('Invalid measured base rigid transform')
+    geometry=dict(world,frame='base',pose_source='exact registered scene survey; no visual refinement')
+    geometry['goal']=tuple(base_frame.point(world['goal']))
+    geometry['standoff']=tuple(base_frame.point(world['standoff']))
+    for key in ('retreat_vector','bar_axis'):geometry[key]=tuple(R@world[key])
+    orientation=optical_transform([0.,0.,0.],world['tcp_quaternion_xyzw'])
+    geometry['tcp_quaternion_xyzw']=tuple(matrix_quaternion(R@np.asarray(orientation)[:3,:3]))
+    return geometry
