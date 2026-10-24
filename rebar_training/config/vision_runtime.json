@@ -1,0 +1,8 @@
+{
+  "schema_version": "rebar_capture_v1", "stride": 3, "env_ids": [0], "max_envs": 4,
+  "label_scene": false,
+  "cameras": [{"name": "wrist", "mode": "existing", "mount_body": "mono_camera_link",
+    "prim_path": "/World/envs/env_.*/Robot/mono_camera_link/camera_optical_frame/ros2_camera",
+    "width": 1024, "height": 615, "mono": true, "policy_observable": true,
+    "data_types": ["rgb"]}]
+}

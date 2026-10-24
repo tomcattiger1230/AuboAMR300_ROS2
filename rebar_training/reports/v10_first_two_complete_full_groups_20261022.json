@@ -1,0 +1,260 @@
+{
+  "verified_at": "2026-10-22T06:11:22.250027+00:00",
+  "source": "complete native groups, not rolling partial rows",
+  "proof": {
+    "at": "2026-10-22T14:10:45.488738+08:00",
+    "complete_groups": 2,
+    "episodes": 16,
+    "successes": 15,
+    "failures": 1,
+    "partial_gate": {
+      "passed": false,
+      "phase": "full",
+      "randomization": "expanded",
+      "episodes": 16,
+      "successes": 15,
+      "success_rate": 0.9375,
+      "wilson_95_lower": 0.7167126242970107,
+      "minimum_episodes": 64,
+      "minimum_distinct_seeds": 2,
+      "distinct_seeds": [
+        7241042,
+        7251042
+      ],
+      "required_wilson_95_lower": 0.9,
+      "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "evidence_errors": [],
+      "sample_requirement_met": false,
+      "failures": [
+        {
+          "episode": 5,
+          "stage": "pickup",
+          "reason": "stage timeout: pickup",
+          "timeout": false
+        }
+      ],
+      "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+    },
+    "all_failed_receipts_retained": true,
+    "checks": [
+      {
+        "seed": 7241042,
+        "episode": 0,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.114375307224691,
+        "axis_error_deg": 0.040243625138614236,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7241042,
+        "episode": 1,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.096139196306467,
+        "axis_error_deg": 0.04014963996662507,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7241042,
+        "episode": 2,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.2370655313134193,
+        "axis_error_deg": 0.03984187842428986,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7241042,
+        "episode": 3,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.098204986192286,
+        "axis_error_deg": 0.0394326560219965,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7241042,
+        "episode": 4,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.0770303197205067,
+        "axis_error_deg": 0.039724672253411523,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7241042,
+        "episode": 5,
+        "success": false,
+        "failure": "stage timeout: pickup",
+        "error_mm": 8276.537895202637,
+        "axis_error_deg": 89.9999999882677,
+        "strict_success_physics_passed": false,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7241042,
+        "episode": 6,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.0173433693125844,
+        "axis_error_deg": 0.03964617977830002,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7241042,
+        "episode": 7,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.059033558703959,
+        "axis_error_deg": 0.039319595986768895,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7251042,
+        "episode": 0,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.1342812795192003,
+        "axis_error_deg": 0.04002145717271096,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7251042,
+        "episode": 1,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.159358536824584,
+        "axis_error_deg": 0.041229175644850145,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7251042,
+        "episode": 2,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.2141171609982848,
+        "axis_error_deg": 0.0397067291761432,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7251042,
+        "episode": 3,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.0922509245574474,
+        "axis_error_deg": 0.03943638101088309,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7251042,
+        "episode": 4,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.0148031869903207,
+        "axis_error_deg": 0.04031367491478682,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7251042,
+        "episode": 5,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.0829989332705736,
+        "axis_error_deg": 0.040498650916674504,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7251042,
+        "episode": 6,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.0728228371590376,
+        "axis_error_deg": 0.03997055728674713,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      },
+      {
+        "seed": 7251042,
+        "episode": 7,
+        "success": true,
+        "failure": null,
+        "error_mm": 1.3423932250589132,
+        "axis_error_deg": 0.041105199213165654,
+        "strict_success_physics_passed": true,
+        "retained_in_denominator": true
+      }
+    ],
+    "report_sha256": {
+      "7241042": "6864b969703b67201df0b53f300ae74e354b231725503767d2c7e98da19fd431",
+      "7251042": "a323b55de2a0423a2b80b6339daf604052325fa04068b9a920580add8ba098b8"
+    },
+    "qualified": false,
+    "formal_scope": "Only complete native eight-episode reports; running group rows excluded. At least64 are still required."
+  },
+  "both_hosts": {
+    "at": "2026-10-22T06:12:34.148267+00:00",
+    "files": 1819,
+    "mismatches": [],
+    "mac_recomputed_gate": {
+      "passed": false,
+      "phase": "full",
+      "randomization": "expanded",
+      "episodes": 16,
+      "successes": 15,
+      "success_rate": 0.9375,
+      "wilson_95_lower": 0.7167126242970107,
+      "minimum_episodes": 64,
+      "minimum_distinct_seeds": 2,
+      "distinct_seeds": [
+        7241042,
+        7251042
+      ],
+      "required_wilson_95_lower": 0.9,
+      "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "evidence_errors": [],
+      "sample_requirement_met": false,
+      "failures": [
+        {
+          "episode": 5,
+          "stage": "pickup",
+          "reason": "stage timeout: pickup",
+          "timeout": false
+        }
+      ],
+      "scope": "bounded manipulation residual + deployed visual servo, phase supervisor and odometry; not standalone RL"
+    },
+    "node_gate_identical": true,
+    "report_sha256": {
+      "7241042": "6864b969703b67201df0b53f300ae74e354b231725503767d2c7e98da19fd431",
+      "7251042": "a323b55de2a0423a2b80b6339daf604052325fa04068b9a920580add8ba098b8"
+    },
+    "qualified": false
+  },
+  "formal_gate_passed": false,
+  "recovery_archive": {
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_recovery_20261022_v10_first_two_full_groups.tar.gz",
+    "sha256": "20f941f76575826c928f7bd85aee46cb83887c9bf455db153437549b48722ef0",
+    "files": 1972,
+    "bytes": 1417322209,
+    "requires": [
+      "fe0a57df9fbf3394c42c417af0752296bc681c1c0eafe42dfbd8c7e7ffc27b7d"
+    ],
+    "both_hosts_verified": true,
+    "node_archive": "/home/arnold/Develop/rebar-migration-back4090-20261022/rebar_training_recovery_20261022_v10_first_two_full_groups.tar.gz",
+    "qualified": false
+  }
+}

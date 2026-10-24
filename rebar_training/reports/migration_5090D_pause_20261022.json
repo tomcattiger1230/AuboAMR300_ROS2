@@ -1,0 +1,107 @@
+{
+  "at": "2026-10-22T08:37:21.105477+00:00",
+  "state": "paused_migration_ready",
+  "target": "5090D_address_pending",
+  "pause": {
+    "at": "2026-10-22T08:37:18.885991+00:00",
+    "user_instruction": "Pause all new work; prepare all data for migration to 5090D. No automatic resume.",
+    "actions": [
+      {
+        "pid": 49758,
+        "pgid": 49758,
+        "signal": "SIGTERM",
+        "role": "one-shot dispatcher"
+      },
+      {
+        "pid": 46837,
+        "pgid": 46837,
+        "signal": "SIGTERM",
+        "role": "source_return_reset8_7241042"
+      },
+      {
+        "pid": 46911,
+        "pgid": 46911,
+        "signal": "SIGTERM",
+        "role": "source_return_reset2_7271042"
+      },
+      {
+        "pid": 20758,
+        "signal": "SIGKILL",
+        "role": "previously SIGSTOP worker; no SIGCONT"
+      }
+    ],
+    "jobs_before": [
+      {
+        "name": "source_return_reset8_7241042",
+        "status": {
+          "job": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/source_return_reset8_7241042.job.json",
+          "runner_pid": 46837,
+          "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+          "log": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/source_return_reset8_7241042.log",
+          "state": "running",
+          "pid": 46838,
+          "updated": 1792655750.4031289
+        },
+        "completed_episodes": 1,
+        "successes": 1,
+        "physical_failures": 0,
+        "interrupted_episode_not_counted": true
+      },
+      {
+        "name": "source_return_reset2_7271042",
+        "status": {
+          "job": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/source_return_reset2_7271042.job.json",
+          "runner_pid": 46911,
+          "source_sha256": "8a24e31302639bb5a666b06d5a962b9033e011df3dad9e342dd40c0eaf28cb58",
+          "log": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v2_regression_20261022/source_return_reset2_7271042.log",
+          "state": "running",
+          "pid": 46912,
+          "updated": 1792655751.4794648
+        },
+        "completed_episodes": 1,
+        "successes": 1,
+        "physical_failures": 0,
+        "interrupted_episode_not_counted": true
+      }
+    ],
+    "remaining_owned_groups": {},
+    "stopped_at": "2026-10-22T08:37:21.105477+00:00",
+    "gpu_after": "",
+    "all_task_processes_stopped": true,
+    "automatic_resume_allowed": false,
+    "candidate_complete_episodes": 2,
+    "candidate_successes": 2,
+    "candidate_physical_failures": 0
+  },
+  "model_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "requires_explicit_resume": true,
+  "package": "rebar_training/artifacts/rebar_training_migration_5090D_20261022.tar.gz",
+  "updated_at": "2026-10-22T08:54:12.338503+00:00",
+  "migration_package_state": "complete_and_verified",
+  "migration_package": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_migration_5090D_20261022.tar.gz",
+  "migration_package_sha256": "d8f0a99269cad0a58a953ccdf03ee3118b21f8d4087d598c0ee8aa8d7fe4f753",
+  "migration_package_bytes": 12698828724,
+  "migration_package_payload_files": 12000,
+  "migration_package_verification": {
+    "verified_at": "2026-10-22T08:52:46.086974+00:00",
+    "archive": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/rebar_training_migration_5090D_20261022.tar.gz",
+    "bytes": 12698828724,
+    "sha256": "d8f0a99269cad0a58a953ccdf03ee3118b21f8d4087d598c0ee8aa8d7fe4f753",
+    "payload_files": 12000,
+    "archive_regular_files": 12001,
+    "uncompressed_payload_bytes": 14267773013,
+    "manifest_sha256": "5ac8c9efc855e55e3dfefb2f0b6937b4a6d085be8b9e55c3da6af6533dc8fc5d",
+    "mismatches": [],
+    "all_archive_entries_verified": true,
+    "full_current_repo_node_to_mac_sha_verified": true,
+    "current_repo_original_files": 11976,
+    "historical_archive_sha_verified": true,
+    "task_state": "PAUSED",
+    "automatic_resume_allowed": false
+  },
+  "status": "paused_user_migration_5090D_ready",
+  "user_task_paused": true,
+  "automation_state": "PAUSED",
+  "active_jobs": [],
+  "next_action": "Task remains paused. Complete5090D destination identification, transfer to a new directory and verify outer/archive/inner file SHA. No simulation, regression, training, video or dispatcher startup without explicit resume. Preserve source8a24/current393b+optimizer and all historical results; hardware-only migration does not retrain."
+}

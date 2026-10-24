@@ -1,0 +1,10 @@
+{
+  "id": "rebar-debug",
+  "name": "Rebar read-only diagnostics",
+  "description": "Read saved reports and logs; training stays paused.",
+  "categories": ["developer-tools"],
+  "contracts": { "tools": ["rebar_readonly_debug"] },
+  "toolMetadata": { "rebar_readonly_debug": { "optional": true } },
+  "activation": { "onStartup": true },
+  "configSchema": { "type": "object", "properties": {}, "additionalProperties": false }
+}

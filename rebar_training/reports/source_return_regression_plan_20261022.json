@@ -1,0 +1,107 @@
+{
+  "schema": "source_return_candidate_physics_plan_v1",
+  "declared_at": "2026-10-22T05:25:07.823521+00:00",
+  "state": "prepared_not_launched_waiting_for_free_simulation_slot",
+  "candidate_source_sha256": "142925af9a12852711ad40123daee6a4bc29e6af65082a440dc977e54ea7a67c",
+  "candidate_deployed": false,
+  "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "parent_source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+  "new_output_directory": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v1_regression_20261022",
+  "preconditions": [
+    "Read current controller active_jobs and all native job states; independently check GPU/process inventory immediately before every launch.",
+    "Do not stop/restart either healthy running v10 full holdout. Maximum two simulations globally.",
+    "Verify candidate source SHA, model SHA and unchanged detector/assets. Refuse existing output job/report paths.",
+    "Do not modify canonical source2c, controller20756, frozen393b policy or any native v10 receipts."
+  ],
+  "jobs": [
+    {
+      "name": "source_return_reset8_7241042",
+      "seed": 7241042,
+      "episodes": 8,
+      "role": "development_regression_only",
+      "env": {
+        "REBAR_REPO_ROOT": "/home/arnold/Develop/rebar-training-4090-return-20261021",
+        "PYTHONPATH": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v1/src"
+      },
+      "argv": [
+        "/home/arnold/Develop/rebar-training-4090-return-20261021/runtime_python_4090",
+        "-m",
+        "rebar_training.mobile_jobs",
+        "--python",
+        "/home/arnold/Develop/rebar-training-4090-return-20261021/runtime_python_4090",
+        "--artifact-dir",
+        "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v1_regression_20261022",
+        "--name",
+        "source_return_reset8_7241042",
+        "--",
+        "--until",
+        "clamp",
+        "--randomization",
+        "expanded",
+        "--seed",
+        "7241042",
+        "--episodes",
+        "8",
+        "--residual-scale",
+        ".08",
+        "--residual-checkpoint",
+        "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_policy.pt",
+        "--regression"
+      ],
+      "full_mission_no_tray_or_dock_initialization": true,
+      "no_hint": true,
+      "no_learning": true
+    },
+    {
+      "name": "supported_partial_outage_241042",
+      "seed": 241042,
+      "episodes": 1,
+      "role": "development_regression_only",
+      "env": {
+        "REBAR_REPO_ROOT": "/home/arnold/Develop/rebar-training-4090-return-20261021",
+        "PYTHONPATH": "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/recovery_candidates/source_return_handoff_v1/src"
+      },
+      "argv": [
+        "/home/arnold/Develop/rebar-training-4090-return-20261021/runtime_python_4090",
+        "-m",
+        "rebar_training.mobile_jobs",
+        "--python",
+        "/home/arnold/Develop/rebar-training-4090-return-20261021/runtime_python_4090",
+        "--artifact-dir",
+        "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/review_20261020/source_return_candidate_v1_regression_20261022",
+        "--name",
+        "supported_partial_outage_241042",
+        "--",
+        "--until",
+        "clamp",
+        "--randomization",
+        "expanded",
+        "--seed",
+        "241042",
+        "--episodes",
+        "1",
+        "--residual-scale",
+        ".08",
+        "--residual-checkpoint",
+        "/home/arnold/Develop/rebar-training-4090-return-20261021/rebar_training/artifacts/mobile_curriculum_20261020/course_v10_4090_return/full_policy.pt",
+        "--regression",
+        "--tray-grasp-camera-outage-frames",
+        "30"
+      ],
+      "full_mission_no_tray_or_dock_initialization": true,
+      "no_hint": true,
+      "no_learning": true
+    }
+  ],
+  "required_episodes": 9,
+  "passing_requirements": [
+    "All nine complete native episodes succeed under existing strict criteria; any failure requires analysis and a new output/source candidate.",
+    "First job runs all eight episodes continuously, including failed-development seed7241042 episode5; never select successful receipts.",
+    "Verify actual source_return_handoffs telemetry occurs under fresh accepted camera, open unloaded fingers, allowed return index and >=100mm source clearance; if no trigger this does not validate the proposed fix.",
+    "Independent all-phase physical checks: 3mm/3deg,250N, four real jaw loads, actual open unload, >=60mm retreat, stable velocities, truth isolation, no arm/self contacts.",
+    "Second job must actually inject30-frame partial-grasp outage and restore visual observation only after supported open-unloaded measured return, at half speed, within existing two-retry budget.",
+    "This development plan contributes zero rows to v10 or any new final64 denominator. New-source adoption requires a new course, seed-overlap audit and predeclaration, all training/actor gates, skill gates and final64 anew."
+  ],
+  "formal_acceptance_episodes": 0,
+  "no_automatic_promotion": true
+}

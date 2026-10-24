@@ -1,0 +1,45 @@
+{
+  "updated_at": "2026-10-21T00:30:16.578993+00:00",
+  "status": "4090_resumed_precision_validation",
+  "user_authorized_resume": true,
+  "training_host": "arnold@192.168.3.133",
+  "remote_repo": "/home/arnold/Develop/rebar-training-4090",
+  "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+  "pending_validation": "review_20261020/precision_resume_4090_20261021/validation.status.json",
+  "pending_course": "course_v8_precision_envelope",
+  "pending_plan": "config/mobile_curriculum_recovery_v8.json",
+  "validation_launcher_pgid": 15449,
+  "validation_runner_pid": 15451,
+  "stable": false,
+  "current_development_regressions": {
+    "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+    "required_episodes": 9,
+    "episodes": 0,
+    "successes": 0
+  },
+  "migration_4090": {
+    "archive": "rebar_training_migration_4090_20261021.tar.gz",
+    "sha256": "e094b128eb410b03e79ac3921ef24c99f4bd3d6fe17d159935c0b7cbabd179e9",
+    "files_verified": 1428,
+    "usd_stages_verified": 10,
+    "sdk_mdl_verified": true,
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "runtime_python": "/home/arnold/Develop/rebar-training-runtime/bin/python",
+    "runtime_link_target": "/home/arnold/Develop/IsaacLab-rebar/.venv",
+    "sim": "/home/arnold/isaacsim",
+    "lab": "/home/arnold/Develop/IsaacLab-rebar",
+    "cpu_tests": {
+      "passed": 220,
+      "skipped": 1,
+      "seconds": 19.91
+    }
+  },
+  "next_action": "Inspect fresh precision_resume_4090_20261021 validator and native jobs. Preserve running jobs. CPU then 9 minimum strict physical regression episodes; analyze any failure, no gate relaxation. Only all passed may launch new v8 course and rerun every independent gate including 64 predeclared full episodes. Do not restart old v7 or old paused validator. Only simulation on 3.133.",
+  "validation_state": "regression_running",
+  "automation_state": "ACTIVE",
+  "active_jobs": [
+    "precision_resume_4090_20261021/failed_policy_dock_4151042"
+  ],
+  "physical_regression_successes": 0,
+  "physical_regression_episodes": 0
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "rebar_appearance_v1",
+  "prompts": [
+    "Industrial rebar loading cell. Change only lighting and surface appearance to dim overhead workshop lighting with stronger steel reflections. Preserve every rebar, gripper finger, fixture jaw, source camera trajectory and object motion exactly; no additional objects. For monochrome source, preserve grayscale appearance.",
+    "Industrial rebar loading cell. Change only surface appearance to lightly oxidized steel with diffuse overhead lighting and subtle workshop background texture. Preserve object geometry, trajectories, source camera trajectory and all contact relationships. For monochrome source, preserve grayscale appearance."
+  ],
+  "labels_reusable_without_geometry_review": false
+}

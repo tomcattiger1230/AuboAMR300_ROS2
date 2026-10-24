@@ -1,0 +1,46 @@
+{
+  "recorded_at": "2026-10-20T23:02:53.355790+00:00",
+  "state": "paused_by_user",
+  "automatic_resume_allowed": false,
+  "automation_state": "PAUSED",
+  "remaining_task_processes": 0,
+  "gpu_compute_processes_after_stop": 0,
+  "source_sha256": "2c7ef709bc6ad5d6ed5128c9d4e7399179938cf230129cd0e1c33221f7010aa2",
+  "old_source_sha256": "32a32bb278ee8fe49b0d271e8dff7120f361124ddd0fc253a3c6503b986cff2e",
+  "progress": {
+    "v7_tray_independent": [
+      8,
+      8
+    ],
+    "v7_dock_training": [
+      2,
+      2
+    ],
+    "v7_dock_training_error_mm": [
+      1.297181705,
+      1.447290881
+    ],
+    "v7_dock_new_actor_updates": 10,
+    "v7_dock_independent": {
+      "declared_episodes": 8,
+      "completed_episodes": 2,
+      "successes": 0,
+      "batches_complete": false,
+      "each_second_episode": "interrupted_by_user"
+    },
+    "new_physics_regression": {
+      "completed": 0,
+      "required": 9
+    },
+    "full_64_gate_passed": false
+  },
+  "tests": {
+    "local_passed": 231,
+    "local_skipped": 3,
+    "node_passed": 237,
+    "migration_tests_passed": 2
+  },
+  "migration_guide": "MIGRATE_4090.md",
+  "known_failure": "Deterministic residual insertion stalls above unchanged0.8mm visual alignment interlock; fourfixturepads0N. New quadratic20mm gain remains physically unverified.",
+  "scope": "Bounded arm residualPPO over RGBservo/scriptedphase/gripper/odom; simulationonly, no Cosmosinference, not standalonefullmissionpolicy."
+}

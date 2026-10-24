@@ -1,0 +1,226 @@
+{
+  "at": "2026-10-24T05:11:03.512917+00:00",
+  "complete_responses": 32,
+  "schema_and_scope_valid": 32,
+  "identity": "fd309cb7e4cbd53dc4675ea90d507c620ae2d9a973f504c16d34d4728d85a129",
+  "evaluation_plan_sha256": "762e1b0dd8de04fb42b1f25a9ce12d6e50ffa420519a6e40167a219d24fcb1b7",
+  "input_strategy": "Three overview keyframes plus 31 original high-resolution wrist snapshots in 16 intervals; overview model also receives independent image-derived tracking measurements",
+  "motion_positive_cases": [
+    8,
+    9,
+    10,
+    11
+  ],
+  "motion_positive_raw_counts": {
+    "uncertain": 4
+  },
+  "motion_negative_cases": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    13,
+    14,
+    15
+  ],
+  "motion_negative_raw_counts": {
+    "uncertain": 10
+  },
+  "independent_tracker_positive_counts": {
+    "moving": 4
+  },
+  "independent_tracker_negative_counts": {
+    "stationary": 10
+  },
+  "independent_tracker_transition_counts": {
+    "uncertain": 2
+  },
+  "support_cases": [
+    {
+      "index": 6,
+      "overview_support": "uncertain",
+      "wrist_support": "uncertain",
+      "either_view_gripper_claim": false,
+      "overview_correct_tray": false,
+      "wrist_correct_tray": false,
+      "overview_schema_valid": true,
+      "wrist_schema_valid": true,
+      "fused": {
+        "base_motion": "uncertain",
+        "base_motion_source": "overview_only",
+        "rod_support": "uncertain",
+        "needs_review": true,
+        "positive_grasp_authorized": false,
+        "advisory_only": true,
+        "physical_acceptance": false,
+        "reason": "Support unresolved; neither a grasp nor absence of grasp is inferred",
+        "pipeline_motion_assessment": "stationary",
+        "pipeline_motion_source": "independent image-only feature tracking, not Cosmos detection",
+        "model_motion_suggestion": "uncertain",
+        "observed_movement_alert": false,
+        "motion_source_disagreement": false
+      }
+    },
+    {
+      "index": 7,
+      "overview_support": "uncertain",
+      "wrist_support": "uncertain",
+      "either_view_gripper_claim": false,
+      "overview_correct_tray": false,
+      "wrist_correct_tray": false,
+      "overview_schema_valid": true,
+      "wrist_schema_valid": true,
+      "fused": {
+        "base_motion": "uncertain",
+        "base_motion_source": "overview_only",
+        "rod_support": "uncertain",
+        "needs_review": true,
+        "positive_grasp_authorized": false,
+        "advisory_only": true,
+        "physical_acceptance": false,
+        "reason": "Support unresolved; neither a grasp nor absence of grasp is inferred",
+        "pipeline_motion_assessment": "uncertain",
+        "pipeline_motion_source": "independent image-only feature tracking, not Cosmos detection",
+        "model_motion_suggestion": "uncertain",
+        "observed_movement_alert": false,
+        "motion_source_disagreement": false
+      }
+    },
+    {
+      "index": 8,
+      "overview_support": "uncertain",
+      "wrist_support": "uncertain",
+      "either_view_gripper_claim": false,
+      "overview_correct_tray": false,
+      "wrist_correct_tray": false,
+      "overview_schema_valid": true,
+      "wrist_schema_valid": true,
+      "fused": {
+        "base_motion": "uncertain",
+        "base_motion_source": "overview_only",
+        "rod_support": "uncertain",
+        "needs_review": true,
+        "positive_grasp_authorized": false,
+        "advisory_only": true,
+        "physical_acceptance": false,
+        "reason": "Support unresolved; neither a grasp nor absence of grasp is inferred",
+        "pipeline_motion_assessment": "moving",
+        "pipeline_motion_source": "independent image-only feature tracking, not Cosmos detection",
+        "model_motion_suggestion": "uncertain",
+        "observed_movement_alert": true,
+        "motion_source_disagreement": false
+      }
+    },
+    {
+      "index": 9,
+      "overview_support": "uncertain",
+      "wrist_support": "uncertain",
+      "either_view_gripper_claim": false,
+      "overview_correct_tray": false,
+      "wrist_correct_tray": false,
+      "overview_schema_valid": true,
+      "wrist_schema_valid": true,
+      "fused": {
+        "base_motion": "uncertain",
+        "base_motion_source": "overview_only",
+        "rod_support": "uncertain",
+        "needs_review": true,
+        "positive_grasp_authorized": false,
+        "advisory_only": true,
+        "physical_acceptance": false,
+        "reason": "Support unresolved; neither a grasp nor absence of grasp is inferred",
+        "pipeline_motion_assessment": "moving",
+        "pipeline_motion_source": "independent image-only feature tracking, not Cosmos detection",
+        "model_motion_suggestion": "uncertain",
+        "observed_movement_alert": true,
+        "motion_source_disagreement": false
+      }
+    },
+    {
+      "index": 10,
+      "overview_support": "uncertain",
+      "wrist_support": "uncertain",
+      "either_view_gripper_claim": false,
+      "overview_correct_tray": false,
+      "wrist_correct_tray": false,
+      "overview_schema_valid": true,
+      "wrist_schema_valid": true,
+      "fused": {
+        "base_motion": "uncertain",
+        "base_motion_source": "overview_only",
+        "rod_support": "uncertain",
+        "needs_review": true,
+        "positive_grasp_authorized": false,
+        "advisory_only": true,
+        "physical_acceptance": false,
+        "reason": "Support unresolved; neither a grasp nor absence of grasp is inferred",
+        "pipeline_motion_assessment": "moving",
+        "pipeline_motion_source": "independent image-only feature tracking, not Cosmos detection",
+        "model_motion_suggestion": "uncertain",
+        "observed_movement_alert": true,
+        "motion_source_disagreement": false
+      }
+    },
+    {
+      "index": 11,
+      "overview_support": "uncertain",
+      "wrist_support": "uncertain",
+      "either_view_gripper_claim": false,
+      "overview_correct_tray": false,
+      "wrist_correct_tray": false,
+      "overview_schema_valid": true,
+      "wrist_schema_valid": true,
+      "fused": {
+        "base_motion": "uncertain",
+        "base_motion_source": "overview_only",
+        "rod_support": "uncertain",
+        "needs_review": true,
+        "positive_grasp_authorized": false,
+        "advisory_only": true,
+        "physical_acceptance": false,
+        "reason": "Support unresolved; neither a grasp nor absence of grasp is inferred",
+        "pipeline_motion_assessment": "moving",
+        "pipeline_motion_source": "independent image-only feature tracking, not Cosmos detection",
+        "model_motion_suggestion": "uncertain",
+        "observed_movement_alert": true,
+        "motion_source_disagreement": false
+      }
+    }
+  ],
+  "non_gripper_windows": 6,
+  "windows_with_any_raw_false_gripper_claim": 0,
+  "windows_correct_tray_in_overview": 0,
+  "windows_correct_tray_in_wrist": 0,
+  "uncertainty_is_not_correct_support_identification": true,
+  "total_response_latency_s": 475.7450577559648,
+  "median_response_latency_s": 13.654816791939083,
+  "format_constraints_are_not_semantic_accuracy": true,
+  "wrist_motion_scope_is_forced_not_model_accuracy": true,
+  "general_semantic_acceptance": false,
+  "online_control_ready": false,
+  "physical_acceptance": false,
+  "new_independent_episodes": 0,
+  "simulation_started": false,
+  "training_started": false,
+  "source_video_sha256": "7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef",
+  "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "raw_wrist_frames": 31,
+  "overview_model_pixels": [
+    1024,
+    480
+  ],
+  "wrist_model_pixels": [
+    1024,
+    608
+  ],
+  "test_count": 19,
+  "tests_passed": true,
+  "artifact_root": "rebar_training/artifacts/cosmos_reasoner_split_replay_20261024",
+  "report": "rebar_training/artifacts/cosmos_reasoner_split_replay_20261024/analysis_zh.md",
+  "analysis_complete": true,
+  "node_sync_pending": true,
+  "model_only_semantic_problem_not_solved": true
+}

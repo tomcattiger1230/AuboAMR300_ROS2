@@ -1,0 +1,120 @@
+{
+  "at": "2026-10-24T02:50:38.559267+00:00",
+  "model_id": "nvidia/Cosmos3-Edge",
+  "model_revision": "344d602b128d1bbdacb43b08d0a3626f46343e29",
+  "completed_clips": 16,
+  "schema_valid_clips": 14,
+  "schema_invalid_clip_ids": [
+    0,
+    8
+  ],
+  "source_duration_s": 316.4,
+  "sampling_fps": 4.0,
+  "total_latency_s": 45.81464492002851,
+  "median_clip_latency_s": 2.379762395998114,
+  "min_clip_latency_s": 1.6785201260063332,
+  "max_clip_latency_s": 10.4946963149996,
+  "peak_cuda_memory_bytes": 6078877696,
+  "input_tokens_range": [
+    4825,
+    5791
+  ],
+  "output_tokens_total": 3304,
+  "semantic_acceptance_passed": false,
+  "semantic_evaluation": "Manual sampled comparison found false grasp descriptions and missed base movement; not a calibrated accuracy score",
+  "online_control_ready": false,
+  "physical_acceptance": false,
+  "formal_full_gate_changed": false,
+  "native_reference_given_to_model": false,
+  "post_inference_native_reference_sha256": "db5068eb874b8c869c43d56604a48bafb0820e9b5329cf1d575f0bbfb2ab1bbf",
+  "native_mission_transitions_after_inference": [
+    {
+      "tick": 1959,
+      "from_stage": "pickup",
+      "to_stage": "tray_raise",
+      "approx_video_seconds": 65.3
+    },
+    {
+      "tick": 2056,
+      "from_stage": "tray_raise",
+      "to_stage": "tray_rotate",
+      "approx_video_seconds": 68.53333333333333
+    },
+    {
+      "tick": 2214,
+      "from_stage": "tray_rotate",
+      "to_stage": "tray_via_side",
+      "approx_video_seconds": 73.8
+    },
+    {
+      "tick": 2397,
+      "from_stage": "tray_via_side",
+      "to_stage": "tray_via_front",
+      "approx_video_seconds": 79.9
+    },
+    {
+      "tick": 2868,
+      "from_stage": "tray_via_front",
+      "to_stage": "tray_above",
+      "approx_video_seconds": 95.6
+    },
+    {
+      "tick": 3054,
+      "from_stage": "tray_above",
+      "to_stage": "tray_down",
+      "approx_video_seconds": 101.8
+    },
+    {
+      "tick": 3136,
+      "from_stage": "tray_down",
+      "to_stage": "tray_release",
+      "approx_video_seconds": 104.53333333333333
+    },
+    {
+      "tick": 3161,
+      "from_stage": "tray_release",
+      "to_stage": "tray_retreat",
+      "approx_video_seconds": 105.36666666666666
+    },
+    {
+      "tick": 3226,
+      "from_stage": "tray_retreat",
+      "to_stage": "observe_tray",
+      "approx_video_seconds": 107.53333333333333
+    },
+    {
+      "tick": 4269,
+      "from_stage": "observe_tray",
+      "to_stage": "navigate",
+      "approx_video_seconds": 142.3
+    },
+    {
+      "tick": 7217,
+      "from_stage": "navigate",
+      "to_stage": "dock",
+      "approx_video_seconds": 240.56666666666666
+    },
+    {
+      "tick": 7259,
+      "from_stage": "dock",
+      "to_stage": "pickup_tray",
+      "approx_video_seconds": 241.96666666666667
+    },
+    {
+      "tick": 8581,
+      "from_stage": "pickup_tray",
+      "to_stage": "tray_lift_high",
+      "approx_video_seconds": 286.03333333333336
+    },
+    {
+      "tick": 8728,
+      "from_stage": "tray_lift_high",
+      "to_stage": "loading",
+      "approx_video_seconds": 290.93333333333334
+    }
+  ],
+  "source_video_sha256": "7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef",
+  "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "artifact_root": "rebar_training/artifacts/cosmos_reasoner_replay_20261024",
+  "report": "rebar_training/artifacts/cosmos_reasoner_replay_20261024/analysis_zh.md"
+}
