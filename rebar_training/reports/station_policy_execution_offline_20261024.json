@@ -1,0 +1,131 @@
+{
+  "schema": "station_policy_execution_candidate_report_v1",
+  "status": "offline_input_compatibility_and_execution_interfaces_verified",
+  "scope": "CPU frozen inference, legacy input/servo math and injected offline navigation/task lifecycle only",
+  "source_count": 2,
+  "machine_count": 3,
+  "task_combinations_passed": 6,
+  "task_combinations_total": 6,
+  "counterexample_chains_passed": 4,
+  "counterexample_chains_total": 4,
+  "tests": {
+    "tests": 219,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "input_compatibility": {
+    "passed": true,
+    "pairs": 138,
+    "max_input_abs_difference": 4.440892164675075e-17,
+    "max_actor_abs_difference": 0.0,
+    "source_context_different_from_real_destination_cases": 72,
+    "unchanged_76d_contract": true,
+    "gripper_controlled_by_policy": false,
+    "scope": "synthetic local-state coordinate equivalence, not physical generalization"
+  },
+  "original_encoder_identity": {
+    "passed": true,
+    "original_encoder_source_sha256": "d2985ce3200eea0529bd3963c933683faefed41d836e7293b0da0fe60a82c3af",
+    "comparisons": 92,
+    "max_input_abs_difference": 5.960464477539063e-08,
+    "max_actor_abs_difference": 4.470348358154297e-08,
+    "max_applied_residual_difference": 3.725290298461914e-09,
+    "activation_masks_identical": true,
+    "original_encoder_function_executed_in_isolation": true,
+    "simulator_module_imported": false,
+    "scope": "synthetic measurements through the actual legacy input function"
+  },
+  "frozen_identity": {
+    "sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "model_optimizer_tensors": 52,
+    "counters": {
+      "updates": 466,
+      "actor_updates": 170,
+      "policy_steps": 36602
+    },
+    "file_and_tensor_payload_unchanged": true,
+    "optimizer_instantiated": false,
+    "training_started": false
+  },
+  "native_partial_audit": {
+    "unsupported_legacy_phase_route_pairs": [],
+    "source_sha256": "db5068eb874b8c869c43d56604a48bafb0820e9b5329cf1d575f0bbfb2ab1bbf",
+    "measured_rows": 318,
+    "complete_76d_replay_available": false,
+    "missing_fields": [
+      "dq",
+      "bar velocity vectors",
+      "base yaw in each row",
+      "jaw loads in each row"
+    ],
+    "ground_truth_fields_used": false,
+    "permitted_fields": [
+      "stage",
+      "route",
+      "valid",
+      "base",
+      "tcp_base",
+      "arm_joints",
+      "estimated_bar",
+      "finger_positions",
+      "finger_forces",
+      "camera_age_ms"
+    ],
+    "valid_measured_rows": 262,
+    "scope": "partial measured-field audit only; no missing sensor values fabricated"
+  },
+  "source_context_semantics": "Legacy surveyed destination as policy context for source skills; real navigation and loading targets remain separate",
+  "input_contract": "mobile_visual_manipulation_residual_v1",
+  "adapter_contract": "station_relative_legacy_context_v1",
+  "legacy_controller_sensor_bridge_connected": true,
+  "legacy_route_servo_math_connected": true,
+  "task_execution_interface_wired": true,
+  "navigation_request_interface_wired": true,
+  "seer_response_codec": "configurable explicit field paths; actual device capture mapping not verified",
+  "policy_inference_executed": true,
+  "optimizer_instantiated": false,
+  "policy_optimizer_modified": false,
+  "actual_navigation_executed": false,
+  "physical_acceptance": false,
+  "live_dispatch_enabled": false,
+  "simulation_started": false,
+  "training_started": false,
+  "hardware_or_ros_started": false,
+  "immutable_input_files_unchanged": {
+    "rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/frozen_policy.pt": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/full_policy_demo.mp4": "7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef",
+    "rebar_training/src/rebar_training/mobile_residual.py": "4562c45afbf3f91d12c054545065606f36f852762568e3fb143488265f16f9a3",
+    "rebar_training/src/rebar_training/mobile_env.py": "d2985ce3200eea0529bd3963c933683faefed41d836e7293b0da0fe60a82c3af"
+  },
+  "candidate_files_sha256": {
+    "src/rebar_training/workcells.py": "6a74d380b9e84ab1b7b2f6e9b1991f1183f49d4ad9514c79f29d6bb86728907f",
+    "src/rebar_training/workcell_mission.py": "a760e0351759b332ceba10c986373212ab67fa0937adef8cb0c0545b2d6df2a2",
+    "src/rebar_training/policy_compatibility.py": "fa8135103a9415144cb411c7f44f04a8d54bc2cfd851ff3f25d37cbadaec5812",
+    "src/rebar_training/mission_execution.py": "ebe8bfb15289207139353cc8795d2826e698cbade1e1ec58363b7c50cc7561b5",
+    "src/rebar_training/legacy_skill_driver.py": "297398cd696dce5f17260073663c935a705dd1b8eac513b85f0003af7fabe0fb",
+    "src/rebar_training/legacy_observation_probe.py": "3c9a844a4f24d6a3179324096382075c04b2bf2aa40c227dc4834af0dcaee4bc",
+    "src/rebar_training/offline_execution_check.py": "b69e3c284194151c167e2731f9c5a4a0689778e4db7c2232fe464f52b7e13163",
+    "tests/test_policy_compatibility.py": "7008209164fd98703af4fe613d0577caef6f0c0256bb9f55efb3a3f1e825b331",
+    "tests/test_mission_execution.py": "bb05e4f0f0965a20cb4d3a88534a58471e9c60533b657a9dfcaf1ff72c77dbda",
+    "docs/STATION_POLICY_EXECUTION_OFFLINE_20261024.md": "354f643d0ea2ea6e9abd24f61d72efeec2a8a89833d86a4f037dae3e235ef534",
+    "README.md": "8e77ea6403ac777e5325a97407d5e317692a58bab484fd7eb304793f5c9f20bc",
+    "TRAINING_HANDOFF.md": "ecf37f28b063e5fd1cc396f55bb5f92807e5527a76904830d0db82e820ef647c"
+  },
+  "artifact_directory": "rebar_training/artifacts/station_policy_execution_offline_20261024",
+  "artifact_sha256": {
+    "before.json": "a82933669f606fcf29d2e83b5c4c86a20e9eefa0aa5bcc958326297ccbeeddd8",
+    "after.json": "7c597cd00c78bc05c774afcbc8070fdc18fb3df473016618289e28e65da33c97",
+    "release_wiring.json": "2af817478550cdab0640efaa66c66b63681c17b083109354a789a61bc7f517dc",
+    "release_tests.junit.xml": "c230638246dcc967f35f2245b79e603daa457ea632f01eb825ea0f88b64d0be1",
+    "release_tests.log": "39d4f9f466c448b92db45665986da1cf79a87b211c035160a1239d143046225e",
+    "candidate_files.sha256.json": "339d118f229e0a7705dc0c167c56bf17cce456657e5e048380ac43f4dd9388ec"
+  },
+  "base_commit": "26d811e371ee63912655f71e1a4b3abb0c3714f3",
+  "created_unix": 1792857704.6174562,
+  "remaining_validation": [
+    "Bind actual SEER request/target status fields from device captures",
+    "Bind and verify a real or simulator local session factory; none is started by this code",
+    "Independent new-layout physics/collision/reachability and perception validation; source-context adaptation is not a physical success guarantee"
+  ]
+}

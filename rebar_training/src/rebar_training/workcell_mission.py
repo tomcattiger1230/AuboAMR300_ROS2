@@ -325,6 +325,13 @@ class MissionFlow:
         return dict(state=self.state, task_id=self._plan['task_id'], completed_steps=self.index,
                     offline_contract_only=True, physical_acceptance=False)
 
+    def block(self, reason, now):
+        """Execution adapter faults stop this task without fabricating completion."""
+        self._clock(now)
+        if self.state == 'completed':
+            raise ValueError('Cannot block a completed task')
+        return self._block(reason)
+
     def retry_observation(self, now):
         self._clock(now)
         if self.state != 'blocked' or not self._plan['steps'][self.index]['kind'].startswith('observe_'):

@@ -178,12 +178,17 @@ class WorkcellLayout:
             raise ValueError('Both source and machine profiles required')
         self.profiles = MappingProxyType(self.profiles)
         self.stations = MappingProxyType(self.stations)
+        self._serialized = json.dumps(data, allow_nan=False)
         self.sha256 = content_sha(data)
         self._sealed = True
 
     @classmethod
     def load(cls, path):
         return cls(json.loads(Path(path).read_text()))
+
+    def to_dict(self):
+        """A detached configuration copy, preserving the hashed numeric representation."""
+        return json.loads(self._serialized)
 
     def station(self, station_id, kind=None):
         try:
