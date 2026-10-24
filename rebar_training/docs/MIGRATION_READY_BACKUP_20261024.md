@@ -6,32 +6,33 @@
 
 本机备份目录：`/Users/weiluo/Develop/backups/rebar_migration_20261024_142019/`。
 
-- `rebar_migration.tar`：自包含内容去重归档。每份不同内容只存一次，完整清单保留每个文件的路径、SHA、大小、权限、修改时间、目录和符号链接。
-- `source_manifest.json`：完整路径到内容对象的映射；`source_stability.json`检查打包期间源文件是否变化。
-- `rebar_migration.tar.sha256`、`rebar_migration.verify.json`：整包SHA和完整对象/路径映射复核。**只有verify凭据存在且mismatches为空才算备份完成。**
-- `migration_backup.py`：仅用Python标准库的校验与恢复工具，另以归档内的workspace版本复核工具SHA。
-- `metadata/`：完整Git bundle、工作区/暂存差异、分支/提交信息、环境版本和依赖清单、迁移说明。
+- `objects/`与`source_manifest.json`：当前实际备份形式，内容去重目录；所有对象都是普通独立文件，使用APFS写时复制节约本机空间，不是硬链接。源文件修改或删除不会改变副本。对象内容和目录映射自包含，复制整个备份目录到另一主机即可，不需要访问旧原路径。
+- `backup.verify.json`：完整对象SHA及所有文件映射复核；`source_stability.json`记录快照期间源文件稳定性。只有校验凭据mismatches为空且映射通过，才算完成。
+- `migration_folder.py`与`migration_backup.py`：随目录携带的创建、校验、恢复、可选tar导出工具。恢复仅依赖Python标准库；APFS只用于Mac本地创建副本，普通文件在其他磁盘仍可读取。
+- `TOOLKIT.sha256`：清单、恢复工具和本说明的校验和；复制后先核对这些入口，再执行全对象verify。
+- `metadata/`：全refs Git bundle、未提交工作区/暂存差异、提交/分支信息、依赖freeze与环境版本。原清单及构建工具更新记录单独保留，不更改算法、权重或原始证据。
+- 可选`rebar_migration.tar`：当前未生成，避免84GB左右唯一内容耗尽系统盘。未来在空间足够的目标盘，运行`migration_folder.py export-tar --backup 当前备份目录 --destination /目标盘/rebar_migration.tar`，再用`migration_backup.py verify --archive ...`逐项及整包SHA复核。
 
 归档覆盖整个当前仓库工作树（包括未提交改动），全部rebar原始数据、失败/中断/历史归档、正式证据、冻结模型与optimizer、资产/纹理/配置/种子计划、所有Cosmos结果及固定模型分片、三套现有虚拟环境与对应Mac Python运行时。`.git`由独立的全refs Git bundle替代；跳过可再生的`__pycache__`、`.pyc`、测试/lint缓存和`.DS_Store`，完整排除列表随包保存。没有删除历史数据或用新结果覆盖旧结果。
 
-当前仅检测到系统盘，没有已挂载的外置备份盘；103本次有界SSH重试超时。此处是可直接带走的本机迁移副本，**不是独立磁盘容灾副本，也不宣称本次已同步103**。将整个备份目录复制到外置盘/NAS/新主机后，在目标重新计算整包SHA并运行verify。
+当前仅检测到系统盘，没有已挂载的外置备份盘；103本次有界SSH重试超时。此处是可直接带走的本机迁移副本，**不是独立磁盘容灾副本，也不宣称本次已同步103**。用户已明确选择只备份本Mac。将来迁移时复制整个备份目录到新主机，再校验TOOLKIT与全部对象；本次不要求外部存储。
 
 ## 校验和恢复：先验证、后进入新目录
 
 在备份目录运行，Python不需要安装项目依赖：
 
 ```sh
-shasum -a 256 -c rebar_migration.tar.sha256
-python3 migration_backup.py verify --archive rebar_migration.tar
-python3 migration_backup.py restore --archive rebar_migration.tar --destination /新磁盘/rebar-restored
+shasum -a 256 -c TOOLKIT.sha256
+python3 migration_folder.py verify --backup .
+python3 migration_folder.py restore --backup . --destination /新磁盘/rebar-restored
 ```
 
-目标目录必须不存在，工具拒绝覆盖。恢复时逐对象校验SHA，并把重复内容复制为独立文件；默认不使用可能相互污染证据的硬链接。完整恢复所需空间按manifest的source_bytes估算，另留Git和系统余量。归档本身较小不表示恢复树同样小。
+目标目录必须不存在，工具拒绝覆盖。恢复时逐对象校验SHA，并把重复内容复制为独立文件；默认不使用可能相互污染证据的硬链接。完整恢复所需空间按manifest的source_bytes估算，约146GB，另留Git和系统余量；内容对象约84GB。Mac写时复制当前节约物理空间，但复制到另一磁盘会实际写入这些内容。
 
 可先恢复关键内容（每个`--prefix`都对应归档内路径），其余原始历史继续完整留在归档中：
 
 ```sh
-python3 migration_backup.py restore --archive rebar_migration.tar \
+python3 migration_folder.py restore --backup . \
   --destination /新磁盘/critical-check \
   --prefix workspace/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/frozen_policy.pt \
   --prefix workspace/rebar_training/artifacts/mobile_curriculum_20261020/source_return_v2_frozen_acceptance_20261022/full_policy_demo.mp4 \

@@ -1,5 +1,7 @@
 # 钢筋视觉移动操作训练：接力指导
 
+本Mac迁移备份入口：`/Users/weiluo/Develop/backups/rebar_migration_20261024_142019/README_RESTORE.md`；完整校验状态以同目录`backup.verify.json`为准。说明见[迁移备份与恢复](docs/MIGRATION_READY_BACKUP_20261024.md)，恢复只写入新目录，不启动仿真或训练。
+
 ## Cosmos回放诊断完成（2026-10-24）
 
 最新说明：`docs/COSMOS_INTEGRATION_DIAGNOSIS_20261024.md`，结构化结果：`reports/cosmos_integration_diagnosis_20261024.json`，原始证据：`artifacts/cosmos_reasoner_integration_diagnosis_20261024/`。33项对照及1次资源中止全部保留，不输入独立跟踪器/原生答案，不加载PPO策略或optimizer，不启动仿真。已定位MPS BF16+SDPA带前置探针路径的全NaN，标准生成3次未复现；改MPS FP32并记录分数、特殊token、EOS/截断及prefill预算。9份FP32专项响应数值有效且完整，28项测试通过。提示模板与物体预设影响回答，语义可靠性未通过；3/12帧图像和12帧视频在200–220秒识别到平移，不等于旋转或持杆已可靠。正式64/64及演示1/1保持原已验收结果。原录像和393b策略+optimizer只读SHA不变。103有界重试仍SSH22超时，新证据Mac归档、同步pending；不据此重启任何仿真或自动化。
