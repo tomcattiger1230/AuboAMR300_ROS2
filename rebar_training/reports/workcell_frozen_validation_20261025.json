@@ -1,6 +1,6 @@
 {
   "schema": "workcell_frozen_validation_progress_v1",
-  "phase": "v7_physical_candidate_baseline_running",
+  "phase": "v7_baseline_first_passed_remaining_running",
   "created_unix": 1792859368.224087,
   "layout": "rebar_training/config/multi_workcell_offline.json",
   "layout_is_synthetic": true,
@@ -15,11 +15,11 @@
   "new_learning_updates": 0,
   "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
   "baseline_candidates": 6,
-  "current": "baseline_source_A_machine_1_v7",
+  "current": "baseline_source_A_machine_2_v7",
   "manager_pid": 72209,
   "runner_pid": 72208,
-  "native_pid": 72222,
-  "run_id": "39d5dcb07ce94cbd9edc245fad5ea7fb",
+  "native_pid": 76696,
+  "run_id": "6cf626fe6abe4c6f9d1384d6e60f8884",
   "source_archive_sha256": "5fdd7faa9c601043e3955259946ec8920c3f4873de905e565a74209c4630cfbc",
   "offline_targeted_tests": 103,
   "earlier_broad_tests": {
@@ -49,7 +49,7 @@
   "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v7",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792863892.974602,
+  "updated_unix": 1792864209.895305,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -104,61 +104,57 @@
     "frozen_identity_unchanged": true
   },
   "results_are_version_separated": true,
-  "current_campaign_completed_episodes": 0,
-  "current_campaign_successes": 0,
-  "last_live_snapshot_unix": 1792863867.9054174,
+  "current_campaign_completed_episodes": 1,
+  "current_campaign_successes": 1,
+  "last_live_snapshot_unix": 1792864205.8044648,
   "last_live_progress": {
-    "step": 8340,
-    "sim_time_s": 278.03333333333336,
-    "stage": "pickup_tray",
+    "step": 2970,
+    "sim_time_s": 99.03333333333333,
+    "stage": "observe_tray",
     "source_navigation": false,
-    "route": 0,
-    "valid": true,
+    "route": 4,
+    "valid": false,
     "base": [
-      6.2938761711120605,
-      4.769953727722168,
-      1.8976699323047796e-08
+      1.162950873374939,
+      2.3077316654962488e-05,
+      1.0715363885083207e-07
     ],
     "base_quaternion": [
-      -1.2202106347558583e-07,
-      1.1525450105409618e-07,
-      0.0005297479801811278,
-      0.9999998211860657
+      1.2381692116036902e-08,
+      1.459993370644952e-07,
+      -0.007734577637165785,
+      0.999970018863678
     ],
     "wheel_command": [
       0.0,
       0.0
     ],
     "robot_twist": [
-      0.0004735205147881061,
-      -0.0005647767102345824,
-      -0.0001754519616952166
+      0.0005786005058325827,
+      -0.0005624504992738366,
+      -0.00017227386706508696
     ],
-    "last_error": "",
-    "estimated_bar": [
-      0.2922300596012205,
-      -0.0013512520783691539,
-      0.715
-    ],
-    "camera_age_ms": 33.33333333335986,
+    "last_error": "Move to the surveyed observation view first",
+    "estimated_bar": null,
+    "camera_age_ms": 99033.33333433334,
     "arm_joints": [
-      4.34731388092041,
-      0.9990979433059692,
-      1.9094126224517822,
-      -0.3133578300476074,
-      0.8500124216079712,
-      -0.49795615673065186
+      4.384851455688477,
+      1.0118350982666016,
+      1.9388231039047241,
+      -0.327157199382782,
+      0.8378517031669617,
+      -0.4512590765953064
     ],
     "finger_positions": [
-      0.0002469743776600808,
-      1.0687779905538264e-07
+      0.0002453215420246124,
+      1.0377253545357235e-07
     ],
     "finger_forces": [
       0.0,
       0.0
     ],
-    "tray_load_n": 20.688133239746094,
-    "policy_calls": 1432
+    "tray_load_n": 21.865217208862305,
+    "policy_calls": 1423
   },
   "v7_mac_collector_pid": 62361,
   "v5_raw_backup": {
@@ -172,5 +168,33 @@
     "all_files_both_hosts_verified": true,
     "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792861952/workcell_results.tar.gz",
     "sha256": "4155952f754431f72720ed404c566ba0da2f4ddbe5932f4ec6bfbdd19de6ad73"
+  },
+  "v7_first_pass": {
+    "node_and_mac_verified": true,
+    "report_sha256": "91ad19458c22fdce3a422b761dd069f4f1d6e4737d219c030ac287d607dd0f97",
+    "source": "source_A",
+    "machine": "machine_1",
+    "steps": 9938,
+    "error_mm": 1.007727929390967,
+    "retreat_mm": 88.8901799917221,
+    "unsafe_peak_n": 26.02528953552246,
+    "jaw_forces_n": [
+      26.02528953552246,
+      23.91741371154785,
+      23.903764724731445,
+      26.011112213134766
+    ],
+    "frozen_identity": {
+      "sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "model_optimizer_tensors": 52,
+      "counters": {
+        "updates": 466,
+        "actor_updates": 170,
+        "policy_steps": 36602
+      },
+      "file_and_tensor_payload_unchanged": true,
+      "optimizer_instantiated": false,
+      "training_started": false
+    }
   }
 }
