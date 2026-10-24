@@ -77,8 +77,10 @@ class StationLoadingAdapter:
         _skill_visual(visual_evidence, self.layout, self.command['station_id'], now, self.command['issued_s'])
         _measured_state(state)
         g = self.geometry(base_pose_map, robot_stamp_s, now, measured_twist)
-        return route.advance(state, logic, joints, g['goal'], grasp_quaternion=measured_quaternion,
-                             loading_geometry=g)
+        grasping = int(route.stage[0]) < 4
+        return route.advance(state, logic, joints, g['goal'],
+                             grasp_quaternion=measured_quaternion if grasping else None,
+                             loading_quaternion=None if grasping else measured_quaternion,loading_geometry=g)
 
     def servo_actions(self, servo, state, route, *, base_pose_map, robot_stamp_s, now, measured_twist, visual_evidence):
         _skill_visual(visual_evidence, self.layout, self.command['station_id'], now, self.command['issued_s'])

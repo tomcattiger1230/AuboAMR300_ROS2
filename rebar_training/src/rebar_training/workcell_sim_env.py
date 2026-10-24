@@ -291,7 +291,9 @@ class WorkcellControl(VisualControl):
             grasp_q=(self.state.tcp.new_tensor(self.packets[0].quaternion_xyzw).reshape(1,4)
                      if self.stage in ('pickup','pickup_tray') and bool(active[0]) else None)
             e.route.advance(self.state,self.logic,e.robot.data.joint_pos.torch[:,e.control_ids[:6]],self.goal(),
-                            grasp_quaternion=grasp_q,loading_geometry=self.loading_geometry() if self.stage=='loading' else None)
+                            grasp_quaternion=grasp_q,loading_geometry=self.loading_geometry() if self.stage=='loading' else None,
+                            loading_quaternion=self.state.tcp.new_tensor(self.packets[0].quaternion_xyzw).reshape(1,4)
+                            if self.stage=='loading' and bool(active[0]) else None)
             if e.route.grasp_alignment_blocked_contact[0]:
                 self.failure='grasp orientation drift with pre-contact load'
             e.route.stage[~active]=old[~active];e.route.dwell[~active]=dwell[~active];e.route.anchor[~active]=anchor[~active]

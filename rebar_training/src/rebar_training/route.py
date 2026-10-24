@@ -62,8 +62,16 @@ class LoadingRoute:
             raise ValueError('Invalid station orientation or clearance')
         return values
 
-    def advance(self, state, logic, joints, goal, *, grasp_quaternion=None, loading_geometry=None):
+    def advance(self, state, logic, joints, goal, *, grasp_quaternion=None, loading_geometry=None, loading_quaternion=None):
         geometry = self._loading_geometry(goal, loading_geometry)
+        loading_q = None
+        if loading_quaternion is not None:
+            if geometry is None:raise ValueError('Loading orientation requires station geometry')
+            loading_q = torch.as_tensor(loading_quaternion, device=self.device, dtype=self.quaternion.dtype)
+            if (loading_q.shape != self.quaternion.shape or not torch.isfinite(loading_q).all()
+                    or (torch.linalg.vector_norm(loading_q, dim=-1) < .5).any()):
+                raise ValueError('Invalid measured loading quaternion')
+            loading_q = loading_q / torch.linalg.vector_norm(loading_q, dim=-1, keepdim=True)
         s = state
         ready = (self.stage == 0) & (torch.linalg.vector_norm(s.bar + s.bar.new_tensor([0, 0, .10]) - s.tcp, dim=-1) < .006)
         self.grasp_alignment_blocked_contact.zero_()
@@ -101,10 +109,11 @@ class LoadingRoute:
         ready = (self.stage == 6) & (torch.linalg.vector_norm(stand_off - s.tcp, dim=-1) < .012)
         if geometry is not None:
             # Position alone must not permit insertion into a rotated fixture.
-            if grasp_quaternion is None:
+            orientation = loading_q if loading_q is not None else (q if grasp_quaternion is not None else None)
+            if orientation is None:
                 ready &= False
             else:
-                ready &= (q * geometry['tcp_quaternion_xyzw']).sum(-1).abs() >= math.cos(math.radians(2)/2)
+                ready &= (orientation * geometry['tcp_quaternion_xyzw']).sum(-1).abs() >= math.cos(math.radians(2)/2)
         self.stage[ready] = 7
         ready = (self.stage == 7) & (logic.phase == 2)
         self.stage[ready] = 8

@@ -1,6 +1,6 @@
 {
   "schema": "workcell_frozen_validation_progress_v1",
-  "phase": "v6_physical_candidate_baseline_running",
+  "phase": "v7_physical_candidate_baseline_running",
   "created_unix": 1792859368.224087,
   "layout": "rebar_training/config/multi_workcell_offline.json",
   "layout_is_synthetic": true,
@@ -15,13 +15,13 @@
   "new_learning_updates": 0,
   "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
   "baseline_candidates": 6,
-  "current": "baseline_source_A_machine_1_v6",
-  "manager_pid": 68219,
-  "runner_pid": 68218,
-  "native_pid": 68229,
-  "run_id": "60a42dcef7b64098be2bd964531ea6fe",
-  "source_archive_sha256": "d3e585a8b9243c5becbfa9d6348a344eb9adc427b1d62ee7e48272b26349145b",
-  "offline_targeted_tests": 90,
+  "current": "baseline_source_A_machine_1_v7",
+  "manager_pid": 72209,
+  "runner_pid": 72208,
+  "native_pid": null,
+  "run_id": null,
+  "source_archive_sha256": "5fdd7faa9c601043e3955259946ec8920c3f4873de905e565a74209c4630cfbc",
+  "offline_targeted_tests": 102,
   "earlier_broad_tests": {
     "passed": 425,
     "skipped": 8,
@@ -45,11 +45,11 @@
     "Machine visual identity/pose/ready binding",
     "Full MissionFlow simulation session and receipt binding"
   ],
-  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v6",
-  "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v6",
+  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v7",
+  "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v7",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792860779.098864,
+  "updated_unix": 1792863359.14319,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -65,65 +65,11 @@
   "v5_dispatcher_stopped_after_SE3_replay": true,
   "v6_prelauncher_pid": 65543,
   "v6_mac_collector_pid": 45557,
-  "planned_next": "baseline_source_A_machine_1_v6",
+  "planned_next": null,
   "SE3_projection_issue_reproduced_m": 1.4769942480730158e-06,
   "SE3_corrected_replay_passed": true,
   "v4_all_raw_both_hosts_verified": true,
   "v4_final_backup": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792859858",
-  "last_live_snapshot_unix": 1792860775.526649,
-  "last_live_progress": {
-    "step": 2430,
-    "sim_time_s": 81.03333333333333,
-    "stage": "tray_above",
-    "source_navigation": false,
-    "route": 4,
-    "valid": true,
-    "base": [
-      1.1620633602142334,
-      4.161202741670422e-05,
-      -9.941757639353455e-08
-    ],
-    "base_quaternion": [
-      -4.0032809067724884e-08,
-      4.955556960339891e-07,
-      -0.0074483659118413925,
-      0.9999722242355347
-    ],
-    "wheel_command": [
-      0.0,
-      0.0
-    ],
-    "robot_twist": [
-      0.00019548405543901026,
-      -0.0004608001618180424,
-      -0.00013295230746734887
-    ],
-    "last_error": "",
-    "estimated_bar": [
-      0.2888884337723826,
-      -0.3464520647300823,
-      0.9027461023348132
-    ],
-    "camera_age_ms": 33.33333333333144,
-    "arm_joints": [
-      2.8946897983551025,
-      -0.3633369505405426,
-      1.3044217824935913,
-      0.09665612876415253,
-      1.5690670013427734,
-      -1.8166446685791016
-    ],
-    "finger_positions": [
-      0.01750682294368744,
-      0.016187360510230064
-    ],
-    "finger_forces": [
-      54.59678268432617,
-      55.533409118652344
-    ],
-    "tray_load_n": 0.0,
-    "policy_calls": 1110
-  },
   "v5_result": {
     "completed_episodes": 0,
     "error": "ValueError: Station geometry and loading goal disagree",
@@ -138,5 +84,26 @@
     "files": 29,
     "both_hosts_verified": true
   },
-  "final_result_backup_pending": true
+  "final_result_backup_pending": true,
+  "v6_result": {
+    "completed_episodes": 1,
+    "successes": 0,
+    "failures": 1,
+    "failure": "stage timeout: loading",
+    "steps": 12782,
+    "machine_error_m": 0.05127464607357979,
+    "unsafe_force_n": 53.433685302734375,
+    "terminal_arm_contact_n": 0,
+    "peak_arm_contact_n": 0,
+    "root_cause": "missing measured loading orientation at route6 gate",
+    "measured_replay_standoff_error_m": 0.0007750187167606564,
+    "measured_replay_orientation_error_deg": 0.15285466800148864,
+    "missing_measurement_route_after": 6,
+    "with_measurement_route_after": 7,
+    "remaining_five_not_dispatched": true,
+    "frozen_identity_unchanged": true
+  },
+  "results_are_version_separated": true,
+  "current_campaign_completed_episodes": 0,
+  "current_campaign_successes": 0
 }

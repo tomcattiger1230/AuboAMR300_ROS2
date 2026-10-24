@@ -153,3 +153,16 @@ def test_skill_bridge_never_computes_commands_from_invalid_feedback(fault):
     with pytest.raises(ValueError):
         adapter.servo_actions(NeverServo(), state, route, base_pose_map=layout.navigation_goal('machine_1').values(),
                               robot_stamp_s=now+.01, now=now+.01, measured_twist=[0, 0], visual_evidence=e)
+
+
+def test_shared_adapter_keeps_grasp_alignment_guard_and_separate_loading_evidence():
+    layout,flow,c,now=setup_loading();adapter=StationLoadingAdapter(layout,c);state,route=state_and_route()
+    kwargs=dict(base_pose_map=layout.navigation_goal('machine_1').values(),robot_stamp_s=now+.01,now=now+.01,measured_twist=[0,0],visual_evidence=fixture_result(flow,c,now+.01)['evidence'])
+    logic=SimpleNamespace(contact_dwell=torch.zeros(1),pick_complete=torch.zeros(1,dtype=torch.bool),phase=torch.zeros(1))
+    # Position is ready but an incorrect grasp orientation must never descend.
+    for _ in range(10):adapter.advance_route(route,state,logic,torch.zeros(1,6),measured_quaternion=torch.tensor([[0.,0.,0.,1.]]),**kwargs)
+    assert route.stage.item()==0
+    assert route.grasp_alignment_error_deg.item()>2
+    route.stage[:]=6;g=adapter.geometry(base_pose_map=kwargs['base_pose_map'],robot_stamp_s=now+.01,now=now+.01,measured_twist=[0,0]);state.tcp[:]=torch.tensor([g['standoff']]);route.grasp_alignment_error_deg[:]=.1
+    adapter.advance_route(route,state,logic,torch.zeros(1,6),measured_quaternion=torch.tensor([g['tcp_quaternion_xyzw']]),**kwargs)
+    assert route.stage.item()==7 and route.grasp_alignment_error_deg.item()==pytest.approx(.1)

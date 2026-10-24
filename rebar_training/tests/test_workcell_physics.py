@@ -104,3 +104,30 @@ def test_measured_physical_pitch_retains_exact_route_goal_guard():
     actual=frame.point(layout.machine_geometry('machine_1')['goal'])
     assert geometry['goal']==pytest.approx(actual,abs=1e-12)
     assert LoadingRoute(1,'cpu')._loading_geometry(actual,geometry) is not None
+
+
+def test_loading_orientation_advances_route_without_corrupting_grasp_evidence():
+    import torch
+    from types import SimpleNamespace
+    from rebar_training.vision.frames import BaseFrame
+    from rebar_training.workcell_physics import ideal_scene_loading_geometry
+    from rebar_training.route import LoadingRoute
+    layout=WorkcellLayout.load(LAYOUT)
+    # Actual v6 terminal measured TCP/steel estimate, not scoring truth.
+    frame=BaseFrame([6.306112289428711,4.769908905029297,9.416947222007366e-9],
+        [2.9727766559517477e-7,-7.228599940845015e-8,-.011750463396310806,.9999309778213501])
+    g=ideal_scene_loading_geometry(layout,'machine_1',frame,enabled=True)
+    state=SimpleNamespace(bar=torch.tensor([[-.288665235,-.726651788,1.508043885]]),
+        tcp=torch.tensor([[-.290029317,-.717264473,1.507939816]]),
+        fingers=torch.tensor([[.017839693,.015851855]]),finger_forces=torch.tensor([[53.30795,53.43282]]),jaw_forces=torch.zeros(1,4))
+    logic=SimpleNamespace(contact_dwell=torch.tensor([0]),pick_complete=torch.tensor([True]),phase=torch.tensor([0]))
+    route=LoadingRoute(1,'cpu');route.stage[:]=6;route.grasp_alignment_error_deg[:]=.104678
+    q=torch.tensor([[.706952271,.007641190,.007156748,.707183767]])
+    route.advance(state,logic,torch.zeros(1,6),g['goal'],loading_geometry=g)
+    assert route.stage.item()==6
+    route.advance(state,logic,torch.zeros(1,6),g['goal'],loading_geometry=g,loading_quaternion=q)
+    assert route.stage.item()==7
+    assert route.grasp_alignment_error_deg.item()==pytest.approx(.104678)
+    route.stage[:]=6
+    with pytest.raises(ValueError,match='Invalid measured loading quaternion'):
+        route.advance(state,logic,torch.zeros(1,6),g['goal'],loading_geometry=g,loading_quaternion=torch.zeros(1,4))
