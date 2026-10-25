@@ -41,11 +41,11 @@
   "sparse_saved_frame_warning_lead_s": 54.0,
   "conclusion": "Real steel slid axially on the tray. Vision and scoring truth agree; the original guard correctly stopped. No bounded physical recenter path existed in v8.",
   "cause_limit": "Existing logs do not isolate contact-solver creep, friction or drive excitation contributions. Assets/friction are kept unchanged.",
-  "physical_recovery_success_proven": false,
+  "physical_recovery_success_proven": true,
   "simulation_started": false,
   "training_started": false,
   "new_learning_updates": 0,
-  "updated_at_shanghai": "2026-10-25T14:04:40.827856+08:00",
+  "updated_at_shanghai": "2026-10-25T23:07:53.182164+08:00",
   "root_cause_chain": "Actual axial tray slip -> support envelope interlock stop -> no physical recenter/resume path -> navigation timeout",
   "runtime_truth_access": false,
   "method": {
@@ -79,15 +79,14 @@
     "subtests_passed": 6
   },
   "physical_retest": {
-    "state": "remote_live_state_unknown",
+    "state": "completed_independently_passed",
     "name": "retest_source_A_machine_3_v11",
     "seed": 12504003,
     "run_id": "8ea8faa353cd42a19a42a7aa3731294f",
-    "manager_pid": 108329,
-    "native_pid": 108352,
-    "passed": false,
-    "last_known_state": "running",
-    "full_episode_result_unknown": true
+    "passed": true,
+    "report_sha256": "8ac32b8f9c7dcdf5ec10c064959e6065545f6700f1df80993ee844cf21df01e4",
+    "machine_error_mm": 1.0492034489288926,
+    "retreat_mm": 85.60187369585037
   },
   "source_archive_sha256": "e7a7d786868f82103cd4bcac012ab252369890b218bdfaeb927857995330e052",
   "source_files": 69,
@@ -330,8 +329,8 @@
       }
     }
   },
-  "remote_live_state_fresh": false,
-  "node_connection_state": "ssh_timeout_then_no_route",
+  "remote_live_state_fresh": true,
+  "node_connection_state": "ssh_connected_jobs_naturally_exited",
   "metadata_sync_pending": true,
   "last_trusted_snapshot_at_shanghai": "2026-10-25T14:13:21.144104+08:00",
   "last_trusted_partial_progress": {
@@ -343,5 +342,168 @@
     "full_episode_result_unknown": true
   },
   "network_followup": "rebar_training/artifacts/workcell_frozen_validation_20261025_v11/network_followup_20261025_1416.json",
-  "updated_unix": 1792908944.537288
+  "updated_unix": 1792940873.182164,
+  "current_campaign_state": "needs_analysis",
+  "physical_controller_coverage_passed": 3,
+  "physical_controller_coverage_total": 6,
+  "physical_task_acceptance": false,
+  "simulation_started_this_followup": false,
+  "latest_reconnect_audit": "rebar_training/artifacts/workcell_frozen_validation_20261025_v11/reconnect_review_20261025.json",
+  "raw_files_both_hosts_verified": 386,
+  "latest_final_raw_backup": {
+    "local": {
+      "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792940633/workcell_results.tar.gz",
+      "sha256": "177bbe120a0b1cbce05a3432e0b424868d44f035ee55a891697bf48405ff7944",
+      "bytes": 170467154,
+      "files": 406,
+      "all_files_verified": true,
+      "remote": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_177bbe120a0b.tar.gz"
+    },
+    "nas": {
+      "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_177bbe120a0b.tar.gz",
+      "sha256": "177bbe120a0b1cbce05a3432e0b424868d44f035ee55a891697bf48405ff7944",
+      "files": 406,
+      "all_files_verified": true,
+      "verified_unix": 1792940833.3447433,
+      "campaign_state": "needs_analysis",
+      "new_layout_task_acceptance": false,
+      "verification": "streamed whole archive and every file SHA"
+    }
+  },
+  "native_recovery_verification": {
+    "report_sha256": "8ac32b8f9c7dcdf5ec10c064959e6065545f6700f1df80993ee844cf21df01e4",
+    "physical_candidate_passed": true,
+    "errors": [],
+    "recovery_attempts": [
+      {
+        "requested_tick": 5298,
+        "started_ns": 176600000000,
+        "requested_position": [
+          0.2932114898258421,
+          -0.007506434648796513,
+          0.715
+        ],
+        "requested_offset_m": 0.007523840972441723,
+        "request_mode": "before_narrow_corridor",
+        "state": "complete",
+        "requested_pose": [
+          8.20324993133545,
+          -0.21597014367580414,
+          -0.03215241332072691
+        ],
+        "workspace_radius_m": 1.5,
+        "parked_tick": 5316,
+        "parked_twist": [
+          0.00029831373831257224,
+          -0.0001716313126962632
+        ],
+        "stopped_dwell_s": 0.5,
+        "pregrasp_full_frames": 7,
+        "parked_pose": [
+          8.206871032714844,
+          -0.21608835458755493,
+          -0.031727652008106275
+        ],
+        "grasp": {
+          "tick": 6563,
+          "position": [
+            0.2925077939594231,
+            -0.008872751790600143,
+            0.715
+          ],
+          "fingers": [
+            0.01707366667687893,
+            0.016742531210184097
+          ],
+          "forces": [
+            56.80904769897461,
+            51.6682243347168
+          ]
+        },
+        "release": {
+          "tick": 6787,
+          "load": 16.210355758666992,
+          "fingers": [
+            2.700457480386831e-05,
+            1.8495138647267595e-05
+          ],
+          "forces": [
+            0.0,
+            0.0
+          ]
+        },
+        "verified_tick": 7866,
+        "verified_position": [
+          0.29316901173510745,
+          0.0005440724022755026,
+          0.715
+        ],
+        "verified_offset_m": 0.000718322202487384,
+        "verified_load": 22.47896957397461,
+        "verified_twist": [
+          0.00023939672973938286,
+          -0.0006924003246240318
+        ],
+        "verified_fresh_frames": 3,
+        "elapsed_s": 85.60000000000001
+      }
+    ],
+    "navigation_ticks_by_stage": {
+      "navigate": 3338,
+      "dock": 85
+    },
+    "deferred_warnings": 0,
+    "recovery_file_hashes_verified": 12,
+    "machine_error_mm": 1.0492034489288926,
+    "retreat_mm": 85.60187369585037,
+    "jaw_forces_n": [
+      24.119701385498047,
+      25.83449935913086,
+      25.817546844482422,
+      24.12080192565918
+    ],
+    "unsafe_force_n": 25.846994400024414,
+    "max_arm_contact_n": 0.0,
+    "frozen_after": {
+      "sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "model_optimizer_tensors": 52,
+      "counters": {
+        "updates": 466,
+        "actor_updates": 170,
+        "policy_steps": 36602
+      },
+      "file_and_tensor_payload_unchanged": true,
+      "optimizer_instantiated": false,
+      "training_started": false
+    },
+    "recenter_policy_calls": 0,
+    "task_interface_accepted": false,
+    "verified_unix": 1792940621.973461
+  },
+  "followup_B1": {
+    "run_id": "97893845c89144cc8f2dc1af10fa0128",
+    "seed": 12504004,
+    "report_sha256": "01462b0793132a7755b0209faf7e7371b5e5023e3f995638040ca3a94ba0a8f1",
+    "native_error": "AttributeError: 'NoneType' object has no attribute 'bar'",
+    "completed_physical_episodes": 0,
+    "policy_calls": 0,
+    "last_logged_step": 5370,
+    "last_source_navigation_active": true,
+    "receipt_error_location": "workcell_sim_env.py:760 accesses v.state.bar while v.state is None",
+    "prior_source_navigation_timeout_possible": true,
+    "underlying_source_navigation_cause_not_yet_isolated": true,
+    "review": {
+      "physical_candidate_passed": false,
+      "errors": [
+        "runtime error: AttributeError: 'NoneType' object has no attribute 'bar'",
+        "no completed physical episode",
+        "exactly one episode required"
+      ],
+      "task_interface_accepted": false,
+      "report_sha256": "01462b0793132a7755b0209faf7e7371b5e5023e3f995638040ca3a94ba0a8f1",
+      "reviewed_unix": 1792940847.233116,
+      "reviewed_on": "Mac independent frozen physical review",
+      "node_review_agrees": true
+    }
+  }
 }
