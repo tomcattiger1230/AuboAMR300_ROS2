@@ -1,6 +1,6 @@
 {
   "schema": "workcell_frozen_validation_progress_v1",
-  "phase": "v11_supported_release_handoff_retest_running",
+  "phase": "v11_recovery_resumed_navigation_remote_state_unknown",
   "created_unix": 1792859368.224087,
   "layout": "rebar_training/config/multi_workcell_offline.json",
   "layout_is_synthetic": true,
@@ -49,7 +49,7 @@
   "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v11",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792908280.8286562,
+  "updated_unix": 1792908944.537288,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -171,7 +171,7 @@
     "root_cause": "Measured 1Hz log: 15mm boundary chatter between position-heading and goal-yaw branches; 38 switches/142 samples; original path contains redundant short/duplicate turns."
   },
   "live_checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
-  "node_connection_state": "connected_fresh_v11_retest",
+  "node_connection_state": "ssh_timeout_then_no_route",
   "v7_last_status_observation": "rebar_training/artifacts/workcell_frozen_validation_20261025_v7/status_observed_20261025_0725.json",
   "v7_result_backup": {
     "local": {
@@ -673,5 +673,17 @@
         "verification": "streamed complete archive plus every file SHA"
       }
     }
-  }
+  },
+  "remote_live_state_fresh": false,
+  "metadata_sync_pending": true,
+  "last_trusted_snapshot_at_shanghai": "2026-10-25T14:13:21.144104+08:00",
+  "last_trusted_partial_progress": {
+    "step": 8010,
+    "stage": "navigate",
+    "recovery_phase": "idle",
+    "recovery_attempts": 1,
+    "measured_center_offset_m": 0.002099852626441382,
+    "full_episode_result_unknown": true
+  },
+  "network_followup": "rebar_training/artifacts/workcell_frozen_validation_20261025_v11/network_followup_20261025_1416.json"
 }

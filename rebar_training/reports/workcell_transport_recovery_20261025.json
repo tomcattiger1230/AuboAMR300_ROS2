@@ -79,13 +79,15 @@
     "subtests_passed": 6
   },
   "physical_retest": {
-    "state": "running",
+    "state": "remote_live_state_unknown",
     "name": "retest_source_A_machine_3_v11",
     "seed": 12504003,
     "run_id": "8ea8faa353cd42a19a42a7aa3731294f",
     "manager_pid": 108329,
     "native_pid": 108352,
-    "passed": false
+    "passed": false,
+    "last_known_state": "running",
+    "full_episode_result_unknown": true
   },
   "source_archive_sha256": "e7a7d786868f82103cd4bcac012ab252369890b218bdfaeb927857995330e052",
   "source_files": 69,
@@ -327,5 +329,19 @@
         "verification": "streamed complete archive plus every file SHA"
       }
     }
-  }
+  },
+  "remote_live_state_fresh": false,
+  "node_connection_state": "ssh_timeout_then_no_route",
+  "metadata_sync_pending": true,
+  "last_trusted_snapshot_at_shanghai": "2026-10-25T14:13:21.144104+08:00",
+  "last_trusted_partial_progress": {
+    "step": 8010,
+    "stage": "navigate",
+    "recovery_phase": "idle",
+    "recovery_attempts": 1,
+    "measured_center_offset_m": 0.002099852626441382,
+    "full_episode_result_unknown": true
+  },
+  "network_followup": "rebar_training/artifacts/workcell_frozen_validation_20261025_v11/network_followup_20261025_1416.json",
+  "updated_unix": 1792908944.537288
 }

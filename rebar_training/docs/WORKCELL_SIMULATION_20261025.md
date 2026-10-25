@@ -107,3 +107,10 @@ v10完整原生回执保存成功，失败为transport recenter overall deadline
 9900step原图/概率/K/TF离线重放：旧错误Axial texture registration lacks consistent image evidence，但新鲜侧边拟合100条可见边、残差0.4808px；轴向明确标记未观测。v11在原15帧支撑/卸载条件满足且最近视觉没有错误时，切换为用于空手垂直退让的新鲜侧边观察，保留原200ms期限、没有强置valid或last_good_ns。该运动只使用已测release_TCP的固定XY向上退让，不靠未观测轴向位置去抓取或行驶；退让后已有新require_full_support观察器重新测量两个端面，连续3帧位置<6mm才恢复导航。载荷丢失、夹持状态、图像过期均拒绝交接，单元测试覆盖。恢复tray_above/tray_down额外要求XY<1.5mm，原4mm三维/姿态驻留要求仍保留，未放宽任何独立评分或运输硬门槛。
 
 全494测试通过、8跳过、6subtest通过。source_v11共69文件，源码包SHAe7a7d786868f82103cd4bcac012ab252369890b218bdfaeb927857995330e052，旧v11预备稿未启动版本独立保留在workcell_prepared_revisions_20261025。103冻结模型/CAD预检通过后只启动同失败seed12504003的新编号retest_source_A_machine_3_v11；策略和optimizer、原资产/摩擦保持，不重跑旧成功，B三条仅在该回合严格通过后串行执行。
+
+## 最新：v11首次恢复后已续行，连接中断待取完整回执（2026-10-25T14:15 上海）
+
+最后可信节点快照为2026-10-25T14:13:21，原run_id `8ea8faa353cd42a19a42a7aa3731294f`，step8010，已完成首次抓取/放回/空手退让和完整端面复核，并回到navigate；当帧新鲜视觉有效、last_error空，测得中心偏差2.100mm，托盘承载15.529N。此前空手退让观察交接的问题未在这次首次恢复重现；这只是局部真实进度，不是整回合/指定机上料通过，仍待原生完整回执和独立审核。
+
+随后有界SSH读取出现port22 timeout和No route to host，远端实时状态、完整回合是否完成及B三条是否已被原有限管理器派发当前未知。没有启停、重派或修改网络/电源/身份。现有Mac有限采集器PID1430继续只读跟进（总时限6小时），连接恢复后从实际原生status/report/review和raw取证，不调用launcher。v9/v10失败原始包及v11代码增量在Mac与NAS均有逐文件SHA凭据；本次连接中断及最新Mac文档尚待回传，metadata_sync_pending=true，不把旧备份当本次完成。完整历史保留，旧正式64与A1/A2成功保持，策略/optimizer393b未修改。下文“当前”各段均为历史阶段。
+
