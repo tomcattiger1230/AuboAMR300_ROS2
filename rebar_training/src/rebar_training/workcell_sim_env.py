@@ -168,6 +168,10 @@ class WorkcellControl(VisualControl):
     def settled_at(self,target,quaternion,tolerance=.004):
         robot=self.packets[0];o=self.observers[0]
         good=self.valid[0] and np.linalg.norm(o.position-target)<tolerance
+        if self.transport_resume is not None and self.stage in ('tray_above','tray_down'):
+            # Reserve part of the 6mm verification envelope for image error
+            # and settling while the empty wrist reaches the full-cap view.
+            good=good and np.linalg.norm(o.position[:2]-np.asarray(target)[:2])<.0015
         good=good and abs(robot.quaternion_xyzw@quaternion)>math.cos(math.radians(1.5))
         self.stage_dwell=self.stage_dwell+1 if good else 0
         return self.stage_dwell>=9
@@ -376,13 +380,14 @@ class WorkcellControl(VisualControl):
             p=self.packets[0]
             supported=self.valid[0] and self.tray_force>=5 and np.all(p.fingers<.003) and np.all(p.finger_forces<.5)
             self.stage_dwell=self.stage_dwell+1 if supported else 0
-            if self.stage_dwell>=15:
+            if self.stage_dwell>=15 and (self.transport_resume is None or not o.last_error):
                 # A measured support transition updates only the estimator.
                 # Steel physics is never attached, frozen or repositioned.
                 o.anchored=o.released=False;o.plane_height=.715
                 o.position[2]=.715;o.local_correction[:]=0
                 if self.transport_resume is not None:
                     self.transport_recenter.released(tick=self.tick,load=self.tray_force,fingers=p.fingers,forces=p.finger_forces)
+                    o.supported_release_retreat(p,self.tray_force)
                     self.recenter_packet('release')
                 self.enter('tray_retreat')
         elif self.stage=='tray_retreat':

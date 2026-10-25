@@ -89,6 +89,7 @@ class TransportRecentering:
                 and 5<=load<=250 and np.all(np.abs(f)<.003) and np.all((force>=0)&(force<.5))):
             return self.fail('transport recenter release lacks support/open unloaded fingers')
         self.phase='verifying';self.verified_frames=0;self.verified_image_ns=-1
+        self.attempts[-1]['state']='verifying'
         self.attempts[-1]['release']=dict(tick=int(tick),load=float(load),fingers=[float(x) for x in fingers],forces=[float(x) for x in forces])
 
     def verify(self,*,tick,**values):

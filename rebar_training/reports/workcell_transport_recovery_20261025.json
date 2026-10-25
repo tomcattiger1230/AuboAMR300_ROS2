@@ -45,7 +45,7 @@
   "simulation_started": false,
   "training_started": false,
   "new_learning_updates": 0,
-  "updated_at_shanghai": "2026-10-25T13:42:00.139964+08:00",
+  "updated_at_shanghai": "2026-10-25T14:04:40.827856+08:00",
   "root_cause_chain": "Actual axial tray slip -> support envelope interlock stop -> no physical recenter/resume path -> navigation timeout",
   "runtime_truth_access": false,
   "method": {
@@ -68,25 +68,28 @@
     "lookahead_m": 0.5,
     "narrow_corridor_rule": "Keep arm stowed and original 25mm/load/image interlock; 8mm is advisory where recenter workspace is absent",
     "same_frame_recovery_packet_copy": true,
-    "strict_numpy_json_conversion": true
+    "strict_numpy_json_conversion": true,
+    "recenter_placement_xy_m": 0.0015,
+    "release_observation_handoff": "After fresh measured unloaded release: fresh partial side-edge observer for empty vertical retreat; require new full-cap survey before driving",
+    "camera_freshness_limit_ns": 200000000
   },
   "offline_tests": {
-    "passed": 485,
+    "passed": 494,
     "skipped": 8,
     "subtests_passed": 6
   },
   "physical_retest": {
     "state": "running",
-    "name": "retest_source_A_machine_3_v10",
+    "name": "retest_source_A_machine_3_v11",
     "seed": 12504003,
-    "run_id": "44a641b096ec49a28df1a2435eb06b0e",
-    "manager_pid": 104066,
-    "native_pid": 104086,
+    "run_id": "8ea8faa353cd42a19a42a7aa3731294f",
+    "manager_pid": 108329,
+    "native_pid": 108352,
     "passed": false
   },
-  "source_archive_sha256": "6873fb8392114f2590a22749e01165fdef984c65760554935d3413708e97e5f9",
+  "source_archive_sha256": "e7a7d786868f82103cd4bcac012ab252369890b218bdfaeb927857995330e052",
   "source_files": 69,
-  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v10",
+  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v11",
   "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
   "optimizer_instantiated": false,
   "assets_and_friction_unchanged": true,
@@ -154,5 +157,175 @@
       }
     }
   },
-  "v9_excluded_from_acceptance": true
+  "v9_excluded_from_acceptance": true,
+  "v10_result": {
+    "native_failure": "transport recenter overall deadline",
+    "completed_episodes": 1,
+    "successes": 0,
+    "recovery_attempts": [
+      {
+        "requested_tick": 4953,
+        "started_ns": 165100000000,
+        "requested_position": [
+          0.29241092535823787,
+          -0.008014337875789354,
+          0.715
+        ],
+        "requested_offset_m": 0.008019549596817874,
+        "request_mode": "measured_slip",
+        "state": "complete",
+        "requested_pose": [
+          6.973159313201904,
+          -0.17742137610912323,
+          -0.031735416552930606
+        ],
+        "workspace_radius_m": 1.5,
+        "parked_tick": 4972,
+        "parked_twist": [
+          0.00026967693702317774,
+          -0.00023461320961359888
+        ],
+        "stopped_dwell_s": 0.5,
+        "pregrasp_full_frames": 7,
+        "parked_pose": [
+          6.977041721343994,
+          -0.17754754424095154,
+          -0.031200732932534374
+        ],
+        "grasp": {
+          "tick": 6212,
+          "position": [
+            0.29259432840959865,
+            -0.008169980470072962,
+            0.715
+          ],
+          "fingers": [
+            0.01700921356678009,
+            0.016795607283711433
+          ],
+          "forces": [
+            57.88673782348633,
+            51.82398986816406
+          ]
+        },
+        "release": {
+          "tick": 6431,
+          "load": 21.199649810791016,
+          "fingers": [
+            2.6990424885298125e-05,
+            1.848940519266762e-05
+          ],
+          "forces": [
+            0.0,
+            0.0
+          ]
+        },
+        "verified_tick": 7572,
+        "verified_position": [
+          0.29332755209398087,
+          0.0006946453185605175,
+          0.715
+        ],
+        "verified_offset_m": 0.0009361376764439074,
+        "verified_load": 21.030662536621094,
+        "verified_twist": [
+          0.00026873149909079075,
+          -0.000942827551625669
+        ],
+        "verified_fresh_frames": 3,
+        "elapsed_s": 87.30000000000001
+      },
+      {
+        "requested_tick": 7890,
+        "started_ns": 263000000000,
+        "requested_position": [
+          0.2934769425046894,
+          0.00420966086696411,
+          0.715
+        ],
+        "requested_offset_m": 0.004280757441206179,
+        "request_mode": "before_narrow_corridor",
+        "state": "manipulating",
+        "requested_pose": [
+          8.427221298217773,
+          -0.22592304646968842,
+          -0.03246074130631459
+        ],
+        "workspace_radius_m": 1.5,
+        "parked_tick": 7909,
+        "parked_twist": [
+          0.0002943825093097985,
+          -8.765399979893118e-05
+        ],
+        "stopped_dwell_s": 0.5,
+        "pregrasp_full_frames": 7,
+        "parked_pose": [
+          8.430870056152344,
+          -0.22604495286941528,
+          -0.03184716127670069
+        ],
+        "grasp": {
+          "tick": 9154,
+          "position": [
+            0.29258743834358497,
+            0.0034869801853152273,
+            0.715
+          ],
+          "fingers": [
+            0.01702289655804634,
+            0.01678493805229664
+          ],
+          "forces": [
+            57.49253463745117,
+            51.792747497558594
+          ]
+        },
+        "release": {
+          "tick": 9369,
+          "load": 15.698508262634277,
+          "fingers": [
+            2.7003619834431447e-05,
+            1.848137799242977e-05
+          ],
+          "forces": [
+            0.0,
+            0.0
+          ]
+        },
+        "error": "transport recenter overall deadline"
+      }
+    ],
+    "frozen_after": {
+      "sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "model_optimizer_tensors": 52,
+      "counters": {
+        "updates": 466,
+        "actor_updates": 170,
+        "policy_steps": 36602
+      },
+      "file_and_tensor_payload_unchanged": true,
+      "optimizer_instantiated": false,
+      "training_started": false
+    },
+    "backup": {
+      "local": {
+        "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792907757/workcell_results.tar.gz",
+        "sha256": "fccbb870fd5aa7acdaa6c0c79496972eebc47a184f5237921c28f438011ae619",
+        "bytes": 160412190,
+        "files": 322,
+        "all_files_verified": true,
+        "remote": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_fccbb870fd5a.tar.gz"
+      },
+      "nas": {
+        "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_fccbb870fd5a.tar.gz",
+        "sha256": "fccbb870fd5aa7acdaa6c0c79496972eebc47a184f5237921c28f438011ae619",
+        "files": 322,
+        "all_files_verified": true,
+        "verified_unix": 1792907788.6772044,
+        "campaign_state": "needs_analysis",
+        "new_layout_task_acceptance": false,
+        "verification": "streamed complete archive plus every file SHA"
+      }
+    }
+  }
 }

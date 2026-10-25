@@ -214,3 +214,21 @@ class ImageObserver:
         self.local_correction[:] = 0
         self.axis_correction = None
         self.anchored = True
+
+    def supported_release_retreat(self,robot,tray_force):
+        """Retire grasp texture after measured unloading, for empty retreat.
+
+        Fresh side edges still update the pose and freshness clock normally.
+        Axial position is explicitly unmeasured in this temporary mode. The
+        caller must acquire a new full-cap survey before moving the chassis.
+        No camera timestamp, validity or XY estimate is synthesized here.
+        """
+        if not (self.valid(robot.timestamp_ns) and not self.last_error and np.isfinite(tray_force)
+                and 5<=tray_force<=250 and np.asarray(robot.fingers).shape==(2,)
+                and np.asarray(robot.finger_forces).shape==(2,)
+                and np.isfinite(robot.fingers).all() and np.isfinite(robot.finger_forces).all()
+                and np.all(np.abs(robot.fingers)<.003) and np.all((robot.finger_forces>=0)&(robot.finger_forces<.5))):
+            raise ValueError('Supported release retreat requires fresh vision and measured unloaded fingers')
+        self.anchored=self.released=False
+        self.prefer_full_support=self.require_full_support=self.track_support_texture=False
+        self.plane_height=.715;self.position[2]=.715;self.local_correction[:]=0

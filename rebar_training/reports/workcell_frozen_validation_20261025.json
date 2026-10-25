@@ -1,6 +1,6 @@
 {
   "schema": "workcell_frozen_validation_progress_v1",
-  "phase": "v10_transport_recenter_retest_running",
+  "phase": "v11_supported_release_handoff_retest_running",
   "created_unix": 1792859368.224087,
   "layout": "rebar_training/config/multi_workcell_offline.json",
   "layout_is_synthetic": true,
@@ -15,13 +15,13 @@
   "new_learning_updates": 0,
   "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
   "baseline_candidates": 6,
-  "current": "retest_source_A_machine_3_v10",
-  "manager_pid": 104066,
-  "runner_pid": 104076,
-  "native_pid": 104086,
-  "run_id": "44a641b096ec49a28df1a2435eb06b0e",
-  "source_archive_sha256": "6873fb8392114f2590a22749e01165fdef984c65760554935d3413708e97e5f9",
-  "offline_targeted_tests": 485,
+  "current": "retest_source_A_machine_3_v11",
+  "manager_pid": 108329,
+  "runner_pid": 108342,
+  "native_pid": 108352,
+  "run_id": "8ea8faa353cd42a19a42a7aa3731294f",
+  "source_archive_sha256": "e7a7d786868f82103cd4bcac012ab252369890b218bdfaeb927857995330e052",
+  "offline_targeted_tests": 494,
   "earlier_broad_tests": {
     "passed": 437,
     "skipped": 8,
@@ -45,11 +45,11 @@
     "Machine visual identity/pose/ready binding",
     "Full MissionFlow simulation session and receipt binding"
   ],
-  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v10",
-  "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v10",
+  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v11",
+  "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v11",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792906920.1409311,
+  "updated_unix": 1792908280.8286562,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -61,7 +61,7 @@
     "frozen_identity_unchanged": true,
     "remaining_five_not_dispatched": true
   },
-  "mac_collector_pid": 83970,
+  "mac_collector_pid": 1430,
   "v5_dispatcher_stopped_after_SE3_replay": true,
   "v6_prelauncher_pid": 65543,
   "v6_mac_collector_pid": 45557,
@@ -106,7 +106,7 @@
   "results_are_version_separated": true,
   "current_campaign_completed_episodes": 0,
   "current_campaign_successes": 0,
-  "last_live_snapshot_unix": 1792906911.5038269,
+  "last_live_snapshot_unix": 1792908274.5876265,
   "v7_mac_collector_pid": 62361,
   "v5_raw_backup": {
     "files": 253,
@@ -149,7 +149,7 @@
     }
   },
   "active_simulation_jobs": 1,
-  "updated_at_shanghai": "2026-10-25T13:42:00.139964+08:00",
+  "updated_at_shanghai": "2026-10-25T14:04:40.827856+08:00",
   "current_campaign_failures": 0,
   "current_campaign_unstarted": 3,
   "v7_second_result": {
@@ -171,7 +171,7 @@
     "root_cause": "Measured 1Hz log: 15mm boundary chatter between position-heading and goal-yaw branches; 38 switches/142 samples; original path contains redundant short/duplicate turns."
   },
   "live_checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
-  "node_connection_state": "connected_fresh_v10_retest",
+  "node_connection_state": "connected_fresh_v11_retest",
   "v7_last_status_observation": "rebar_training/artifacts/workcell_frozen_validation_20261025_v7/status_observed_20261025_0725.json",
   "v7_result_backup": {
     "local": {
@@ -503,5 +503,175 @@
       }
     }
   },
-  "v9_excluded_from_acceptance": true
+  "v9_excluded_from_acceptance": true,
+  "v10_result": {
+    "native_failure": "transport recenter overall deadline",
+    "completed_episodes": 1,
+    "successes": 0,
+    "recovery_attempts": [
+      {
+        "requested_tick": 4953,
+        "started_ns": 165100000000,
+        "requested_position": [
+          0.29241092535823787,
+          -0.008014337875789354,
+          0.715
+        ],
+        "requested_offset_m": 0.008019549596817874,
+        "request_mode": "measured_slip",
+        "state": "complete",
+        "requested_pose": [
+          6.973159313201904,
+          -0.17742137610912323,
+          -0.031735416552930606
+        ],
+        "workspace_radius_m": 1.5,
+        "parked_tick": 4972,
+        "parked_twist": [
+          0.00026967693702317774,
+          -0.00023461320961359888
+        ],
+        "stopped_dwell_s": 0.5,
+        "pregrasp_full_frames": 7,
+        "parked_pose": [
+          6.977041721343994,
+          -0.17754754424095154,
+          -0.031200732932534374
+        ],
+        "grasp": {
+          "tick": 6212,
+          "position": [
+            0.29259432840959865,
+            -0.008169980470072962,
+            0.715
+          ],
+          "fingers": [
+            0.01700921356678009,
+            0.016795607283711433
+          ],
+          "forces": [
+            57.88673782348633,
+            51.82398986816406
+          ]
+        },
+        "release": {
+          "tick": 6431,
+          "load": 21.199649810791016,
+          "fingers": [
+            2.6990424885298125e-05,
+            1.848940519266762e-05
+          ],
+          "forces": [
+            0.0,
+            0.0
+          ]
+        },
+        "verified_tick": 7572,
+        "verified_position": [
+          0.29332755209398087,
+          0.0006946453185605175,
+          0.715
+        ],
+        "verified_offset_m": 0.0009361376764439074,
+        "verified_load": 21.030662536621094,
+        "verified_twist": [
+          0.00026873149909079075,
+          -0.000942827551625669
+        ],
+        "verified_fresh_frames": 3,
+        "elapsed_s": 87.30000000000001
+      },
+      {
+        "requested_tick": 7890,
+        "started_ns": 263000000000,
+        "requested_position": [
+          0.2934769425046894,
+          0.00420966086696411,
+          0.715
+        ],
+        "requested_offset_m": 0.004280757441206179,
+        "request_mode": "before_narrow_corridor",
+        "state": "manipulating",
+        "requested_pose": [
+          8.427221298217773,
+          -0.22592304646968842,
+          -0.03246074130631459
+        ],
+        "workspace_radius_m": 1.5,
+        "parked_tick": 7909,
+        "parked_twist": [
+          0.0002943825093097985,
+          -8.765399979893118e-05
+        ],
+        "stopped_dwell_s": 0.5,
+        "pregrasp_full_frames": 7,
+        "parked_pose": [
+          8.430870056152344,
+          -0.22604495286941528,
+          -0.03184716127670069
+        ],
+        "grasp": {
+          "tick": 9154,
+          "position": [
+            0.29258743834358497,
+            0.0034869801853152273,
+            0.715
+          ],
+          "fingers": [
+            0.01702289655804634,
+            0.01678493805229664
+          ],
+          "forces": [
+            57.49253463745117,
+            51.792747497558594
+          ]
+        },
+        "release": {
+          "tick": 9369,
+          "load": 15.698508262634277,
+          "fingers": [
+            2.7003619834431447e-05,
+            1.848137799242977e-05
+          ],
+          "forces": [
+            0.0,
+            0.0
+          ]
+        },
+        "error": "transport recenter overall deadline"
+      }
+    ],
+    "frozen_after": {
+      "sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+      "model_optimizer_tensors": 52,
+      "counters": {
+        "updates": 466,
+        "actor_updates": 170,
+        "policy_steps": 36602
+      },
+      "file_and_tensor_payload_unchanged": true,
+      "optimizer_instantiated": false,
+      "training_started": false
+    },
+    "backup": {
+      "local": {
+        "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792907757/workcell_results.tar.gz",
+        "sha256": "fccbb870fd5aa7acdaa6c0c79496972eebc47a184f5237921c28f438011ae619",
+        "bytes": 160412190,
+        "files": 322,
+        "all_files_verified": true,
+        "remote": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_fccbb870fd5a.tar.gz"
+      },
+      "nas": {
+        "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_fccbb870fd5a.tar.gz",
+        "sha256": "fccbb870fd5aa7acdaa6c0c79496972eebc47a184f5237921c28f438011ae619",
+        "files": 322,
+        "all_files_verified": true,
+        "verified_unix": 1792907788.6772044,
+        "campaign_state": "needs_analysis",
+        "new_layout_task_acceptance": false,
+        "verification": "streamed complete archive plus every file SHA"
+      }
+    }
+  }
 }
