@@ -267,5 +267,26 @@
     "manifest_sha256": "754807c6e12f85712908f754e87e1f166185f063d3024e952877514ca9b50c12",
     "verified_unix": 1792893164.686136,
     "report_sha256": "033be9af0ecf882c6bf18ba899430762c36ef3bf930f259f90d2cbe01894b5d8"
-  }
+  },
+  "retest_result_archive_backup": {
+    "archive": "/Users/weiluo/Develop/backups/rebar_navigation_retest_20261025_3ed9e68/navigation_retest.tar.gz",
+    "sha256": "8845002339e7b0d55d096f2e6019321feabd15407ccf8bee9d04242d4c815d21",
+    "files": 178,
+    "bytes": 118128697,
+    "local_all_files_verified": true,
+    "nas": "/mnt/zspace/rebar_migration_20261024_142019/supplements/navigation_retest_3ed9e68_8845002339e7.tar.gz",
+    "nas_all_files_verified": true,
+    "remote_proof": {
+      "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/navigation_retest_3ed9e68_8845002339e7.tar.gz",
+      "sha256": "8845002339e7b0d55d096f2e6019321feabd15407ccf8bee9d04242d4c815d21",
+      "files": 178,
+      "all_files_verified": true,
+      "nas_all_files_verified": true,
+      "verified_unix": 1792893274.584088,
+      "physical_retest_passed": true,
+      "remaining_campaign_pending": true
+    },
+    "transport_history": []
+  },
+  "migration_increment_index": "/Users/weiluo/Develop/backups/REBAR_BACKUP_INDEX_20261025.json"
 }
