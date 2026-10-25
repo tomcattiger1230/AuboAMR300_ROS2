@@ -29,8 +29,15 @@ def parser():
     return p
 
 
+def json_scalar(value):
+    import numpy as np
+    if isinstance(value,np.generic):return value.item()
+    if isinstance(value,np.ndarray):return value.tolist()
+    raise TypeError('Unsupported evidence value: '+type(value).__name__)
+
+
 def atomic(path,data):
-    tmp=path.with_suffix(path.suffix+'.tmp');tmp.write_text(json.dumps(data,indent=2,allow_nan=False)+'\n');tmp.replace(path)
+    tmp=path.with_suffix(path.suffix+'.tmp');tmp.write_text(json.dumps(data,indent=2,allow_nan=False,default=json_scalar)+'\n');tmp.replace(path)
 
 
 def main():
@@ -81,6 +88,7 @@ def main():
         rows=[];decisions=0;error=None;terminal=[];navigation_goals=None;navigation_obstacles=None;seen_recenter_packets=set()
         recenter_nominal_steps=0;recenter_policy_calls=0
         recenter_obstacles=None
+        recenter_packet_files={}
         robot_tilt_max=0.;started=time.time()
         def save_packet(e,tag,terminal_packet=None):
             from PIL import Image
@@ -92,6 +100,9 @@ def main():
             if prob is not None:np.save(raw/(tag+'.probability.npy'),prob,allow_pickle=False)
             atomic(raw/(tag+'.json'),dict(timestamp_ns=packet.timestamp_ns,frame=packet.frame,K=packet.K.tolist(),
                 T_base_optical=packet.T_scene_optical.tolist(),last_error=reason))
+            digest=lambda suffix:hashlib.sha256((raw/(tag+suffix)).read_bytes()).hexdigest()
+            return dict(timestamp_ns=packet.timestamp_ns,image_sha256=digest('.png'),
+                probability_sha256=digest('.probability.npy') if prob is not None else None,packet_sha256=digest('.json'))
         def publish():
             unchanged=frozen.verify_unchanged()
             report=dict(schema='workcell_physical_candidate_v1',run_id=run_id,source_id=args.source,machine_id=args.machine,
@@ -106,6 +117,7 @@ def main():
                 transport_recenter_enabled=args.transport_recenter,
                 transport_recenter_nominal_only=True,recenter_nominal_steps=recenter_nominal_steps,recenter_policy_calls=recenter_policy_calls,
                 recenter_workspace_height_m=2.,recenter_workspace_obstacles=recenter_obstacles,
+                recenter_packet_files=recenter_packet_files,
                 scope='physical candidate controller probe; task-level acceptance requires independent review and machine observation binding',
                 navigation_goals=navigation_goals,navigation_obstacles=navigation_obstacles,raw_directory=str(raw),
                 candidate_env_sha256=hashlib.sha256(Path(__file__).with_name('workcell_sim_env.py').read_bytes()).hexdigest(),elapsed_wall_s=time.time()-started)
@@ -142,9 +154,9 @@ def main():
                         if e.mobile_receipts:
                             terminal=list(e.mobile_receipts);save_packet(e,'terminal',e.mobile_terminal_packet);break
                         if v.source_return_handoffs and v.source_return_handoffs[-1]['tick']==v.tick:save_packet(e,v.source_return_handoffs[-1]['packet_tag'])
-                        for event in v.recenter_packets:
-                            if event['packet_tag'] not in seen_recenter_packets:
-                                save_packet(e,event['packet_tag']);seen_recenter_packets.add(event['packet_tag'])
+                        for tag,camera,probability,reason in v.recenter_raw_packets:
+                            if tag not in seen_recenter_packets:
+                                recenter_packet_files[tag]=save_packet(e,tag,(camera,probability,reason));seen_recenter_packets.add(tag)
                         if (step+1)%args.capture_stride==0:save_packet(e,'wrist_'+str(step+1))
                         if step%30==0:
                             observer=v.observers[0]
@@ -160,7 +172,8 @@ def main():
                                 base_angular_velocity_map=array(e.robot.data.root_ang_vel_w)[0].tolist(),
                                 navigation_diagnostics=getattr(v,'navigation_diagnostics',None),transport_guard=v.gate.reason,
                                 transport_recenter_phase=v.transport_recenter.phase if v.transport_recenter else None,
-                                transport_recenter_attempts=len(v.transport_recenter.attempts) if v.transport_recenter else 0)
+                                transport_recenter_attempts=len(v.transport_recenter.attempts) if v.transport_recenter else 0,
+                                transport_recenter_deferred_warnings=v.transport_recenter.deferred_warnings if v.transport_recenter else 0)
                             rows.append(row);print(json.dumps(row,allow_nan=False),flush=True)
                             atomic(args.report.with_suffix('.status.json'),dict(state='running',run_id=run_id,pid=os.getpid(),
                                 source=args.source,machine=args.machine,latest=row,updated_unix=time.time(),training_started=False))
@@ -171,8 +184,16 @@ def main():
                 (raw/'error.txt').write_text(traceback.format_exc())
             finally:
                 # Kit can terminate Python during shutdown; persist proofs first.
-                publish()
-                if env is not None:env.close()
+                try:publish()
+                except Exception as ex:
+                    import traceback
+                    (raw/'publish_error.txt').write_text(traceback.format_exc())
+                    atomic(args.report.with_suffix('.status.json'),dict(state='failed',report_complete=False,
+                        run_id=run_id,error='Report publication failed: '+type(ex).__name__+': '+str(ex),
+                        frozen_identity_after=frozen.verify_unchanged(),updated_unix=time.time(),training_started=False))
+                    raise
+                finally:
+                    if env is not None:env.close()
             if error:raise RuntimeError(error)
     run()
 

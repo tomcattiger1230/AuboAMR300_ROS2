@@ -1,6 +1,6 @@
 import math
 import pytest
-from rebar_training.transport_recenter import TransportRecentering,recenter_workspace_clear
+from rebar_training.transport_recenter import TransportRecentering,recenter_workspace_clear,approaching_recenter_boundary
 
 
 def feedback(ns,**changes):
@@ -57,7 +57,7 @@ def test_missing_or_unsafe_measurements_never_request_manipulation(change):
 def test_lost_support_after_request_and_missing_workspace_fail_closed():
     c=TransportRecentering()
     for k in range(3):x=c.navigation(tick=k,clearance=False,arm_stowed=True,**feedback((k+1)*100_000_000))
-    assert x=='failed' and 'workspace' in c.error
+    assert x is None and c.phase=='idle' and not c.attempts and c.deferred_warnings==3
     c=TransportRecentering()
     for k in range(3):c.navigation(tick=k,clearance=True,arm_stowed=True,**feedback((k+1)*100_000_000,twist=[.1,0.]))
     assert c.navigation(tick=4,clearance=True,arm_stowed=True,**feedback(400_000_000,load=0.))=='failed'
@@ -80,3 +80,14 @@ def test_full_height_cad_recovery_disk_rejects_near_obstacle():
     assert not recenter_workspace_clear((0.,0.,0.),o)
     assert recenter_workspace_clear((-1.,0.,0.),o)
     assert not recenter_workspace_clear((-1.,0.,0.),o,radius=.1)
+
+
+def test_prepare_load_before_narrow_corridor_without_in_corridor_arm_motion():
+    obstacle=[dict(minimum=[1.9,-.1,1.],maximum=[3.,.1,1.5])]
+    assert approaching_recenter_boundary((0.,0.,0.),(4.,0.,0.),obstacle)
+    assert not approaching_recenter_boundary((1.,0.,0.),(4.,0.,0.),obstacle)
+    assert not approaching_recenter_boundary((0.,0.,0.),(-4.,0.,0.),obstacle)
+    c=TransportRecentering()
+    assert c.navigation(tick=1,clearance=True,arm_stowed=True,prepare_corridor=True,
+        **feedback(100_000_000,position=[.2927,.0045,.715]))=='stop'
+    assert c.attempts[0]['request_mode']=='before_narrow_corridor'

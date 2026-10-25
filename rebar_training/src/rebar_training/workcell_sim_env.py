@@ -19,7 +19,7 @@ from .visual_env import VisualRebarEnv,VisualControl
 from .expert import CartesianExpert
 from .reset import quat_apply,quat_multiply
 from .mobile import TransportGate,TransportFeedback,PrecisionDock,SettledPrecisionDock,NavigationProgress,wheel_speeds
-from .transport_recenter import TransportRecentering,recenter_workspace_clear
+from .transport_recenter import TransportRecentering,recenter_workspace_clear,approaching_recenter_boundary
 from .navigation_map import validated_detour
 from .spec import asset_directory
 from .vision.capture import array
@@ -85,7 +85,7 @@ class WorkcellControl(VisualControl):
         self.source_arrival=None;self.navigation_events=[]
         self.transport_recenter=TransportRecentering() if getattr(self.env.cfg,'workcell_transport_recenter',False) else None
         self.transport_resume=None;self.navigation_ticks_by_stage={'navigate':0,'dock':0}
-        self.recenter_packets=[]
+        self.recenter_packets=[];self.recenter_raw_packets=[]
 
     def frame(self):
         e=self.env
@@ -110,12 +110,18 @@ class WorkcellControl(VisualControl):
         return dict(now_ns=round(self.tick/30*1e9),image_ns=observed.last_good_ns,valid=bool(self.valid[0]),
             position=observed.position.tolist(),axis=observed.axis.tolist(),load=self.tray_force,
             fingers=p.fingers.tolist(),forces=p.finger_forces.tolist(),twist=[float(np.linalg.norm(linear[:2])),float(angular)],
-            full_caps=bool(observed.quality.get('full_length') and observed.quality.get('axial_position_measured')))
+            full_caps=bool(not observed.last_error and self.latest_cameras
+                and self.latest_cameras[0].timestamp_ns==observed.last_good_ns
+                and observed.quality.get('full_length') and observed.quality.get('axial_position_measured')))
 
     def recenter_packet(self,phase):
         o=self.observers[0]
-        self.recenter_packets.append(dict(packet_tag='transport_recenter_'+str(len(self.transport_recenter.attempts))+'_'+phase,
+        tag='transport_recenter_'+str(len(self.transport_recenter.attempts))+'_'+phase
+        self.recenter_packets.append(dict(packet_tag=tag,
             tick=self.tick,phase=phase,camera_timestamp_ns=o.last_good_ns,position=o.position.tolist(),quality=dict(o.quality)))
+        camera=self.latest_cameras[0]
+        camera=replace(camera,mono8=camera.mono8.copy(),K=camera.K.copy(),T_scene_optical=camera.T_scene_optical.copy())
+        self.recenter_raw_packets.append((tag,camera,o.last_probability.copy() if o.last_probability is not None else None,o.last_error))
 
     def begin_tray_regrasp(self,observed):
         e=self.env
@@ -432,6 +438,7 @@ class WorkcellControl(VisualControl):
             if self.transport_recenter and self.stage=='navigate':
                 recovery=self.transport_recenter.navigation(tick=self.tick,
                     clearance=recenter_workspace_clear(pose,self.recenter_obstacles),
+                    prepare_corridor=approaching_recenter_boundary(pose,self.navigation.goal,self.recenter_obstacles),
                     arm_stowed=bool(not self.view_search and self.motion.motion.ready[0]
                         and self.motion.motion.position_error[0]<.025 and self.motion.motion.quaternion_error[0]<.0005),
                     **self.recenter_feedback(o))
@@ -710,6 +717,7 @@ class WorkcellVisualEnv(VisualRebarEnv):
             self.mobile_receipts[-1]['navigation_controller_contract']='settled_position_then_yaw_v1'
             self.mobile_receipts[-1]['transport_recenter_attempts']=v.transport_recenter.attempts if v.transport_recenter else []
             self.mobile_receipts[-1]['transport_recenter_packets']=v.recenter_packets
+            self.mobile_receipts[-1]['transport_recenter_deferred_warnings']=v.transport_recenter.deferred_warnings if v.transport_recenter else 0
             self.mobile_receipts[-1]['navigation_ticks_by_stage']=v.navigation_ticks_by_stage
             self.mobile_receipts[-1]['source_navigation']=v.source_arrival
             self.mobile_receipts[-1]['source_id']=self.cfg.workcell_source

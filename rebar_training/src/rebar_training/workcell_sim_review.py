@@ -62,8 +62,11 @@ def review(report,layout):
             attempts=r['transport_recenter_attempts'];require(len(attempts)<=2,'bounded transport recenter attempts')
             packets=r['transport_recenter_packets'];require(len(packets)==4*len(attempts),'physical recovery camera packets recorded')
             for packet in packets:
+                evidence=report['recenter_packet_files'][packet['packet_tag']]
+                require(all(isinstance(evidence[k],str) and len(evidence[k])==64 for k in ('image_sha256','probability_sha256','packet_sha256')),'complete same-frame recovery evidence files')
                 if packet['phase'] in ('parked','verified'):
                     require(packet['quality'].get('full_length') is True and packet['quality'].get('axial_position_measured') is True,'full-cap recovery image evidence')
+                    require(evidence['timestamp_ns']==packet['camera_timestamp_ns'],'same-frame recovery camera/probability identity')
             require(all(0<=v<=7200 for v in r['navigation_ticks_by_stage'].values()),'navigation budgets remain cumulative')
             for attempt in attempts:
                 require(attempt['state']=='complete' and not attempt.get('error'),'completed physical transport recenter')

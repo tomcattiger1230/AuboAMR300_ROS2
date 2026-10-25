@@ -10,11 +10,12 @@ from rebar_training.workcell_sim_review import review
 def report():
     layout,r=receipt();r.update(transport_recenter_enabled=True,transport_recenter_nominal_only=True,recenter_policy_calls=0,
         recenter_workspace_height_m=2.,recenter_workspace_obstacles=[dict(minimum=[10.,10.,1.],maximum=[11.,11.,2.])])
-    r['results'][0].update(transport_recenter_packets=[dict(phase=p,quality=dict(full_length=True,axial_position_measured=True)) for p in ('parked','grasp','release','verified')],navigation_ticks_by_stage=dict(navigate=3000,dock=80),transport_recenter_attempts=[dict(
+    r['results'][0].update(transport_recenter_packets=[dict(packet_tag=p,phase=p,camera_timestamp_ns=1,quality=dict(full_length=True,axial_position_measured=True)) for p in ('parked','grasp','release','verified')],navigation_ticks_by_stage=dict(navigate=3000,dock=80),transport_recenter_attempts=[dict(
         state='complete',requested_offset_m=.009,requested_position=[.2927,.009,.715],verified_offset_m=.003,verified_position=[.2927,.003,.715],
         requested_pose=[0.,0.,0.],parked_pose=[0.,0.,0.],workspace_radius_m=1.5,stopped_dwell_s=.533,parked_twist=[0.,0.],pregrasp_full_frames=3,
         requested_tick=1,parked_tick=20,grasp=dict(tick=30,forces=[50.,50.]),release=dict(tick=80,load=21.,fingers=[0.,0.],forces=[0.,0.]),
         verified_tick=100,elapsed_s=50.,verified_fresh_frames=3,verified_load=21.,verified_twist=[0.,0.])])
+    r['recenter_packet_files']={p:dict(timestamp_ns=1,image_sha256='a'*64,probability_sha256='b'*64,packet_sha256='c'*64) for p in ('parked','grasp','release','verified')}
     return layout,r
 
 

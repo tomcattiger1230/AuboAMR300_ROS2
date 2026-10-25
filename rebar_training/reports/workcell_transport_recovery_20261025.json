@@ -45,7 +45,7 @@
   "simulation_started": false,
   "training_started": false,
   "new_learning_updates": 0,
-  "updated_at_shanghai": "2026-10-25T13:22:18.775603+08:00",
+  "updated_at_shanghai": "2026-10-25T13:42:00.139964+08:00",
   "root_cause_chain": "Actual axial tray slip -> support envelope interlock stop -> no physical recenter/resume path -> navigation timeout",
   "runtime_truth_access": false,
   "method": {
@@ -63,29 +63,96 @@
     "workspace_radius_m": 1.5,
     "workspace_cad_height_m": 2.0,
     "recovery_uses": "existing measured vision servo grasp/lift/center/place/unload; nominal only off station",
-    "policy_input_contract": "unchanged; no off-station residual inference"
+    "policy_input_contract": "unchanged; no off-station residual inference",
+    "corridor_preparation_warning_m": 0.004,
+    "lookahead_m": 0.5,
+    "narrow_corridor_rule": "Keep arm stowed and original 25mm/load/image interlock; 8mm is advisory where recenter workspace is absent",
+    "same_frame_recovery_packet_copy": true,
+    "strict_numpy_json_conversion": true
   },
   "offline_tests": {
-    "passed": 478,
+    "passed": 485,
     "skipped": 8,
     "subtests_passed": 6
   },
   "physical_retest": {
     "state": "running",
-    "name": "retest_source_A_machine_3_v9",
+    "name": "retest_source_A_machine_3_v10",
     "seed": 12504003,
-    "run_id": "90e041f934334e24a5a5faa56645fece",
-    "manager_pid": 100663,
-    "runner_pid": 100675,
-    "native_pid": 100685,
+    "run_id": "44a641b096ec49a28df1a2435eb06b0e",
+    "manager_pid": 104066,
+    "native_pid": 104086,
     "passed": false
   },
-  "source_archive_sha256": "089bbc0ac78151dabda47d6f1f390e78d47247a8eabd04a5f1f90c6bee1d32b5",
+  "source_archive_sha256": "6873fb8392114f2590a22749e01165fdef984c65760554935d3413708e97e5f9",
   "source_files": 69,
-  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v9",
+  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v10",
   "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
   "optimizer_instantiated": false,
   "assets_and_friction_unchanged": true,
   "old_formal64_unchanged": true,
-  "prior_two_successes_not_rerun": true
+  "prior_two_successes_not_rerun": true,
+  "v9_partial_audit": {
+    "schema": "v9_partial_recovery_evidence_v1",
+    "full_native_report_missing": true,
+    "acceptance_passed": false,
+    "parked_original_probability_missing": true,
+    "verified_packet_probability_exists": true,
+    "measured_bilateral_grasp_samples": 6,
+    "grasp_example": {
+      "step": 6210,
+      "finger_positions": [
+        0.017483390867710114,
+        0.016211340203881264
+      ],
+      "finger_forces": [
+        54.76898193359375,
+        55.44995880126953
+      ],
+      "estimated_bar": [
+        0.29010310249558025,
+        -0.009080486510855227,
+        0.7478425119308176
+      ]
+    },
+    "serialization_error": "float32 is not JSON serializable",
+    "terminal_cause_inferred_not_formal_receipt": "8mm warning outside 1.5m CAD workspace",
+    "raw_backup": {
+      "local": {
+        "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792906300/workcell_results.tar.gz",
+        "sha256": "0538c5400c5969fa1be2c7f2d87943b4128def4e4690bd0d8e1996354b21244f",
+        "bytes": 114018605,
+        "files": 258,
+        "all_files_verified": true,
+        "remote": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_0538c5400c59.tar.gz"
+      },
+      "nas": {
+        "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_0538c5400c59.tar.gz",
+        "sha256": "0538c5400c5969fa1be2c7f2d87943b4128def4e4690bd0d8e1996354b21244f",
+        "files": 258,
+        "all_files_verified": true,
+        "verified_unix": 1792906322.0848205,
+        "campaign_state": "needs_analysis",
+        "new_layout_task_acceptance": false,
+        "verification": "streamed complete archive plus every file SHA"
+      }
+    },
+    "independent_verified_packet_replay": {
+      "position": [
+        0.2927505227266401,
+        0.001059512943336,
+        0.715
+      ],
+      "offset_m": 0.0010607168439332251,
+      "quality": {
+        "source": "mono_known_plane_cylinder",
+        "residual_px": 0.530882606565192,
+        "visible_edges": 95,
+        "full_length": true,
+        "cap_search": "bounded_visual_prediction_both_polarities",
+        "axial_position_measured": true
+      }
+    }
+  },
+  "v9_excluded_from_acceptance": true
 }

@@ -8,8 +8,9 @@ import pytest
 from rebar_training import workcells,workcell_sim_review
 
 
+@pytest.mark.parametrize('version',[9,10])
 @pytest.mark.parametrize('first_pass,existing,expected_launches',[(False,False,1),(True,False,4),(True,True,3)])
-def test_transport_followup_gates_failed_retest_and_never_resubmits_existing(tmp_path,monkeypatch,first_pass,existing,expected_launches):
+def test_transport_followup_gates_failed_retest_and_never_resubmits_existing(tmp_path,monkeypatch,first_pass,existing,expected_launches,version):
     script=Path(__file__).parents[1]/'scripts/run_workcell_transport_followup.py'
     spec=importlib.util.spec_from_file_location('navigation_followup_test',script);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     source=tmp_path/'source';(source/'config').mkdir(parents=True);(source/'rebar_training').mkdir()
@@ -28,7 +29,7 @@ def test_transport_followup_gates_failed_retest_and_never_resubmits_existing(tmp
     command=['rebar_training.workcell_sim_check','--checkpoint',str(checkpoint),'--source','x','--machine','y','--seed','0','--report','z','--transport-recenter']
     plan=dict(template=dict(command=command,source_snapshot=str(source)),tasks=tasks,
         previous_coverage=previous_coverage)
-    (tmp_path/'followup.plan.json').write_text(json.dumps(plan));(tmp_path/'candidate_source_v9.manifest.json').write_text(json.dumps({'rebar_training/workcell_sim_env.py':digest}))
+    (tmp_path/'followup.plan.json').write_text(json.dumps(plan));(tmp_path/('candidate_source_v'+str(version)+'.manifest.json')).write_text(json.dumps({'rebar_training/workcell_sim_env.py':digest}))
     launches=[]
     def finish(jobfile):
         jobfile=Path(jobfile);c=json.loads(jobfile.read_text())['command'];value=lambda flag:c[c.index(flag)+1]
@@ -43,7 +44,7 @@ def test_transport_followup_gates_failed_retest_and_never_resubmits_existing(tmp
         jobfile=tmp_path/'task_0.job.json';jobfile.write_text(json.dumps(dict(command=c)));finish(jobfile)
     monkeypatch.setattr(module.socket,'gethostname',lambda:'arnold-NUC16JNK9XX11')
     monkeypatch.setattr(module.subprocess,'check_output',lambda *a,**k:'')
-    monkeypatch.setattr(module.subprocess,'Popen',popen);monkeypatch.setattr(module.sys,'argv',[str(script),'--root',str(tmp_path)])
+    monkeypatch.setattr(module.subprocess,'Popen',popen);monkeypatch.setattr(module.sys,'argv',[str(script),'--root',str(tmp_path),'--version',str(version)])
     module.main();state=json.loads((tmp_path/'campaign.status.json').read_text())
     assert len(launches)==expected_launches
     assert state['state']==('physical_candidate_baseline_complete' if first_pass else 'needs_analysis')

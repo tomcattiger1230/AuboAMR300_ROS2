@@ -21,7 +21,8 @@ def atomic(path,value):
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--root',type=Path,required=True);args=p.parse_args();version='v9'
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--root',type=Path,required=True);p.add_argument('--version',type=int,default=9);args=p.parse_args();version='v'+str(args.version)
+    if not 9<=args.version<=99:p.error('Unsupported private recovery candidate version')
     if socket.gethostname()!='arnold-NUC16JNK9XX11':p.error('Only the authorized simulation node is supported')
     root=args.root.resolve();plan=json.loads((root/'followup.plan.json').read_text());template=plan['template']
     expected=[('source_A','machine_3',12504003),('source_B','machine_1',12504004),('source_B','machine_2',12504005),('source_B','machine_3',12504006)]

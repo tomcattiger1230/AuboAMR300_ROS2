@@ -77,7 +77,7 @@ def main():
     global RELATIVE
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--repo',type=Path,required=True);p.add_argument('--max-hours',type=float,default=6);p.add_argument('--artifact-name',default='workcell_frozen_validation_20261025');args=p.parse_args()
     import re
-    if not re.fullmatch(r'workcell_frozen_validation_20261025(?:_v[4-9])?',args.artifact_name):p.error('Unsupported campaign artifact name')
+    if not re.fullmatch(r'workcell_frozen_validation_20261025(?:_v(?:[4-9]|[1-9][0-9]))?',args.artifact_name):p.error('Unsupported campaign artifact name')
     RELATIVE='rebar_training/artifacts/'+args.artifact_name
     if not 0<args.max_hours<=6:p.error('Collector must be bounded to at most six hours')
     root=args.repo.resolve()/RELATIVE;status=root/'mac_followup.status.json';started=time.monotonic()

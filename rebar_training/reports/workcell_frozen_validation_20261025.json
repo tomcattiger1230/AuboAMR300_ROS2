@@ -1,6 +1,6 @@
 {
   "schema": "workcell_frozen_validation_progress_v1",
-  "phase": "v9_transport_recenter_retest_running",
+  "phase": "v10_transport_recenter_retest_running",
   "created_unix": 1792859368.224087,
   "layout": "rebar_training/config/multi_workcell_offline.json",
   "layout_is_synthetic": true,
@@ -15,13 +15,13 @@
   "new_learning_updates": 0,
   "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
   "baseline_candidates": 6,
-  "current": "retest_source_A_machine_3_v9",
-  "manager_pid": 100663,
-  "runner_pid": 100675,
-  "native_pid": 100685,
-  "run_id": "90e041f934334e24a5a5faa56645fece",
-  "source_archive_sha256": "089bbc0ac78151dabda47d6f1f390e78d47247a8eabd04a5f1f90c6bee1d32b5",
-  "offline_targeted_tests": 478,
+  "current": "retest_source_A_machine_3_v10",
+  "manager_pid": 104066,
+  "runner_pid": 104076,
+  "native_pid": 104086,
+  "run_id": "44a641b096ec49a28df1a2435eb06b0e",
+  "source_archive_sha256": "6873fb8392114f2590a22749e01165fdef984c65760554935d3413708e97e5f9",
+  "offline_targeted_tests": 485,
   "earlier_broad_tests": {
     "passed": 437,
     "skipped": 8,
@@ -45,11 +45,11 @@
     "Machine visual identity/pose/ready binding",
     "Full MissionFlow simulation session and receipt binding"
   ],
-  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v9",
-  "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v9",
+  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v10",
+  "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v10",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792905738.776309,
+  "updated_unix": 1792906920.1409311,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -61,7 +61,7 @@
     "frozen_identity_unchanged": true,
     "remaining_five_not_dispatched": true
   },
-  "mac_collector_pid": 63072,
+  "mac_collector_pid": 83970,
   "v5_dispatcher_stopped_after_SE3_replay": true,
   "v6_prelauncher_pid": 65543,
   "v6_mac_collector_pid": 45557,
@@ -106,7 +106,7 @@
   "results_are_version_separated": true,
   "current_campaign_completed_episodes": 0,
   "current_campaign_successes": 0,
-  "last_live_snapshot_unix": 1792905734.948827,
+  "last_live_snapshot_unix": 1792906911.5038269,
   "v7_mac_collector_pid": 62361,
   "v5_raw_backup": {
     "files": 253,
@@ -149,7 +149,7 @@
     }
   },
   "active_simulation_jobs": 1,
-  "updated_at_shanghai": "2026-10-25T13:22:18.775603+08:00",
+  "updated_at_shanghai": "2026-10-25T13:42:00.139964+08:00",
   "current_campaign_failures": 0,
   "current_campaign_unstarted": 3,
   "v7_second_result": {
@@ -171,7 +171,7 @@
     "root_cause": "Measured 1Hz log: 15mm boundary chatter between position-heading and goal-yaw branches; 38 switches/142 samples; original path contains redundant short/duplicate turns."
   },
   "live_checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
-  "node_connection_state": "connected_fresh_v9_retest",
+  "node_connection_state": "connected_fresh_v10_retest",
   "v7_last_status_observation": "rebar_training/artifacts/workcell_frozen_validation_20261025_v7/status_observed_20261025_0725.json",
   "v7_result_backup": {
     "local": {
@@ -440,5 +440,68 @@
       "new_layout_task_acceptance": false,
       "verification": "streamed complete archive plus every file SHA"
     }
-  }
+  },
+  "v9_result": {
+    "schema": "v9_partial_recovery_evidence_v1",
+    "full_native_report_missing": true,
+    "acceptance_passed": false,
+    "parked_original_probability_missing": true,
+    "verified_packet_probability_exists": true,
+    "measured_bilateral_grasp_samples": 6,
+    "grasp_example": {
+      "step": 6210,
+      "finger_positions": [
+        0.017483390867710114,
+        0.016211340203881264
+      ],
+      "finger_forces": [
+        54.76898193359375,
+        55.44995880126953
+      ],
+      "estimated_bar": [
+        0.29010310249558025,
+        -0.009080486510855227,
+        0.7478425119308176
+      ]
+    },
+    "serialization_error": "float32 is not JSON serializable",
+    "terminal_cause_inferred_not_formal_receipt": "8mm warning outside 1.5m CAD workspace",
+    "raw_backup": {
+      "local": {
+        "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792906300/workcell_results.tar.gz",
+        "sha256": "0538c5400c5969fa1be2c7f2d87943b4128def4e4690bd0d8e1996354b21244f",
+        "bytes": 114018605,
+        "files": 258,
+        "all_files_verified": true,
+        "remote": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_0538c5400c59.tar.gz"
+      },
+      "nas": {
+        "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_0538c5400c59.tar.gz",
+        "sha256": "0538c5400c5969fa1be2c7f2d87943b4128def4e4690bd0d8e1996354b21244f",
+        "files": 258,
+        "all_files_verified": true,
+        "verified_unix": 1792906322.0848205,
+        "campaign_state": "needs_analysis",
+        "new_layout_task_acceptance": false,
+        "verification": "streamed complete archive plus every file SHA"
+      }
+    },
+    "independent_verified_packet_replay": {
+      "position": [
+        0.2927505227266401,
+        0.001059512943336,
+        0.715
+      ],
+      "offset_m": 0.0010607168439332251,
+      "quality": {
+        "source": "mono_known_plane_cylinder",
+        "residual_px": 0.530882606565192,
+        "visible_edges": 95,
+        "full_length": true,
+        "cap_search": "bounded_visual_prediction_both_polarities",
+        "axial_position_measured": true
+      }
+    }
+  },
+  "v9_excluded_from_acceptance": true
 }
