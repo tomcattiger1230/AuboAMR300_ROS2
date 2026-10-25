@@ -31,3 +31,9 @@ python3 migration_folder.py restore --backup . --destination /新磁盘/rebar-ba
 基础包保留原视频、完整物理历史和Cosmos固定模型。Mac虚拟环境不能直接当作Linux/CUDA环境；Isaac Sim/IsaacLab、GPU驱动/CUDA及系统库须按基础包版本说明在新主机安装。SSH身份、账户凭据和全局网络/电源设置不属于恢复内容。恢复检查仅允许CPU文件/接口核验，不自动启动GPU任务。
 
 下一项算法工作是离线隔离B料区源导航未完成的原因，并修复未获取视觉状态时的失败回执路径；本轮没有修改或重试该问题。
+
+## 最终核验凭据
+
+本轮核查与迁移备份已完成（2026-10-25T23:18上海）：A→3完整复测通过，B→1异常停止，B→2/B→3未启动，当前无本任务仿真进程。Mac/103重新核对冻结身份；386份节点文件逐SHA一致，406文件结果包双端完整核验。汇总迁移包700文件、2,020,400,470字节，SHA9c070aae017c243716b15cff091116a6f0f85135f345d29b5b40ce0ca2aa6a97；Mac与NAS均逐文件通过，实际恢复88份关键文件并独立克隆Git历史/审核器通过。迁移复制完整基础目录和`/Users/weiluo/Develop/backups/rebar_migration_followup_20261025/`（含final_state及完成凭据）；使用压缩包替代目录时也须带走同目录旁的`rebar_migration_followup_20261025.final_state.tar.gz`。数据就绪不代表目标GPU环境已安装；本轮未启动仿真、重试、训练或修改policy/optimizer。详细步骤见MIGRATION_CHECKLIST_20261025.md。
+
+最终收尾资料位于迁移增量目录的final_state/，包含最新文档/报告、网络恢复证明、备份索引及仅文档变化的Git增量bundle（以主包807d9fb完整bundle为前提）。final_state/manifest.json和FINAL_STATE_VERIFIED.json单独给出收尾文件及NAS核验，主包700文件manifest保持不可变。恢复时先应用主包workspace，再应用final_state/workspace。

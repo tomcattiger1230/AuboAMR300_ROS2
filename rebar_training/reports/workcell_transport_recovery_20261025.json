@@ -45,7 +45,7 @@
   "simulation_started": false,
   "training_started": false,
   "new_learning_updates": 0,
-  "updated_at_shanghai": "2026-10-25T23:07:53.182164+08:00",
+  "updated_at_shanghai": "2026-10-25T23:18:26.611671+08:00",
   "root_cause_chain": "Actual axial tray slip -> support envelope interlock stop -> no physical recenter/resume path -> navigation timeout",
   "runtime_truth_access": false,
   "method": {
@@ -331,7 +331,7 @@
   },
   "remote_live_state_fresh": true,
   "node_connection_state": "ssh_connected_jobs_naturally_exited",
-  "metadata_sync_pending": true,
+  "metadata_sync_pending": false,
   "last_trusted_snapshot_at_shanghai": "2026-10-25T14:13:21.144104+08:00",
   "last_trusted_partial_progress": {
     "step": 8010,
@@ -342,7 +342,7 @@
     "full_episode_result_unknown": true
   },
   "network_followup": "rebar_training/artifacts/workcell_frozen_validation_20261025_v11/network_followup_20261025_1416.json",
-  "updated_unix": 1792940873.182164,
+  "updated_unix": 1792941506.611671,
   "current_campaign_state": "needs_analysis",
   "physical_controller_coverage_passed": 3,
   "physical_controller_coverage_total": 6,
@@ -505,5 +505,76 @@
       "reviewed_on": "Mac independent frozen physical review",
       "node_review_agrees": true
     }
+  },
+  "migration_data_verified": true,
+  "migration_backup": {
+    "local": {
+      "local_directory": "/Users/weiluo/Develop/backups/rebar_migration_followup_20261025",
+      "archive": "/Users/weiluo/Develop/backups/rebar_migration_followup_20261025.tar.gz",
+      "archive_sha256": "9c070aae017c243716b15cff091116a6f0f85135f345d29b5b40ce0ca2aa6a97",
+      "archive_bytes": 2020400470,
+      "manifest_sha256": "4f5fb2a224a8076af22795016742c9a5c1d96a07cea7d4b6d06f5f3a1787cf3c",
+      "files": 700,
+      "payload_bytes": 2062320037,
+      "all_files_verified": true,
+      "git_head": "807d9fb7b11833f718a5baea86959c945bf01740",
+      "simulation_started": false,
+      "training_started": false,
+      "verified_unix": 1792941046.180694
+    },
+    "nas": {
+      "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/rebar_migration_followup_20261025.tar.gz",
+      "sha256": "9c070aae017c243716b15cff091116a6f0f85135f345d29b5b40ce0ca2aa6a97",
+      "files": 700,
+      "all_files_verified": true,
+      "git_head": "807d9fb7b11833f718a5baea86959c945bf01740",
+      "physical_coverage": "3/6",
+      "simulation_started": false,
+      "training_started": false,
+      "verified_unix": 1792941488.7254295,
+      "verification": "whole archive SHA and complete streamed per-file manifest equality"
+    },
+    "restore_smoke": {
+      "actual_files_restored": 88,
+      "restore_directory": "/var/folders/yr/_2btbnbn6cl8096dd5mjgv3m0000gn/T/rebar_migration_smoke_20261025_h18vzo_e",
+      "all_restored_sha_verified": true,
+      "full_git_bundle_clone_verified": true,
+      "git_head": "807d9fb7b11833f718a5baea86959c945bf01740",
+      "restored_immutable_reviewer": {
+        "A3_passed": true,
+        "B1_rejected": true,
+        "errors_A3": [],
+        "errors_B1": [
+          "runtime error: AttributeError: 'NoneType' object has no attribute 'bar'",
+          "no completed physical episode",
+          "exactly one episode required"
+        ]
+      },
+      "simulation_started": false,
+      "training_started": false,
+      "optimizer_instantiated": false,
+      "verified_unix": 1792941053.849379
+    }
+  },
+  "migration_restore_smoke": {
+    "actual_files_restored": 88,
+    "restore_directory": "/var/folders/yr/_2btbnbn6cl8096dd5mjgv3m0000gn/T/rebar_migration_smoke_20261025_h18vzo_e",
+    "all_restored_sha_verified": true,
+    "full_git_bundle_clone_verified": true,
+    "git_head": "807d9fb7b11833f718a5baea86959c945bf01740",
+    "restored_immutable_reviewer": {
+      "A3_passed": true,
+      "B1_rejected": true,
+      "errors_A3": [],
+      "errors_B1": [
+        "runtime error: AttributeError: 'NoneType' object has no attribute 'bar'",
+        "no completed physical episode",
+        "exactly one episode required"
+      ]
+    },
+    "simulation_started": false,
+    "training_started": false,
+    "optimizer_instantiated": false,
+    "verified_unix": 1792941053.849379
   }
 }
