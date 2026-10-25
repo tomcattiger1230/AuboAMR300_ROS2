@@ -25,6 +25,7 @@ def parser():
     p.add_argument('--ideal-machine-survey',action='store_true',help='Explicit ideal localization probe: target pose is exact by scene construction; not visual refinement')
     p.add_argument('--randomization',choices=('baseline','expanded'),default='baseline')
     p.add_argument('--capture-stride',type=int,default=90)
+    p.add_argument('--transport-recenter',action='store_true',help='Bounded measured stop/regrasp/recenter; unchanged checkpoint, assets and navigation budget')
     return p
 
 
@@ -70,13 +71,16 @@ def main():
         cfg.mobile_residual_control=True;cfg.observation_space=76
         cfg.mobile_start_on_tray=False;cfg.mobile_start_at_dock=False;cfg.mobile_visual_hint_packet=None
         cfg.workcell_layout=str(args.layout.resolve());cfg.workcell_source=args.source;cfg.workcell_machine=args.machine
+        cfg.workcell_transport_recenter=args.transport_recenter
         cfg.workcell_initial_offset=args.initial_offset;cfg.workcell_ideal_machine_survey=True
         cfg.visual_detector=str(args.detector.resolve());cfg.camera_capture_config=str(args.camera_config.resolve())
         cfg.scene.env_spacing=15. # Sufficient physical floor for all three surveyed machines.
         cfg.robot.actuators['wheels']=ImplicitActuatorCfg(joint_names_expr=['.*wheel_joint'],effort_limit_sim=120.,velocity_limit_sim=3.,stiffness=0.,damping=1000.)
         cfg.viewer.eye=(-3.,-5.,8.);cfg.viewer.lookat=(5.,2.,0.)
         adapter=StationPolicyAdapter(layout,args.source,args.machine)
-        rows=[];decisions=0;error=None;terminal=[];navigation_goals=None;navigation_obstacles=None
+        rows=[];decisions=0;error=None;terminal=[];navigation_goals=None;navigation_obstacles=None;seen_recenter_packets=set()
+        recenter_nominal_steps=0;recenter_policy_calls=0
+        recenter_obstacles=None
         robot_tilt_max=0.;started=time.time()
         def save_packet(e,tag,terminal_packet=None):
             from PIL import Image
@@ -99,6 +103,9 @@ def main():
                 machine_visual_identity_verified=False,machine_pose_source='exact registered pose by scene construction; explicit ideal localization probe',
                 ideal_machine_survey=True,visual_machine_pose_refinement=False,
                 multi_workcell_task_executor_verified=False,physical_acceptance=False,
+                transport_recenter_enabled=args.transport_recenter,
+                transport_recenter_nominal_only=True,recenter_nominal_steps=recenter_nominal_steps,recenter_policy_calls=recenter_policy_calls,
+                recenter_workspace_height_m=2.,recenter_workspace_obstacles=recenter_obstacles,
                 scope='physical candidate controller probe; task-level acceptance requires independent review and machine observation binding',
                 navigation_goals=navigation_goals,navigation_obstacles=navigation_obstacles,raw_directory=str(raw),
                 candidate_env_sha256=hashlib.sha256(Path(__file__).with_name('workcell_sim_env.py').read_bytes()).hexdigest(),elapsed_wall_s=time.time()-started)
@@ -111,6 +118,7 @@ def main():
                 env=gym.make(task,cfg=cfg);e=env.unwrapped
                 env.reset(seed=args.seed)
                 navigation_goals=e.visual.navigation_goals;navigation_obstacles=e.visual.navigation_obstacles
+                recenter_obstacles=getattr(e.visual,'recenter_obstacles',None)
                 atomic(raw/'scene_navigation.json',dict(layout=layout.to_dict(),goals=navigation_goals,obstacles=navigation_obstacles,
                     initial_base=array(e.robot.data.root_pos_w)[0].tolist(),initial_base_quaternion=array(e.robot.data.root_quat_w)[0].tolist(),
                     initial_bar_for_evaluation=array(e.bar.data.root_pos_w)[0].tolist(),machine_goal=e.machine_goal_map,
@@ -121,17 +129,22 @@ def main():
                         with blinded_control(e):
                             nominal=v.action();actions=nominal
                             # Bootstrap and bounded visual-loss hold stay under the original controller.
-                            if (not v.initial_navigation and v.stage in SUPPORTED_ROUTES and bool(v.valid[0])
+                            if (v.transport_resume is None and not v.initial_navigation and v.stage in SUPPORTED_ROUTES and bool(v.valid[0])
                                     and v.tick/30-v.observers[0].last_good_ns*1e-9<=.2):
                                 sample=sample_from_legacy_control(v,inference_now_s=v.tick/30)
                                 packet=adapter.encode(sample);decision=frozen.infer(packet)
                                 actions=compose_residual_actions(nominal,decision);decisions+=int(decision['active'])
                                 policy_log.write(json.dumps(dict(step=step,phase=v.stage,route=int(e.route.stage[0]),
                                     values=packet.values,decision=decision,nominal=nominal.cpu().tolist(),actions=actions.cpu().tolist()),allow_nan=False)+'\n')
+                            if v.transport_resume is not None:
+                                recenter_nominal_steps+=1;recenter_policy_calls+=int(decision is not None and decision['active'])
                         env.step(actions)
                         if e.mobile_receipts:
                             terminal=list(e.mobile_receipts);save_packet(e,'terminal',e.mobile_terminal_packet);break
                         if v.source_return_handoffs and v.source_return_handoffs[-1]['tick']==v.tick:save_packet(e,v.source_return_handoffs[-1]['packet_tag'])
+                        for event in v.recenter_packets:
+                            if event['packet_tag'] not in seen_recenter_packets:
+                                save_packet(e,event['packet_tag']);seen_recenter_packets.add(event['packet_tag'])
                         if (step+1)%args.capture_stride==0:save_packet(e,'wrist_'+str(step+1))
                         if step%30==0:
                             observer=v.observers[0]
@@ -145,7 +158,9 @@ def main():
                                 finger_positions=v.packets[0].fingers.tolist(),finger_forces=v.packets[0].finger_forces.tolist(),
                                 tray_load_n=float(v.tray_force),policy_calls=decisions,
                                 base_angular_velocity_map=array(e.robot.data.root_ang_vel_w)[0].tolist(),
-                                navigation_diagnostics=getattr(v,'navigation_diagnostics',None),transport_guard=v.gate.reason)
+                                navigation_diagnostics=getattr(v,'navigation_diagnostics',None),transport_guard=v.gate.reason,
+                                transport_recenter_phase=v.transport_recenter.phase if v.transport_recenter else None,
+                                transport_recenter_attempts=len(v.transport_recenter.attempts) if v.transport_recenter else 0)
                             rows.append(row);print(json.dumps(row,allow_nan=False),flush=True)
                             atomic(args.report.with_suffix('.status.json'),dict(state='running',run_id=run_id,pid=os.getpid(),
                                 source=args.source,machine=args.machine,latest=row,updated_unix=time.time(),training_started=False))

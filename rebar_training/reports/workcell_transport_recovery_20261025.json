@@ -1,0 +1,91 @@
+{
+  "schema": "workcell_transport_recovery_progress_v1",
+  "report_sha256": "c8ff4c0212a67d0660138b93622f87dd17edd43d03777c7151664899a0c59bf2",
+  "known_failure": "stage timeout: navigate",
+  "actual_tray_accepted": false,
+  "terminal_truth_for_audit_only": [
+    0.29269926487868925,
+    -0.036020695016873105,
+    0.7149890106858328
+  ],
+  "terminal_replayed_visual": [
+    0.29297865186053546,
+    -0.03538513483244434,
+    0.715
+  ],
+  "terminal_visual_truth_error_m": 0.0006943447261138545,
+  "physical_axial_offset_m": -0.036020695016873105,
+  "terminal_quality": {
+    "source": "mono_known_plane_cylinder",
+    "residual_px": 0.633540042598864,
+    "visible_edges": 88,
+    "full_length": true,
+    "cap_search": "bounded_visual_prediction_both_polarities",
+    "axial_position_measured": true
+  },
+  "replayed_full_cap_frames": 41,
+  "max_replay_vs_logged_estimate_m": 0.00036259615482238795,
+  "preemption": {
+    "tick": 5040,
+    "action": "stop",
+    "position": [
+      0.29346213676571126,
+      -0.010031628778589183,
+      0.715
+    ],
+    "offset_m": 0.010060538176512602,
+    "native_full_height_clearance_pending": true,
+    "scope": "old saved-frame detection only; original moving feedback cannot prove a counterfactual stop or grasp"
+  },
+  "original_guard_first_step": 6660,
+  "sparse_saved_frame_warning_lead_s": 54.0,
+  "conclusion": "Real steel slid axially on the tray. Vision and scoring truth agree; the original guard correctly stopped. No bounded physical recenter path existed in v8.",
+  "cause_limit": "Existing logs do not isolate contact-solver creep, friction or drive excitation contributions. Assets/friction are kept unchanged.",
+  "physical_recovery_success_proven": false,
+  "simulation_started": false,
+  "training_started": false,
+  "new_learning_updates": 0,
+  "updated_at_shanghai": "2026-10-25T13:22:18.775603+08:00",
+  "root_cause_chain": "Actual axial tray slip -> support envelope interlock stop -> no physical recenter/resume path -> navigation timeout",
+  "runtime_truth_access": false,
+  "method": {
+    "warning_m": 0.008,
+    "hard_guard_m": 0.025,
+    "verified_center_m": 0.006,
+    "stopped_speed_limit": 0.008,
+    "stopped_dwell_s": 0.5,
+    "independent_full_frames_before_grasp": 3,
+    "independent_full_frames_after_release": 3,
+    "max_attempts": 2,
+    "deadline_s": 110,
+    "navigation_budget_s": 240,
+    "episode_max_steps": 18030,
+    "workspace_radius_m": 1.5,
+    "workspace_cad_height_m": 2.0,
+    "recovery_uses": "existing measured vision servo grasp/lift/center/place/unload; nominal only off station",
+    "policy_input_contract": "unchanged; no off-station residual inference"
+  },
+  "offline_tests": {
+    "passed": 478,
+    "skipped": 8,
+    "subtests_passed": 6
+  },
+  "physical_retest": {
+    "state": "running",
+    "name": "retest_source_A_machine_3_v9",
+    "seed": 12504003,
+    "run_id": "90e041f934334e24a5a5faa56645fece",
+    "manager_pid": 100663,
+    "runner_pid": 100675,
+    "native_pid": 100685,
+    "passed": false
+  },
+  "source_archive_sha256": "089bbc0ac78151dabda47d6f1f390e78d47247a8eabd04a5f1f90c6bee1d32b5",
+  "source_files": 69,
+  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v9",
+  "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "optimizer_instantiated": false,
+  "assets_and_friction_unchanged": true,
+  "old_formal64_unchanged": true,
+  "prior_two_successes_not_rerun": true
+}

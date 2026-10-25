@@ -1,13 +1,13 @@
 {
   "schema": "workcell_frozen_validation_progress_v1",
-  "phase": "v8_needs_tray_support_analysis",
+  "phase": "v9_transport_recenter_retest_running",
   "created_unix": 1792859368.224087,
   "layout": "rebar_training/config/multi_workcell_offline.json",
   "layout_is_synthetic": true,
   "old_formal_full_gate_unchanged": true,
   "old_formal_denominator": 64,
-  "new_layout_completed_episodes": 2,
-  "new_layout_passed_episodes": 1,
+  "new_layout_completed_episodes": 0,
+  "new_layout_passed_episodes": 0,
   "new_layout_task_acceptance": false,
   "simulation_started": true,
   "training_started": false,
@@ -15,13 +15,13 @@
   "new_learning_updates": 0,
   "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
   "baseline_candidates": 6,
-  "current": "remaining_source_A_machine_3_v8",
-  "manager_pid": null,
-  "runner_pid": null,
-  "native_pid": null,
-  "run_id": "c8279e2f0e5c40c3b6e14ee0d16553ef",
-  "source_archive_sha256": "3eb3ad13c313e1689f58e3db24d0ee65e856140a637bce11038b4e28ffa93f72",
-  "offline_targeted_tests": 437,
+  "current": "retest_source_A_machine_3_v9",
+  "manager_pid": 100663,
+  "runner_pid": 100675,
+  "native_pid": 100685,
+  "run_id": "90e041f934334e24a5a5faa56645fece",
+  "source_archive_sha256": "089bbc0ac78151dabda47d6f1f390e78d47247a8eabd04a5f1f90c6bee1d32b5",
+  "offline_targeted_tests": 478,
   "earlier_broad_tests": {
     "passed": 437,
     "skipped": 8,
@@ -45,11 +45,11 @@
     "Machine visual identity/pose/ready binding",
     "Full MissionFlow simulation session and receipt binding"
   ],
-  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v8",
-  "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v8",
+  "artifact_root": "rebar_training/artifacts/workcell_frozen_validation_20261025_v9",
+  "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v9",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792900715.624268,
+  "updated_unix": 1792905738.776309,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -61,7 +61,7 @@
     "frozen_identity_unchanged": true,
     "remaining_five_not_dispatched": true
   },
-  "mac_collector_pid": null,
+  "mac_collector_pid": 63072,
   "v5_dispatcher_stopped_after_SE3_replay": true,
   "v6_prelauncher_pid": 65543,
   "v6_mac_collector_pid": 45557,
@@ -84,7 +84,7 @@
     "files": 29,
     "both_hosts_verified": true
   },
-  "final_result_backup_pending": false,
+  "final_result_backup_pending": true,
   "v6_result": {
     "completed_episodes": 1,
     "successes": 0,
@@ -104,9 +104,9 @@
     "frozen_identity_unchanged": true
   },
   "results_are_version_separated": true,
-  "current_campaign_completed_episodes": 2,
-  "current_campaign_successes": 1,
-  "last_live_snapshot_unix": 1792900715.2896683,
+  "current_campaign_completed_episodes": 0,
+  "current_campaign_successes": 0,
+  "last_live_snapshot_unix": 1792905734.948827,
   "v7_mac_collector_pid": 62361,
   "v5_raw_backup": {
     "files": 253,
@@ -148,9 +148,9 @@
       "training_started": false
     }
   },
-  "active_simulation_jobs": 0,
-  "updated_at_shanghai": "2026-10-25T11:58:35.623166+08:00",
-  "current_campaign_failures": 1,
+  "active_simulation_jobs": 1,
+  "updated_at_shanghai": "2026-10-25T13:22:18.775603+08:00",
+  "current_campaign_failures": 0,
   "current_campaign_unstarted": 3,
   "v7_second_result": {
     "source": "source_A",
@@ -171,7 +171,7 @@
     "root_cause": "Measured 1Hz log: 15mm boundary chatter between position-heading and goal-yaw branches; 38 switches/142 samples; original path contains redundant short/duplicate turns."
   },
   "live_checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
-  "node_connection_state": "connected_fresh_status_audit",
+  "node_connection_state": "connected_fresh_v9_retest",
   "v7_last_status_observation": "rebar_training/artifacts/workcell_frozen_validation_20261025_v7/status_observed_20261025_0725.json",
   "v7_result_backup": {
     "local": {
@@ -289,26 +289,6 @@
     "transport_history": []
   },
   "migration_increment_index": "/Users/weiluo/Develop/backups/REBAR_BACKUP_INDEX_20261025.json",
-  "final_result_backup": {
-    "local": {
-      "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792893954/workcell_results.tar.gz",
-      "sha256": "02e16be95e32a2955021b19a9c202042a87176cc90967226210b7dd693356c09",
-      "bytes": 262895835,
-      "files": 469,
-      "all_files_verified": true,
-      "remote": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_02e16be95e32.tar.gz"
-    },
-    "nas": {
-      "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_02e16be95e32.tar.gz",
-      "sha256": "02e16be95e32a2955021b19a9c202042a87176cc90967226210b7dd693356c09",
-      "files": 469,
-      "all_files_verified": true,
-      "verified_unix": 1792894002.685061,
-      "campaign_state": "needs_analysis",
-      "new_layout_task_acceptance": false,
-      "verification": "streamed complete archive plus every file SHA"
-    }
-  },
   "remaining_four": {
     "passed": 0,
     "failed": 1,
@@ -420,5 +400,45 @@
     "report_sha256": "c8ff4c0212a67d0660138b93622f87dd17edd43d03777c7151664899a0c59bf2"
   },
   "no_new_launches_this_audit": true,
-  "v8_mac_collector_finished": true
+  "v8_mac_collector_finished": true,
+  "v8_collector_finished": true,
+  "v9_transport_recovery_report": "rebar_training/reports/workcell_transport_recovery_20261025.json",
+  "v8_machine3_diagnosis": {
+    "actual_axial_offset_m": -0.036020695016873105,
+    "visual_truth_error_m": 0.0006943447261138545,
+    "replayed_cap_frames": 41,
+    "real_slip_confirmed": true,
+    "unresolved": "Friction/contact solver/drive contributions not isolated; assets remain unchanged"
+  },
+  "v9_plan": {
+    "retest": {
+      "source": "source_A",
+      "machine": "machine_3",
+      "seed": 12504003
+    },
+    "remaining_unstarted": 3,
+    "prior_successes_retained": 2,
+    "no_training": true,
+    "stop_on_failure": true
+  },
+  "v8_final_result_backup": {
+    "local": {
+      "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792893954/workcell_results.tar.gz",
+      "sha256": "02e16be95e32a2955021b19a9c202042a87176cc90967226210b7dd693356c09",
+      "bytes": 262895835,
+      "files": 469,
+      "all_files_verified": true,
+      "remote": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_02e16be95e32.tar.gz"
+    },
+    "nas": {
+      "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_02e16be95e32.tar.gz",
+      "sha256": "02e16be95e32a2955021b19a9c202042a87176cc90967226210b7dd693356c09",
+      "files": 469,
+      "all_files_verified": true,
+      "verified_unix": 1792894002.685061,
+      "campaign_state": "needs_analysis",
+      "new_layout_task_acceptance": false,
+      "verification": "streamed complete archive plus every file SHA"
+    }
+  }
 }

@@ -72,7 +72,7 @@ def configure_scene(env):
             machine.func(path+'/Machine',machine)
 
 
-def all_machine_obstacles(layout,assets):
+def all_machine_obstacles(layout,assets,height=.60):
     from pxr import Usd,UsdGeom,UsdPhysics,Gf
     from pathlib import Path
     stage=Usd.Stage.CreateInMemory()
@@ -86,7 +86,7 @@ def all_machine_obstacles(layout,assets):
     for prim in stage.Traverse():
         if not prim.HasAPI(UsdPhysics.CollisionAPI) or prim.GetAttribute('physics:collisionEnabled').Get() is False:continue
         box=cache.ComputeWorldBound(prim).ComputeAlignedBox();lo,hi=np.asarray(box.GetMin()),np.asarray(box.GetMax())
-        if lo[2]<.60 and hi[2]>.02:result.append(dict(path=str(prim.GetPath()),minimum=lo.tolist(),maximum=hi.tolist()))
+        if lo[2]<height and hi[2]>.02:result.append(dict(path=str(prim.GetPath()),minimum=lo.tolist(),maximum=hi.tolist()))
     if not result:raise ValueError('No machine collision CAD found')
     # Source supports are additional obstacles in the same map.
     for s in layout.stations.values():
@@ -99,7 +99,7 @@ def all_machine_obstacles(layout,assets):
         if not any(str(prim.GetPath()).startswith('/'+s.id+'/') for s in layout.stations.values() if layout.profiles[s.profile_id].kind=='source'):continue
         if not prim.HasAPI(UsdPhysics.CollisionAPI):continue
         box=cache.ComputeWorldBound(prim).ComputeAlignedBox();lo,hi=np.asarray(box.GetMin()),np.asarray(box.GetMax())
-        if lo[2]<.60 and hi[2]>.02:result.append(dict(path=str(prim.GetPath()),minimum=lo.tolist(),maximum=hi.tolist()))
+        if lo[2]<height and hi[2]>.02:result.append(dict(path=str(prim.GetPath()),minimum=lo.tolist(),maximum=hi.tolist()))
     # Merge each table's contained support/leg colliders into a conservative AABB.
     merged=[]
     for station in layout.stations.values():

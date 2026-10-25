@@ -55,6 +55,31 @@ def review(report,layout):
                 require(math.dist(event['pose'][:2],goal[:2])<pt and abs(wrap(goal[2]-event['pose'][2]))<yt,'measured navigation arrival')
                 require(event['linear_speed']<.008 and abs(event['yaw_rate'])<.008 and event['stopped_dwell_s']>=.5,'stopped navigation dwell')
         require(r.get('actual_handoff') is True,'native physical handoff')
+        if report.get('transport_recenter_enabled'):
+            from .transport_recenter import recenter_workspace_clear
+            require(report.get('transport_recenter_nominal_only') is True and report.get('recenter_policy_calls')==0,'no off-station residual policy calls during recenter')
+            require(report.get('recenter_workspace_height_m')==2. and bool(report.get('recenter_workspace_obstacles')),'full-height recovery workspace CAD recorded')
+            attempts=r['transport_recenter_attempts'];require(len(attempts)<=2,'bounded transport recenter attempts')
+            packets=r['transport_recenter_packets'];require(len(packets)==4*len(attempts),'physical recovery camera packets recorded')
+            for packet in packets:
+                if packet['phase'] in ('parked','verified'):
+                    require(packet['quality'].get('full_length') is True and packet['quality'].get('axial_position_measured') is True,'full-cap recovery image evidence')
+            require(all(0<=v<=7200 for v in r['navigation_ticks_by_stage'].values()),'navigation budgets remain cumulative')
+            for attempt in attempts:
+                require(attempt['state']=='complete' and not attempt.get('error'),'completed physical transport recenter')
+                require(attempt['requested_offset_m']<.025 and attempt['verified_offset_m']<.006,'recenter support envelope')
+                require(abs(math.dist(attempt['requested_position'],[.2927,0.,.715])-attempt['requested_offset_m'])<1e-6
+                    and abs(math.dist(attempt['verified_position'],[.2927,0.,.715])-attempt['verified_offset_m'])<1e-6,'independent recenter displacement')
+                require(attempt['workspace_radius_m']==1.5 and recenter_workspace_clear(attempt['requested_pose'],report['recenter_workspace_obstacles'])
+                    and recenter_workspace_clear(attempt['parked_pose'],report['recenter_workspace_obstacles']),'independent recovery workspace clearance')
+                require(attempt['stopped_dwell_s']>=.5 and max(map(abs,attempt['parked_twist']))<.008,'parked before recenter')
+                require(attempt['pregrasp_full_frames']>=3,'fresh independent full-cap frames before recenter grasp')
+                require(attempt['requested_tick']<attempt['parked_tick']<=attempt['grasp']['tick']<attempt['release']['tick']<attempt['verified_tick'],'physical recenter sequence')
+                require(len(attempt['grasp']['forces'])==2 and min(attempt['grasp']['forces'])>=15,'recenter measured bilateral grasp')
+                release=attempt['release']
+                require(5<=release['load']<=250 and max(map(abs,release['fingers']))<.003 and min(release['forces'])>=0 and max(release['forces'])<.5,'recenter supported unload')
+                require(attempt['elapsed_s']<=110 and attempt['verified_fresh_frames']>=3,'recenter deadline and fresh visual verification')
+                require(5<=attempt['verified_load']<=250 and max(map(abs,attempt['verified_twist']))<.008,'supported stopped recenter verification')
     except (KeyError,ValueError,TypeError,IndexError) as ex:errors.append('incomplete physical evidence: '+str(ex))
     return dict(physical_candidate_passed=not errors,errors=errors,source_id=report['source_id'],machine_id=report['machine_id'],
                 task_interface_accepted=False,machine_visual_identity_verified=report.get('machine_visual_identity_verified') is True,

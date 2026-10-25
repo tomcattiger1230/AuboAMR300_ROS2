@@ -19,6 +19,7 @@ from .visual_env import VisualRebarEnv,VisualControl
 from .expert import CartesianExpert
 from .reset import quat_apply,quat_multiply
 from .mobile import TransportGate,TransportFeedback,PrecisionDock,SettledPrecisionDock,NavigationProgress,wheel_speeds
+from .transport_recenter import TransportRecentering,recenter_workspace_clear
 from .navigation_map import validated_detour
 from .spec import asset_directory
 from .vision.capture import array
@@ -50,6 +51,9 @@ class WorkcellControl(VisualControl):
         self.mission_trace=[]
         from .workcell_physics import simulation_navigation
         self.navigation_goals,self.navigation_obstacles=simulation_navigation(env.layout,env.cfg.workcell_source,env.cfg.workcell_machine,asset_directory())
+        if getattr(env.cfg,'workcell_transport_recenter',False):
+            from .workcell_physics import all_machine_obstacles
+            self.recenter_obstacles=all_machine_obstacles(env.layout,asset_directory(),height=2.)
 
     def reset(self,ids):
         super().reset(ids)
@@ -79,6 +83,9 @@ class WorkcellControl(VisualControl):
         goal=self.env.layout.navigation_goal(self.env.cfg.workcell_source)
         self.source_navigation=PrecisionDock((goal.x,goal.y,goal.yaw),.005,.008,.10,.15)
         self.source_arrival=None;self.navigation_events=[]
+        self.transport_recenter=TransportRecentering() if getattr(self.env.cfg,'workcell_transport_recenter',False) else None
+        self.transport_resume=None;self.navigation_ticks_by_stage={'navigate':0,'dock':0}
+        self.recenter_packets=[]
 
     def frame(self):
         e=self.env
@@ -96,6 +103,19 @@ class WorkcellControl(VisualControl):
     def enter(self,stage):
         self.mission_trace.append(dict(tick=self.tick,from_stage=self.stage,to_stage=stage))
         self.stage=stage;self.stage_age=self.stage_dwell=0
+
+    def recenter_feedback(self,observed):
+        e=self.env;p=self.packets[0]
+        linear=array(e.robot.data.root_lin_vel_w)[0];angular=array(e.robot.data.root_ang_vel_w)[0,2]
+        return dict(now_ns=round(self.tick/30*1e9),image_ns=observed.last_good_ns,valid=bool(self.valid[0]),
+            position=observed.position.tolist(),axis=observed.axis.tolist(),load=self.tray_force,
+            fingers=p.fingers.tolist(),forces=p.finger_forces.tolist(),twist=[float(np.linalg.norm(linear[:2])),float(angular)],
+            full_caps=bool(observed.quality.get('full_length') and observed.quality.get('axial_position_measured')))
+
+    def recenter_packet(self,phase):
+        o=self.observers[0]
+        self.recenter_packets.append(dict(packet_tag='transport_recenter_'+str(len(self.transport_recenter.attempts))+'_'+phase,
+            tick=self.tick,phase=phase,camera_timestamp_ns=o.last_good_ns,position=o.position.tolist(),quality=dict(o.quality)))
 
     def begin_tray_regrasp(self,observed):
         e=self.env
@@ -148,6 +168,14 @@ class WorkcellControl(VisualControl):
 
     def after_physics(self):
         e=self.env;self.tick+=1;self.stage_age+=1
+        if self.stage in self.navigation_ticks_by_stage and not self.initial_navigation:
+            self.navigation_ticks_by_stage[self.stage]+=1
+            if self.transport_recenter and self.navigation_ticks_by_stage[self.stage]>240*30:
+                self.failure='stage timeout: '+self.stage;e.wheel_target.zero_();return
+        if (self.transport_recenter and self.transport_recenter.active and self.transport_recenter.attempts
+                and self.tick/30-self.transport_recenter.attempts[-1]['started_ns']*1e-9>self.transport_recenter.max_recovery_s):
+            self.transport_recenter.fail('transport recenter overall deadline')
+            self.failure=self.transport_recenter.error;e.wheel_target.zero_();return
         if self.initial_navigation:
             timestamp=round(self.tick*e.task_spec.control_dt*1e9)
             self.packets=self.robot_packets(timestamp)
@@ -298,7 +326,12 @@ class WorkcellControl(VisualControl):
                 self.failure='grasp orientation drift with pre-contact load'
             e.route.stage[~active]=old[~active];e.route.dwell[~active]=dwell[~active];e.route.anchor[~active]=anchor[~active]
             e.route.release_dwell[~active]=release[~active]
-            if old[0]==2 and e.route.stage[0]==3:o.latch_grasp(self.packets[0])
+            if old[0]==2 and e.route.stage[0]==3:
+                o.latch_grasp(self.packets[0])
+                if self.transport_resume is not None:
+                    self.transport_recenter.grasped(tick=self.tick,position=o.position,
+                        fingers=self.packets[0].fingers,forces=self.packets[0].finger_forces)
+                    self.recenter_packet('grasp')
             if self.stage=='pickup' and e.route.stage[0]>=4:
                 self.source_above=o.position.copy();self.source_above[2]=.90
                 # The outer reset bound can put a 0.9 m vertical lift outside
@@ -310,7 +343,7 @@ class WorkcellControl(VisualControl):
             elif self.stage=='pickup_tray' and e.route.stage[0]>=4:
                 # A 600 mm rod cannot rotate upright immediately above the
                 # 715 mm rack. Gain end clearance before the joint carry path.
-                self.tray_lift_target=o.position.copy();self.tray_lift_target[2]=1.20
+                self.tray_lift_target=o.position.copy();self.tray_lift_target[2]=.90 if self.transport_resume is not None else 1.20
                 self.tray_lift_quaternion=self.packets[0].quaternion_xyzw.copy()
                 self.enter('tray_lift_high')
             elif self.stage=='loading' and self.logic.verified[0]>=45:
@@ -325,7 +358,8 @@ class WorkcellControl(VisualControl):
               'tray_above':(np.array([.2927,0.,.90]),q,'tray_down'),
               'tray_down':(np.array([.2927,0.,.717]),q,'tray_release')}
         if hasattr(self,'tray_lift_target'):
-            path['tray_lift_high']=(self.tray_lift_target,self.tray_lift_quaternion,'loading')
+            path['tray_lift_high']=(self.tray_lift_target,self.tray_lift_quaternion,
+                'tray_above' if self.transport_resume is not None else 'loading')
         self.path=path
         if self.stage in path:
             target,orientation,next_stage=path[self.stage]
@@ -341,6 +375,9 @@ class WorkcellControl(VisualControl):
                 # Steel physics is never attached, frozen or repositioned.
                 o.anchored=o.released=False;o.plane_height=.715
                 o.position[2]=.715;o.local_correction[:]=0
+                if self.transport_resume is not None:
+                    self.transport_recenter.released(tick=self.tick,load=self.tray_force,fingers=p.fingers,forces=p.finger_forces)
+                    self.recenter_packet('release')
                 self.enter('tray_retreat')
         elif self.stage=='tray_retreat':
             target=self.release_tcp.clone();target[2]=.90
@@ -354,7 +391,13 @@ class WorkcellControl(VisualControl):
                     self.observers=[ImageObserver(self.detector,plane_height=.715,require_full_support=True)]
                     self.enter('observe_tray')
         elif self.stage=='observe_tray' and o.acquired:
-            if self.pending_tray_regrasp or (e.cfg.mobile_start_at_dock and e.cfg.mobile_until=='clamp'):
+            if self.transport_resume is not None:
+                if self.transport_recenter.verify(tick=self.tick,**self.recenter_feedback(o)):
+                    self.recenter_packet('verified')
+                    resume=self.transport_resume;self.transport_resume=None;self.navigation_index=resume['index']
+                    self.navigation=SettledPrecisionDock(self.navigation_goals[self.navigation_index],.015,.02,.15,.2)
+                    self.navigation_progress=NavigationProgress();self.gate=TransportGate();self.enter('navigate')
+            elif self.pending_tray_regrasp or (e.cfg.mobile_start_at_dock and e.cfg.mobile_until=='clamp'):
                 # This explicit reset-only skill already starts at the tester.
                 # A lateral reset offset must not provoke an in-place 90 deg
                 # differential-drive correction in the tight machine dock.
@@ -386,6 +429,26 @@ class WorkcellControl(VisualControl):
                 distance_m=math.dist(pose[:2],self.navigation.goal[:2]),
                 yaw_error_rad=math.atan2(math.sin(self.navigation.goal[2]-pose[2]),math.cos(self.navigation.goal[2]-pose[2])),
                 measured_yaw_rate=float(angular),requested_twist=list(command),ready=self.navigation.ready)
+            if self.transport_recenter and self.stage=='navigate':
+                recovery=self.transport_recenter.navigation(tick=self.tick,
+                    clearance=recenter_workspace_clear(pose,self.recenter_obstacles),
+                    arm_stowed=bool(not self.view_search and self.motion.motion.ready[0]
+                        and self.motion.motion.position_error[0]<.025 and self.motion.motion.quaternion_error[0]<.0005),
+                    **self.recenter_feedback(o))
+                if recovery:
+                    attempt=self.transport_recenter.attempts[-1] if self.transport_recenter.attempts else None
+                    if attempt is not None and 'requested_pose' not in attempt:
+                        attempt.update(requested_pose=list(pose),workspace_radius_m=1.50)
+                    self.wheel_command=(0.,0.);e.wheel_target.zero_()
+                    # Gate history also stops; no stale acceleration command is resumed.
+                    self.gate.previous=(0.,0.)
+                    self.gate.reason='transport recenter stop'
+                    if recovery=='failed':self.failure=self.transport_recenter.error
+                    elif recovery=='recenter':
+                        attempt['parked_pose']=list(pose)
+                        self.transport_resume=dict(index=self.navigation_index)
+                        self.recenter_packet('parked');self.begin_tray_regrasp(o)
+                    return
             now=self.tick/30
             tray_valid=(self.tray_force>=5 and np.linalg.norm(o.position-[.2927,0,.715])<.025
                         and abs(o.axis[1])>.95)
@@ -415,8 +478,10 @@ class WorkcellControl(VisualControl):
                     if e.cfg.mobile_until=='dock':
                         self.finished=True;self.enter('docked');return
                     self.begin_tray_regrasp(o)
-        if self.stage_age>(240 if self.stage in ('navigate','dock') else 120)*30:
+        elapsed=self.navigation_ticks_by_stage[self.stage] if self.transport_recenter and self.stage in ('navigate','dock') else self.stage_age
+        if elapsed>(240 if self.stage in ('navigate','dock') else 120)*30:
             self.failure='stage timeout: '+self.stage
+        if self.transport_recenter and self.transport_recenter.error:self.failure=self.transport_recenter.error
         e.wheel_target[0]=e.wheel_target.new_tensor(wheel_speeds(*self.wheel_command))
 
     def learning_observation(self):
@@ -643,6 +708,9 @@ class WorkcellVisualEnv(VisualRebarEnv):
                 rebar_pose_writes_after_reset=False,actual_handoff=bool(actual_handoff)))
             self.mobile_receipts[-1]['navigation_events']=v.navigation_events
             self.mobile_receipts[-1]['navigation_controller_contract']='settled_position_then_yaw_v1'
+            self.mobile_receipts[-1]['transport_recenter_attempts']=v.transport_recenter.attempts if v.transport_recenter else []
+            self.mobile_receipts[-1]['transport_recenter_packets']=v.recenter_packets
+            self.mobile_receipts[-1]['navigation_ticks_by_stage']=v.navigation_ticks_by_stage
             self.mobile_receipts[-1]['source_navigation']=v.source_arrival
             self.mobile_receipts[-1]['source_id']=self.cfg.workcell_source
             self.mobile_receipts[-1]['machine_id']=self.cfg.workcell_machine
