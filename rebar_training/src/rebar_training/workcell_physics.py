@@ -170,17 +170,25 @@ def plan_chassis_path(start,goal,obstacles,resolution=.25):
     nodes=[found]
     while nodes[-1]!=origin:nodes.append(parents[nodes[-1]])
     points=[start[:2]]+[xy(n) for n in reversed(nodes)]+[targets[found][:2]]
-    compact=[points[0]]
-    for i in range(1,len(points)-1):
-        a=np.asarray(points[i])-compact[-1];b=np.asarray(points[i+1])-points[i]
-        if np.linalg.norm(a)<1e-8:continue
-        if abs(a[0]*b[1]-a[1]*b[0])>1e-8:compact.append(points[i])
-    compact.append(points[-1]);goals=[]
-    for a,b in zip(compact,compact[1:]):
-        if math.dist(a,b)<1e-8:continue
-        goals.append((b[0],b[1],math.atan2(b[1]-a[1],b[0]-a[0])))
-    # Turn to target yaw in the free approach space before entering the dock.
-    goals.append(targets[found]);goals.append(goal)
+    # Shortcut only through segments checked against the same CAD. Every
+    # retained turn remains inside its full-rotation collision-free envelope.
+    compact=[points[0]];index=0
+    while index<len(points)-1:
+        next_index=next((j for j in range(len(points)-1,index,-1)
+                         if turn(points[j]) and segment(points[index],points[j])),None)
+        if next_index is None:raise ValueError('No verified shortcut to next route point')
+        compact.append(points[next_index]);index=next_index
+    goals=[]
+    for i,point in enumerate(compact[1:],1):
+        if math.dist(compact[i-1],point)<1e-8:continue
+        # Turn once into the outgoing corridor at a checked free-space point.
+        # The former incoming-yaw + same-position outgoing-yaw pair forced
+        # needless small-segment heading changes and boundary reacquisition.
+        following=compact[i+1] if i+1<len(compact) else goal[:2]
+        yaw=math.atan2(following[1]-point[1],following[0]-point[0])
+        if i==len(compact)-1:yaw=goal[2]
+        goals.append((point[0],point[1],yaw))
+    goals.append(goal)
     return goals
 
 

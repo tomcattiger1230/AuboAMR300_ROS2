@@ -143,7 +143,9 @@ def main():
                                 camera_age_ms=(v.tick/30-observer.last_good_ns*1e-9)*1000,
                                 arm_joints=array(e.robot.data.joint_pos)[0,e.control_ids[:6]].tolist(),
                                 finger_positions=v.packets[0].fingers.tolist(),finger_forces=v.packets[0].finger_forces.tolist(),
-                                tray_load_n=float(v.tray_force),policy_calls=decisions)
+                                tray_load_n=float(v.tray_force),policy_calls=decisions,
+                                base_angular_velocity_map=array(e.robot.data.root_ang_vel_w)[0].tolist(),
+                                navigation_diagnostics=getattr(v,'navigation_diagnostics',None),transport_guard=v.gate.reason)
                             rows.append(row);print(json.dumps(row,allow_nan=False),flush=True)
                             atomic(args.report.with_suffix('.status.json'),dict(state='running',run_id=run_id,pid=os.getpid(),
                                 source=args.source,machine=args.machine,latest=row,updated_unix=time.time(),training_started=False))

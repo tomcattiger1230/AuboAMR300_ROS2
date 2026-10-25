@@ -1,0 +1,44 @@
+{
+  "schema": "workcell_navigation_offline_replay_v2",
+  "source_report_sha256": "921fa620ad56151c7e05b32d008ee2284e9f22c3030011d499b791d10e47d58f",
+  "scope": "measured 1Hz command branches; synthetic kinematics separately labelled; no physical pass claimed",
+  "active_goal_inferred_not_logged": [
+    9.23,
+    1.2999999999999998,
+    -2.432966381462128
+  ],
+  "start_sample_step": 10230,
+  "all_candidate_stress_converged": true,
+  "original_navigation_timeout_s": 240,
+  "simulation_started": false,
+  "training_started": false,
+  "new_learning_updates": 0,
+  "measured_log": {
+    "samples": 142,
+    "sample_interval_s": 1.0,
+    "branch_switches": 38,
+    "turns_away_from_goal_yaw": 44,
+    "all_images_valid": true,
+    "distance_min_m": 0.014199575461583062,
+    "distance_max_m": 0.015141922325277762
+  },
+  "original_report": "rebar_training/artifacts/workcell_frozen_validation_20261025_v7/baseline_source_A_machine_2_v7.json",
+  "full_replay_artifact": "rebar_training/artifacts/workcell_navigation_fix_20261025/offline_replay.json",
+  "full_replay_sha256": "2ecb71e5c3930c92dd99b8767a6916793c7bf99d1f8c565edcf4c3fc0c9a381f",
+  "offline_tests": {
+    "passed": 437,
+    "skipped": 8,
+    "subtests_passed": 6
+  },
+  "synthetic_route_budget_seconds": {
+    "source_A->machine_1": 83.2,
+    "source_A->machine_2": 99.13333333333334,
+    "source_A->machine_3": 109.9,
+    "source_B->machine_1": 88.46666666666667,
+    "source_B->machine_2": 147.96666666666667,
+    "source_B->machine_3": 165.7
+  },
+  "routes_independent_cad_checked": true,
+  "physical_retest_pending": true,
+  "updated_at_shanghai": "2026-10-25T09:40:43.323758+08:00"
+}

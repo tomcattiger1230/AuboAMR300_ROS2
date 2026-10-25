@@ -122,3 +122,44 @@ class NavigationProgress:
         progress=math.hypot(pose[0]-old[0],pose[1]-old[1]) if mode=='linear' else abs(wrap(pose[2]-old[2]))
         if progress<(.025 if mode=='linear' else .03):return 'navigation blocked: '+mode+' command without odometry progress'
         return None
+
+
+class SettledPrecisionDock(PrecisionDock):
+    """Acquire a position margin, then align yaw without boundary chatter.
+
+    Final acceptance uses the original position/yaw/stopped dwell thresholds.
+    Position reacquisition is explicit if drift consumes the margin. Intended
+    for the multi-workcell candidate; legacy PrecisionDock remains unchanged.
+    """
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.phase='position';self.phase_changes=0
+        self.acquire_distance=.65*self.position_tolerance
+        self.release_distance=1.3*self.position_tolerance
+
+    def step(self,pose,measured_twist,dt):
+        if dt<=0 or not all(math.isfinite(x) for x in (*pose,*measured_twist,dt)):
+            raise ValueError('Finite measured odometry and positive dt required')
+        dx,dy=self.goal[0]-pose[0],self.goal[1]-pose[1]
+        distance=math.hypot(dx,dy);yaw=wrap(self.goal[2]-pose[2])
+        previous=self.phase
+        if self.phase=='position' and distance<self.acquire_distance:self.phase='yaw'
+        elif self.phase=='yaw' and (distance>self.release_distance
+                or abs(yaw)<self.yaw_tolerance and distance>=self.position_tolerance):self.phase='position'
+        self.phase_changes+=int(previous!=self.phase)
+        good=distance<self.position_tolerance and abs(yaw)<self.yaw_tolerance
+        stopped=max(abs(x) for x in measured_twist)<.008
+        self.stable_seconds=self.stable_seconds+dt if good and stopped else 0.
+        self.ready=self.stable_seconds>=.5
+        if good:return (0.,0.)
+        if self.phase=='yaw':
+            # Measured-rate damping reduces overshoot through the unchanged
+            # transport acceleration limiter; no minimum turn is forced.
+            limit=min(.10,self.max_angular)
+            return (0.,max(-limit,min(limit,1.5*yaw-.6*measured_twist[1])))
+        heading=wrap(math.atan2(dy,dx)-pose[2]);direction=1.
+        if abs(heading)>math.pi/2:
+            heading=wrap(heading-math.copysign(math.pi,heading));direction=-1.
+        linear=direction*min(self.max_linear,.7*distance)*max(0.,math.cos(heading))
+        if abs(heading)>.35:linear=0.
+        return linear,max(-self.max_angular,min(self.max_angular,2*heading))

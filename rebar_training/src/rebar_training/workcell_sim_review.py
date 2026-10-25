@@ -45,6 +45,15 @@ def review(report,layout):
         a=r['source_navigation'];dock=layout.navigation_goal(report['source_id'])
         require(a is not None and math.dist(a['base_pose'][:2],(dock.x,dock.y))<=.01 and abs(wrap(a['base_pose'][2]-dock.yaw))<=.01,'source navigation arrival')
         require(a['linear_speed']<.008 and abs(a['yaw_rate'])<.008,'source stopped arrival')
+        if r.get('navigation_controller_contract')=='settled_position_then_yaw_v1':
+            events=r['navigation_events'];goals=report['navigation_goals']+[report['navigation_goals'][-1]]
+            require(len(events)==len(goals),'all navigation waypoints and precision dock recorded')
+            for i,(event,goal) in enumerate(zip(events,goals)):
+                pt,yt=(.015,.02) if i<len(goals)-1 else (.008,.008)
+                require(event['index']==i and event['goal']==goal,'navigation waypoint identity')
+                require(event['position_tolerance_m']==pt and event['yaw_tolerance_rad']==yt,'unchanged navigation thresholds')
+                require(math.dist(event['pose'][:2],goal[:2])<pt and abs(wrap(goal[2]-event['pose'][2]))<yt,'measured navigation arrival')
+                require(event['linear_speed']<.008 and abs(event['yaw_rate'])<.008 and event['stopped_dwell_s']>=.5,'stopped navigation dwell')
         require(r.get('actual_handoff') is True,'native physical handoff')
     except (KeyError,ValueError,TypeError,IndexError) as ex:errors.append('incomplete physical evidence: '+str(ex))
     return dict(physical_candidate_passed=not errors,errors=errors,source_id=report['source_id'],machine_id=report['machine_id'],

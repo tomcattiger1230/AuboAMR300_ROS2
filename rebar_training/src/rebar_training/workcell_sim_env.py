@@ -18,7 +18,7 @@ from .isaac_env import RebarEnv
 from .visual_env import VisualRebarEnv,VisualControl
 from .expert import CartesianExpert
 from .reset import quat_apply,quat_multiply
-from .mobile import TransportGate,TransportFeedback,PrecisionDock,NavigationProgress,wheel_speeds
+from .mobile import TransportGate,TransportFeedback,PrecisionDock,SettledPrecisionDock,NavigationProgress,wheel_speeds
 from .navigation_map import validated_detour
 from .spec import asset_directory
 from .vision.capture import array
@@ -78,7 +78,7 @@ class WorkcellControl(VisualControl):
         self.initial_navigation=True
         goal=self.env.layout.navigation_goal(self.env.cfg.workcell_source)
         self.source_navigation=PrecisionDock((goal.x,goal.y,goal.yaw),.005,.008,.10,.15)
-        self.source_arrival=None
+        self.source_arrival=None;self.navigation_events=[]
 
     def frame(self):
         e=self.env
@@ -362,9 +362,9 @@ class WorkcellControl(VisualControl):
                 # Continuous missions still execute their complete docking.
                 self.begin_tray_regrasp(o)
             elif e.cfg.mobile_start_at_dock:
-                self.navigation_index=3;self.navigation=PrecisionDock(self.navigation_goals[-1]);self.enter('dock')
+                self.navigation_index=3;self.navigation=SettledPrecisionDock(self.navigation_goals[-1]);self.enter('dock')
             else:
-                self.navigation=PrecisionDock(self.navigation_goals[0],.015,.02,.15,.2)
+                self.navigation=SettledPrecisionDock(self.navigation_goals[0],.015,.02,.15,.2)
                 self.enter('navigate')
         elif self.stage in ('navigate','dock'):
             if (not self.valid[0] and timestamp-o.last_good_ns>500_000_000
@@ -381,6 +381,11 @@ class WorkcellControl(VisualControl):
             pose=(*base[:2,3],float(np.arctan2(base[1,0],base[0,0])))
             speed=array(e.robot.data.root_lin_vel_w)[0];angular=array(e.robot.data.root_ang_vel_w)[0,2]
             command=self.navigation.step(pose,(float(np.linalg.norm(speed[:2])),float(angular)),1/30)
+            self.navigation_diagnostics=dict(index=self.navigation_index,goal=list(self.navigation.goal),
+                phase=self.navigation.phase,phase_changes=self.navigation.phase_changes,
+                distance_m=math.dist(pose[:2],self.navigation.goal[:2]),
+                yaw_error_rad=math.atan2(math.sin(self.navigation.goal[2]-pose[2]),math.cos(self.navigation.goal[2]-pose[2])),
+                measured_yaw_rate=float(angular),requested_twist=list(command),ready=self.navigation.ready)
             now=self.tick/30
             tray_valid=(self.tray_force>=5 and np.linalg.norm(o.position-[.2927,0,.715])<.025
                         and abs(o.axis[1])>.95)
@@ -393,12 +398,18 @@ class WorkcellControl(VisualControl):
             if blocked:
                 self.failure=blocked;self.wheel_command=(0.,0.)
             if self.navigation.ready and self.valid[0] and tray_valid and not self.view_search and self.motion.motion.ready[0]:
+                self.navigation_events.append(dict(tick=self.tick,index=self.navigation_index,goal=list(self.navigation.goal),
+                    pose=list(pose),position_error_m=math.dist(pose[:2],self.navigation.goal[:2]),
+                    yaw_error_rad=math.atan2(math.sin(self.navigation.goal[2]-pose[2]),math.cos(self.navigation.goal[2]-pose[2])),
+                    linear_speed=float(np.linalg.norm(speed[:2])),yaw_rate=float(angular),
+                    position_tolerance_m=self.navigation.position_tolerance,yaw_tolerance_rad=self.navigation.yaw_tolerance,
+                    phase_changes=self.navigation.phase_changes,stopped_dwell_s=self.navigation.stable_seconds))
                 self.navigation_index+=1
                 goals=self.navigation_goals+[self.navigation_goals[-1]]
                 if self.navigation_index<len(self.navigation_goals):
-                    self.navigation=PrecisionDock(goals[self.navigation_index],.015,.02,.15,.2)
+                    self.navigation=SettledPrecisionDock(goals[self.navigation_index],.015,.02,.15,.2)
                 elif self.navigation_index==len(self.navigation_goals):
-                    self.navigation=PrecisionDock(goals[-1]);self.enter('dock')
+                    self.navigation=SettledPrecisionDock(goals[-1]);self.enter('dock')
                 else:
                     self.wheel_command=(0.,0.)
                     if e.cfg.mobile_until=='dock':
@@ -630,6 +641,8 @@ class WorkcellVisualEnv(VisualRebarEnv):
                 true_position_for_evaluation=truth.bar[0].tolist(),machine_error_m=error,
                 mission_transitions=list(v.mission_trace),camera_only=True,neural_policy=False,
                 rebar_pose_writes_after_reset=False,actual_handoff=bool(actual_handoff)))
+            self.mobile_receipts[-1]['navigation_events']=v.navigation_events
+            self.mobile_receipts[-1]['navigation_controller_contract']='settled_position_then_yaw_v1'
             self.mobile_receipts[-1]['source_navigation']=v.source_arrival
             self.mobile_receipts[-1]['source_id']=self.cfg.workcell_source
             self.mobile_receipts[-1]['machine_id']=self.cfg.workcell_machine
