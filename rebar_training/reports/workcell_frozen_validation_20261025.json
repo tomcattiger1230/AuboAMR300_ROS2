@@ -1,12 +1,12 @@
 {
   "schema": "workcell_frozen_validation_progress_v1",
-  "phase": "v8_navigation_retest_passed_remaining_running",
+  "phase": "v8_needs_tray_support_analysis",
   "created_unix": 1792859368.224087,
   "layout": "rebar_training/config/multi_workcell_offline.json",
   "layout_is_synthetic": true,
   "old_formal_full_gate_unchanged": true,
   "old_formal_denominator": 64,
-  "new_layout_completed_episodes": 1,
+  "new_layout_completed_episodes": 2,
   "new_layout_passed_episodes": 1,
   "new_layout_task_acceptance": false,
   "simulation_started": true,
@@ -16,9 +16,9 @@
   "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
   "baseline_candidates": 6,
   "current": "remaining_source_A_machine_3_v8",
-  "manager_pid": 90949,
-  "runner_pid": 93804,
-  "native_pid": 93814,
+  "manager_pid": null,
+  "runner_pid": null,
+  "native_pid": null,
   "run_id": "c8279e2f0e5c40c3b6e14ee0d16553ef",
   "source_archive_sha256": "3eb3ad13c313e1689f58e3db24d0ee65e856140a637bce11038b4e28ffa93f72",
   "offline_targeted_tests": 437,
@@ -49,7 +49,7 @@
   "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v8",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792893210.4426172,
+  "updated_unix": 1792900715.624268,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -61,7 +61,7 @@
     "frozen_identity_unchanged": true,
     "remaining_five_not_dispatched": true
   },
-  "mac_collector_pid": 9351,
+  "mac_collector_pid": null,
   "v5_dispatcher_stopped_after_SE3_replay": true,
   "v6_prelauncher_pid": 65543,
   "v6_mac_collector_pid": 45557,
@@ -84,7 +84,7 @@
     "files": 29,
     "both_hosts_verified": true
   },
-  "final_result_backup_pending": true,
+  "final_result_backup_pending": false,
   "v6_result": {
     "completed_episodes": 1,
     "successes": 0,
@@ -104,9 +104,9 @@
     "frozen_identity_unchanged": true
   },
   "results_are_version_separated": true,
-  "current_campaign_completed_episodes": 1,
+  "current_campaign_completed_episodes": 2,
   "current_campaign_successes": 1,
-  "last_live_snapshot_unix": 1792893198.0592005,
+  "last_live_snapshot_unix": 1792900715.2896683,
   "v7_mac_collector_pid": 62361,
   "v5_raw_backup": {
     "files": 253,
@@ -148,9 +148,9 @@
       "training_started": false
     }
   },
-  "active_simulation_jobs": 1,
-  "updated_at_shanghai": "2026-10-25T09:53:30.441913+08:00",
-  "current_campaign_failures": 0,
+  "active_simulation_jobs": 0,
+  "updated_at_shanghai": "2026-10-25T11:58:35.623166+08:00",
+  "current_campaign_failures": 1,
   "current_campaign_unstarted": 3,
   "v7_second_result": {
     "source": "source_A",
@@ -171,7 +171,7 @@
     "root_cause": "Measured 1Hz log: 15mm boundary chatter between position-heading and goal-yaw branches; 38 switches/142 samples; original path contains redundant short/duplicate turns."
   },
   "live_checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
-  "node_connection_state": "connected_fresh_v8_retest",
+  "node_connection_state": "connected_fresh_status_audit",
   "v7_last_status_observation": "rebar_training/artifacts/workcell_frozen_validation_20261025_v7/status_observed_20261025_0725.json",
   "v7_result_backup": {
     "local": {
@@ -288,5 +288,137 @@
     },
     "transport_history": []
   },
-  "migration_increment_index": "/Users/weiluo/Develop/backups/REBAR_BACKUP_INDEX_20261025.json"
+  "migration_increment_index": "/Users/weiluo/Develop/backups/REBAR_BACKUP_INDEX_20261025.json",
+  "final_result_backup": {
+    "local": {
+      "archive": "/Users/weiluo/Develop/backups/rebar_workcell_results_20261025_1792893954/workcell_results.tar.gz",
+      "sha256": "02e16be95e32a2955021b19a9c202042a87176cc90967226210b7dd693356c09",
+      "bytes": 262895835,
+      "files": 469,
+      "all_files_verified": true,
+      "remote": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_02e16be95e32.tar.gz"
+    },
+    "nas": {
+      "archive": "/mnt/zspace/rebar_migration_20261024_142019/supplements/workcell_results_02e16be95e32.tar.gz",
+      "sha256": "02e16be95e32a2955021b19a9c202042a87176cc90967226210b7dd693356c09",
+      "files": 469,
+      "all_files_verified": true,
+      "verified_unix": 1792894002.685061,
+      "campaign_state": "needs_analysis",
+      "new_layout_task_acceptance": false,
+      "verification": "streamed complete archive plus every file SHA"
+    }
+  },
+  "remaining_four": {
+    "passed": 0,
+    "failed": 1,
+    "unstarted": 3
+  },
+  "status_audit": "rebar_training/artifacts/workcell_frozen_validation_20261025_v8/status_observed_20261025_115835.json",
+  "v8_machine3_failure": {
+    "navigation_samples": 240,
+    "guard_counts": {
+      "enabled": 95,
+      "steel not supported by tray": 145
+    },
+    "first_blocked": {
+      "step": 6660,
+      "sim_time_s": 222.03333333333333,
+      "base": [
+        10.766318321228027,
+        -1.4207717180252075,
+        1.0211454082309501e-07
+      ],
+      "valid": true,
+      "last_error": "",
+      "estimated_bar": [
+        0.29259310188822635,
+        -0.025004050807746637,
+        0.715
+      ],
+      "tray_load_n": 20.47018051147461,
+      "transport_guard": "steel not supported by tray",
+      "navigation_diagnostics": {
+        "index": 1,
+        "goal": [
+          10.77,
+          -3.3,
+          -1.5707963267948966
+        ],
+        "phase": "position",
+        "phase_changes": 0,
+        "distance_m": 1.8792318884407293,
+        "yaw_error_rad": -0.002469327583513925,
+        "measured_yaw_rate": 0.0007952743908390403,
+        "requested_twist": [
+          0.14999998047826024,
+          -0.001020372224075583
+        ],
+        "ready": false
+      }
+    },
+    "last_navigation": {
+      "step": 11040,
+      "base": [
+        10.767141342163086,
+        -1.6816920042037964,
+        1.0875901068629901e-07
+      ],
+      "valid": true,
+      "last_error": "",
+      "estimated_bar": [
+        0.29273745056950984,
+        -0.03544645304378211,
+        0.715
+      ],
+      "tray_load_n": 21.782180786132812,
+      "transport_guard": "steel not supported by tray",
+      "navigation_diagnostics": {
+        "index": 1,
+        "goal": [
+          10.77,
+          -3.3,
+          -1.5707963267948966
+        ],
+        "phase": "position",
+        "phase_changes": 0,
+        "distance_m": 1.6183105206302508,
+        "yaw_error_rad": 0.007415052477726558,
+        "measured_yaw_rate": -0.001205546548590064,
+        "requested_twist": [
+          0.14999367754984091,
+          0.018362998410859973
+        ],
+        "ready": false
+      }
+    },
+    "passed_waypoints": [
+      {
+        "tick": 6407,
+        "index": 0,
+        "goal": [
+          10.77,
+          -0.2999999999999998,
+          -1.5707963267948966
+        ],
+        "pose": [
+          10.762267112731934,
+          -0.29922792315483093,
+          -1.5521396580028486
+        ],
+        "position_error_m": 0.007771335030447656,
+        "yaw_error_rad": -0.01865666879204797,
+        "linear_speed": 0.0002685920044314116,
+        "yaw_rate": -0.0014034511987119913,
+        "position_tolerance_m": 0.015,
+        "yaw_tolerance_rad": 0.02,
+        "phase_changes": 1,
+        "stopped_dwell_s": 0.5333333333333333
+      }
+    ],
+    "note": "Native failure navigate timeout after first waypoint passed; guard says unsupported tray despite positive measured load. Physical slip vs visual estimate cause is not established by this status audit.",
+    "report_sha256": "c8ff4c0212a67d0660138b93622f87dd17edd43d03777c7151664899a0c59bf2"
+  },
+  "no_new_launches_this_audit": true,
+  "v8_mac_collector_finished": true
 }
