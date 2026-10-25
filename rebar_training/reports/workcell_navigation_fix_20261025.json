@@ -39,6 +39,66 @@
     "source_B->machine_3": 165.7
   },
   "routes_independent_cad_checked": true,
-  "physical_retest_pending": true,
-  "updated_at_shanghai": "2026-10-25T09:40:43.323758+08:00"
+  "physical_retest_pending": false,
+  "updated_at_shanghai": "2026-10-25T09:53:30.441913+08:00",
+  "additional_control_plane_tests": {
+    "passed": 3,
+    "scope": "fake native-job control-plane tests: failure stops, five-task success, observe existing launch; no physical success claimed"
+  },
+  "additional_arrival_review_tests": {
+    "passed": 7,
+    "scope": "synthetic receipt mutations: missing, XY/yaw, moving, dwell, relaxed threshold, wrong index; no physical success claimed"
+  },
+  "physical_retest_passed": true,
+  "physical_comparison_artifact": "rebar_training/artifacts/workcell_frozen_validation_20261025_v8/physical_navigation_comparison.json",
+  "physical_comparison_sha256": "ef909070c187b1c2707d68a815c85b0ad6c8995b261c2baa1a2ff1abc6d78cbc",
+  "physical_result": {
+    "schema": "physical_navigation_retest_comparison_v1",
+    "old_report_sha256": "921fa620ad56151c7e05b32d008ee2284e9f22c3030011d499b791d10e47d58f",
+    "new_report_sha256": "033be9af0ecf882c6bf18ba899430762c36ef3bf930f259f90d2cbe01894b5d8",
+    "seed": 12504002,
+    "same_layout": true,
+    "old_failure": "stage timeout: navigate",
+    "new_failure": null,
+    "new_physical_candidate_passed": true,
+    "navigation_seconds": 98.83333333333333,
+    "docking_seconds": 2.466666666666667,
+    "unchanged_navigation_timeout_s": 240,
+    "all_logged_transport_guards_enabled": true,
+    "all_logged_navigation_images_valid": true,
+    "machine_error_mm": 1.1146505130454898,
+    "retreat_mm": 89.4787386059761,
+    "jaw_forces_n": [
+      25.821786880493164,
+      24.132282257080078,
+      24.1118221282959,
+      25.810588836669922
+    ],
+    "unsafe_force_n": 25.831605911254883,
+    "task_interface_accepted": false,
+    "training_started": false,
+    "prior_v7_machine1_pass_preserved": true,
+    "old_formal_64_unchanged": true,
+    "reviewed_unix": 1792893122.609277,
+    "same_initial_reset_measurements": {
+      "initial_base": true,
+      "initial_base_quaternion": true,
+      "initial_bar_for_evaluation": true,
+      "machine_goal": true
+    },
+    "initial_reset_max_absolute_difference": {
+      "initial_base": 0.0,
+      "initial_base_quaternion": 0.0,
+      "initial_bar_for_evaluation": 0.0,
+      "machine_goal": 0.0
+    }
+  },
+  "raw_both_hosts_verified": {
+    "all_files_both_hosts_verified": true,
+    "files": 164,
+    "bytes": 143607455,
+    "manifest_sha256": "754807c6e12f85712908f754e87e1f166185f063d3024e952877514ca9b50c12",
+    "verified_unix": 1792893164.686136,
+    "report_sha256": "033be9af0ecf882c6bf18ba899430762c36ef3bf930f259f90d2cbe01894b5d8"
+  }
 }

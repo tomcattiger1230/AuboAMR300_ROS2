@@ -1,13 +1,13 @@
 {
   "schema": "workcell_frozen_validation_progress_v1",
-  "phase": "v8_navigation_retest_running",
+  "phase": "v8_navigation_retest_passed_remaining_running",
   "created_unix": 1792859368.224087,
   "layout": "rebar_training/config/multi_workcell_offline.json",
   "layout_is_synthetic": true,
   "old_formal_full_gate_unchanged": true,
   "old_formal_denominator": 64,
-  "new_layout_completed_episodes": 0,
-  "new_layout_passed_episodes": 0,
+  "new_layout_completed_episodes": 1,
+  "new_layout_passed_episodes": 1,
   "new_layout_task_acceptance": false,
   "simulation_started": true,
   "training_started": false,
@@ -15,11 +15,11 @@
   "new_learning_updates": 0,
   "checkpoint_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
   "baseline_candidates": 6,
-  "current": "retest_source_A_machine_2_v8",
+  "current": "remaining_source_A_machine_3_v8",
   "manager_pid": 90949,
-  "runner_pid": 90953,
-  "native_pid": 90963,
-  "run_id": "ef5dc9f634a84d6ca27003c73fcb2e6b",
+  "runner_pid": 93804,
+  "native_pid": 93814,
+  "run_id": "c8279e2f0e5c40c3b6e14ee0d16553ef",
   "source_archive_sha256": "3eb3ad13c313e1689f58e3db24d0ee65e856140a637bce11038b4e28ffa93f72",
   "offline_targeted_tests": 437,
   "earlier_broad_tests": {
@@ -49,7 +49,7 @@
   "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v8",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792892443.324629,
+  "updated_unix": 1792893210.4426172,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -104,9 +104,9 @@
     "frozen_identity_unchanged": true
   },
   "results_are_version_separated": true,
-  "current_campaign_completed_episodes": 0,
-  "current_campaign_successes": 0,
-  "last_live_snapshot_unix": 1792892437.3034458,
+  "current_campaign_completed_episodes": 1,
+  "current_campaign_successes": 1,
+  "last_live_snapshot_unix": 1792893198.0592005,
   "v7_mac_collector_pid": 62361,
   "v5_raw_backup": {
     "files": 253,
@@ -149,9 +149,9 @@
     }
   },
   "active_simulation_jobs": 1,
-  "updated_at_shanghai": "2026-10-25T09:40:43.323758+08:00",
+  "updated_at_shanghai": "2026-10-25T09:53:30.441913+08:00",
   "current_campaign_failures": 0,
-  "current_campaign_unstarted": 4,
+  "current_campaign_unstarted": 3,
   "v7_second_result": {
     "source": "source_A",
     "machine": "machine_2",
@@ -205,5 +205,67 @@
     "stop_on_failure": true,
     "repair_report": "rebar_training/reports/workcell_navigation_fix_20261025.json"
   },
-  "new_layout_coverage_note": "Prior v7 A1 pass retained separately; v8 is one failed-seed retest plus four previously unstarted routes. No aggregate acceptance before physical reviews."
+  "new_layout_coverage_note": "Prior v7 A1 pass retained separately; v8 is one failed-seed retest plus four previously unstarted routes. No aggregate acceptance before physical reviews.",
+  "unique_route_physical_coverage_passed": 2,
+  "coverage_denominator": 6,
+  "counts_scope": "Current campaign counts refer only to v8; prior v7 A1 pass retained separately; previous failures version-separated",
+  "v8_machine2_retest": {
+    "schema": "physical_navigation_retest_comparison_v1",
+    "old_report_sha256": "921fa620ad56151c7e05b32d008ee2284e9f22c3030011d499b791d10e47d58f",
+    "new_report_sha256": "033be9af0ecf882c6bf18ba899430762c36ef3bf930f259f90d2cbe01894b5d8",
+    "seed": 12504002,
+    "same_layout": true,
+    "old_failure": "stage timeout: navigate",
+    "new_failure": null,
+    "new_physical_candidate_passed": true,
+    "navigation_seconds": 98.83333333333333,
+    "docking_seconds": 2.466666666666667,
+    "unchanged_navigation_timeout_s": 240,
+    "all_logged_transport_guards_enabled": true,
+    "all_logged_navigation_images_valid": true,
+    "machine_error_mm": 1.1146505130454898,
+    "retreat_mm": 89.4787386059761,
+    "jaw_forces_n": [
+      25.821786880493164,
+      24.132282257080078,
+      24.1118221282959,
+      25.810588836669922
+    ],
+    "unsafe_force_n": 25.831605911254883,
+    "task_interface_accepted": false,
+    "training_started": false,
+    "prior_v7_machine1_pass_preserved": true,
+    "old_formal_64_unchanged": true,
+    "reviewed_unix": 1792893122.609277,
+    "same_initial_reset_measurements": {
+      "initial_base": true,
+      "initial_base_quaternion": true,
+      "initial_bar_for_evaluation": true,
+      "machine_goal": true
+    },
+    "initial_reset_max_absolute_difference": {
+      "initial_base": 0.0,
+      "initial_base_quaternion": 0.0,
+      "initial_bar_for_evaluation": 0.0,
+      "machine_goal": 0.0
+    }
+  },
+  "code_increment_backup": {
+    "archive": "/Users/weiluo/Develop/backups/rebar_navigation_fix_20261025_371391c/navigation_fix.tar.gz",
+    "sha256": "ee8eecaafb368f981ad80a938fc4cea6ae68dee367a0abece5958d3632e9ddd7",
+    "bytes": 324268,
+    "files": 22,
+    "local_all_files_verified": true,
+    "nas": "/mnt/zspace/rebar_migration_20261024_142019/supplements/navigation_fix_371391c_ee8eecaafb36.tar.gz",
+    "nas_verified": true,
+    "nas_all_files_verified": true
+  },
+  "raw_retest_backup": {
+    "all_files_both_hosts_verified": true,
+    "files": 164,
+    "bytes": 143607455,
+    "manifest_sha256": "754807c6e12f85712908f754e87e1f166185f063d3024e952877514ca9b50c12",
+    "verified_unix": 1792893164.686136,
+    "report_sha256": "033be9af0ecf882c6bf18ba899430762c36ef3bf930f259f90d2cbe01894b5d8"
+  }
 }
