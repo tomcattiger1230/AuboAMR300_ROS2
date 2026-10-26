@@ -37,6 +37,7 @@ def main():
     ap.add_argument('--source',type=Path,required=True)
     ap.add_argument('--only',nargs='+')
     ap.add_argument('--cases',type=Path,help='Explicit saved ablation plan; preserve all outcomes')
+    ap.add_argument('--device',choices=['cuda','mps','cpu'],default='mps',help='Explicit backend; mps default preserves existing Mac ablation commands')
     ap.add_argument('--dtype',choices=['bfloat16','float32'],default='bfloat16')
     ap.add_argument('--attention',choices=['sdpa','eager'],default='sdpa')
     args=ap.parse_args()
@@ -51,7 +52,9 @@ def main():
     assert frozen=={'full_policy_demo.mp4':VIDEO_SHA,'frozen_policy.pt':POLICY_SHA}
     mm=json.loads((mp/'download_manifest.json').read_text())
     for f in mm['files']:assert sha256(mp/f['name'])==f['actual_sha256']
-    dtype=getattr(torch,args.dtype);device='mps'
+    dtype=getattr(torch,args.dtype);device=args.device
+    if device=='cuda' and not torch.cuda.is_available():raise RuntimeError('CUDA backend unavailable')
+    if device=='mps' and not torch.backends.mps.is_available():raise RuntimeError('MPS backend unavailable')
     p=transformers.AutoProcessor.from_pretrained(str(mp),local_files_only=True)
     model,loading=transformers.AutoModelForImageTextToText.from_pretrained(str(mp),dtype=dtype,
         attn_implementation=args.attention,local_files_only=True,output_loading_info=True)
@@ -127,7 +130,7 @@ def main():
         grid=x.get('image_grid_thw',x.get('video_grid_thw'))
         patches=int(grid.prod(-1).sum().item())
         save(r/'input_preflight.json',{'id':case['id'],'grid':grid.tolist(),'vision_patches':patches,'language_tokens':n})
-        assert patches<=8192 and n<=3500,'Conservative local MPS prefill budget exceeded; no model inference started'
+        assert patches<=8192 and n<=3500,'Conservative replay prefill budget exceeded; no model inference started'
         if case.get('schema'):kw['prefix_allowed_tokens_fn']=constraint_prefix(tokdata,case['schema'])
         maximum=4096 if case['thinking'] else 512;deadline=180 if case['thinking'] else 90
         audit=GenerationScoreAudit(n,allow_masked=bool(case.get('schema')))
