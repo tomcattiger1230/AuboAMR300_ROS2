@@ -1,5 +1,10 @@
 # 钢筋抓取与试验机上料训练
 
+## 当前部署：4090就绪，无NAS依赖（2026-10-26）
+
+已直接从Mac部署到`arnold@192.168.3.133`（arnold-TRX50-AERO-D），独立目录`/home/arnold/Develop/rebar-deployment-4090-20261026`。762份文件逐SHA一致；506项离线测试、6项子测试通过，7项平台/独立Cosmos环境跳过；USD和CUDA只读前向通过。冻结393b策略+optimizer及52张量/466-170-36602不变。共享SDK和旧目录保持，不需要极空间，没有启动仿真/训练或复活旧作业。源平台物理流程仍3/6，B1失败、B2/B3未启动；目标4090物理复测尚未运行。后续入口为`reports/deployment_4090_20261026.json`和`docs/DEPLOY_4090_20261026.md`，下文103与旧4090各段为历史。Cosmos回放代码已同步，模型权重/独立环境本轮尚未迁移。
+
+
 本轮核查与迁移备份已完成（2026-10-25T23:18上海）：A→3完整复测通过，B→1异常停止，B→2/B→3未启动，当前无本任务仿真进程。Mac/103重新核对冻结身份；386份节点文件逐SHA一致，406文件结果包双端完整核验。汇总迁移包700文件、2,020,400,470字节，SHA9c070aae017c243716b15cff091116a6f0f85135f345d29b5b40ce0ca2aa6a97；Mac与NAS均逐文件通过，实际恢复88份关键文件并独立克隆Git历史/审核器通过。迁移复制完整基础目录和`/Users/weiluo/Develop/backups/rebar_migration_followup_20261025/`（含final_state及完成凭据）；使用压缩包替代目录时也须带走同目录旁的`rebar_migration_followup_20261025.final_state.tar.gz`。数据就绪不代表目标GPU环境已安装；本轮未启动仿真、重试、训练或修改policy/optimizer。详细步骤见MIGRATION_CHECKLIST_20261025.md。
 
 

@@ -1,0 +1,66 @@
+{
+  "schema": "rebar_4090_deployment_state_v1",
+  "state": "deployed_offline_verified",
+  "host": "arnold@192.168.3.133",
+  "hostname": "arnold-TRX50-AERO-D",
+  "deployment_root": "/home/arnold/Develop/rebar-deployment-4090-20261026",
+  "source_git_head": "3d027999310a99f038ce0ea1c9df94ee88206c68",
+  "payload": {
+    "all_files_both_hosts_verified": true,
+    "files": 762,
+    "bytes": 852959953,
+    "manifest_sha256": "2525a236fad0e84333f94bfee0b14c8ab2b84912b8ed4baa46b26b09681a17ac",
+    "git_head": "3d027999310a99f038ce0ea1c9df94ee88206c68",
+    "nas_required": false,
+    "simulation_started": false,
+    "training_started": false,
+    "verified_unix": 1792975897.9948034
+  },
+  "cpu_tests": {
+    "passed": 506,
+    "subtests_passed": 6,
+    "skipped": 7,
+    "failures": 0,
+    "errors": 0,
+    "skips_explained": [
+      "5 Cosmos image-tracking tests require its isolated environment",
+      "2 APFS creation tests are Mac-only"
+    ]
+  },
+  "frozen_identity": {
+    "sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "model_optimizer_tensors": 52,
+    "counters": {
+      "updates": 466,
+      "actor_updates": 170,
+      "policy_steps": 36602
+    },
+    "file_and_tensor_payload_unchanged": true,
+    "optimizer_instantiated": false,
+    "training_started": false
+  },
+  "cuda_readonly_forward_passed": true,
+  "asset_dependency_preflight_passed": true,
+  "existing_shared_runtime_reused": true,
+  "shared_sdk_modified": false,
+  "nas_required": false,
+  "old_directories_preserved": true,
+  "source_physical_controller_coverage": "3/6",
+  "source_A3_passed": true,
+  "source_B1_failed": true,
+  "source_B2_B3_unstarted": true,
+  "target_physical_simulation_run": false,
+  "task_visual_acceptance": false,
+  "simulation_started": false,
+  "training_started": false,
+  "policy_updates_performed": 0,
+  "optimizer_instantiated": false,
+  "cosmos_replay_code_present": true,
+  "cosmos_model_weights_migrated": false,
+  "cosmos_scope": "Separate optional offline replay component; core frozen control deployment first",
+  "gpu_compute_apps_after_checks": "",
+  "next_step": "Offline isolate source B navigation/failed receipt path; no automatic retry or old job execution",
+  "verified_unix": 1792975997.5488422,
+  "local_receipts": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/deployment_4090_20261026",
+  "updated_at_shanghai": "2026-10-26T08:54:13.986113+08:00"
+}

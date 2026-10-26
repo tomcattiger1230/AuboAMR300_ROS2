@@ -49,7 +49,7 @@
   "remote_root": "/home/arnold/Develop/rebar-training-resume-0103-20261022/rebar_training/artifacts/workcell_frozen_validation_20261025_v11",
   "stop_on_failure": true,
   "automatic_retry": false,
-  "updated_unix": 1792941506.611671,
+  "updated_unix": 1792976053.9880252,
   "ideal_machine_survey": true,
   "visual_machine_pose_refinement": false,
   "v4_result": {
@@ -788,5 +788,9 @@
     "training_started": false,
     "optimizer_instantiated": false,
     "verified_unix": 1792941053.849379
-  }
+  },
+  "current_deployment_host": "arnold@192.168.3.133",
+  "current_deployment_root": "/home/arnold/Develop/rebar-deployment-4090-20261026",
+  "deployment_report": "rebar_training/reports/deployment_4090_20261026.json",
+  "target_physical_simulation_run": false
 }
