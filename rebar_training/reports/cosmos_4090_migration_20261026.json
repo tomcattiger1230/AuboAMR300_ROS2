@@ -1,0 +1,50 @@
+{
+  "state": "target_connection_unavailable_runtime_transfer_pending",
+  "model_id": "nvidia/Cosmos3-Edge",
+  "model_revision": "344d602b128d1bbdacb43b08d0a3626f46343e29",
+  "transformers_commit": "50e35cc0ca18ec19b80653690de553e6decf74f5",
+  "target": "arnold@192.168.3.133",
+  "target_root": "/home/arnold/Develop/rebar-deployment-4090-20261026",
+  "target_models_previously_verified": {
+    "files": 16,
+    "bytes": 7735509866
+  },
+  "local_linux_dependencies_verified": {
+    "files": 21948,
+    "bytes": 5370093498,
+    "torch": "2.10.0+cu130",
+    "torchvision": "0.25.0+cu130"
+  },
+  "local_replay_unit_tests_passed": 28,
+  "local_backup": {
+    "backup_directory": "/Users/weiluo/Develop/backups/cosmos_4090_migration_20261026_5eb62fc",
+    "local_verified": true,
+    "model_files": 16,
+    "model_bytes": 7735509866,
+    "linux_dependency_files": 21948,
+    "linux_dependency_bytes": 5370093498,
+    "independent_apfs_clones": true,
+    "hardlinks_used": false,
+    "remote_deployment_complete": false,
+    "remote_state": "SSH temporarily unavailable during runtime dependency transfer",
+    "target_models_previously_verified": true,
+    "target_cuda_replay_not_run_yet": true,
+    "python_runtime_requirement": "Linux x86_64 Python3.13.15; target interpreter is not included in this directory",
+    "nas_required": false,
+    "simulation_started": false,
+    "training_started": false,
+    "verified_unix": 1792977708.921514
+  },
+  "target_runtime_import_verified": false,
+  "target_cuda_model_load_verified": false,
+  "target_replay_completed": false,
+  "semantic_acceptance_passed": false,
+  "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "video_sha256": "7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef",
+  "policy_or_optimizer_loaded_by_cosmos": false,
+  "simulation_started": false,
+  "training_started": false,
+  "nas_required": false,
+  "remote_live_state_fresh": false,
+  "updated_unix": 1792977815.6635
+}
