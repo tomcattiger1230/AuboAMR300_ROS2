@@ -1,5 +1,10 @@
 # 钢筋抓取与试验机上料训练
 
+## 最新：冻结Edge官方样例与2–4fps对照完成，语义仍未通过（2026-10-26）
+
+保留37项离线结果（34项完整、2项截断、1项解码错误），33项相关测试通过。官方货物定位大致正确；显式PyAV绕过默认视频解码兼容错误，延长输出预算使图片样例正常结束，原失败保持。钢筋对象、底盘运动与事件时间仍不稳定；固定分辨率的4fps转向仍判静止，不能以帧率或格式成功替代语义验收。模型、393b策略/optimizer及原视频SHA保持，未训练或启动仿真。完整分析见docs/COSMOS_EDGE_OFFICIAL_SHORTCLIPS_20261026.md和reports/cosmos_edge_official_shortclips_20261026.json。Newton/Isaac Lab只调研比较，未安装或切换；见docs/NEWTON_ISAACLAB_COMPARISON_20261026.md。
+
+
 ## Cosmos迁移完成：CUDA回放链路通过，语义可靠性仍未通过（2026-10-26）
 
 133恢复后完成独立环境续传，模型16份及Linux依赖21,948份在回放前后全SHA一致。4090实际加载固定Cosmos Reasoner，28项单元测试及三项原视频CUDA诊断通过完整性检查，零NaN/未知token、正常EOS；总览仍漏报底盘位移，腕部仍误认夹具，semantic_acceptance_passed=false。全部原始输出已回传核验，Mac迁移备份补齐独立Linux Python解释器（4,738项内容/链接核验）。393b策略/optimizer及7d85原视频不变，没有启动仿真/训练。入口、恢复方法与局限见docs/COSMOS_4090_MIGRATION_20261026.md，完成状态见reports/cosmos_4090_migration_20261026.json。下文原物理验收结论保持。

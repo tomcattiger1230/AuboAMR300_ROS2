@@ -1,0 +1,110 @@
+{
+  "at_unix": 1792999301.656358,
+  "total_retained_results": 37,
+  "batch_results": [
+    {
+      "batch": "outputs",
+      "total": 25,
+      "statuses": {
+        "incomplete": 2,
+        "complete": 22,
+        "error": 1
+      }
+    },
+    {
+      "batch": "followup_outputs",
+      "total": 4,
+      "statuses": {
+        "complete": 4
+      }
+    },
+    {
+      "batch": "fixed_resolution_outputs",
+      "total": 8,
+      "statuses": {
+        "complete": 8
+      }
+    }
+  ],
+  "status_counts": {
+    "incomplete": 2,
+    "complete": 34,
+    "error": 1
+  },
+  "all_generation_scores_checked_finite": true,
+  "complete_answers_eos_and_no_unknown": true,
+  "frozen_policy_optimizer_and_video_unchanged": true,
+  "all_model_files_unchanged": true,
+  "model_revision": "344d602b128d1bbdacb43b08d0a3626f46343e29",
+  "copied_node_files": 483,
+  "all_copied_node_sha_equal": true,
+  "fixed_resolution_pairs": [
+    {
+      "segment": "a",
+      "shared_source_frames": 8,
+      "all_shared_frames_pixel_identical": true,
+      "spatial_grid": [
+        16,
+        24
+      ]
+    },
+    {
+      "segment": "b",
+      "shared_source_frames": 8,
+      "all_shared_frames_pixel_identical": true,
+      "spatial_grid": [
+        18,
+        24
+      ]
+    },
+    {
+      "segment": "c",
+      "shared_source_frames": 8,
+      "all_shared_frames_pixel_identical": true,
+      "spatial_grid": [
+        16,
+        24
+      ]
+    },
+    {
+      "segment": "d",
+      "shared_source_frames": 8,
+      "all_shared_frames_pixel_identical": true,
+      "spatial_grid": [
+        18,
+        24
+      ]
+    }
+  ],
+  "motion_output_contract": {
+    "valid": 0,
+    "total": 14,
+    "note": "Coordinate arrays are not reinterpreted as yes/no displacement labels. Some prose can be semantically correct while failing the contract."
+  },
+  "event_time_mae_s": null,
+  "event_time_mae_note": "No trustworthy event-identity/localization acceptance; do not score arbitrary timestamps as correct. Provisional stop reference corrected after exact-frame inspection and not used as truth.",
+  "semantic_acceptance_passed": false,
+  "training_started": false,
+  "simulation_started": false,
+  "optimizer_loaded": false,
+  "policy_loaded": false,
+  "environment_packages_modified": false,
+  "state": "offline_evaluation_complete_semantic_acceptance_failed",
+  "source": "arnold@192.168.3.133",
+  "source_video_sha256": "7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef",
+  "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "results_root": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/cosmos_edge_official_shortclips_20261026",
+  "newton_scope": "research_and_comparison_only",
+  "isaac_lab_sdk_modified": false,
+  "unit_tests_passed": 33,
+  "conclusions": {
+    "official_grounding": "qualitatively localized cargo",
+    "official_caption": "major entities described; details not fully reliable",
+    "decoder_failure": "Torchvision read_video passes removed metadata_errors to PyAV19; existing explicit PyAV path succeeded without changing installed packages",
+    "steel_recognition": "rod-like object localization partial; fixture identity and relations unstable",
+    "motion": "clear rotation still called stationary; isolated stationary scene described correctly; classification contract not followed",
+    "event_timing": "no accepted target event localization; MAE not reported"
+  },
+  "all_failure_evidence_retained": true,
+  "newton_installed_this_round": false
+}
