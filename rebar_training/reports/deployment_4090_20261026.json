@@ -56,11 +56,15 @@
   "policy_updates_performed": 0,
   "optimizer_instantiated": false,
   "cosmos_replay_code_present": true,
-  "cosmos_model_weights_migrated": false,
-  "cosmos_scope": "Separate optional offline replay component; core frozen control deployment first",
+  "cosmos_model_weights_migrated": true,
+  "cosmos_scope": "Isolated offline Reasoner, fixed model and CUDA runtime verified; three diagnostic cases complete, semantic reliability remains unaccepted",
   "gpu_compute_apps_after_checks": "",
   "next_step": "Offline isolate source B navigation/failed receipt path; no automatic retry or old job execution",
   "verified_unix": 1792975997.5488422,
   "local_receipts": "/Users/weiluo/Develop/github/AuboAMR300_ROS2/rebar_training/artifacts/deployment_4090_20261026",
-  "updated_at_shanghai": "2026-10-26T08:54:13.986113+08:00"
+  "updated_at_shanghai": "2026-10-26T08:54:13.986113+08:00",
+  "cosmos_runtime_migrated": true,
+  "cosmos_cuda_replay_verified": true,
+  "cosmos_semantic_acceptance_passed": false,
+  "cosmos_report": "rebar_training/reports/cosmos_4090_migration_20261026.json"
 }

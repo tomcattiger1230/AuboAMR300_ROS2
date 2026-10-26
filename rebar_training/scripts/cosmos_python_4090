@@ -1,0 +1,14 @@
+#!/bin/sh
+# Offline Reasoner environment; deliberately separate from the robot runtime.
+set -eu
+repo=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
+python="$repo/.cosmos_reasoner_replay/venv/bin/python"
+if [ ! -x "$python" ]; then
+    echo "Cosmos isolated Python is missing: $python" >&2
+    exit 1
+fi
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
+export TOKENIZERS_PARALLELISM=false
+export PYTHONDONTWRITEBYTECODE=1
+exec "$python" "$@"

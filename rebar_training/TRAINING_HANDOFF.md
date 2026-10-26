@@ -1,13 +1,13 @@
 # 钢筋视觉移动操作训练：接力指导
 
-## Cosmos补充迁移：模型已到4090，独立环境续传因网络待完成（2026-10-26）
+## Cosmos迁移完成：CUDA回放链路通过，语义可靠性仍未通过（2026-10-26）
 
-固定16份Cosmos模型已在4090逐SHA通过；Linux依赖和原回放材料已准备，Mac完整克隆备份逐SHA通过，28项回放单元测试通过。环境续传时4090 SSH中断，当前尚未核验目标CUDA模型加载及回放，不标记Cosmos部署完成。钢筋控制部署、393b策略/optimizer及原视频保持，不启动仿真/训练。接力见docs/COSMOS_4090_MIGRATION_20261026.md和reports/cosmos_4090_migration_20261026.json；旧4090钢筋控制部署结论继续有效。
+133恢复后完成独立环境续传，模型16份及Linux依赖21,948份在回放前后全SHA一致。4090实际加载固定Cosmos Reasoner，28项单元测试及三项原视频CUDA诊断通过完整性检查，零NaN/未知token、正常EOS；总览仍漏报底盘位移，腕部仍误认夹具，semantic_acceptance_passed=false。全部原始输出已回传核验，Mac迁移备份补齐独立Linux Python解释器（4,738项内容/链接核验）。393b策略/optimizer及7d85原视频不变，没有启动仿真/训练。入口、恢复方法与局限见docs/COSMOS_4090_MIGRATION_20261026.md，完成状态见reports/cosmos_4090_migration_20261026.json。下文原物理验收结论保持。
 
 
 ## 当前部署：4090就绪，无NAS依赖（2026-10-26）
 
-已直接从Mac部署到`arnold@192.168.3.133`（arnold-TRX50-AERO-D），独立目录`/home/arnold/Develop/rebar-deployment-4090-20261026`。762份文件逐SHA一致；506项离线测试、6项子测试通过，7项平台/独立Cosmos环境跳过；USD和CUDA只读前向通过。冻结393b策略+optimizer及52张量/466-170-36602不变。共享SDK和旧目录保持，不需要极空间，没有启动仿真/训练或复活旧作业。源平台物理流程仍3/6，B1失败、B2/B3未启动；目标4090物理复测尚未运行。后续入口为`reports/deployment_4090_20261026.json`和`docs/DEPLOY_4090_20261026.md`，下文103与旧4090各段为历史。Cosmos回放代码已同步，模型权重/独立环境本轮尚未迁移。
+已直接从Mac部署到`arnold@192.168.3.133`（arnold-TRX50-AERO-D），独立目录`/home/arnold/Develop/rebar-deployment-4090-20261026`。762份文件逐SHA一致；506项离线测试、6项子测试通过，7项平台/独立Cosmos环境跳过；USD和CUDA只读前向通过。冻结393b策略+optimizer及52张量/466-170-36602不变。共享SDK和旧目录保持，不需要极空间，没有启动仿真/训练或复活旧作业。源平台物理流程仍3/6，B1失败、B2/B3未启动；目标4090物理复测尚未运行。后续入口为`reports/deployment_4090_20261026.json`和`docs/DEPLOY_4090_20261026.md`，下文103与旧4090各段为历史。Cosmos模型和独立环境已在后续补充迁移中完成，详见上文；语义识别可靠性仍未通过。
 
 
 本轮核查与迁移备份已完成（2026-10-25T23:18上海）：A→3完整复测通过，B→1异常停止，B→2/B→3未启动，当前无本任务仿真进程。Mac/103重新核对冻结身份；386份节点文件逐SHA一致，406文件结果包双端完整核验。汇总迁移包700文件、2,020,400,470字节，SHA9c070aae017c243716b15cff091116a6f0f85135f345d29b5b40ce0ca2aa6a97；Mac与NAS均逐文件通过，实际恢复88份关键文件并独立克隆Git历史/审核器通过。迁移复制完整基础目录和`/Users/weiluo/Develop/backups/rebar_migration_followup_20261025/`（含final_state及完成凭据）；使用压缩包替代目录时也须带走同目录旁的`rebar_migration_followup_20261025.final_state.tar.gz`。数据就绪不代表目标GPU环境已安装；本轮未启动仿真、重试、训练或修改policy/optimizer。详细步骤见MIGRATION_CHECKLIST_20261025.md。
