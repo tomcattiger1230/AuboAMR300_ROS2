@@ -213,14 +213,26 @@ class MapView(QWidget):
                         pass
 
         if self.show_curves:
-            painter.setPen(QPen(QColor(COLORS["map_curve"]), 1.5))
+            has_nurbs = False
             for obj in self.smap.advanced_curves:
                 if not isinstance(obj, dict):
                     continue
+                is_nurbs = obj.get("className") == "NURBS6"
+                has_nurbs |= is_nurbs
+                painter.setPen(QPen(QColor(COLORS["warn"] if is_nurbs else COLORS["map_curve"]),
+                                    1.5, Qt.DashLine if is_nurbs else Qt.SolidLine))
                 pts = self._curve_points(obj)
                 if len(pts) >= 2:
                     for a, b in zip(pts[:-1], pts[1:]):
                         painter.drawLine(self.world_to_screen(a[0], a[1]), self.world_to_screen(b[0], b[1]))
+            if has_nurbs:
+                painter.setFont(QFont("Sans", 10))
+                painter.setPen(QColor(COLORS["text"]))
+                painter.setBrush(QColor(COLORS["bg"]))
+                label = "橙色虚线：NURBS6 控制多边形（非行驶轨迹）"
+                box = QRectF(8, 8, QFontMetrics(painter.font()).horizontalAdvance(label) + 16, 26)
+                painter.drawRoundedRect(box, 4, 4)
+                painter.drawText(box.adjusted(8, 0, -8, 0), Qt.AlignVCenter | Qt.AlignLeft, label)
 
         if self.show_points:
             painter.setFont(QFont("Sans", 9))
@@ -246,11 +258,26 @@ class MapView(QWidget):
                 if "pos" in item and isinstance(item["pos"], dict):
                     item = item["pos"]
                 if "x" in item and "y" in item:
-                    return float(item["x"]), float(item["y"])
+                    try:
+                        xy = float(item["x"]), float(item["y"])
+                        return xy if all(math.isfinite(v) for v in xy) else None
+                    except (TypeError, ValueError):
+                        return None
             return None
 
         p0 = pos_from(obj.get("startPos"))
         p3 = pos_from(obj.get("endPos"))
+        kind = obj.get("className", "DegenerateBezier")
+        if kind == "NURBS6":
+            # The map supplies six positions but no degree/knot vector. Do not
+            # invent the controller's NURBS convention or silently discard CP3/4.
+            # Show the complete control polygon, explicitly labelled by the view.
+            points = [p0] + [pos_from(obj.get(f"controlPos{i}")) for i in range(1, 5)] + [p3]
+            return points if all(point is not None for point in points) else []
+        if kind == "StraightPath":
+            return [p0, p3] if p0 is not None and p3 is not None else []
+        if kind != "DegenerateBezier":
+            return []
         p1 = pos_from(obj.get("controlPos1")) or p0
         p2 = pos_from(obj.get("controlPos2")) or p3
         if not (p0 and p1 and p2 and p3):

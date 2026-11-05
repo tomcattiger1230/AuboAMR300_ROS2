@@ -1,5 +1,7 @@
 # MV-CH100-60UM + 12 mm C 口镜头版本
 
+实机内参标定、原始 PNG 采集及 Jetson 操作步骤见 [相机内参标定](README_CAMERA_CALIBRATION.md)。
+
 本版本保留底盘、六轴机械臂、末端夹爪和双雷达，将末端的 Gemini RGB-D 模型换为黑白工业相机（挂接在 `wrist3_Link`）。原 Gemini 版本仍使用原来的文件和启动入口。
 
 另有保留同一相机、改用 Blender 调整原点后的 `finger_centered.stl` 与 `motor_new.stl` 的

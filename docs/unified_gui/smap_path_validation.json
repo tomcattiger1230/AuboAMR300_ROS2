@@ -1,0 +1,20 @@
+[
+  {
+    "map": "HSJC01",
+    "sha256": "9eb58a7f1272667947c84f1bcedf69f6fcc7e6d707beb0793f03dbd54359744c",
+    "stations": 3,
+    "path_types": {
+      "DegenerateBezier": 4,
+      "NURBS6": 2
+    }
+  },
+  {
+    "map": "HSJC04",
+    "sha256": "55f360b3a27fa6240a4f36802a87f89be1b645362588aecb1598199d1aff936d",
+    "stations": 7,
+    "path_types": {
+      "DegenerateBezier": 6,
+      "StraightPath": 8
+    }
+  }
+]

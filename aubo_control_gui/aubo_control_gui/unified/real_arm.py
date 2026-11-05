@@ -13,7 +13,7 @@ class RealArm(QWidget):
         super().__init__(parent)
         import rclpy
         from sensor_msgs.msg import JointState
-        from aubo_bridge_msgs.msg import RobotStatus, TrajectoryCommand
+        from aubo_bridge_msgs.msg import JointStateEx, RobotStatus, TrajectoryCommand
         from aubo_bridge_msgs.srv import MoveJoint, MoveToPose, GetRobotInfo
         from std_msgs.msg import String, Float64
         self.ros = rclpy
@@ -30,6 +30,7 @@ class RealArm(QWidget):
         self.gripper_time = 0
         self.node.create_subscription(Float64, '/aubo/gripper_position', self.on_gripper, 10)
         self.node.create_subscription(RobotStatus, '/aubo/status', self.on_status, 10)
+        self.node.create_subscription(JointStateEx, '/aubo/joint_states_ex', self.on_bridge_joints, 10)
         self.node.create_subscription(JointState, '/aubo/realtime_joint_states', lambda m: self.on_joints(m, True), 20)
         self.node.create_subscription(JointState, '/joint_states', lambda m: self.on_joints(m, False), 10)
         self.status = None
@@ -93,7 +94,17 @@ class RealArm(QWidget):
         values = dict(zip(msg.name, msg.position))
         if not all(n in values for n in names):
             return
-        self.actual = [values[n] for n in names]
+        self._accept_joints([values[n] for n in names], realtime)
+
+    def on_bridge_joints(self, msg):
+        # The bundled AUBO Python bridge publishes this custom type, not JointState.
+        self._accept_joints(msg.position, True)
+
+    def _accept_joints(self, positions, realtime):
+        if len(positions) != 6 or not all(math.isfinite(value) for value in positions):
+            return
+        self.actual = list(positions)
+        now = time.monotonic()
         self.joint_time = now
         if realtime: self.realtime_time = now
         self.view.set_joint_positions(self.actual)
@@ -111,9 +122,12 @@ class RealArm(QWidget):
         self.gripper_feedback.setText('夹爪反馈：'+(str(self.gripper_position) if time.monotonic()-self.gripper_time < 1.5 else '-- / 过期')+'（设备原始位置单位）')
         if self.stopping and fresh and self.status_time > self.stop_requested_at and self.status.robot_state == self.status.IDLE and self.future is None:
             self.stopping = False
-        self.feedback.setText('实机反馈：'+(', '.join(f'J{i+1} {math.degrees(v):.1f}°' for i,v in enumerate(self.actual)) if self.actual and fresh else '等待 / 过期'))
+        joints_fresh = self.actual is not None and time.monotonic()-self.joint_time < 1.5
+        self.feedback.setText('ROS 关节反馈：'+(', '.join(f'J{i+1} {math.degrees(v):.1f}°' for i,v in enumerate(self.actual)) if joints_fresh else '等待 / 过期'))
         if fresh:
             self.feedback.setText(self.feedback.text()+f'\nTCP / m：{self.status.tool_position_x:.4f}, {self.status.tool_position_y:.4f}, {self.status.tool_position_z:.4f}')
+        else:
+            self.feedback.setText(self.feedback.text()+'\nAUBO Bridge 状态：等待 / 过期；运动已禁用')
         for b in self.actions: b.setEnabled(self.ready())
 
     def copy_actual(self):

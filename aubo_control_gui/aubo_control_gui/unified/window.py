@@ -344,6 +344,10 @@ class UnifiedWindow(QMainWindow):
         self.station_choices.blockSignals(False)
         self.target.clear()
         self.log(f'已载入地图 {smap.name}：{len(stations)} 个 LM 点位；请选择目标后点击导航')
+        nurbs_count = sum(isinstance(curve, dict) and curve.get('className') == 'NURBS6'
+                          for curve in smap.advanced_curves)
+        if nurbs_count:
+            self.log(f'{nurbs_count} 条 NURBS6 仅显示控制多边形（橙色虚线），非行驶轨迹；精确曲线需核对 SEER 参数定义')
 
     def choose_station(self, index):
         station_id = self.station_choices.itemData(index)

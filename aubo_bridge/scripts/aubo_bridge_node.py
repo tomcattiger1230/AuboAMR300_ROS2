@@ -828,7 +828,8 @@ class AuboBridgeNode(Node):
             if waypoint and "joint" in waypoint:
                 msg.position = list(waypoint["joint"])
             else:
-                msg.position = [0.0] * 6
+                self.get_logger().warn("Current waypoint has no joint feedback; skipping joint state")
+                return
             msg.velocity = [0.0] * 6
             msg.effort = [0.0] * 6
             msg.joint_temperatures = [0.0] * 6
@@ -836,12 +837,7 @@ class AuboBridgeNode(Node):
             msg.joint_error_flags = [False] * 6
         except Exception as e:
             self.get_logger().warn(f"Failed to get joint state: {e}")
-            msg.position = [0.0] * 6
-            msg.velocity = [0.0] * 6
-            msg.effort = [0.0] * 6
-            msg.joint_temperatures = [0.0] * 6
-            msg.joint_currents = [0.0] * 6
-            msg.joint_error_flags = [False] * 6
+            return
 
         self.joint_state_pub.publish(msg)
 

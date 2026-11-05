@@ -18,6 +18,7 @@ from aubo_control_gui.unified.seer.client import AgvClient
 from aubo_control_gui.unified.base import SeerBase
 from aubo_control_gui.unified.map_canvas import MapCanvas
 from aubo_control_gui.unified.window import UnifiedWindow
+from aubo_control_gui.unified.seer.smap import load_smap_file, extract_station_like_points
 
 @pytest.fixture(scope='module')
 def app():
@@ -64,7 +65,8 @@ def test_lm_dropdown_syncs_map_and_clears_target_on_reload(app, monkeypatch):
         assert window.station_choices.currentIndex() == 0
         assert window.target.text() == 'custom_station'
         window.set_seer_map(maps / 'HSJC04.smap')
-        assert window.station_choices.count() == 6
+        expected = len(extract_station_like_points(load_smap_file(maps / 'HSJC04.smap')))
+        assert window.station_choices.count() == expected + 1
         assert window.target.text() == ''
         assert window.seer_map.selected_station_id == ''
         assert window.base is None

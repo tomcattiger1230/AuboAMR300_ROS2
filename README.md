@@ -31,6 +31,7 @@ SEER AMB-300 底盘、AUBO i16H 机械臂、末端夹爪和工业相机的 ROS 2
 | 车载 1–4 号钢筋到目标位姿的规划窗口 | [钢筋末端姿态规划 GUI](seer_description/README_REBAR_POSE_PLANNER.md) |
 | 双雷达、SLAM、导航和视频 | [导航与相机](seer_description/ISAAC_NAVIGATION_CAMERA.md) |
 | 黑白相机参数、URDF/SDF/USD、视频入口 | [MV-CH100-60UM + 12 mm](seer_description/README_MONO_CAMERA.md) |
+| 实机相机原图采集、内参求解与验证 | [相机内参标定](seer_description/README_CAMERA_CALIBRATION.md) |
 | 新 finger + motor_adapter 夹爪模型与启动 | [新夹爪版本](seer_description/README_FINGER_GRIPPER.md) |
 | 钢筋抓取/释放测试场景与自动化测试 | [钢筋抓取测试](seer_description/README_REBAR_GRASP.md) |
 | Isaac Lab 钢筋抓取、插入上料训练与 4090 验证 | [钢筋训练模块](rebar_training/README.md) |

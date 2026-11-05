@@ -59,3 +59,6 @@ weights/
 # Reproducible Isaac Lab training wrappers, reports and checkpoints
 /rebar_training/artifacts/
 /rebar_training/src/*.egg-info/
+
+# Native camera calibration captures and generated results
+/calibration_data/

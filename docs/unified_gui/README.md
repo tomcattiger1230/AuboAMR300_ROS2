@@ -64,6 +64,13 @@ ros2 run aubo_control_gui seer_aubo_gui --mode isaac --domain-id 133 --peer 192.
 载入本地 `.smap` 后，实机导航自动列出 LM 点位及坐标，按编号排序。
 下拉选择、双击 SEER 地图站点和手动输入目标 ID 会同步地图高亮与下拉选择。
 切换地图会清空上一次目标；地图点击和点位选择仅设置目标，发送按钮才启动导航。
+路径显示按 `className` 区分：`StraightPath` 显示直线，`DegenerateBezier` 显示三次贝塞尔曲线。
+HSJC01 的 `LM1↔LM3` 为 `NURBS6`，包含起终点及四个控制点；原先错误地只取前两个控制点，
+导致正反向路径变形且不重合。当前显示全部六点的橙色虚线控制多边形，并在地图和日志中标注
+“非行驶轨迹”。文件未给出阶数与节点向量，`z` 的含义也尚未确认；精确显示需核对 SEER 的
+`NURBS6` 定义，不将它猜测为普通贝塞尔曲线。此改动不修改 `.smap` 或导航指令。
+2026-09-29 对比结果见 `hsjc01_path_comparison.png`、`hsjc04_path_comparison.png`，
+本次地图哈希和路径类型统计见 `smap_path_validation.json`；HSJC04 当前含 7 个 LM 点位。
 “停止底盘与机械臂”同时请求底盘停止、导航取消和机械臂停止，属于软件请求。
 
 ## 同网段部署
@@ -119,11 +126,74 @@ Isaac 与其机器人 ROS stack 也需要使用同一 ROS 域和局域网发现�
 
 ## 实机 ROS 桥
 
-实机先在 ROS 桥主机运行匹配版本的 AUBO Bridge，并配置真实 `robot_host`、
-`robot_port`。如果使用独立 Jetson 夹爪桥，AUBO Bridge 的
-`gripper_enabled` 应为 false，Jetson 与 GUI 的 ROS 域须一致。
+当前有两条实机 ROS 路径，接口不同，不能只替换 CMake 文件：
+
+- 现有 `aubo_bridge` Python 桥使用仓库内 `libpyauboi5.so`，该文件是 Linux x86-64 二进制，
+  需要在 x86-64 主机运行并配置真实 `robot_host`、`robot_port`。它发布
+  `/aubo/status`、`/aubo/joint_states_ex` 和 `/aubo/get_robot_info`，供当前 GUI 完整读取。
+- 仓库已有的 `aubo_ros2_driver/aubo_ros2_driver/CMakeLists.txt` 在 `aarch64` 上选取 AUBO
+  ARM64 C++ SDK；可作为 Jetson 部署路径。驱动的 `joint_state_broadcaster` 发布标准
+  `/joint_states`，当前 GUI 能读取关节角，但驱动没有发布本 GUI 所需的
+  `/aubo/status`、`/aubo/get_robot_info`，因此实机运动按钮仍会禁用，末端状态也不会完整显示。
+  此时 GUI 标注为“ROS 关节反馈”，仅表示收到话题数据，不表示已核实真实机械臂连接。
+  需单独开发和验证适配层，或将 GUI 改接该驱动的控制接口。
+
+所参考的 `/Users/weiluo/Downloads/CMakeLists.txt` 属于 `aubo_ros2_driver`，
+ARM64 SDK URL 与子模块现有文件相同。参考文件省略了子模块中的
+`aubo_client_node.py` 安装项及若干显式链接，不能覆盖当前子模块 CMake。
+子模块还提供基于 Python 标准库 socket 的 JSON-RPC 客户端和
+`/jsonrpc_service`，可用于独立查询控制器信息，但这也不是当前 GUI 的完整接口。
+若 Jetson 与控制器适用该 JSON-RPC 接口（仓库默认 TCP 30004），先核对控制器 IP 与固件，
+再运行 `aubo_client.launch.py robot_ip:=<控制器 IP>`，用只读请求
+`ros2 service call /jsonrpc_service aubo_msgs/srv/JsonRpc
+"{cls: 'RobotState', func: 'getTcpPose', params: '[]'}"` 查询 TCP 位姿。
+若使用 `aubo_control.launch.py`，`joint_state_broadcaster` 启动后可读
+`ros2 topic echo /joint_states`，但硬件激活过程会开启伺服模式，须按实机驱动流程验收。
+2026-11-05 在 `jetson@192.168.88.214`（Ubuntu 22.04.5、ARM64、ROS 2 Humble）
+完成以下隔离测试，目录为 Jetson 的 `~/.local/share/aubo-arm64-probe/`：
+
+- 下载并验证 `0.24.1-rc.3` ARM64 SDK；C++ 程序实际编译、链接并构造 `AuboApi` 成功，
+  没有连接机器人。
+- 克隆当前子模块提交 `d848ddc` 的精简源码。`aubo_msgs` 和 `aubo_dashboard_msgs` 构建成功；
+  原样构建 `aubo_ros2_driver` 时，Humble 缺少 `HardwareComponentInterfaceParams`，编译失败。
+  仅在 Jetson 的隔离副本中把该类型改为 `HardwareInfo` 后，驱动构建成功，插件能加载 ARM64 SDK。
+  仓库子模块未因此修改，正式部署仍需提交并验证 Humble 兼容补丁。
+- `/jsonrpc_service` 在 Jetson 本机模拟 TCP 控制端上查询 `getTcpPose` 成功；
+  这只验证 ROS 2 请求、节点和 TCP 客户端的通路，不代表实际控制柜支持该协议。
+- 实际控制柜为 `192.168.88.186`：ICMP 可达，TCP 8899 可连接，驱动所用
+  30004/30010 返回 `ECONNREFUSED`。因此此驱动不能按当前配置从该控制柜读取真实数据，
+  未启动 `aubo_control.launch.py`、伺服模式或任何运动命令。原有夹爪服务保持 inactive。
+
+完整构建日志留在 Jetson 的 `colcon-build.log` 与 `colcon-build-humble-probe.log`；
+还需核实控制柜协议/固件，以及是否有适用于此 8899 接口的 ARM64 桥或 SDK。
+`aubo_control.launch.py` 的真实硬件激活代码会开启伺服模式，不应当作单纯的只读查询入口。
+
+若只需显示六轴关节角，当前控制柜无需开放 30004/30010，也无需启动上述 ROS 2 控制驱动。
+应通过已开放的 8899 使用 AUBO PE 兼容 SDK 的 `get_current_waypoint()['joint']` 读取角度，
+再发布为 ROS 2 `/joint_states` 供 GUI 显示。Jetson 上已验证 8899 可建立 TCP 连接，
+但该服务不主动推送数据；仓库内的旧 SDK `libpyauboi5.so` 是 x86-64 二进制，
+Jetson 目前没有对应的 ARM64 版本，所以**尚未从真实机械臂读到六轴角度**。
+在获得兼容的 ARM64 旧 SDK 前，也可让同网段 x86-64 Linux 主机运行现有 `aubo_bridge`，
+将其 `/aubo/joint_states_ex` 转给 Jetson/GUI。
+
+GUI 的“ROS 桥主机 IP”填写实际运行所需 ROS 节点的主机 IP；
+若 GUI、Jetson、x86-64 桥共同使用，须确保它们在相同 ROS 域中能相互发现。
+实机模式中 SEER 底盘仍由 GUI 直接通过 TCP 访问，未经过 Jetson 中转。
 GUI 端需编译相同 `aubo_bridge_msgs`；不需要安装厂商 AUBO SDK。
 实机机械臂页明确使用 SDK 桥接口，首版不提供 MoveIt 碰撞规划或学生固定快捷路线。
+
+连接后可用只读命令查看 `/aubo/status`（桥接连接/初始化状态、末端位置）、
+`/aubo/joint_states_ex`（六轴关节角，弧度），或调用
+`/aubo/get_robot_info` 查询关节、法兰位姿及速度/加速度限值：
+
+```bash
+ros2 topic echo /aubo/status
+ros2 topic echo /aubo/joint_states_ex
+ros2 service call /aubo/get_robot_info aubo_bridge_msgs/srv/GetRobotInfo "{}"
+```
+
+实机 GUI 订阅桥发布的 `/aubo/joint_states_ex` 与 `/aubo/status`，显示关节、末端位置和状态；
+反馈过期时禁用运动按钮。以上查询需先由桥连接真实机械臂，GUI 自身不直接加载厂商 SDK。
 
 ## Isaac 实验实时观察
 

@@ -23,10 +23,48 @@ def local_ros(monkeypatch):
 
 def test_real_arm_uses_generated_types_without_device(local_ros):
     from aubo_control_gui.unified.real_arm import RealArm
+    from aubo_bridge_msgs.msg import JointStateEx
+    import time
     arm = RealArm(lambda *args:None)
     assert not arm.ready()
     assert all(not b.isEnabled() for b in arm.actions)
     assert arm.joint_type.Request().enable_move is False
+    publisher_node = rclpy.create_node('offline_arm_feedback')
+    publisher = publisher_node.create_publisher(JointStateEx, '/aubo/joint_states_ex', 10)
+    try:
+        deadline = time.monotonic() + 3
+        while publisher.get_subscription_count() == 0 and time.monotonic() < deadline:
+            rclpy.spin_once(publisher_node, timeout_sec=.01)
+            arm.tick()
+        assert publisher.get_subscription_count() == 1
+        sample = JointStateEx()
+        sample.position = [.1, .2, .3, .4, .5, .6]
+        publisher.publish(sample)
+        while arm.actual is None and time.monotonic() < deadline:
+            rclpy.spin_once(publisher_node, timeout_sec=.01)
+            arm.tick()
+        assert arm.actual == pytest.approx(sample.position)
+        assert not arm.ready()  # Joint feedback alone cannot enable motion.
+        assert all(not b.isEnabled() for b in arm.actions)
+    finally:
+        publisher_node.destroy_node()
+    arm.tick()
+    assert 'ROS 关节反馈：J1' in arm.feedback.text()
+    assert 'AUBO Bridge 状态：等待 / 过期' in arm.feedback.text()
+    assert not arm.ready()
+    # The official Jetson driver publishes standard /joint_states instead.
+    from sensor_msgs.msg import JointState
+    msg = JointState()
+    msg.name = ['shoulder_joint', 'upperArm_joint', 'foreArm_joint',
+                'wrist1_joint', 'wrist2_joint', 'wrist3_joint']
+    msg.position = [.6, .5, .4, .3, .2, .1]
+    arm.realtime_time = 0
+    arm.on_joints(msg, False)
+    arm.tick()
+    assert arm.actual == pytest.approx(msg.position)
+    assert 'ROS 关节反馈：J1' in arm.feedback.text()
+    assert not arm.ready()
+    assert all(not b.isEnabled() for b in arm.actions)
     arm.close()
 
 

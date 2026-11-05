@@ -24,6 +24,8 @@ install(PROGRAMS
   scripts/camera_video.py
   scripts/observer_video.py
   scripts/camera_mono.py
+  scripts/capture_camera_calibration.py
+  scripts/calibrate_camera_intrinsics.py
   scripts/generate_mono_camera_usd.py
   scripts/generate_mono_robot_models.py
   scripts/generate_finger_gripper_usd.py
@@ -85,6 +87,8 @@ install(PROGRAMS
 )
 
 install(FILES scripts/rebar_experiment_geometry.py scripts/rebar_tester_control.py
+  scripts/camera_calibration_core.py
+  scripts/camera_calibration_sources.py
   scripts/third_person_recorder.py
   scripts/rebar_tester_mission/compact_curve.py
   scripts/rebar_tester_mission/stage_entry.py
@@ -94,6 +98,7 @@ install(FILES
   README_ISAAC_ROS2.md
   ISAAC_NAVIGATION_CAMERA.md
   README_MONO_CAMERA.md
+  README_CAMERA_CALIBRATION.md
   README_FINGER_GRIPPER.md
   README_REBAR_GRASP.md
   README_ETM6M.md
