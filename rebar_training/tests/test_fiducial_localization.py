@@ -10,7 +10,7 @@ from scipy.spatial.transform import Rotation
 
 from rebar_training.fiducial_localization import (
     CameraCalibration, Limits, MarkerAnchor, RelocalizationSession, WristMarkerEstimator,
-    fixture_loading_geometry, inverse, rigid, rotation_distance, square_points)
+    WristMarkerBoardEstimator, PlanarWristBoardEstimator, fixture_loading_geometry, inverse, rigid, rotation_distance, square_points)
 from rebar_training.workcells import WorkcellLayout
 
 
@@ -153,6 +153,16 @@ def test_session_timeout_cannot_be_satisfied_by_a_new_but_late_frame(setup):
         session.observe(s['image'], measured_base_twist=(0., 0.), base_stopped_confirmed=True, **kwargs)
 
 
+def test_exact_200ms_window_uses_sensor_nanoseconds(setup):
+    s=setup;observed=s['e'].estimate(s['image'],**s['kwargs'])
+    session=RelocalizationSession(s['e'],session_id='boundary',issued_s=1.,fixture_from_base_goal=observed['fixture_from_base'])
+    for n in range(3):
+        stamp=1.1+n*.1
+        r=session.observe(s['image'],measured_base_twist=(0.,0.),base_stopped_confirmed=True,
+            **(s['kwargs']|dict(frame_id=f'boundary_{n}',image_stamp_s=stamp,fk_stamp_s=stamp,now_s=stamp)))
+    assert r['state']=='docked_geometry_candidate'
+
+
 @pytest.mark.parametrize('change', [dict(measured_base_twist=(.02, 0.)),
     dict(measured_base_twist=(0., .02)), dict(base_stopped_confirmed=False)])
 def test_motion_invalidates_pose_session(setup, change):
@@ -198,3 +208,51 @@ def test_limits_and_calibration_are_immutable_and_finite(setup):
     with pytest.raises(ValueError):
         replace(setup['c'], distortion=(0., 0., 0.))
     assert isinstance(setup['a'].fixture_from_marker, tuple)
+
+
+def board_anchors(s):
+    return [replace(s['a'],marker_id=marker_id,length_m=.10,
+                    fixture_from_marker=np.array(s['a'].fixture_from_marker)@transform((dx,0,0)))
+            for marker_id,dx in ((11,0.),(21,.14),(31,.28))]
+
+
+def test_multi_marker_pose_and_real_detector_use_all_surveyed_corners(setup):
+    s=setup;anchors=board_anchors(s);e=WristMarkerBoardEstimator(s['c'],anchors)
+    parts=[s['optical']@transform((dx,0,0)) for dx in (0.,.14,.28)]
+    corners=np.concatenate([pixels(t,s['k'],.10) for t in parts])
+    recovered,_=e.solve_corners(corners)
+    np.testing.assert_allclose(recovered,s['optical'],atol=1e-8)
+    image=np.minimum.reduce([marker_image(t,s['k'],marker_id=mid,length=.10)
+                             for t,mid in zip(parts,(11,21,31))])
+    r=e.estimate(image,**s['kwargs'])
+    assert r['marker_ids']==[11,21,31] and len(r['corners_px'])==12
+
+
+def test_multi_marker_has_no_partial_board_fallback(setup):
+    s=setup;e=WristMarkerBoardEstimator(s['c'],board_anchors(s))
+    with pytest.raises(ValueError,match='absent'):
+        e.estimate(s['image'],**s['kwargs'])
+
+
+def test_duplicate_wrong_machine_or_nonplanar_board_is_rejected(setup):
+    s=setup;anchors=board_anchors(s)
+    for values in ([anchors[0],anchors[0]], [anchors[0],replace(anchors[1],machine_id='machine_3')],
+                   [anchors[0],replace(anchors[1],fixture_from_marker=np.array(anchors[1].fixture_from_marker)@transform((0,0,.01)))]):
+        with pytest.raises(ValueError):WristMarkerBoardEstimator(s['c'],values)
+
+
+def test_explicit_level_floor_solver_preserves_unconstrained_measurement(setup):
+    s=setup;anchors=board_anchors(s)
+    e=PlanarWristBoardEstimator(s['c'],anchors,fixture_from_base_z_m=-1.508)
+    parts=[s['optical']@transform((dx,0,0)) for dx in (0.,.14,.28)]
+    image=np.minimum.reduce([marker_image(t,s['k'],marker_id=mid,length=.10)
+                             for t,mid in zip(parts,(11,21,31))])
+    r=e.estimate(image,**s['kwargs'])
+    t=np.array(r['fixture_from_base']);truth=np.linalg.inv(s['base_fixture'])
+    assert np.linalg.norm(t[:3,3]-truth[:3,3])<.005
+    assert rotation_distance(t,truth)<math.radians(.5)
+    assert r['planar_constraints']['validated_level_floor_required']
+    assert r['unconstrained_fixture_from_base']
+    assert not r['physical_acceptance']
+    with pytest.raises(ValueError,match='Planar'):
+        PlanarWristBoardEstimator(s['c'],anchors,fixture_from_base_z_m=-1.30).estimate(image,**s['kwargs'])

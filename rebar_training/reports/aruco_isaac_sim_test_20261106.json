@@ -1,0 +1,171 @@
+{
+  "date": "2026-11-06",
+  "host": "arnold-TRX50-AERO-D",
+  "scope": "isolated rendered wrist fiducial and empty-base local correction probes",
+  "isaac_simulation_actually_run": true,
+  "attempt_count": 7,
+  "all_attempts_retained": true,
+  "all_workers_terminal": true,
+  "all_node_raw_files_sha_verified": true,
+  "verified_node_raw_file_count": 733,
+  "static_view_detection": {
+    "accepted": 40,
+    "frames": 40,
+    "max_fixture_point_error_mm": 2.5856279831512197,
+    "max_orientation_error_deg": 0.6594440089315734,
+    "base_relocalization_acceptance": false
+  },
+  "closed_loop_correction_passed": false,
+  "steel_transfer_started": false,
+  "formal_acceptance_denominator_changed": false,
+  "runtime_gate_limits_relaxed": false,
+  "additional_planar_variant_simulated": false,
+  "planar_same_frame_replay_passed": false,
+  "planar_rejection_rms_px": [
+    1.232703,
+    1.074563
+  ],
+  "tests": {
+    "passed": 147,
+    "skipped": 0,
+    "scope": "offline fiducial, workcell, mission, station adapter and mobile regression checks"
+  },
+  "simulation_attempts": [
+    {
+      "attempt": "board_clearance_probe_05",
+      "samples": 2,
+      "accepted": 1,
+      "render_passed": false,
+      "closed_loop_completed": false,
+      "errors": [
+        "Multi-frame fixture-relative pose is unstable"
+      ],
+      "policy_unchanged": true,
+      "cosmos_used": false,
+      "spread_from_first_mm": 5.0923322698428315,
+      "max_fixture_position_error_mm": 1.3524945273181523,
+      "max_fixture_angle_error_deg": 0.87234034866571
+    },
+    {
+      "attempt": "board_correction_probe_04",
+      "samples": 9,
+      "accepted": 8,
+      "render_passed": true,
+      "closed_loop_completed": false,
+      "errors": [
+        "No acceptable front-facing positive-depth PnP hypothesis"
+      ],
+      "policy_unchanged": true,
+      "cosmos_used": false,
+      "spread_from_first_mm": 5.891457460295985,
+      "max_fixture_position_error_mm": 1.2860369307404618,
+      "max_fixture_angle_error_deg": 1.4518563224498182
+    },
+    {
+      "attempt": "board_resolution_probe_06",
+      "samples": 3,
+      "accepted": 2,
+      "render_passed": false,
+      "closed_loop_completed": false,
+      "errors": [
+        "Multi-frame fixture-relative pose is unstable"
+      ],
+      "policy_unchanged": true,
+      "cosmos_used": false,
+      "spread_from_first_mm": 3.440782629407863,
+      "max_fixture_position_error_mm": 0.4830754171865908,
+      "max_fixture_angle_error_deg": 0.5357558003175701
+    },
+    {
+      "attempt": "board_settling_probe_07",
+      "samples": 2,
+      "accepted": 1,
+      "render_passed": false,
+      "closed_loop_completed": false,
+      "errors": [
+        "Multi-frame fixture-relative pose is unstable"
+      ],
+      "policy_unchanged": true,
+      "cosmos_used": false,
+      "spread_from_first_mm": 3.3976626972175925,
+      "max_fixture_position_error_mm": 0.5073884352154359,
+      "max_fixture_angle_error_deg": 0.6279121580467962,
+      "synchronization_audit": [
+        {
+          "step": 0,
+          "fk_renderer_pos_delta_mm": 1.6737620578527242e-05,
+          "fk_renderer_angle_delta_deg": 1.17563138788917e-05,
+          "max_joint_speed": 0.004294820595532656,
+          "camera_frame": [
+            2
+          ]
+        },
+        {
+          "step": 3,
+          "fk_renderer_pos_delta_mm": 2.3818590255396184e-05,
+          "fk_renderer_angle_delta_deg": 1.2706606002033607e-05,
+          "max_joint_speed": 0.0037881098687648773,
+          "camera_frame": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "attempt": "correction_probe_03",
+      "samples": 3,
+      "accepted": 2,
+      "render_passed": false,
+      "closed_loop_completed": false,
+      "errors": [
+        "Multi-frame fixture-relative pose is unstable"
+      ],
+      "policy_unchanged": true,
+      "cosmos_used": false,
+      "spread_from_first_mm": 3.390106966595558,
+      "max_fixture_position_error_mm": 3.243183857155684,
+      "max_fixture_angle_error_deg": 0.2563434703702979
+    },
+    {
+      "attempt": "render_probe_01",
+      "samples": 40,
+      "accepted": 0,
+      "render_passed": false,
+      "closed_loop_completed": false,
+      "errors": [],
+      "policy_unchanged": true,
+      "cosmos_used": false
+    },
+    {
+      "attempt": "render_probe_02",
+      "samples": 40,
+      "accepted": 40,
+      "render_passed": true,
+      "closed_loop_completed": false,
+      "errors": [],
+      "policy_unchanged": true,
+      "cosmos_used": false,
+      "spread_from_first_mm": 23.07493186722168,
+      "max_fixture_position_error_mm": 2.5856279831512197,
+      "max_fixture_angle_error_deg": 0.6594440089315734
+    }
+  ],
+  "inversion_error_audit": {
+    "estimated_base_position_change_mm": 3.3976626972175925,
+    "true_base_position_change_mm_for_evaluation": 0.011837486193658401,
+    "change_in_position_estimation_error_mm": 3.404007202060133,
+    "base_position_error_mm_by_frame": [
+      13.395651695310871,
+      10.027977066312383
+    ],
+    "prior_note": "No truth value used for runtime pose estimation"
+  },
+  "cosmos_used": false,
+  "policy_optimizer_loaded": false,
+  "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "policy_optimizer_unchanged": true,
+  "training": false,
+  "hardware_or_ros": false,
+  "gpu_after": "11564, /usr/bin/ptyxis, 28 MiB\n",
+  "next_required_work": "independent multi-view camera pixel/angle calibration and corner-error validation, followed by explicit planar-prior verification; no transfer dispatch"
+}

@@ -156,13 +156,9 @@ class WristMarkerEstimator:
         if (not isinstance(image, np.ndarray) or image.dtype != np.uint8 or image.ndim != 2
                 or (image.shape[1], image.shape[0]) != c.image_size):
             raise ValueError('Native calibrated Mono8 image required; no implicit resize/crop')
-        corners, ids, _ = self.detector.detectMarkers(image)
-        ids = [] if ids is None else ids.reshape(-1).tolist()
-        matches = [i for i, v in enumerate(ids) if v == a.marker_id]
-        if len(matches) != 1:
-            raise ValueError('Requested marker absent or duplicate ID visible')
-        pixels = np.asarray(corners[matches[0]], np.float64).reshape(4, 2)
-        if (np.min(np.linalg.norm(pixels-np.roll(pixels, -1, axis=0), axis=1)) < lim.min_edge_px
+        pixels = self.detect_corners(image)
+        if (min(np.min(np.linalg.norm(block-np.roll(block,-1,axis=0),axis=1))
+                for block in pixels.reshape(-1,4,2)) < lim.min_edge_px
                 or np.min(pixels) < 2 or np.max(pixels[:, 0]) >= image.shape[1]-2
                 or np.max(pixels[:, 1]) >= image.shape[0]-2):
             raise ValueError('Marker too small or clipped at image boundary')
@@ -176,18 +172,35 @@ class WristMarkerEstimator:
                     optical_frame_id=c.optical_frame_id, clock_id=c.clock_id,
                     base_from_fixture=base_from_fixture.tolist(),
                     fixture_from_base=inverse(base_from_fixture).tolist(),
-                    corners_px=pixels.tolist(), candidates=candidates,
+                    marker_ids=self.marker_ids, corners_px=pixels.tolist(), candidates=candidates,
                     global_map_pose_corrected=False, physical_acceptance=False, actuator_dispatch=False)
 
+    @property
+    def marker_ids(self):
+        return [self.anchor.marker_id]
+
+    def detect_corners(self,image):
+        corners,ids,_=self.detector.detectMarkers(image)
+        ids=[] if ids is None else ids.reshape(-1).tolist()
+        pixels=[]
+        for marker_id in self.marker_ids:
+            matches=[i for i,v in enumerate(ids) if v==marker_id]
+            if len(matches)!=1:
+                raise ValueError('Requested marker absent or duplicate ID visible')
+            pixels.extend(np.asarray(corners[matches[0]],np.float64).reshape(4,2))
+        return np.asarray(pixels,np.float64)
+
     def solve_corners(self, pixels):
-        """Return all positive-depth, front-facing hypotheses; refuse material ambiguity."""
-        c = self.calibration; lim = self.limits
-        points = square_points(self.anchor.length_m)
         pixels = np.asarray(pixels, np.float64)
         if pixels.shape != (4, 2) or not np.isfinite(pixels).all():
             raise ValueError('Four finite ordered corners required')
+        return self._solve_pose(square_points(self.anchor.length_m),pixels,cv2.SOLVEPNP_IPPE_SQUARE)
+
+    def _solve_pose(self,points,pixels,method):
+        """Return all positive-depth, front-facing hypotheses; refuse material ambiguity."""
+        c = self.calibration; lim = self.limits
         ok, rotations, translations, _ = cv2.solvePnPGeneric(
-            points, pixels, np.array(c.K), np.array(c.distortion), flags=cv2.SOLVEPNP_IPPE_SQUARE)
+            points, pixels, np.array(c.K), np.array(c.distortion), flags=method)
         choices = []
         for rv, tv in zip(rotations, translations):
             rotation = cv2.Rodrigues(rv)[0]; translation = tv.reshape(3)
@@ -197,7 +210,7 @@ class WristMarkerEstimator:
                     or not lim.min_distance_m <= distance <= lim.max_distance_m
                     or float(rotation[:, 2] @ translation) >= 0):
                 continue
-            projected = cv2.projectPoints(points, rv, tv, np.array(c.K), np.array(c.distortion))[0].reshape(4, 2)
+            projected = cv2.projectPoints(points, rv, tv, np.array(c.K), np.array(c.distortion))[0].reshape(-1, 2)
             error = float(np.sqrt(np.mean(np.sum((projected-pixels)**2, axis=1))))
             t = np.eye(4); t[:3, :3] = rotation; t[:3, 3] = translation
             choices.append((error, rigid(t)))
@@ -210,6 +223,93 @@ class WristMarkerEstimator:
                     or rotation_distance(t, choices[0][1]) > lim.ambiguity_rotation_rad):
                 raise ValueError('Ambiguous planar pose; require another view or multi-marker board')
         return choices[0][1], [dict(rms_px=e, optical_from_marker=t.tolist()) for e, t in choices]
+
+
+class WristMarkerBoardEstimator(WristMarkerEstimator):
+    """Coplanar rigid multi-marker board, surveyed entirely in fixture coordinates.
+
+    All configured IDs must be visible. No single-marker fallback or weakening
+    of the original per-frame/multi-frame gates is performed.
+    """
+    def __init__(self,calibration,anchors,limits=None):
+        anchors=tuple(anchors)
+        if len(anchors)<2:
+            raise ValueError('At least two surveyed markers required')
+        first=anchors[0]
+        if len({a.marker_id for a in anchors})!=len(anchors) or any(
+                (a.machine_id,a.dictionary,a.survey_id)!=(first.machine_id,first.dictionary,first.survey_id)
+                for a in anchors):
+            raise ValueError('Board IDs must be unique and share machine/dictionary/survey')
+        super().__init__(calibration,first,limits)
+        self.anchors=anchors
+        points=[]
+        for a in anchors:
+            relative=inverse(first.fixture_from_marker)@rigid(a.fixture_from_marker)
+            p=square_points(a.length_m)@relative[:3,:3].T+relative[:3,3]
+            if np.max(np.abs(p[:,2]))>1e-6 or np.linalg.norm(relative[:3,2]-[0,0,1])>1e-6:
+                raise ValueError('Board markers must lie in one front-facing plane')
+            points.extend(p)
+        self.points=np.asarray(points,np.float64)
+
+    @property
+    def marker_ids(self):
+        return [a.marker_id for a in self.anchors]
+
+    def solve_corners(self,pixels):
+        pixels=np.asarray(pixels,np.float64)
+        if pixels.shape!=(len(self.points),2) or not np.isfinite(pixels).all():
+            raise ValueError('All board corners in configured marker order required')
+        return self._solve_pose(self.points,pixels,cv2.SOLVEPNP_IPPE)
+
+
+class PlanarWristBoardEstimator(WristMarkerBoardEstimator):
+    """Explicit level-floor/known-height geometry variant, not unconstrained SE(3).
+
+    Height is a fixed survey/calibration input, never the current simulated root
+    position. This variant requires independently validated level base/fixture
+    axes. Real deployment needs a tilt gate or an IMU-aware extension.
+    """
+    def __init__(self,calibration,anchors,*,fixture_from_base_z_m,limits=None):
+        super().__init__(calibration,anchors,limits)
+        if isinstance(fixture_from_base_z_m,bool) or not math.isfinite(fixture_from_base_z_m):
+            raise ValueError('Fixed surveyed base height in fixture coordinates required')
+        self.height=float(fixture_from_base_z_m)
+
+    def estimate(self,image,**kwargs):
+        from scipy.optimize import least_squares
+        obs=super().estimate(image,**kwargs)
+        initial=rigid(obs['fixture_from_base'])
+        p0=np.array([initial[0,3],initial[1,3],math.atan2(initial[1,0],initial[0,0])])
+        base_camera=rigid(kwargs['base_from_flange'])@rigid(self.calibration.flange_from_optical)
+        fixture_points=self.points@rigid(self.anchor.fixture_from_marker)[:3,:3].T+rigid(self.anchor.fixture_from_marker)[:3,3]
+        pixels=np.asarray(obs['corners_px']);k=np.asarray(self.calibration.K);d=np.asarray(self.calibration.distortion)
+        def base_pose(values):
+            t=np.eye(4);t[:3,:3]=Rotation.from_euler('z',values[2]).as_matrix()
+            t[:3,3]=[values[0],values[1],self.height];return t
+        def residual(values):
+            optical_fixture=inverse(base_camera)@inverse(base_pose(values))
+            predicted=cv2.projectPoints(fixture_points,cv2.Rodrigues(optical_fixture[:3,:3])[0],
+                optical_fixture[:3,3],k,d)[0].reshape(-1,2)
+            return (predicted-pixels).reshape(-1)
+        result=least_squares(residual,p0,method='trf',max_nfev=50,
+            bounds=(p0-[.1,.1,math.radians(10)],p0+[.1,.1,math.radians(10)]),
+            ftol=1e-10,xtol=1e-10,gtol=1e-10)
+        rms=float(np.sqrt(np.mean(np.sum(residual(result.x).reshape(-1,2)**2,axis=1))))
+        singular=np.linalg.svd(result.jac,compute_uv=False)
+        pose=base_pose(result.x);camera_fixture=inverse(base_camera)@inverse(pose)
+        depths=(fixture_points@camera_fixture[:3,:3].T+camera_fixture[:3,3])[:,2]
+        if (not result.success or not math.isfinite(rms) or rms>self.limits.max_reprojection_px
+                or np.any(depths<=0) or singular[-1]<1e-6 or singular[0]/singular[-1]>1e5):
+            raise ValueError(f'Planar constrained image fit rejected: converged={result.success}, '
+                             f'rms_px={rms:.6f}, jacobian_condition={singular[0]/singular[-1]:.3f}')
+        obs.update(unconstrained_base_from_fixture=obs['base_from_fixture'],
+                   unconstrained_fixture_from_base=obs['fixture_from_base'],
+                   base_from_fixture=inverse(pose).tolist(),fixture_from_base=pose.tolist(),
+                   planar_constraints=dict(base_roll_pitch_assumed_rad=[0.,0.],
+                       surveyed_fixture_from_base_height_m=self.height,rms_px=rms,
+                       validated_level_floor_required=True,solver='three-variable image reprojection least squares',
+                       height_or_tilt_uncertainty_validated=False))
+        return obs
 
 
 class RelocalizationSession:
@@ -252,7 +352,9 @@ class RelocalizationSession:
                     raise ValueError('Multi-frame fixture-relative pose is unstable')
             self.seen.add(obs['frame_id']); self.frames.append(obs)
             self.frames = self.frames[-lim.min_stable_frames:]
-            if kwargs['now_s']-self.frames[0]['image_stamp_s'] > lim.max_age_s:
+            # Common sensor timestamps use integer nanoseconds; avoid rejecting
+            # an exactly 200ms window because binary subtraction rounds upward.
+            if round(kwargs['now_s']*1e9)-round(self.frames[0]['image_stamp_s']*1e9) > round(lim.max_age_s*1e9):
                 raise ValueError('Stable evidence window expired')
             delta = inverse(current) @ self.goal
             yaw = math.atan2(delta[1, 0], delta[0, 0])
