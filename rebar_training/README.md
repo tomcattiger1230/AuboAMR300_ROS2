@@ -1,5 +1,9 @@
 # 钢筋抓取与试验机上料训练
 
+## 最新离线研究（2026-11-06）
+
+新增 [Cosmos 固定画面单问题对照](docs/COSMOS_PROMPT_ABLATION_20261106.md)：26 项均完整，短文格式更稳定，但两个可见运动正例仍漏报，语义验收未通过。新增 [腕部 ArUco 夹具相对定位原型](docs/WRIST_ARUCO_RELOCALIZATION_20261106.md)，按用户指定的腕部相机与夹具相对标记测量设计；仅离线检测/SE(3)/门控验证，尚未连接硬件或切换实际任务流程。策略/optimizer 保持，不训练、不启动仿真。
+
 ## 最新：冻结Edge官方样例与2–4fps对照完成，语义仍未通过（2026-10-26）
 
 保留37项离线结果（34项完整、2项截断、1项解码错误），33项相关测试通过。官方货物定位大致正确；显式PyAV绕过默认视频解码兼容错误，延长输出预算使图片样例正常结束，原失败保持。钢筋对象、底盘运动与事件时间仍不稳定；固定分辨率的4fps转向仍判静止，不能以帧率或格式成功替代语义验收。模型、393b策略/optimizer及原视频SHA保持，未训练或启动仿真。完整分析见docs/COSMOS_EDGE_OFFICIAL_SHORTCLIPS_20261026.md和reports/cosmos_edge_official_shortclips_20261026.json。Newton/Isaac Lab只调研比较，未安装或切换；见docs/NEWTON_ISAACLAB_COMPARISON_20261026.md。

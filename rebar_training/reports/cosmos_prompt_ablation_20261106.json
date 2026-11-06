@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-06",
+  "host": "arnold-TRX50-AERO-D",
+  "response_count": 26,
+  "complete_responses": 26,
+  "sha_verified_files": 488,
+  "all_node_files_match_mac": true,
+  "frozen_before_after_identical": true,
+  "policy_optimizer_sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+  "source_video_sha256": "7d85144259e009b40d14c1fc7924c1718caee48264b6792938f0eb1a0703f2ef",
+  "model_files_unchanged": 16,
+  "matched_motion_input_groups": 6,
+  "all_matched_motion_pixels_identical": true,
+  "training": false,
+  "simulation": false,
+  "semantic_acceptance_passed": false,
+  "motion_by_contract": {
+    "baseline": {
+      "n": 6,
+      "contract_valid": 0,
+      "contract_and_label_correct": 0
+    },
+    "single_json": {
+      "n": 6,
+      "contract_valid": 3,
+      "contract_and_label_correct": 1
+    },
+    "single_prose": {
+      "n": 6,
+      "contract_valid": 6,
+      "contract_and_label_correct": 4
+    }
+  },
+  "claims": [
+    "Six targeted motion questions share exactly identical pixel tensors across prompt variants; repeated-frame controls included.",
+    "Both visible positive motion targets remain missed by single-question prose; four negative/control targets all receive no.",
+    "Single-question prose improves protocol availability, not positive-motion recognition.",
+    "Wrist event answers describe separation increase but provide no requested event timestamp.",
+    "No tracker answers or native task labels supplied; recognition requires manual review."
+  ],
+  "tests_passed": 166,
+  "tests_skipped": 5,
+  "zero_nan_or_positive_inf": true,
+  "zero_unknown_tokens": true,
+  "all_26_eos_reached": true
+}

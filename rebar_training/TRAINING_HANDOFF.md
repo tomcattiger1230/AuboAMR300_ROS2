@@ -1,5 +1,13 @@
 # 钢筋视觉移动操作训练：接力指导
 
+## 最新：Cosmos 单问题复测与腕部 ArUco 离线原型（2026-11-06）
+
+Cosmos 26 项新结果全部完整，488 份节点文件在 Mac 逐 SHA 一致；六组问题跨提示词的实际像素相同。单问题短文 6/6 可解释，但两个可见运动正例仍全部漏报，四个静止/重复帧负例正确；不能将 4/6 当作运动识别通过。腕部描述能指出间隙/分离变化，但材质/夹具身份仍不稳且没有事件时间。详见 docs/COSMOS_PROMPT_ABLATION_20261106.md。唯一离线 worker61469 已自然完成 exit0，没有仿真/训练或重复派发。
+
+用户确认 ArUco 使用机械臂腕部相机，测量标记相对测试机夹具的位姿。新增独立 fiducial_localization/fiducial_check 模块：完整手眼/FK/PnP 坐标链、曝光时间/坐标系/时钟绑定、平面多解拒收、三帧门控和局部停靠误差。原 MissionFlow/导航服务/冻结策略入口没有自动切换；所有 loading_authorized/actuator_dispatch 保持 false。当前只有投影图与数学验证，没有现场标记/标定数据、硬件连接或毫米级精度验收。后续输入和边界见 docs/WRIST_ARUCO_RELOCALIZATION_20261106.md。
+
+策略+optimizer393b、原视频7d85和16份Cosmos模型文件保持；本轮无训练/仿真/SDK修改。保留旧正式64/64、旧演示1/1及新布局物理3/6的原范围。
+
 ## 最新：冻结Edge官方样例与2–4fps对照完成，语义仍未通过（2026-10-26）
 
 保留37项离线结果（34项完整、2项截断、1项解码错误），33项相关测试通过。官方货物定位大致正确；显式PyAV绕过默认视频解码兼容错误，延长输出预算使图片样例正常结束，原失败保持。钢筋对象、底盘运动与事件时间仍不稳定；固定分辨率的4fps转向仍判静止，不能以帧率或格式成功替代语义验收。模型、393b策略/optimizer及原视频SHA保持，未训练或启动仿真。完整分析见docs/COSMOS_EDGE_OFFICIAL_SHORTCLIPS_20261026.md和reports/cosmos_edge_official_shortclips_20261026.json。Newton/Isaac Lab只调研比较，未安装或切换；见docs/NEWTON_ISAACLAB_COMPARISON_20261026.md。

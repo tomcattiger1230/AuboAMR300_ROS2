@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-06",
+  "scope": "offline projective-camera geometry and gate validation only",
+  "user_camera": "eye_in_hand_wrist",
+  "user_anchor": "marker_pose_relative_to_test_machine_fixture",
+  "test_results": {
+    "passed": 166,
+    "skipped": 5,
+    "skips": "Five existing image-tracking regressions require PyAV in the isolated Cosmos environment; not run in Mac rebar venv"
+  },
+  "synthetic_corner_trials": 180,
+  "synthetic_raster_marker_ids": [
+    11,
+    12,
+    13
+  ],
+  "physical_acceptance": false,
+  "real_camera_data_available": false,
+  "live_navigation_or_task_flow_integrated": false,
+  "policy_optimizer_mutated": false,
+  "policy_optimizer_loaded": false,
+  "simulation": false,
+  "training": false,
+  "global_map_reset": false,
+  "loading_authorized": false,
+  "source_sha256": {
+    "rebar_training/src/rebar_training/fiducial_localization.py": "03a95cbb6fa0679daac3dfa5064a132c7f1207fe93451e7837289be994ea8768",
+    "rebar_training/src/rebar_training/fiducial_check.py": "14e5813197d8f498cb6a406cf81eae1f4a6816aee00541a36487345d6ce16b91",
+    "rebar_training/tests/test_fiducial_localization.py": "9edc9abadcf59733602fd127a5317e540bdb40aaf6fbbb1c103f63a229178bad",
+    "rebar_training/config/machine_fiducials_offline.json": "541a41a9094406cc282f1dd07920db3827823e067ad07008eb6f41e718443428"
+  },
+  "evidence": "rebar_training/artifacts/aruco_fixture_relocalization_20261106/final_check/report.json",
+  "limitations": [
+    "No measured fixture_from_marker, camera intrinsics, hand-eye or synchronized hardware frames supplied",
+    "Default thresholds are candidate gates, not verified mm-level accuracy",
+    "Original MissionFlow/robot dispatch remains unchanged"
+  ]
+}

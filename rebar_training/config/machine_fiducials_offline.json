@@ -1,0 +1,39 @@
+{
+  "schema": "wrist_fixture_fiducial_research_v1",
+  "geometry_status": "synthetic_proposal_not_surveyed",
+  "scope": "Offline design only; no actuator dispatch or live localization reset",
+  "camera_mount": "eye_in_hand",
+  "anchor_reference": "fixture_target_origin_with_station_axes",
+  "units": {"translation": "m", "rotation": "radians"},
+  "dictionary": "DICT_5X5_100",
+  "markers": [
+    {"machine_id": "machine_1", "marker_id": 11, "proposed_length_m": 0.16},
+    {"machine_id": "machine_2", "marker_id": 12, "proposed_length_m": 0.16},
+    {"machine_id": "machine_3", "marker_id": 13, "proposed_length_m": 0.16}
+  ],
+  "required_site_measurements": [
+    "actual outer black-square side length after printing and mounting",
+    "full fixture_from_marker SE3 including marker orientation, survey version and uncertainty",
+    "camera serial, native Mono8 size, fixed lens settings, K and distortion",
+    "flange_from_optical hand-eye SE3, flange frame (not TCP) and control base frame",
+    "exposure and FK time synchronization in one explicitly bound clock domain",
+    "rigid mount stability and expected visibility at pre-dock and dock poses"
+  ],
+  "proposed_flow": [
+    "navigate_to_collision_checked_observation_pose",
+    "confirm_base_stopped_and_loaded_transport_guards",
+    "move_wrist_to_verified_safe_observation_pose",
+    "acquire_unique_requested_marker_and_synchronized_fk",
+    "reject_ambiguous_or_unstable_pose",
+    "compute_fixture_relative_base_pose_and_local_docking_error",
+    "before_base_motion_return_arm_to_verified_stowed_pose_and_recheck_transport_guards",
+    "if_needed_request_separate_guarded_precision_docking",
+    "after_base_motion_start_new_observation_session",
+    "confirm_current_fixture_relative_pose_and_fixture_readiness",
+    "return_arm_via_verified_safe_path_and_refresh_visual_evidence",
+    "execute_existing_steel_transfer_with_original_force_and_motion_guards"
+  ],
+  "live_dispatch_enabled": false,
+  "global_map_reset_enabled": false,
+  "policy_optimizer_mutation_allowed": false
+}
