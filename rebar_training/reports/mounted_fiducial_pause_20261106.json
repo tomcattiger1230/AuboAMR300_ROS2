@@ -1,0 +1,149 @@
+{
+  "date": "2026-11-06",
+  "state": "PAUSED_BY_USER",
+  "requires_explicit_resume": true,
+  "host": "arnold-TRX50-AERO-D",
+  "node": "arnold@192.168.3.133",
+  "repo": "/home/arnold/Develop/rebar-deployment-4090-20261026",
+  "scope": "initialized-tray local arrival, machine-mounted board observation; source pickup excluded",
+  "all_workers_terminal": true,
+  "active_experiment_jobs": [],
+  "native_observation_stage_completed": true,
+  "strict_independent_review_passed": false,
+  "independent_review_blocker": "Third SDK camera pose metadata rotation orthogonality 1.0022873e-6 exceeds unchanged rigid SE(3) 1e-6 tolerance; preserve failed proof for follow-up. First two independent fixture point errors 0.268/0.346mm do not establish complete acceptance.",
+  "correction_dispatched": false,
+  "steel_transfer_started": false,
+  "full_mission_acceptance": false,
+  "formal64_unchanged": true,
+  "mount": {
+    "fixed_to_actual_machine_cad": true,
+    "rigid_bracket_and_backing": true,
+    "one_board_per_machine": true,
+    "charuco_squares": [
+      7,
+      5
+    ],
+    "square_m": 0.05,
+    "marker_m": 0.035,
+    "required_target_ids": 17,
+    "required_chess_corners": 24,
+    "native_image_size": [
+      2048,
+      1230
+    ]
+  },
+  "physics_fixes": [
+    "Return measured tray-view joint path before changing observation branch",
+    "Use alternate surveyed board observation IK branch",
+    "Keep bracket behind printed front and aim 70mm below board centre to clear finger occlusion",
+    "Render after synchronizing actual FK camera pose and refresh both camera metadata caches"
+  ],
+  "policy_optimizer": {
+    "sha256": "393b47f8385a9163e3c9f88b53375923327aa3c80239a3af105e700cf1f93a82",
+    "model_optimizer_tensors": 52,
+    "counters": {
+      "updates": 466,
+      "actor_updates": 170,
+      "policy_steps": 36602
+    },
+    "file_and_tensor_payload_unchanged": true,
+    "optimizer_instantiated": false,
+    "training_started": false
+  },
+  "training": false,
+  "cosmos_used": false,
+  "hardware_or_ros": false,
+  "tests": {
+    "passed": 188,
+    "log": "rebar_training/artifacts/mounted_workcell_fiducials_20261106/unit_tests_paused_final.log"
+  },
+  "last_executed_source": "source_v6",
+  "current_unexecuted_snapshot": "source_paused_unexecuted",
+  "all_attempts_retained": [
+    {
+      "attempt": "arrival_observe_01",
+      "run_id": "27c2ce192681422bbd5e9e93fe94d49c",
+      "requested_stage": "arrival_observation_only",
+      "completed_steps": null,
+      "errors": [
+        "TypeError: Missing values detected in object CameraCfg for the following fields:\n  - spawn\n was raised from the environment creator for Aubo-Rebar-Machine-Fiducial-Direct-v0 with kwargs ({'env_cfg_ent"
+      ],
+      "native_failure": null,
+      "native_observation_stable": false,
+      "policy_unchanged": true,
+      "policy_calls": 0,
+      "video_frames": 0
+    },
+    {
+      "attempt": "arrival_observe_02",
+      "run_id": "e219f6e578ed42fe89484cbea2705fd9",
+      "requested_stage": "arrival_observation_only",
+      "completed_steps": 1263,
+      "errors": [],
+      "native_failure": "force exceeded 250 N",
+      "native_observation_stable": false,
+      "policy_unchanged": true,
+      "policy_calls": 0,
+      "video_frames": 421
+    },
+    {
+      "attempt": "arrival_observe_03",
+      "run_id": "22d0e445145244c4b287b8d93ea22bc1",
+      "requested_stage": "arrival_observation_only",
+      "completed_steps": null,
+      "errors": [
+        "ValueError: vector: expected 3 numbers"
+      ],
+      "native_failure": null,
+      "native_observation_stable": false,
+      "policy_unchanged": true,
+      "policy_calls": 0,
+      "video_frames": 166
+    },
+    {
+      "attempt": "arrival_observe_04",
+      "run_id": "8547eaf81aa74ff1b583e6f0cb09ed79",
+      "requested_stage": "arrival_observation_only",
+      "completed_steps": 595,
+      "errors": [],
+      "native_failure": "force exceeded 250 N",
+      "native_observation_stable": false,
+      "policy_unchanged": true,
+      "policy_calls": 0,
+      "video_frames": 198
+    },
+    {
+      "attempt": "arrival_observe_05",
+      "run_id": "c7893a08447f45bbb3cc266a123dc472",
+      "requested_stage": "arrival_observation_only",
+      "completed_steps": 1806,
+      "errors": [],
+      "native_failure": "ValueError: Fiducial gate rejected: Requested machine board IDs incomplete or ambiguous",
+      "native_observation_stable": false,
+      "policy_unchanged": true,
+      "policy_calls": 0,
+      "video_frames": 602
+    },
+    {
+      "attempt": "arrival_observe_06",
+      "run_id": "dc69da8e2ae4408a8d14d15c427579ab",
+      "requested_stage": "arrival_observation_only",
+      "completed_steps": 1842,
+      "errors": [],
+      "native_failure": null,
+      "native_observation_stable": true,
+      "policy_unchanged": true,
+      "policy_calls": 0,
+      "video_frames": 614
+    }
+  ],
+  "resume_conditions": [
+    "New explicit user authorization",
+    "Audit SDK quaternion precision and strict metadata comparison without weakening 3mm/1px gates",
+    "Independent image/FK gate must pass before a new correction/transfer trial",
+    "Do not resume or relaunch completed prior jobs"
+  ],
+  "artifacts_root": "rebar_training/artifacts/mounted_workcell_fiducials_20261106",
+  "backup_path": "/Users/weiluo/Develop/backups/rebar_mounted_fiducial_paused_20261106",
+  "backup_verification_receipt": "/Users/weiluo/Develop/backups/rebar_mounted_fiducial_paused_20261106/VERIFIED.json"
+}
