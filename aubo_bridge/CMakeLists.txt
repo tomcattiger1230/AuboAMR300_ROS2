@@ -24,6 +24,7 @@ install(DIRECTORY
 # Install scripts
 install(PROGRAMS
   scripts/aubo_bridge_node.py
+  scripts/aubo_joint_states_readonly.py
   scripts/robot_controller.py
   scripts/test_robot_info_ros2.py
   scripts/test_joint_ros2.py

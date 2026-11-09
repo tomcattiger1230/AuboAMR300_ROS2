@@ -126,7 +126,31 @@ Isaac 与其机器人 ROS stack 也需要使用同一 ROS 域和局域网发现�
 
 ## 实机 ROS 桥
 
-当前有两条实机 ROS 路径，接口不同，不能只替换 CMake 文件：
+### x86-64 Ubuntu 只读关节角桥（2026-11-09 现场验证）
+
+桥主机 `192.168.88.179`（Ubuntu 24.04、ROS 2 Jazzy）已在
+`/home/hs/aubo_ros_bridge_ws` 构建 `aubo_bridge_msgs` 与 `aubo_bridge`。
+机械臂控制柜与 SEER 底盘共用地址 `192.168.88.122`；控制柜旧 SDK 接口为 TCP 8899。
+`aubo_joint_states_readonly.py` 只执行 SDK 初始化、连接、`get_current_waypoint()`
+与断开，并发布标准 `/joint_states`（六轴角度，弧度）。它不提供运动服务，也不调用
+`robot_startup()`、`init_profile()` 或控制柜参数设置接口。Mac GUI 可显示关节角，
+由于没有 `/aubo/status`，运动按钮保持禁用。
+
+桥主机的用户服务 `aubo-joints-readonly.service` 已启用，使用 ROS Domain 20；
+启动脚本位于 `/home/hs/aubo_ros_bridge_ws/start_readonly.sh`。该主机已启用用户 linger，
+服务不依赖 SSH 会话。查看状态与日志：
+
+```bash
+systemctl --user status aubo-joints-readonly.service
+journalctl --user -u aubo-joints-readonly.service -n 30 --no-pager
+```
+
+实测桥主机和 Mac 均收到相同的六轴角度。桥主机启动脚本设置
+`ROS_STATIC_PEERS=192.168.89.23`（当时 Mac 的地址）；Mac 的 GUI 则使用
+`--peer 192.168.88.179 --seer-ip 192.168.88.122 --domain-id 20`。
+若 Mac 地址改变，需更新桥主机启动脚本的静态 peer 并重启服务。
+
+若要启用完整控制接口，仓库另有两条实机 ROS 路径，接口不同，不能只替换 CMake 文件：
 
 - 现有 `aubo_bridge` Python 桥使用仓库内 `libpyauboi5.so`，该文件是 Linux x86-64 二进制，
   需要在 x86-64 主机运行并配置真实 `robot_host`、`robot_port`。它发布
