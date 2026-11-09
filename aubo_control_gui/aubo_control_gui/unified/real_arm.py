@@ -2,7 +2,7 @@
 import math
 import time
 from PySide6.QtCore import QTimer, Signal
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QDoubleSpinBox, QPushButton, QGroupBox, QScrollArea
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QDoubleSpinBox, QPushButton, QGroupBox, QScrollArea, QComboBox
 from ..resources import get_package_share_directory
 from ..urdf_view import UrdfRobotView
 from pathlib import Path
@@ -67,6 +67,12 @@ class RealArm(QWidget):
             b.setRange(-3 if name in ('X','Y','Z') else -360, 3 if name in ('X','Y','Z') else 360)
             b.setSuffix(' m' if name in ('X','Y','Z') else ' °')
             self.pose_boxes.append(b); form.addRow(name, b)
+        self.tool_preview_angle = QComboBox()
+        for label, rpy in (('原始', (0., 0., 0.)),
+                           ('Yaw −90° · 实机安装', (0., 0., -math.pi / 2))):
+            self.tool_preview_angle.addItem(label, rpy)
+        self.tool_preview_angle.setToolTip('现场确认的工具显示方向；不发送机械臂指令')
+        form.addRow('工具显示旋转（仅预览）', self.tool_preview_angle)
         button('当前末端 → 位姿目标', self.copy_pose)
         button('执行末端位姿', self.execute_pose, True).setToolTip('当前 SDK 桥将速度参数 0.02 用作关节限速，不代表 TCP 线速度')
         button('夹爪打开', lambda: self.command_gripper('open'), True)
@@ -75,6 +81,9 @@ class RealArm(QWidget):
         share = Path(get_package_share_directory('aubo_control_gui'))
         urdf = Path(get_package_share_directory('aubo_student_description'))/'urdf/aubo_i16.urdf'
         self.view = UrdfRobotView(urdf, share/'qml/RobotView.qml')
+        self.tool_preview_angle.currentIndexChanged.connect(
+            lambda index: self.view.set_tool_preview_rotation(self.tool_preview_angle.itemData(index)))
+        self.tool_preview_angle.setCurrentIndex(1)
         self.view.rootObject().setProperty('targetEnabled', False)
         row.addWidget(self.view, 1)
         self.timer = QTimer(self); self.timer.timeout.connect(self.tick); self.timer.start(30)

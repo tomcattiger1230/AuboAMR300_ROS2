@@ -26,6 +26,9 @@ def test_real_arm_uses_generated_types_without_device(local_ros):
     from aubo_bridge_msgs.msg import JointStateEx
     import time
     arm = RealArm(lambda *args:None)
+    assert arm.tool_preview_angle.currentText() == 'Yaw −90° · 实机安装'
+    assert arm.view.tool_preview_rotation[0, 1] == pytest.approx(1.0)
+    assert arm.view.tool_preview_rotation[2, 2] == pytest.approx(1.0)  # Lens stays forward.
     assert not arm.ready()
     assert all(not b.isEnabled() for b in arm.actions)
     assert arm.joint_type.Request().enable_move is False

@@ -27,6 +27,7 @@ class UrdfRobotView(QQuickWidget):
     def __init__(self,urdf_path,qml_path,parent=None):
         super().__init__(parent); self.setMinimumSize(560,520); self.setResizeMode(QQuickWidget.SizeRootObjectToView)
         self.joints=[]; self.angles=[0.0]*6
+        self.tool_preview_rotation = np.eye(3)
         self.target_pose = None
         root=ET.parse(urdf_path).getroot()
         for joint in root.findall("joint"):
@@ -60,10 +61,19 @@ class UrdfRobotView(QQuickWidget):
 
     def _load_tools(self, camera_mount=None):
         visuals = tool_visuals(self.tool_description or self.tool_urdf, camera_mount)
+        for visual in visuals:
+            visual['position'] = (self.tool_preview_rotation @ visual['position']).tolist()
+            visual['rotation'] = (self.tool_preview_rotation @ visual['rotation']).tolist()
+            visual['axis'] = (self.tool_preview_rotation @ visual['axis']).tolist()
         self.camera_center = np.array(next(v['position'] for v in visuals if v['link'] == 'camera_link'))
         for visual in visuals:
             visual['quaternion'] = QQuaternion.fromRotationMatrix(QMatrix3x3(np.array(visual['rotation']).flatten().tolist()))
         self.rootObject().setProperty("toolVisuals", visuals)
+
+    def set_tool_preview_rotation(self, rpy):
+        """Rotate displayed tool geometry only; arm joints and ROS commands are unchanged."""
+        self.tool_preview_rotation = _rpy(*rpy)
+        self._load_tools()
     def set_gripper_positions(self, positions):
         if len(positions) != 2 or not all(math.isfinite(v) for v in positions):
             return

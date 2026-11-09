@@ -150,6 +150,9 @@ journalctl --user -u aubo-joints-readonly.service -n 30 --no-pager
 `--peer 192.168.88.179 --seer-ip 192.168.88.122 --domain-id 20`。
 若 Mac 地址改变，需更新桥主机启动脚本的静态 peer 并重启服务。
 
+实机机械臂页的工具显示旋转默认设为现场确认的 Yaw −90°；可在下拉框切回“原始”。
+此变换仅用于夹爪和相机三维预览，不修改关节角反馈、机器人 URDF 或运动指令。
+
 若要启用完整控制接口，仓库另有两条实机 ROS 路径，接口不同，不能只替换 CMake 文件：
 
 - 现有 `aubo_bridge` Python 桥使用仓库内 `libpyauboi5.so`，该文件是 Linux x86-64 二进制，
