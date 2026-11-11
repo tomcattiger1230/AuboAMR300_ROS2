@@ -31,7 +31,7 @@ export AUBO_GUI_OVERLAY="$HOME/.local/share/aubo-unified-gui-overlay"
 # 实机机械臂所需的自定义消息；只构建接口，不加载 SDK 或访问设备
 ./scripts/build_macos_aubo_interfaces.sh
 ./scripts/start_unified_gui.command --mode isaac --domain-id 133 --peer 192.168.0.103
-./scripts/start_unified_gui.command --mode real --domain-id 20 --peer 192.168.0.103 --seer-ip 192.168.3.250
+./scripts/start_unified_gui.command --mode real --domain-id 20 --peer 192.168.89.50 --seer-ip 192.168.89.46
 ```
 
 Ubuntu 的 ROS 工作空间构建并 source 后：
@@ -126,18 +126,19 @@ Isaac 与其机器人 ROS stack 也需要使用同一 ROS 域和局域网发现�
 
 ## 实机 ROS 桥
 
-### x86-64 Ubuntu 只读关节角桥（2026-11-09 现场验证）
+### x86-64 Ubuntu 只读关节角桥（2026-11-11 现场验证）
 
-桥主机 `192.168.88.179`（Ubuntu 24.04、ROS 2 Jazzy）已在
-`/home/hs/aubo_ros_bridge_ws` 构建 `aubo_bridge_msgs` 与 `aubo_bridge`。
-机械臂控制柜与 SEER 底盘共用地址 `192.168.88.122`；控制柜旧 SDK 接口为 TCP 8899。
+当前桥主机为 `arnold@192.168.89.50`（Ubuntu 26.04、ROS 2 Lyrical），
+工作空间在 `/home/arnold/Develop/aubo_ros_bridge_ws`，已构建 `aubo_bridge_msgs` 与
+`aubo_bridge`。机械臂控制柜与 SEER 底盘共用 `192.168.89.46`；控制柜旧 SDK
+接口为 TCP 8899。Jetson 地址为 `192.168.89.47`，此只读桥运行在 x86-64 中转电脑上。
 `aubo_joint_states_readonly.py` 只执行 SDK 初始化、连接、`get_current_waypoint()`
 与断开，并发布标准 `/joint_states`（六轴角度，弧度）。它不提供运动服务，也不调用
 `robot_startup()`、`init_profile()` 或控制柜参数设置接口。Mac GUI 可显示关节角，
 由于没有 `/aubo/status`，运动按钮保持禁用。
 
 桥主机的用户服务 `aubo-joints-readonly.service` 已启用，使用 ROS Domain 20；
-启动脚本位于 `/home/hs/aubo_ros_bridge_ws/start_readonly.sh`。该主机已启用用户 linger，
+启动脚本位于 `/home/arnold/Develop/aubo_ros_bridge_ws/start_readonly.sh`。该主机已启用用户 linger，
 服务不依赖 SSH 会话。查看状态与日志：
 
 ```bash
@@ -145,10 +146,32 @@ systemctl --user status aubo-joints-readonly.service
 journalctl --user -u aubo-joints-readonly.service -n 30 --no-pager
 ```
 
-实测桥主机和 Mac 均收到相同的六轴角度。桥主机启动脚本设置
-`ROS_STATIC_PEERS=192.168.89.23`（当时 Mac 的地址）；Mac 的 GUI 则使用
-`--peer 192.168.88.179 --seer-ip 192.168.88.122 --domain-id 20`。
+实测桥主机和 Mac 均收到相同的六轴角度，Mac 侧只有一个 `/joint_states` 发布者。
+退出 SSH 后再次在 Mac 收到数据，确认用户服务继续运行。
+桥主机启动脚本设置 `ROS_STATIC_PEERS=192.168.88.116`（验证时 Mac 的地址）；
+Mac 的 GUI 使用
+`--peer 192.168.89.50 --seer-ip 192.168.89.46 --domain-id 20`。
 若 Mac 地址改变，需更新桥主机启动脚本的静态 peer 并重启服务。
+
+该主机还安装了 `uv`，并用它将构建依赖 `empy==4.2.1` 放在工作空间的
+`python_deps` 目录。ROS Lyrical 使用系统 Python 3.14；构建时要避免旧 CMake 缓存
+指向 `uv` 管理的 Python 3.13。如需重建，先 source `/opt/ros/lyrical/setup.bash`，
+然后在工作空间执行：
+
+```bash
+uv pip install --target python_deps 'empy==4.2.1'
+PYTHONPATH="$PWD/python_deps${PYTHONPATH:+:$PYTHONPATH}" \
+  colcon build --symlink-install --cmake-clean-cache \
+  --packages-select aubo_bridge_msgs aubo_bridge \
+  --cmake-args -DPython3_EXECUTABLE=/usr/bin/python3
+```
+
+当前系统也提供 `empy`，但工作空间里的副本便于用 `uv` 补齐构建依赖，
+且不修改系统 Python 环境。早先的 `192.168.88.179` 桥和
+`192.168.88.122` 控制柜是旧现场地址。
+旧桥主机本次 SSH 端口拒绝连接；若它重新上线，应停用旧的同名服务，避免两个
+`/joint_states` 发布者。单次 SDK 探测成功读取角度后，在断开连接时触发旧版
+原生库的 `FD_SETSIZE` 崩溃；常驻服务验证期间未重启，已配置异常退出后自动重启。
 
 实机机械臂页的工具显示旋转默认设为现场确认的 Yaw −90°；可在下拉框切回“原始”。
 此变换仅用于夹爪和相机三维预览，不修改关节角反馈、机器人 URDF 或运动指令。
